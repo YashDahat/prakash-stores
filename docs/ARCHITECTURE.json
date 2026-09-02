@@ -1039,13 +1039,37 @@
     "status" : "PLANNED",
     "description" : "Represents a customer review for a product, including a rating and comment.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the review. Generated automatically."
+    }, {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product being reviewed. Not null."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the user who submitted the review. Not null."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "Rating given by the user (1-5). Not null, min 1, max 5."
+    }, {
+      "name" : "comment",
+      "type" : "String",
+      "description" : "Text comment of the review. Max 500 characters."
+    }, {
+      "name" : "reviewDate",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the review was submitted. Not null."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "MODEL layer — represents a customer review for a product, including a rating and comment.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1057,14 +1081,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides data access methods for Review entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "List<Review>",
+      "description" : "Retrieves all reviews associated with a specific product ID."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Review.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access methods for Review entities, including finding reviews by product ID.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1076,14 +1105,29 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Handles business logic for creating and managing product reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createReview",
+      "parameters" : [ "CreateReviewRequest request", "Integer userId" ],
+      "return_type" : "ReviewDto",
+      "description" : "Creates a new product review for the given product and user. Throws ResourceNotFoundException if the product does not exist."
+    }, {
+      "name" : "getReviewsByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews for a specified product ID."
+    }, {
+      "name" : "getAllReviews",
+      "parameters" : [ ],
+      "return_type" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews in the system (for admin purposes)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/ReviewRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements createReview(CreateReviewRequest, Integer): ReviewDto, getReviewsByProductId(Long): List<ReviewDto>, and getAllReviews(): List<ReviewDto>; delegates persistence to ReviewRepository and product lookup to ProductService.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1096,13 +1140,37 @@
     "status" : "PLANNED",
     "description" : "Data transfer object for sending review details to the client.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the review."
+    }, {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product being reviewed."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the user who submitted the review."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "Rating given by the user (1-5)."
+    }, {
+      "name" : "comment",
+      "type" : "String",
+      "description" : "Text comment of the review."
+    }, {
+      "name" : "reviewDate",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the review was submitted."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "DTO layer — data transfer object for sending review details to the client.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1115,13 +1183,25 @@
     "status" : "PLANNED",
     "description" : "Data transfer object for creating a new product review.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product being reviewed. Not null."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "Rating given by the user (1-5). Not null, min 1, max 5."
+    }, {
+      "name" : "comment",
+      "type" : "String",
+      "description" : "Text comment of the review. Max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "DTO layer — data transfer object for creating a new product review.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1133,14 +1213,50 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Exposes API endpoints for submitting and retrieving product reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createReview",
+      "parameters" : [ "CreateReviewRequest request", "@CurrentUser Integer userId" ],
+      "return_type" : "ResponseEntity<ReviewDto>",
+      "description" : "Handles POST requests to create a new product review. Requires authentication. Returns 201 Created on success, 404 Not Found if product doesn't exist."
+    }, {
+      "name" : "getReviewsByProductId",
+      "parameters" : [ "@PathVariable Long productId" ],
+      "return_type" : "ResponseEntity<List<ReviewDto>>",
+      "description" : "Handles GET requests to retrieve all reviews for a specific product ID. Publicly accessible. Returns 200 OK."
+    }, {
+      "name" : "getAllReviews",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<ReviewDto>>",
+      "description" : "Handles GET requests to retrieve all reviews in the system. Accessible only by administrators. Returns 200 OK."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/reviews",
+      "request_body" : "CreateReviewRequest",
+      "response_body" : "ReviewDto",
+      "description" : "Submits a new product review.",
+      "access" : "authenticated"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/reviews/product/{productId}",
+      "request_body" : null,
+      "response_body" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews for a specific product.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/reviews",
+      "request_body" : null,
+      "response_body" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews in the system (admin access).",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ReviewService.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — exposes API endpoints for submitting and retrieving product reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2461,8 +2577,8 @@
     "feature_display_name" : "Review System",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Review.java", "backend/src/main/java/com/prakashstores/repository/ReviewRepository.java", "backend/src/main/java/com/prakashstores/service/ReviewService.java", "backend/src/main/java/com/prakashstores/dto/ReviewDto.java", "backend/src/main/java/com/prakashstores/dto/CreateReviewRequest.java", "backend/src/main/java/com/prakashstores/controller/ReviewController.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "The Review System feature enables authenticated users to submit reviews for products and allows anyone to view product reviews. It consists of a `Review` entity, `ReviewRepository` for data access, `ReviewService` for business logic, and `ReviewController` for exposing API endpoints. DTOs `ReviewDto` and `CreateReviewRequest` handle data transfer.\n\n### Review Submission Flow\n1.  **Frontend Interaction**: An authenticated user on the product detail page (from `product-browsing` feature) will interact with a `ReviewForm` (from `customer-engagement` feature) to submit a review. This form will collect a `rating` (Integer) and `comment` (String).\n2.  **API Call**: The frontend will make a POST request to `/api/v1/reviews` with a `CreateReviewRequest` containing `productId`, `rating`, and `comment`.\n3.  **Controller Handling**: `ReviewController.createReview(CreateReviewRequest request, @CurrentUser Integer userId)` will receive the request. It will validate the input and then call `reviewService.createReview(request, userId)`.\n4.  **Service Logic**: `ReviewService.createReview(CreateReviewRequest request, Integer userId)` will:\n    a.  Validate that `request.getProductId()` corresponds to an existing product by calling `productService.getProductById(request.getProductId())` from the `product-catalog-core` feature. If the product is not found, it will throw a `ResourceNotFoundException`.\n    b.  Create a new `Review` entity, setting `userId` from the `@CurrentUser` annotation, `productId` from the request, `rating`, `comment`, and `reviewDate` (current timestamp).\n    c.  Persist the `Review` entity using `reviewRepository.save(review)`.\n    d.  Convert the saved `Review` entity to a `ReviewDto` and return it.\n\n### Review Retrieval Flow\n1.  **Frontend Interaction**: The product detail page will display a list of reviews using a `ReviewList` component (from `customer-engagement` feature).\n2.  **API Call**: The frontend will make a GET request to `/api/v1/reviews/product/{productId}` to fetch all reviews for a specific product.\n3.  **Controller Handling**: `ReviewController.getReviewsByProductId(@PathVariable Long productId)` will receive the request. It will call `reviewService.getReviewsByProductId(productId)`.\n4.  **Service Logic**: `ReviewService.getReviewsByProductId(Long productId)` will:\n    a.  Retrieve all `Review` entities for the given `productId` using `reviewRepository.findByProductId(productId)`.\n    b.  Convert the list of `Review` entities to a list of `ReviewDto`s and return it.\n\n### Admin Review Management\n1.  **Admin UI**: The admin portal will have a section to manage reviews (not explicitly in this feature's files, but assumed for completeness).\n2.  **API Calls**: Admin endpoints will be available for retrieving all reviews, and potentially for deleting or moderating reviews (though only retrieval is covered in this brief).\n3.  **Controller Handling**: `ReviewController.getAllReviews()` will retrieve all reviews for admin purposes.\n4.  **Service Logic**: `ReviewService.getAllReviews()` will fetch all reviews from `reviewRepository.findAll()` and convert them to `ReviewDto`s.\n\n### Error Handling\n-   If a product is not found during review creation, `ReviewService` will throw `ResourceNotFoundException`, which `GlobalExceptionHandler` (from `shared-backend` feature) will catch and return a `404 Not Found` response with an `ErrorResponse` body.\n-   Other unexpected errors will be handled by `GlobalExceptionHandler`, returning `500 Internal Server Error`.\n\n### Data Shapes\n-   `Review`: `id: Long`, `productId: Long`, `userId: Integer`, `rating: Integer`, `comment: String`, `reviewDate: LocalDateTime`.\n-   `ReviewDto`: `id: Long`, `productId: Long`, `userId: Integer`, `rating: Integer`, `comment: String`, `reviewDate: LocalDateTime`.\n-   `CreateReviewRequest`: `productId: Long`, `rating: Integer`, `comment: String`.",
+    "depends_on_features" : [ "product-catalog-core", "shared-backend" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
