@@ -1,59 +1,44 @@
-import { Link } from 'react-router-dom';
-import { useCart } from '@/cart';
+import { useCart } from '@/cart/CartContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/routes';
+import { CartItemsTable } from '@/components/cart/CartItemsTable';
+import { CartSummary } from '@/components/cart/CartSummary';
 
-// Public cart view (a guest can see their cart). "Proceed to checkout" goes to /checkout, which is
-// gated by RequireAuth — so a guest is asked to log in there, with the cart preserved.
 export default function CartPage() {
-  const { cartItems, totals, removeItem, clearCart } = useCart();
+  const { cartItems, totals, cartCount } = useCart();
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12">
-      <Card data-testid="cart-page">
-        <CardHeader>
-          <CardTitle>Your cart</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {cartItems.length === 0 ? (
-            <p data-testid="cart-empty" className="text-muted-foreground">Your cart is empty.</p>
-          ) : (
-            <>
-              <ul className="divide-y" data-testid="cart-items">
-                {cartItems.map((item) => (
-                  <li key={`${item.id}:${item.variantKey ?? ''}`} className="flex items-center justify-between py-3">
-                    <div>
-                      <p className="font-medium">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">₹{item.unitPrice} × {item.quantity}</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="font-semibold">₹{item.unitPrice * item.quantity}</span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        data-testid="cart-remove"
-                        onClick={() => removeItem(item.id, item.variantKey)}
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <div className="flex items-center justify-between border-t pt-3 font-semibold">
-                <span>Total</span>
-                <span data-testid="cart-total">₹{totals.total}</span>
-              </div>
-              <div className="flex gap-3">
-                <Button variant="outline" onClick={clearCart} data-testid="cart-clear">Clear cart</Button>
-                <Button asChild className="flex-1" data-testid="cart-checkout">
-                  <Link to="/checkout">Proceed to checkout</Link>
-                </Button>
-              </div>
-            </>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+    <section className="py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#212121] mb-8">Your Shopping Cart</h1>
+
+        {cartCount === 0 ? (
+          <Card className="p-8 text-center">
+            <CardTitle className="text-2xl font-semibold mb-4">Your cart is empty</CardTitle>
+            <CardContent>
+              <p className="text-gray-600 mb-6">Looks like you haven't added anything to your cart yet.</p>
+              <Button asChild className="bg-[#E87A00] hover:bg-[#D46A00] text-white font-semibold px-6 py-3 transition-all duration-200">
+                <Link to={ROUTES.PRODUCTS}>Start Shopping</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <CartItemsTable cartItems={cartItems} />
+            </div>
+            <div className="lg:col-span-1">
+              <CartSummary cartItems={cartItems} totals={totals} />
+              <Button asChild className="w-full mt-6 bg-[#E87A00] hover:bg-[#D46A00] text-white font-semibold px-6 py-3 transition-all duration-200" data-testid="proceed-to-checkout-cta">
+                <Link to={ROUTES.CHECKOUT}>Proceed to Checkout</Link>
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
