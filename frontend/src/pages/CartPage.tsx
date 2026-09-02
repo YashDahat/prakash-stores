@@ -1,7 +1,6 @@
 import { useCart } from '@/cart/CartContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/routes';
 import { CartItemsTable } from '@/components/cart/CartItemsTable';

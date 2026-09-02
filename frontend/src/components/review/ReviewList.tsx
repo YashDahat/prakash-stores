@@ -3,7 +3,6 @@ import { useReviewsByProductId } from '@/hooks/reviewHooks';
 import { ReviewDto } from '@/types/review';
 import { ReviewForm } from '@/components/review/ReviewForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Star } from 'lucide-react';
 

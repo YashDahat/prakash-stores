@@ -7,7 +7,7 @@ import OrderSummary from '@/components/checkout/OrderSummary';
 import PaymentSelection from '@/components/checkout/PaymentSelection';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CreateOrderRequest, OrderType, OrderResponse, OrderItemRequest } from '@/types/order';
+import { OrderResponse } from '@/types/order';
 import { ShippingDetails, OrderDetailsForPayment } from '@/types/order';
 import { useCreateOrder } from '@/hooks/orderHooks';
 import { toast } from 'sonner';

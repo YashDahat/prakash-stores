@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useEvents, useCreateEvent, useUpdateEvent, useDeleteEvent } from '@/hooks/eventHooks';
 import { EventTable } from '@/components/admin/event/EventTable';
 import { EventForm } from '@/components/admin/event/EventForm';

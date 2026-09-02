@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useProducts } from '@/hooks/productHooks';
 import {
   Accordion,
   AccordionContent,

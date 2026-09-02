@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { EventDto } from '@/types/event';
 
 export function EventCard({ event }: { event: EventDto }): React.JSX.Element {
