@@ -1619,13 +1619,29 @@
     "status" : "PLANNED",
     "description" : "Defines TypeScript types and interfaces for products, categories, and brands.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "ProductDto",
+      "type" : "{ id: Long; name: String; description: String; price: BigDecimal; imageUrl: String; stockQuantity: Integer; size: String; color: String; material: String; gender: String; active: Boolean; category: String; brand: String; }",
+      "description" : "Represents a product with its details."
+    }, {
+      "name" : "ProductFilterRequest",
+      "type" : "{ categoryName?: String; brandName?: String; gender?: String; size?: String; color?: String; minPrice?: BigDecimal; maxPrice?: BigDecimal; searchTerm?: String; page?: Integer; size?: Integer; sortBy?: String; sortDir?: String; }",
+      "description" : "Request object for filtering products."
+    }, {
+      "name" : "ProductCategory",
+      "type" : "{ id: Long; name: String; description: String; }",
+      "description" : "Represents a product category."
+    }, {
+      "name" : "Brand",
+      "type" : "{ id: Long; name: String; description: String; }",
+      "description" : "Represents a product brand."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — defines TypeScript types for products, categories, and brands.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1637,14 +1653,48 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides functions for interacting with the product-related API endpoints.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllProducts",
+      "parameters" : [ "ProductFilterRequest? filter" ],
+      "return_type" : "Promise<Page<ProductDto>>",
+      "description" : "Fetches a paginated list of products, optionally filtered by various criteria."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "Promise<ProductDto>",
+      "description" : "Fetches detailed information for a single product by its ID."
+    }, {
+      "name" : "getAllProductCategories",
+      "parameters" : [ ],
+      "return_type" : "Promise<List<ProductCategory>>",
+      "description" : "Fetches a list of all available product categories."
+    }, {
+      "name" : "getAllBrands",
+      "parameters" : [ ],
+      "return_type" : "Promise<List<Brand>>",
+      "description" : "Fetches a list of all available product brands."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/products",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a paginated list of products.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{productId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single product by ID.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — provides asynchronous functions for interacting with the product-related API endpoints, including getAllProducts(ProductFilterRequest): Promise<Page<ProductDto>>, getProductById(Long): Promise<ProductDto>, getAllProductCategories(): Promise<List<ProductCategory>>, and getAllBrands(): Promise<List<Brand>>.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1815,7 +1865,7 @@
     "imports_from" : [ "frontend/src/components/home/HeroSection.tsx", "frontend/src/components/home/FeaturedProducts.tsx", "frontend/src/components/home/CategoryShowcase.tsx", "frontend/src/components/home/InstagramFeed.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "PAGE layer — the main landing page, composed of HeroSection, FeaturedProducts, CategoryShowcase, and InstagramFeed components.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1827,14 +1877,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A full-width hero section with a welcoming message and a call-to-action button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "HeroSection",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the hero section with a background image, headline, subheadline, and a 'Shop Now' CTA."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a full-width hero section with a welcoming message and a call-to-action button.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1846,14 +1901,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Displays a curated grid of featured or best-selling products.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "FeaturedProducts",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and renders a grid of featured products."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/product/ProductCard.tsx", "frontend/src/services/productService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — fetches and displays a curated grid of featured products using ProductCard components.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1865,14 +1925,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Visually appealing section to navigate to main product categories like Men, Women, and Kids.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CategoryShowcase",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a section showcasing different product categories with links."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — visually presents different product categories with images and navigation links.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1910,7 +1975,7 @@
     "imports_from" : [ "frontend/src/components/product/ProductFilterSidebar.tsx", "frontend/src/components/product/ProductGrid.tsx", "frontend/src/services/productService.ts", "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "PAGE layer — the main product catalog page, integrating ProductFilterSidebar and ProductGrid for filtering and displaying products.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1922,14 +1987,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A sidebar with controls to filter products by category, brand, size, color, and price.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductFilterSidebar",
+      "parameters" : [ "{ onFilterChange: (filters: ProductFilterRequest) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a sidebar with product filtering options and calls onFilterChange when filters are applied."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — provides UI controls for filtering products by category, brand, size, color, and price range.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1941,14 +2011,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Renders a responsive grid of product cards.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductGrid",
+      "parameters" : [ "{ products: ProductDto[] }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays a grid of product cards based on the provided product data."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/product/ProductCard.tsx", "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — receives a list of ProductDto objects and renders them in a responsive grid using ProductCard components.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1960,14 +2035,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A reusable card component to display a single product's image, name, price, and an 'Add to Cart' button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductCard",
+      "parameters" : [ "{ product: ProductDto }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a card for a single product with its details and an 'Add to Cart' button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a single product's image, name, price, and an 'Add to Cart' button, and navigates to the product detail page.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1986,7 +2066,7 @@
     "imports_from" : [ "frontend/src/components/product/ProductImageGallery.tsx", "frontend/src/components/product/ProductDetails.tsx", "frontend/src/components/review/ReviewList.tsx", "frontend/src/services/productService.ts", "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "PAGE layer — displays detailed information for a single product, including image gallery, description, and customer reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1998,14 +2078,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A component to display multiple high-quality images of a product.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductImageGallery",
+      "parameters" : [ "{ imageUrls: string[] }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders an image gallery for a product."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays multiple high-quality images of a product in a gallery format.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2017,14 +2102,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Displays product name, price, description, size/color selectors, and the 'Add to Cart' button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductDetails",
+      "parameters" : [ "{ product: ProductDto }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the detailed information for a product, including an 'Add to Cart' button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays product name, price, description, size/color selectors, and the 'Add to Cart' button.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2742,8 +2832,8 @@
     "feature_display_name" : "Product Browsing",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/types/product.ts", "frontend/src/services/productService.ts", "frontend/src/pages/HomePage.tsx", "frontend/src/components/home/HeroSection.tsx", "frontend/src/components/home/FeaturedProducts.tsx", "frontend/src/components/home/CategoryShowcase.tsx", "frontend/src/pages/ProductsPage.tsx", "frontend/src/components/product/ProductFilterSidebar.tsx", "frontend/src/components/product/ProductGrid.tsx", "frontend/src/components/product/ProductCard.tsx", "frontend/src/pages/ProductDetailPage.tsx", "frontend/src/components/product/ProductImageGallery.tsx", "frontend/src/components/product/ProductDetails.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Secondary CTA: border border-[#1A3A6D] text-[#1A3A6D] hover:bg-[#1A3A6D] hover:text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-sm border border-gray-100 p-4\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\nThis `product-browsing` feature provides the frontend components and pages for users to browse products, view product details, and add products to their cart. It consists of type definitions, a service layer for API interaction, and several React components and pages.\n\n### `frontend/src/types/product.ts`\nThis file defines the TypeScript interfaces for `Product`, `ProductCategory`, and `Brand` based on the `product-catalog-core` backend data shapes. These types are used throughout the frontend for consistent data handling.\n\n### `frontend/src/services/productService.ts`\nThis service file provides asynchronous functions to interact with the `product-catalog-api` backend. It will expose `getAllProducts`, `getProductById`, `getAllProductCategories`, and `getAllBrands`. These functions will internally make HTTP requests to the respective backend endpoints and return typed responses. The `getAllProducts` function will accept an optional `ProductFilterRequest` object to allow filtering and pagination.\n\n### `frontend/src/pages/HomePage.tsx`\nThis page serves as the main landing page for Prakash Stores. It will be composed of several sections:\n1.  **Hero Section**: A full-width hero image with a welcoming message and a call-to-action button. It will use the `HeroSection` component.\n2.  **Featured Products**: A grid displaying a curated selection of products. It will use the `FeaturedProducts` component, which fetches products using `productService.getAllProducts` with a filter for featured items (if available, otherwise just a general selection).\n3.  **Category Showcase**: Visually appealing sections to navigate to main product categories like Men, Women, and Kids. It will use the `CategoryShowcase` component.\n4.  **Instagram Feed**: A section showcasing recent Instagram posts. It will use the `InstagramFeed` component from the `customer-engagement` feature.\n\n### `frontend/src/components/home/HeroSection.tsx`\nThis component renders a full-width hero section. It will display a background image (e.g., `https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80` for a generic business, with a dark overlay), a prominent `h1` headline \"Welcome to Prakash Stores\" and a subheadline \"Your Trusted Family Store for Quality Apparel\", and a call-to-action button \"Shop Now\" that navigates to `/products`.\n\n### `frontend/src/components/home/FeaturedProducts.tsx`\nThis component fetches and displays a grid of featured products. It will use the generated service function `getAllProducts` from `productService.ts` to fetch products. Each product will be rendered using the `ProductCard` component. The section will have a heading \"Our Featured Collection\" and a link to \"View All Products\" navigating to `/products`.\n\n### `frontend/src/components/home/CategoryShowcase.tsx`\nThis component visually presents different product categories. It will display three distinct cards for \"Men's Apparel\", \"Women's Apparel\", and \"Kids' Apparel\", each with a relevant image (placeholder Unsplash images can be used, e.g., for men's fashion: `https://images.unsplash.com/photo-1514317751917-807530f2c459?w=1920&q=80`, women's: `https://images.unsplash.com/photo-1523268753911-b02172776828?w=1920&q=80`, kids': `https://images.unsplash.com/photo-1592877395674-0466373e7381?w=1920&q=80`) and a \"Shop Now\" button that navigates to `/products?category=<categoryName>`.\n\n### `frontend/src/pages/ProductsPage.tsx`\nThis page is the main product catalog. It will feature a `ProductFilterSidebar` on the left and a `ProductGrid` on the right. The page will fetch products using `productService.getAllProducts`, passing filter parameters (category, brand, size, color, price range, search term) obtained from the `ProductFilterSidebar` and URL query parameters. The `ProductGrid` will display the fetched products. The page will also include a search bar at the top of the product grid area.\n\n### `frontend/src/components/product/ProductFilterSidebar.tsx`\nThis component provides UI controls for filtering products. It will allow filtering by `category`, `brand`, `size`, `color`, and `price` range. It will fetch available categories and brands using `productService.getAllProductCategories` and `productService.getAllBrands`. When filter selections change, it will emit an event or call a callback function with the updated filter parameters, which `ProductsPage.tsx` will use to refetch products.\n\n### `frontend/src/components/product/ProductGrid.tsx`\nThis component receives a list of `ProductDto` objects as props and renders them in a responsive grid layout. Each product in the grid will be rendered using the `ProductCard` component.\n\n### `frontend/src/components/product/ProductCard.tsx`\nThis reusable component displays a single product. It takes a `ProductDto` as a prop. It will show the product's `imageUrl`, `name`, and `price` (formatted in INR using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`). It will include an \"Add to Cart\" button. Clicking the button will call `useCart().addItem({ id: product.id, name: product.name, unitPrice: product.price, imageUrl: product.imageUrl })` from the `shopping-cart` feature. The card will also be clickable, navigating to `/products/{productId}`.\n\n### `frontend/src/pages/ProductDetailPage.tsx`\nThis page displays detailed information for a single product. It will extract the `productId` from the URL parameters. It will fetch the product details using `productService.getProductById(productId)`. The page will be structured with a `ProductImageGallery` on one side and `ProductDetails` on the other. Below these, it will include a `ReviewList` component from the `customer-engagement` feature to display customer reviews for the product.\n\n### `frontend/src/components/product/ProductImageGallery.tsx`\nThis component takes an array of image URLs (derived from `product.imageUrl` for now, potentially extended to multiple images later) and displays them in a gallery format, allowing users to view different angles or variations of the product.\n\n### `frontend/src/components/product/ProductDetails.tsx`\nThis component displays the product's `name`, `price` (formatted in INR), `description`, and potentially selectors for `size` and `color` if the product has variants. It will include an \"Add to Cart\" button. Clicking the button will call `useCart().addItem({ id: product.id, name: product.name, unitPrice: product.price, imageUrl: product.imageUrl, variantKey: selectedSize + '-' + selectedColor })` from the `shopping-cart` feature, passing selected size and color as `variantKey` if applicable.\n\n### Inter-file Wiring\n- `HomePage.tsx` imports and renders `HeroSection.tsx`, `FeaturedProducts.tsx`, `CategoryShowcase.tsx`, and `InstagramFeed.tsx`.\n- `FeaturedProducts.tsx` and `ProductsPage.tsx` use the generated service functions from `productService.ts` to fetch product data.\n- `ProductsPage.tsx` imports and renders `ProductFilterSidebar.tsx` and `ProductGrid.tsx`.\n- `ProductGrid.tsx` imports and renders `ProductCard.tsx` for each product.\n- `ProductCard.tsx` and `ProductDetails.tsx` call `useCart().addItem()` from the `shopping-cart` feature.\n- `ProductDetailPage.tsx` imports and renders `ProductImageGallery.tsx`, `ProductDetails.tsx`, and `ReviewList.tsx`.\n- `ProductFilterSidebar.tsx` uses the generated service functions from `productService.ts` to fetch categories and brands.\n\n### Error Handling\nAll service calls should include basic error handling, logging errors to the console, and potentially displaying a user-friendly toast notification using `sonner`.\n",
+    "depends_on_features" : [ "product-catalog-api", "shopping-cart", "customer-engagement" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
