@@ -569,13 +569,49 @@
     "status" : "PLANNED",
     "description" : "Represents a customer's order, containing order items, shipping details, and status.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the order. Generated automatically."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "Identifier of the user who placed the order. Not null."
+    }, {
+      "name" : "orderDate",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the order was placed. Not null."
+    }, {
+      "name" : "totalAmount",
+      "type" : "BigDecimal",
+      "description" : "Total monetary value of the order. Not null, precision 10, scale 2."
+    }, {
+      "name" : "status",
+      "type" : "OrderStatus",
+      "description" : "Current status of the order (e.g., PENDING, SHIPPED, DELIVERED). Not null."
+    }, {
+      "name" : "orderType",
+      "type" : "OrderType",
+      "description" : "Fulfillment method for the order (DELIVERY or PICKUP). Not null."
+    }, {
+      "name" : "shippingAddress",
+      "type" : "String",
+      "description" : "Full shipping address for delivery orders. Nullable if orderType is PICKUP, max 500 characters."
+    }, {
+      "name" : "contactPhone",
+      "type" : "String",
+      "description" : "Contact phone number for the order. Not null, max 20 characters."
+    }, {
+      "name" : "orderItems",
+      "type" : "List<OrderItem>",
+      "description" : "List of items included in this order. Cascade all operations, orphan removal."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/OrderItem.java", "backend/src/main/java/com/prakashstores/model/OrderStatus.java", "backend/src/main/java/com/prakashstores/model/OrderType.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — represents a customer's order, containing order items, shipping details, and status.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -588,13 +624,41 @@
     "status" : "PLANNED",
     "description" : "Represents a single item within an order, linking to a product and quantity.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the order item. Generated automatically."
+    }, {
+      "name" : "order",
+      "type" : "Order",
+      "description" : "The order this item belongs to. Not null."
+    }, {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product being ordered. Not null."
+    }, {
+      "name" : "productName",
+      "type" : "String",
+      "description" : "Name of the product at the time of order. Not null, max 255 characters."
+    }, {
+      "name" : "quantity",
+      "type" : "Integer",
+      "description" : "Number of units of the product ordered. Not null, min 1."
+    }, {
+      "name" : "unitPrice",
+      "type" : "BigDecimal",
+      "description" : "Price of a single unit of the product at the time of order. Not null, precision 10, scale 2."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the product image at the time of order. Nullable, max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — represents a single item within an order, linking to a product and quantity.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -607,13 +671,33 @@
     "status" : "PLANNED",
     "description" : "Enumeration of possible statuses for an order (e.g., PENDING, SHIPPED, DELIVERED).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "PENDING",
+      "type" : "OrderStatus",
+      "description" : "Order has been placed but not yet processed."
+    }, {
+      "name" : "CONFIRMED",
+      "type" : "OrderStatus",
+      "description" : "Order has been confirmed and is being prepared."
+    }, {
+      "name" : "SHIPPED",
+      "type" : "OrderStatus",
+      "description" : "Order has been dispatched for delivery."
+    }, {
+      "name" : "DELIVERED",
+      "type" : "OrderStatus",
+      "description" : "Order has been successfully delivered to the customer."
+    }, {
+      "name" : "CANCELLED",
+      "type" : "OrderStatus",
+      "description" : "Order has been cancelled."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — enumeration of possible statuses for an order (e.g., PENDING, SHIPPED, DELIVERED).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -626,13 +710,21 @@
     "status" : "PLANNED",
     "description" : "Enumeration for order fulfillment method: DELIVERY or PICKUP (Click and Collect).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "DELIVERY",
+      "type" : "OrderType",
+      "description" : "Order will be delivered to a specified address."
+    }, {
+      "name" : "PICKUP",
+      "type" : "OrderType",
+      "description" : "Order will be picked up by the customer from the store."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — enumeration for order fulfillment method: DELIVERY or PICKUP (Click and Collect).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -644,14 +736,24 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides data access methods for Order entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "List<Order>",
+      "description" : "Retrieves all orders placed by a specific user."
+    }, {
+      "name" : "findByStatus",
+      "parameters" : [ "OrderStatus status" ],
+      "return_type" : "List<Order>",
+      "description" : "Retrieves all orders with a specific status."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Order.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access methods for Order entities, including `findByUserId(Integer userId)` and `findByStatus(OrderStatus status)`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -663,14 +765,14 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides data access methods for OrderItem entities.",
-    "public_functions" : null,
+    "public_functions" : [ ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/OrderItem.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access methods for OrderItem entities.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -682,14 +784,34 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Handles business logic for creating and managing orders, and integrates with the PaymentService.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "CreateOrderRequest request", "Integer userId" ],
+      "return_type" : "OrderResponse",
+      "description" : "1. Validates the incoming CreateOrderRequest. 2. Fetches product details for each item in the request using `productService.getProductsByIds(List<Long> productIds)`. 3. Calculates the total amount of the order. 4. Creates a new Order entity with PENDING status, associating it with the provided userId. 5. Creates OrderItem entities for each product, capturing current price and details. 6. Updates the stock quantity for each product using `productService.updateProductStock(Long productId, int quantityChange)` (quantityChange will be negative for order creation). 7. Saves the Order and OrderItems to the database via `orderRepository.save()` and `orderItemRepository.saveAll()`. 8. Returns an OrderResponse DTO."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "Long orderId", "Integer userId" ],
+      "return_type" : "OrderResponse",
+      "description" : "1. Retrieves an order by its ID and ensures it belongs to the specified userId using `orderRepository.findById(orderId)`. 2. Throws `ResourceNotFoundException` if the order is not found or does not belong to the user. 3. Returns an OrderResponse DTO."
+    }, {
+      "name" : "getAllOrders",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "List<OrderResponse>",
+      "description" : "1. Retrieves all orders for a specific user using `orderRepository.findByUserId(userId)`. 2. Maps the list of Order entities to a list of OrderResponse DTOs. 3. Returns the list of OrderResponse DTOs."
+    }, {
+      "name" : "updateOrderStatus",
+      "parameters" : [ "Long orderId", "OrderStatus newStatus" ],
+      "return_type" : "OrderResponse",
+      "description" : "1. Retrieves an order by its ID using `orderRepository.findById(orderId)`. 2. Throws `ResourceNotFoundException` if the order is not found. 3. Updates the order's status to `newStatus`. 4. Saves the updated order via `orderRepository.save()`. 5. Returns an OrderResponse DTO."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/OrderRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/service/ProductService.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements `createOrder(CreateOrderRequest request, Integer userId): OrderResponse`, `getOrderById(Long orderId, Integer userId): OrderResponse`, `getAllOrders(Integer userId): List<OrderResponse>`, and `updateOrderStatus(Long orderId, OrderStatus newStatus): OrderResponse`; delegates persistence to `OrderRepository` and `OrderItemRepository`, and product details/stock updates to `ProductService`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2201,8 +2323,8 @@
     "feature_display_name" : "Order Management (Core)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Order.java", "backend/src/main/java/com/prakashstores/model/OrderItem.java", "backend/src/main/java/com/prakashstores/model/OrderStatus.java", "backend/src/main/java/com/prakashstores/model/OrderType.java", "backend/src/main/java/com/prakashstores/repository/OrderRepository.java", "backend/src/main/java/com/prakashstores/repository/OrderItemRepository.java", "backend/src/main/java/com/prakashstores/service/OrderService.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "This feature, Order Management (Core), provides the foundational backend models, repositories, and service logic for handling customer orders within Prakash Stores. It defines the `Order`, `OrderItem`, `OrderStatus`, and `OrderType` entities, along with their respective repositories for data persistence. The `OrderService` encapsulates the core business logic for creating and managing orders, including interaction with the `ProductService` to retrieve product details and update stock quantities. When an order is created, the service will fetch product details for each item, calculate the total amount, and update the stock quantity for each product. It will then persist the order and its items. The service will also provide methods to retrieve orders by ID or by user ID, and to update order statuses. This feature does not expose any direct API endpoints; instead, its service methods are consumed by the `order-management-api` feature's controllers.",
+    "depends_on_features" : [ "product-catalog-core" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
