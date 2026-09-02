@@ -321,13 +321,65 @@
     "status" : "PLANNED",
     "description" : "Data transfer object for sending product details to the client.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product. Not null, max 255 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the product. Max 1000 characters."
+    }, {
+      "name" : "price",
+      "type" : "BigDecimal",
+      "description" : "Price of the product. Not null, positive value."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the product's main image. Max 500 characters."
+    }, {
+      "name" : "stockQuantity",
+      "type" : "Integer",
+      "description" : "Current stock quantity of the product. Not null, non-negative value."
+    }, {
+      "name" : "size",
+      "type" : "String",
+      "description" : "Size of the product (e.g., S, M, L, XL). Max 50 characters."
+    }, {
+      "name" : "color",
+      "type" : "String",
+      "description" : "Color of the product. Max 50 characters."
+    }, {
+      "name" : "material",
+      "type" : "String",
+      "description" : "Material of the product. Max 100 characters."
+    }, {
+      "name" : "gender",
+      "type" : "String",
+      "description" : "Target gender for the product (e.g., Men, Women, Kids). Max 50 characters."
+    }, {
+      "name" : "active",
+      "type" : "Boolean",
+      "description" : "Indicates if the product is active and visible on the storefront. Not null."
+    }, {
+      "name" : "category",
+      "type" : "String",
+      "description" : "Name of the product category."
+    }, {
+      "name" : "brand",
+      "type" : "String",
+      "description" : "Name of the product brand."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-api",
-    "file_role" : null,
+    "file_role" : "Data transfer object for sending product details to the client, including fields for product information, category, and brand.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -340,13 +392,61 @@
     "status" : "PLANNED",
     "description" : "Represents the filtering criteria for searching products.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "categoryName",
+      "type" : "String",
+      "description" : "Filter by product category name."
+    }, {
+      "name" : "brandName",
+      "type" : "String",
+      "description" : "Filter by product brand name."
+    }, {
+      "name" : "gender",
+      "type" : "String",
+      "description" : "Filter by target gender."
+    }, {
+      "name" : "size",
+      "type" : "String",
+      "description" : "Filter by product size."
+    }, {
+      "name" : "color",
+      "type" : "String",
+      "description" : "Filter by product color."
+    }, {
+      "name" : "minPrice",
+      "type" : "BigDecimal",
+      "description" : "Minimum price for filtering."
+    }, {
+      "name" : "maxPrice",
+      "type" : "BigDecimal",
+      "description" : "Maximum price for filtering."
+    }, {
+      "name" : "searchTerm",
+      "type" : "String",
+      "description" : "General search term for product name or description."
+    }, {
+      "name" : "page",
+      "type" : "Integer",
+      "description" : "Page number for pagination, defaults to 0."
+    }, {
+      "name" : "size",
+      "type" : "Integer",
+      "description" : "Number of items per page for pagination, defaults to 10."
+    }, {
+      "name" : "sortBy",
+      "type" : "String",
+      "description" : "Field to sort by (e.g., 'price', 'name')."
+    }, {
+      "name" : "sortDir",
+      "type" : "String",
+      "description" : "Sort direction ('asc' or 'desc')."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-api",
-    "file_role" : null,
+    "file_role" : "Data transfer object for encapsulating product filtering and pagination criteria.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -358,14 +458,38 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Exposes public API endpoints for browsing and searching products.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllProducts",
+      "parameters" : [ "ProductFilterRequest filterRequest" ],
+      "return_type" : "ResponseEntity<Page<ProductDto>>",
+      "description" : "Retrieves a paginated list of products based on various filtering criteria. Returns 200 OK."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Retrieves a single product by its ID. Returns 200 OK or 404 NOT FOUND if the product does not exist."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/products",
+      "request_body" : null,
+      "response_body" : "Page<ProductDto>",
+      "description" : "Get all products with optional filtering and pagination. Query parameters: categoryName, brandName, gender, size, color, minPrice, maxPrice, searchTerm, page, size, sortBy, sortDir.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{productId}",
+      "request_body" : null,
+      "response_body" : "ProductDto",
+      "description" : "Get a single product by its ID. Returns 404 if not found.",
+      "access" : "public"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ProductService.java", "backend/src/main/java/com/prakashstores/dto/ProductDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-api",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — exposes public API endpoints for browsing and searching products; delegates to ProductService.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -377,14 +501,62 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides secured admin endpoints for creating, updating, and deleting products and managing inventory.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createProduct",
+      "parameters" : [ "ProductDto productDto" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Creates a new product. Returns 201 CREATED."
+    }, {
+      "name" : "updateProduct",
+      "parameters" : [ "Long productId", "ProductDto productDto" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Updates an existing product. Returns 200 OK or 404 NOT FOUND if the product does not exist."
+    }, {
+      "name" : "deleteProduct",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Deletes a product by its ID. Returns 204 NO CONTENT or 404 NOT FOUND if the product does not exist."
+    }, {
+      "name" : "updateProductStock",
+      "parameters" : [ "Long productId", "Integer quantityChange" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Updates the stock quantity of a product. Returns 200 OK or 404 NOT FOUND if the product does not exist."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/admin/products",
+      "request_body" : "ProductDto",
+      "response_body" : "ProductDto",
+      "description" : "Create a new product.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/products/{productId}",
+      "request_body" : "ProductDto",
+      "response_body" : "ProductDto",
+      "description" : "Update an existing product by ID. Returns 404 if not found.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/products/{productId}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Delete a product by ID. Returns 404 if not found.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/products/{productId}/stock",
+      "request_body" : "{ \"quantityChange\": Integer }",
+      "response_body" : "ProductDto",
+      "description" : "Update the stock quantity for a product. Positive value to add, negative to subtract. Returns 404 if not found.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ProductService.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-api",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — provides secured admin endpoints for creating, updating, and deleting products and managing inventory; delegates to ProductService.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2020,8 +2192,8 @@
     "feature_display_name" : "Product Catalog (API)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/dto/ProductDto.java", "backend/src/main/java/com/prakashstores/dto/ProductFilterRequest.java", "backend/src/main/java/com/prakashstores/controller/ProductController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminProductController.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "The Product Catalog (API) feature provides the backend API endpoints for managing and browsing products for Prakash Stores. It consists of two DTOs, `ProductDto` and `ProductFilterRequest`, and two controllers, `ProductController` for public access and `AdminProductController` for authenticated administrative operations. Both controllers interact with the `product-catalog-core` feature's `ProductService` to perform business logic and data persistence.\n\n`ProductDto` is used to transfer product details between the client and the server, ensuring a consistent data structure. `ProductFilterRequest` encapsulates various filtering criteria for product searches, such as category, brand, gender, size, color, price range, and a general search term.\n\n`ProductController` exposes public API endpoints for customers to browse products. It provides methods to retrieve all products with optional filtering, and to fetch a single product by its ID. All monetary values (prices) in `ProductDto` will be formatted in Indian Rupees (₹) using the `en-IN` locale when displayed on the frontend.\n\n`AdminProductController` provides secured endpoints for administrators to manage the product catalog. This includes creating new products, updating existing product details, deleting products, and managing product inventory (stock quantity). All admin operations require authentication and appropriate authorization (handled by the platform's security layer).\n\nBoth controllers inject `ProductService` from the `product-catalog-core` feature. `ProductController.getAllProducts` maps the `ProductFilterRequest` to the parameters expected by `ProductService.getAllProducts` and then converts the `Page<Product>` result into a `Page<ProductDto>`. `ProductController.getProductById` calls `ProductService.getProductById` and converts the `Product` entity to `ProductDto`. `AdminProductController` methods similarly call the corresponding `ProductService` methods (`createProduct`, `updateProduct`, `deleteProduct`, `updateProductStock`) and handle the conversion between `Product` entities and `ProductDto`s.\n\nError Handling: If a product is not found, `ProductService` will throw a `ResourceNotFoundException`, which `GlobalExceptionHandler` (from `shared-backend`) will catch and return an appropriate HTTP 404 Not Found response with an `ErrorResponse` body. Other exceptions will be handled by `GlobalExceptionHandler` as well.",
+    "depends_on_features" : [ "product-catalog-core", "shared-backend" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
