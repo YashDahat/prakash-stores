@@ -5,8 +5,8 @@ Auto-generated website for Prakash Stores — Clothing store, Showroom No 1, 90 
 ## Tech Stack
 
 - **database**: PostgreSQL
-- **frontend**: React 19 + TypeScript on Vite, react-router-dom, Tailwind CSS
 - **backend**: Spring Boot 3 (Java 17) + Spring Data JPA
+- **frontend**: React 19 + TypeScript on Vite, react-router-dom, Tailwind CSS
 
 ## Features
 
