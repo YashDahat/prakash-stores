@@ -824,13 +824,29 @@
     "status" : "PLANNED",
     "description" : "Data transfer object for creating a new order from the client's cart.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "orderItems",
+      "type" : "List<OrderItemRequest>",
+      "description" : "List of items included in the order. Not null, not empty."
+    }, {
+      "name" : "shippingAddress",
+      "type" : "String",
+      "description" : "Shipping address for the order. Not null, max 255 characters."
+    }, {
+      "name" : "contactPhone",
+      "type" : "String",
+      "description" : "Contact phone number for the order. Not null, max 20 characters."
+    }, {
+      "name" : "orderType",
+      "type" : "OrderType",
+      "description" : "Type of order (DELIVERY or PICKUP). Not null."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : null,
+    "file_role" : "Data transfer object for creating a new order from the client's cart.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -843,13 +859,21 @@
     "status" : "PLANNED",
     "description" : "Represents a single item within a new order request.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product. Not null."
+    }, {
+      "name" : "quantity",
+      "type" : "Integer",
+      "description" : "Quantity of the product. Must be positive."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : null,
+    "file_role" : "Represents a single item within a new order request.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -862,13 +886,49 @@
     "status" : "PLANNED",
     "description" : "Data transfer object for sending detailed order information to the client.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier of the order."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the user who placed the order."
+    }, {
+      "name" : "orderDate",
+      "type" : "LocalDateTime",
+      "description" : "Date and time when the order was placed."
+    }, {
+      "name" : "totalAmount",
+      "type" : "BigDecimal",
+      "description" : "Total amount of the order in INR."
+    }, {
+      "name" : "status",
+      "type" : "OrderStatus",
+      "description" : "Current status of the order."
+    }, {
+      "name" : "orderType",
+      "type" : "OrderType",
+      "description" : "Type of order (DELIVERY or PICKUP)."
+    }, {
+      "name" : "shippingAddress",
+      "type" : "String",
+      "description" : "Shipping address for the order."
+    }, {
+      "name" : "contactPhone",
+      "type" : "String",
+      "description" : "Contact phone number for the order."
+    }, {
+      "name" : "orderItems",
+      "type" : "List<OrderItemResponse>",
+      "description" : "List of items in the order."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : null,
+    "file_role" : "Data transfer object for sending detailed order information to the client.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -880,14 +940,50 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Exposes API endpoints for customers to create orders and view their order history.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "CreateOrderRequest createOrderRequest", "@CurrentUser Integer userId" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Creates a new order for the authenticated user. Returns 201 Created on success, 400 Bad Request for invalid input, or 404 Not Found if products are not found."
+    }, {
+      "name" : "getAllOrders",
+      "parameters" : [ "@CurrentUser Integer userId" ],
+      "return_type" : "ResponseEntity<List<OrderResponse>>",
+      "description" : "Retrieves all orders for the authenticated user. Returns 200 OK."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "@PathVariable Long orderId", "@CurrentUser Integer userId" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Retrieves a specific order by ID for the authenticated user. Returns 200 OK on success, or 404 Not Found if the order does not exist or does not belong to the user."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/orders",
+      "request_body" : "CreateOrderRequest",
+      "response_body" : "OrderResponse",
+      "description" : "Creates a new order from the client's cart.",
+      "access" : "authenticated"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders",
+      "request_body" : null,
+      "response_body" : "List<OrderResponse>",
+      "description" : "Retrieves all orders for the authenticated user.",
+      "access" : "authenticated"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : "OrderResponse",
+      "description" : "Retrieves a specific order by ID for the authenticated user.",
+      "access" : "authenticated"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/OrderService.java", "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — exposes API endpoints for customers to create orders and view their order history.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -899,14 +995,38 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides secured admin endpoints for viewing and managing all customer orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllOrders",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<OrderResponse>>",
+      "description" : "Retrieves all customer orders. Returns 200 OK."
+    }, {
+      "name" : "updateOrderStatus",
+      "parameters" : [ "@PathVariable Long orderId", "@RequestParam OrderStatus newStatus" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Updates the status of a specific order. Returns 200 OK on success, 404 Not Found if the order does not exist, or 400 Bad Request for an invalid status transition."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders",
+      "request_body" : null,
+      "response_body" : "List<OrderResponse>",
+      "description" : "Retrieves all customer orders for administrative purposes.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/orders/{orderId}/status",
+      "request_body" : null,
+      "response_body" : "OrderResponse",
+      "description" : "Updates the status of a specific order by ID.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/OrderService.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — provides secured admin endpoints for viewing and managing all customer orders.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2332,8 +2452,8 @@
     "feature_display_name" : "Order Management (API)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java", "backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java", "backend/src/main/java/com/prakashstores/dto/OrderResponse.java", "backend/src/main/java/com/prakashstores/controller/OrderController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminOrderController.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "The Order Management API feature provides endpoints for customers to create and view their orders, and for administrators to manage all orders. It consists of DTOs for request and response payloads, and controllers for customer and admin-specific operations. The `OrderController` handles customer-facing requests, allowing authenticated users to place new orders and retrieve their order history. The `AdminOrderController` provides privileged access for administrators to view and update the status of all orders. Both controllers delegate business logic to the `OrderService` (from `order-management-core` feature), which in turn interacts with the `ProductService` (from `product-catalog-core` feature) to validate product availability and update stock quantities.\n\n### Create Order Flow\n1. A customer sends a `POST` request to `/api/v1/orders` with a `CreateOrderRequest` payload.\n2. The `OrderController.createOrder` method receives the request and the `userId` from the authenticated user context.\n3. It calls `orderService.createOrder(request, userId)`.\n4. The `OrderService.createOrder` method performs the following steps:\n    a. Validates the `productId` and `quantity` for each `OrderItemRequest` by calling `productService.getProductsByIds(List<Long> productIds)` from the `product-catalog-core` feature.\n    b. Checks if sufficient `stockQuantity` is available for each product.\n    c. If stock is insufficient for any item, it throws an `IllegalArgumentException`.\n    d. Creates a new `Order` entity and `OrderItem` entities based on the request and product details.\n    e. Calculates the `totalAmount` for the order.\n    f. Saves the `Order` and `OrderItem` entities using `orderRepository.save(Order order)`.\n    g. For each order item, it calls `productService.updateProductStock(Long productId, int quantityChange)` with a negative `quantityChange` to decrement the stock.\n    h. Returns an `OrderResponse` containing the created order details.\n5. The `OrderController` returns a `201 Created` status with the `OrderResponse` or a `400 Bad Request` if `IllegalArgumentException` is thrown, or `404 Not Found` if `ResourceNotFoundException` is thrown.\n\n### View Customer Orders Flow\n1. An authenticated customer sends a `GET` request to `/api/v1/orders`.\n2. The `OrderController.getAllOrders` method receives the request and the `userId` from the authenticated user context.\n3. It calls `orderService.getAllOrders(userId)`.\n4. The `OrderService.getAllOrders` method retrieves all orders associated with the given `userId` using `orderRepository.findByUserId(Integer userId)`.\n5. It maps the `Order` entities to a `List<OrderResponse>`.\n6. The `OrderController` returns a `200 OK` status with the `List<OrderResponse>`.\n\n### View Single Customer Order Flow\n1. An authenticated customer sends a `GET` request to `/api/v1/orders/{orderId}`.\n2. The `OrderController.getOrderById` method receives the `orderId` from the path and the `userId` from the authenticated user context.\n3. It calls `orderService.getOrderById(orderId, userId)`.\n4. The `OrderService.getOrderById` method retrieves the order by `orderId` and verifies that it belongs to the `userId` using `orderRepository.findById(Long id)` and checking `order.getUserId() == userId`.\n5. If the order is not found or does not belong to the user, it throws a `ResourceNotFoundException`.\n6. It maps the `Order` entity to an `OrderResponse`.\n7. The `OrderController` returns a `200 OK` status with the `OrderResponse` or a `404 Not Found` if `ResourceNotFoundException` is thrown.\n\n### View All Orders (Admin) Flow\n1. An authenticated administrator sends a `GET` request to `/api/v1/admin/orders`.\n2. The `AdminOrderController.getAllOrders` method receives the request.\n3. It calls `orderService.getAllOrders(null)` (passing null for userId to indicate all orders).\n4. The `OrderService.getAllOrders` method retrieves all orders using `orderRepository.findAll()`.\n5. It maps the `Order` entities to a `List<OrderResponse>`.\n6. The `AdminOrderController` returns a `200 OK` status with the `List<OrderResponse>`.\n\n### Update Order Status (Admin) Flow\n1. An authenticated administrator sends a `PUT` request to `/api/v1/admin/orders/{orderId}/status` with a `newStatus` parameter.\n2. The `AdminOrderController.updateOrderStatus` method receives the `orderId` from the path and the `newStatus` from the request parameter.\n3. It calls `orderService.updateOrderStatus(orderId, newStatus)`.\n4. The `OrderService.updateOrderStatus` method retrieves the order by `orderId` using `orderRepository.findById(Long id)`.\n5. If the order is not found, it throws a `ResourceNotFoundException`.\n6. It updates the `status` of the `Order` entity.\n7. Saves the updated `Order` entity using `orderRepository.save(Order order)`.\n8. Maps the updated `Order` entity to an `OrderResponse`.\n9. The `AdminOrderController` returns a `200 OK` status with the `OrderResponse` or a `404 Not Found` if `ResourceNotFoundException` is thrown, or `400 Bad Request` if `IllegalArgumentException` is thrown for an invalid status transition.",
+    "depends_on_features" : [ "order-management-core", "product-catalog-core" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
