@@ -17,13 +17,65 @@
     "status" : "PLANNED",
     "description" : "Represents a clothing item available for sale, including details like price, brand, and stock.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product. Generated automatically."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product. Not null, max 255 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the product. Max 1000 characters."
+    }, {
+      "name" : "price",
+      "type" : "BigDecimal",
+      "description" : "Selling price of the product. Not null, positive value."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the product's main image. Max 500 characters."
+    }, {
+      "name" : "stockQuantity",
+      "type" : "Integer",
+      "description" : "Current stock level of the product. Not null, non-negative."
+    }, {
+      "name" : "size",
+      "type" : "String",
+      "description" : "Available size of the product (e.g., S, M, L, XL). Max 50 characters."
+    }, {
+      "name" : "color",
+      "type" : "String",
+      "description" : "Color of the product. Max 50 characters."
+    }, {
+      "name" : "material",
+      "type" : "String",
+      "description" : "Material of the product (e.g., Cotton, Denim). Max 100 characters."
+    }, {
+      "name" : "gender",
+      "type" : "String",
+      "description" : "Target gender for the product (e.g., Men, Women, Unisex). Max 50 characters."
+    }, {
+      "name" : "active",
+      "type" : "Boolean",
+      "description" : "Indicates if the product is currently active and visible. Not null."
+    }, {
+      "name" : "category",
+      "type" : "ProductCategory",
+      "description" : "The category to which this product belongs. Many-to-one relationship."
+    }, {
+      "name" : "brand",
+      "type" : "Brand",
+      "description" : "The brand of this product. Many-to-one relationship."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/ProductCategory.java", "backend/src/main/java/com/prakashstores/model/Brand.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : null,
+    "file_role" : "JPA Entity — Represents a clothing item with attributes like name, price, stock, and relationships to ProductCategory and Brand.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -36,13 +88,25 @@
     "status" : "PLANNED",
     "description" : "Defines a category for products, such as 'Men', 'Women', or 'Kids'.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product category. Generated automatically."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product category (e.g., 'Men', 'Women'). Not null, unique, max 100 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Description of the product category. Max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : null,
+    "file_role" : "JPA Entity — Defines a category for products, such as 'Men' or 'Women'.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -55,13 +119,25 @@
     "status" : "PLANNED",
     "description" : "Represents a product brand, like 'Wrangler'.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the brand. Generated automatically."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the brand (e.g., 'Wrangler'). Not null, unique, max 100 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Description of the brand. Max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : null,
+    "file_role" : "JPA Entity — Represents a product brand, like 'Wrangler'.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -73,14 +149,54 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides data access methods for Product entities, including filtering and searching.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByCategory_Name",
+      "parameters" : [ "String categoryName", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Finds products by category name with pagination."
+    }, {
+      "name" : "findByBrand_Name",
+      "parameters" : [ "String brandName", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Finds products by brand name with pagination."
+    }, {
+      "name" : "findByGender",
+      "parameters" : [ "String gender", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Finds products by gender with pagination."
+    }, {
+      "name" : "findBySize",
+      "parameters" : [ "String size", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Finds products by size with pagination."
+    }, {
+      "name" : "findByColor",
+      "parameters" : [ "String color", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Finds products by color with pagination."
+    }, {
+      "name" : "findByPriceBetween",
+      "parameters" : [ "BigDecimal minPrice", "BigDecimal maxPrice", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Finds products within a price range with pagination."
+    }, {
+      "name" : "findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase",
+      "parameters" : [ "String nameKeyword", "String descriptionKeyword", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Finds products by name or description containing a keyword, case-insensitively, with pagination."
+    }, {
+      "name" : "findAllByIdIn",
+      "parameters" : [ "List<Long> ids" ],
+      "return_type" : "List<Product>",
+      "description" : "Finds all products whose IDs are in the given list."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Provides data access methods for Product entities, including custom queries for filtering and searching. It exposes methods like findByCategory_Name and findByBrand_Name.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -92,14 +208,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides data access methods for ProductCategory entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByName",
+      "parameters" : [ "String name" ],
+      "return_type" : "Optional<ProductCategory>",
+      "description" : "Finds a product category by its name."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/ProductCategory.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Provides data access methods for ProductCategory entities, including finding by name. It exposes methods like findByName.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -111,14 +232,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides data access methods for Brand entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByName",
+      "parameters" : [ "String name" ],
+      "return_type" : "Optional<Brand>",
+      "description" : "Finds a brand by its name."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Brand.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Provides data access methods for Brand entities, including finding by name. It exposes methods like findByName.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -130,14 +256,59 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Handles business logic for products, including search, filtering, and inventory management.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createProduct",
+      "parameters" : [ "Product product" ],
+      "return_type" : "Product",
+      "description" : "Creates a new product after validating its category and brand. Throws ResourceNotFoundException if category or brand not found."
+    }, {
+      "name" : "updateProduct",
+      "parameters" : [ "Long id", "Product product" ],
+      "return_type" : "Product",
+      "description" : "Updates an existing product by ID, validating category and brand. Throws ResourceNotFoundException if product, category, or brand not found."
+    }, {
+      "name" : "deleteProduct",
+      "parameters" : [ "Long id" ],
+      "return_type" : "void",
+      "description" : "Deletes a product by ID. Throws ResourceNotFoundException if product not found."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "Product",
+      "description" : "Retrieves a product by ID. Throws ResourceNotFoundException if product not found."
+    }, {
+      "name" : "getAllProducts",
+      "parameters" : [ "String categoryName", "String brandName", "String gender", "String size", "String color", "BigDecimal minPrice", "BigDecimal maxPrice", "String searchTerm", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Retrieves a paginated list of products based on various filtering and search criteria."
+    }, {
+      "name" : "updateProductStock",
+      "parameters" : [ "Long productId", "int quantityChange" ],
+      "return_type" : "Product",
+      "description" : "Adjusts the stock quantity of a product. Throws ResourceNotFoundException if product not found, or IllegalArgumentException if stock becomes negative."
+    }, {
+      "name" : "getProductsByIds",
+      "parameters" : [ "List<Long> productIds" ],
+      "return_type" : "List<Product>",
+      "description" : "Retrieves a list of products by their IDs."
+    }, {
+      "name" : "getAllProductCategories",
+      "parameters" : [ ],
+      "return_type" : "List<ProductCategory>",
+      "description" : "Retrieves a list of all available product categories."
+    }, {
+      "name" : "getAllBrands",
+      "parameters" : [ ],
+      "return_type" : "List<Brand>",
+      "description" : "Retrieves a list of all available brands."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java", "backend/src/main/java/com/prakashstores/repository/BrandRepository.java", "backend/src/main/java/com/prakashstores/exception/ResourceNotFoundException.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — Implements business logic for products, including CRUD operations, search, filtering, and inventory management. It exposes methods like createProduct(Product), getProductById(Long), and updateProductStock(Long, int).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1840,8 +2011,8 @@
     "feature_display_name" : "Product Catalog (Core)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Product.java", "backend/src/main/java/com/prakashstores/model/ProductCategory.java", "backend/src/main/java/com/prakashstores/model/Brand.java", "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java", "backend/src/main/java/com/prakashstores/repository/BrandRepository.java", "backend/src/main/java/com/prakashstores/service/ProductService.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "The Product Catalog (Core) feature provides the foundational backend models, repositories, and services for managing products, product categories, and brands for Prakash Stores. This feature is responsible for persisting product data, retrieving it based on various criteria, and handling core business logic related to product inventory and availability. It does not expose any direct API endpoints; instead, its services are consumed by the `product-catalog-api` feature to expose public and admin-facing APIs.\n\n### Product Model (`Product.java`)\nThis JPA entity represents a single clothing item. It includes fields for `name`, `description`, `price`, `imageUrl`, `stockQuantity`, `size`, `color`, `material`, `gender`, and `active`. It has many-to-one relationships with `ProductCategory` and `Brand`.\n\n### ProductCategory Model (`ProductCategory.java`)\nThis JPA entity defines categories for products (e.g., 'Men', 'Women', 'Kids'). It has fields for `name` and `description`.\n\n### Brand Model (`Brand.java`)\nThis JPA entity represents product brands (e.g., 'Wrangler'). It has fields for `name` and `description`.\n\n### Repositories (`ProductRepository.java`, `ProductCategoryRepository.java`, `BrandRepository.java`)\nThese Spring Data JPA repositories provide standard CRUD operations for their respective entities. `ProductRepository` includes custom query methods for filtering products by category, brand, gender, size, color, and price range, as well as searching by name or description. It also includes a method to find products by a list of IDs, which will be used by the `order-management-core` feature to validate product existence and retrieve details when creating an order.\n\n### Product Service (`ProductService.java`)\nThis service layer class encapsulates the business logic for products. It injects `ProductRepository`, `ProductCategoryRepository`, and `BrandRepository` to perform data operations. It provides methods for:\n\n1.  `createProduct(Product product)`: Creates a new product. It validates that the associated category and brand exist. If not, it throws a `ResourceNotFoundException`.\n2.  `updateProduct(Long id, Product product)`: Updates an existing product. It first retrieves the product by ID, then updates its fields. It also validates the existence of the associated category and brand. Throws `ResourceNotFoundException` if the product, category, or brand is not found.\n3.  `deleteProduct(Long id)`: Deletes a product by its ID. Throws `ResourceNotFoundException` if the product is not found.\n4.  `getProductById(Long id)`: Retrieves a single product by its ID. Throws `ResourceNotFoundException` if the product is not found.\n5.  `getAllProducts(String categoryName, String brandName, String gender, String size, String color, BigDecimal minPrice, BigDecimal maxPrice, String searchTerm, Pageable pageable)`: Retrieves a paginated list of products, applying filters based on the provided criteria. If `categoryName` or `brandName` are provided, it first resolves them to their respective IDs using `ProductCategoryRepository` and `BrandRepository`. If a category or brand is not found, it returns an empty page of products.\n6.  `updateProductStock(Long productId, int quantityChange)`: Adjusts the stock quantity of a product. This method will be called by the `order-management-core` feature when an order is placed or cancelled. It throws `ResourceNotFoundException` if the product is not found, or `IllegalArgumentException` if `quantityChange` would result in negative stock.\n7.  `getProductsByIds(List<Long> productIds)`: Retrieves a list of products given a list of product IDs. This is used by `order-management-core` to fetch product details for items in an order.\n8.  `getAllProductCategories()`: Retrieves a list of all available product categories.\n9.  `getAllBrands()`: Retrieves a list of all available brands.\n\nError Handling: The `ProductService` throws `ResourceNotFoundException` for cases where an entity (Product, ProductCategory, Brand) is not found, and `IllegalArgumentException` for invalid operations like attempting to set negative stock. These exceptions are handled by the `GlobalExceptionHandler` in the `shared-backend` feature, which translates them into appropriate HTTP responses.",
+    "depends_on_features" : [ "shared-backend" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
