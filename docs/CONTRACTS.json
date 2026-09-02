@@ -1,0 +1,545 @@
+{
+  "generated_at" : "2026-09-02",
+  "reconciled_count" : 90,
+  "contracts" : [ {
+    "feature_name" : "product-catalog-core",
+    "module" : "backend/src/main/java/com/prakashstores/model/Product.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; name: String; description: String; price: BigDecimal; imageUrl: String; stockQuantity: Integer; size: String; color: String; material: String; gender: String; active: Boolean; category: ProductCategory; brand: Brand",
+    "reconciled_interface" : "id: Long; name: String; description: String; price: BigDecimal; imageUrl: String; stockQuantity: Integer; size: String; color: String; material: String; gender: String; active: Boolean; category: ProductCategory; brand: Brand"
+  }, {
+    "feature_name" : "product-catalog-core",
+    "module" : "backend/src/main/java/com/prakashstores/model/ProductCategory.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; name: String; description: String",
+    "reconciled_interface" : "id: Long; name: String; description: String"
+  }, {
+    "feature_name" : "product-catalog-core",
+    "module" : "backend/src/main/java/com/prakashstores/model/Brand.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; name: String; description: String",
+    "reconciled_interface" : "id: Long; name: String; description: String"
+  }, {
+    "feature_name" : "product-catalog-core",
+    "module" : "backend/src/main/java/com/prakashstores/repository/ProductRepository.java",
+    "kind" : "METHODS",
+    "planned_interface" : "findByCategory_Name(String categoryName, Pageable pageable); findByBrand_Name(String brandName, Pageable pageable); findByGender(String gender, Pageable pageable); findBySize(String size, Pageable pageable); findByColor(String color, Pageable pageable); findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable); findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String nameKeyword, String descriptionKeyword, Pageable pageable); findAllByIdIn(List<Long> ids)",
+    "reconciled_interface" : "searchProducts(Page<Product> searchProducts(String searchTerm, String categoryName, String brandName, String gender, String size, String color, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable)); findAllByIdIn(List<Product> findAllByIdIn(List<Long> productIds))"
+  }, {
+    "feature_name" : "product-catalog-core",
+    "module" : "backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java",
+    "kind" : "METHODS",
+    "planned_interface" : "findByName(String name)",
+    "reconciled_interface" : "findByName(Optional<ProductCategory> findByName(String name))"
+  }, {
+    "feature_name" : "product-catalog-core",
+    "module" : "backend/src/main/java/com/prakashstores/repository/BrandRepository.java",
+    "kind" : "METHODS",
+    "planned_interface" : "findByName(String name)",
+    "reconciled_interface" : "findByName(Optional<Brand> findByName(String name))"
+  }, {
+    "feature_name" : "product-catalog-core",
+    "module" : "backend/src/main/java/com/prakashstores/service/ProductService.java",
+    "kind" : "METHODS",
+    "planned_interface" : "createProduct(Product product); updateProduct(Long id, Product product); deleteProduct(Long id); getProductById(Long id); getAllProducts(String categoryName, String brandName, String gender, String size, String color, BigDecimal minPrice, BigDecimal maxPrice, String searchTerm, Pageable pageable); updateProductStock(Long productId, int quantityChange); getProductsByIds(List<Long> productIds); getAllProductCategories(); getAllBrands()",
+    "reconciled_interface" : "createProduct(Product createProduct(Product product)); updateProduct(Product updateProduct(Long id, Product product)); deleteProduct(void deleteProduct(Long id)); getProductById(Product getProductById(Long id)); getAllProducts(Page<Product> getAllProducts(String categoryName, String brandName, String gender, String size, String color, BigDecimal minPrice, BigDecimal maxPrice, String searchTerm, Pageable pageable)); updateProductStock(Product updateProductStock(Long productId, int quantityChange)); getProductsByIds(List<Product> getProductsByIds(List<Long> productIds)); getAllProductCategories(List<ProductCategory> getAllProductCategories()); getAllBrands(List<Brand> getAllBrands())"
+  }, {
+    "feature_name" : "product-catalog-api",
+    "module" : "backend/src/main/java/com/prakashstores/dto/ProductDto.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; name: String; description: String; price: BigDecimal; imageUrl: String; stockQuantity: Integer; size: String; color: String; material: String; gender: String; active: Boolean; category: String; brand: String",
+    "reconciled_interface" : "id: Long; name: String; description: String; price: java.math.BigDecimal; imageUrl: String; stockQuantity: Integer; size: String; color: String; material: String; gender: String; active: Boolean; category: String; brand: String"
+  }, {
+    "feature_name" : "product-catalog-api",
+    "module" : "backend/src/main/java/com/prakashstores/dto/ProductFilterRequest.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "categoryName: String; brandName: String; gender: String; size: String; color: String; minPrice: BigDecimal; maxPrice: BigDecimal; searchTerm: String; page: Integer; size: Integer; sortBy: String; sortDir: String",
+    "reconciled_interface" : "categoryName: String; brandName: String; gender: String; size: String; color: String; minPrice: java.math.BigDecimal; maxPrice: java.math.BigDecimal; searchTerm: String; page: Integer; size: Integer; sortBy: String; sortDir: String"
+  }, {
+    "feature_name" : "product-catalog-api",
+    "module" : "backend/src/main/java/com/prakashstores/controller/ProductController.java",
+    "kind" : "METHODS",
+    "planned_interface" : "getAllProducts(ProductFilterRequest filterRequest); getProductById(Long productId)",
+    "reconciled_interface" : "getAllProducts(public org.springframework.data.domain.Page<com.prakashstores.dto.ProductDto> getAllProducts(com.prakashstores.dto.ProductFilterRequest filterRequest)); getProductById(public com.prakashstores.dto.ProductDto getProductById(Long productId))"
+  }, {
+    "feature_name" : "product-catalog-api",
+    "module" : "backend/src/main/java/com/prakashstores/controller/admin/AdminProductController.java",
+    "kind" : "METHODS",
+    "planned_interface" : "createProduct(ProductDto productDto); updateProduct(Long productId, ProductDto productDto); deleteProduct(Long productId); updateProductStock(Long productId, Integer quantityChange)",
+    "reconciled_interface" : "createProduct(public com.prakashstores.dto.ProductDto createProduct(com.prakashstores.dto.ProductDto productDto)); updateProduct(public com.prakashstores.dto.ProductDto updateProduct(Long productId, com.prakashstores.dto.ProductDto productDto)); deleteProduct(public void deleteProduct(Long productId)); updateProductStock(public com.prakashstores.dto.ProductDto updateProductStock(Long productId, Integer quantityChange))"
+  }, {
+    "feature_name" : "order-management-core",
+    "module" : "backend/src/main/java/com/prakashstores/model/Order.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; userId: Integer; orderDate: LocalDateTime; totalAmount: BigDecimal; status: OrderStatus; orderType: OrderType; shippingAddress: String; contactPhone: String; orderItems: List<OrderItem>",
+    "reconciled_interface" : "id: Long; userId: Integer; orderDate: java.time.LocalDateTime; totalAmount: java.math.BigDecimal; status: OrderStatus; orderType: OrderType; shippingAddress: String; contactPhone: String; orderItems: java.util.List<OrderItem>"
+  }, {
+    "feature_name" : "order-management-core",
+    "module" : "backend/src/main/java/com/prakashstores/model/OrderItem.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; order: Order; productId: Long; productName: String; quantity: Integer; unitPrice: BigDecimal; imageUrl: String",
+    "reconciled_interface" : "id: Long; order: Order; productId: Long; productName: String; quantity: Integer; unitPrice: java.math.BigDecimal; imageUrl: String"
+  }, {
+    "feature_name" : "order-management-core",
+    "module" : "backend/src/main/java/com/prakashstores/model/OrderStatus.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "PENDING: OrderStatus; CONFIRMED: OrderStatus; SHIPPED: OrderStatus; DELIVERED: OrderStatus; CANCELLED: OrderStatus",
+    "reconciled_interface" : "PENDING: enum; CONFIRMED: enum; SHIPPED: enum; DELIVERED: enum; CANCELLED: enum"
+  }, {
+    "feature_name" : "order-management-core",
+    "module" : "backend/src/main/java/com/prakashstores/model/OrderType.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "DELIVERY: OrderType; PICKUP: OrderType",
+    "reconciled_interface" : "DELIVERY: enum; PICKUP: enum"
+  }, {
+    "feature_name" : "order-management-core",
+    "module" : "backend/src/main/java/com/prakashstores/repository/OrderRepository.java",
+    "kind" : "METHODS",
+    "planned_interface" : "findByUserId(Integer userId); findByStatus(OrderStatus status)",
+    "reconciled_interface" : "findByUserId(java.util.List<Order> findByUserId(Integer userId)); findByStatus(java.util.List<Order> findByStatus(OrderStatus status))"
+  }, {
+    "feature_name" : "order-management-core",
+    "module" : "backend/src/main/java/com/prakashstores/repository/OrderItemRepository.java",
+    "kind" : "METHODS",
+    "planned_interface" : "",
+    "reconciled_interface" : ""
+  }, {
+    "feature_name" : "order-management-core",
+    "module" : "backend/src/main/java/com/prakashstores/service/OrderService.java",
+    "kind" : "METHODS",
+    "planned_interface" : "createOrder(CreateOrderRequest request, Integer userId); getOrderById(Long orderId, Integer userId); getAllOrders(Integer userId); updateOrderStatus(Long orderId, OrderStatus newStatus)",
+    "reconciled_interface" : "createOrder(OrderResponse createOrder(CreateOrderRequest request, Integer userId)); getOrderById(OrderResponse getOrderById(Long orderId, Integer userId)); getAllOrders(java.util.List<OrderResponse> getAllOrders(Integer userId)); updateOrderStatus(OrderResponse updateOrderStatus(Long orderId, OrderStatus newStatus))"
+  }, {
+    "feature_name" : "order-management-core",
+    "module" : "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "orderItems: List<OrderItemRequest>; shippingAddress: String; contactPhone: String; orderType: OrderType",
+    "reconciled_interface" : "orderType: OrderType; shippingAddress: String; contactPhone: String; items: java.util.List<CreateOrderItemRequest>"
+  }, {
+    "feature_name" : "order-management-core",
+    "module" : "backend/src/main/java/com/prakashstores/dto/OrderResponse.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; userId: Integer; orderDate: LocalDateTime; totalAmount: BigDecimal; status: OrderStatus; orderType: OrderType; shippingAddress: String; contactPhone: String; orderItems: List<OrderItemResponse>",
+    "reconciled_interface" : "id: Long; userId: Integer; orderDate: java.time.LocalDateTime; totalAmount: java.math.BigDecimal; status: OrderStatus; orderType: OrderType; shippingAddress: String; contactPhone: String; items: java.util.List<OrderItemResponse>"
+  }, {
+    "feature_name" : "order-management-api",
+    "module" : "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "orderType: OrderType; shippingAddress: String; contactPhone: String; items: java.util.List<CreateOrderItemRequest>",
+    "reconciled_interface" : "orderType: OrderType; shippingAddress: String; contactPhone: String; items: java.util.List<OrderItemRequest>"
+  }, {
+    "feature_name" : "order-management-api",
+    "module" : "backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "productId: Long; quantity: Integer",
+    "reconciled_interface" : "productId: Long; quantity: Integer"
+  }, {
+    "feature_name" : "order-management-api",
+    "module" : "backend/src/main/java/com/prakashstores/dto/OrderResponse.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; userId: Integer; orderDate: java.time.LocalDateTime; totalAmount: java.math.BigDecimal; status: OrderStatus; orderType: OrderType; shippingAddress: String; contactPhone: String; items: java.util.List<OrderItemResponse>",
+    "reconciled_interface" : "id: Long; userId: Integer; orderDate: java.time.LocalDateTime; totalAmount: java.math.BigDecimal; status: OrderStatus; orderType: OrderType; shippingAddress: String; contactPhone: String; items: java.util.List<OrderItemResponse>"
+  }, {
+    "feature_name" : "order-management-api",
+    "module" : "backend/src/main/java/com/prakashstores/controller/OrderController.java",
+    "kind" : "METHODS",
+    "planned_interface" : "createOrder(CreateOrderRequest createOrderRequest, @CurrentUser Integer userId); getAllOrders(@CurrentUser Integer userId); getOrderById(@PathVariable Long orderId, @CurrentUser Integer userId)",
+    "reconciled_interface" : "createOrder(OrderResponse createOrder(@RequestBody CreateOrderRequest createOrderRequest, @CurrentUser Integer userId)); getAllOrders(java.util.List<OrderResponse> getAllOrders(@CurrentUser Integer userId)); getOrderById(OrderResponse getOrderById(@PathVariable Long orderId, @CurrentUser Integer userId))"
+  }, {
+    "feature_name" : "order-management-api",
+    "module" : "backend/src/main/java/com/prakashstores/controller/admin/AdminOrderController.java",
+    "kind" : "METHODS",
+    "planned_interface" : "getAllOrders(); updateOrderStatus(@PathVariable Long orderId, @RequestParam OrderStatus newStatus)",
+    "reconciled_interface" : "getAllOrders(java.util.List<OrderResponse> getAllOrders()); updateOrderStatus(OrderResponse updateOrderStatus(@PathVariable Long orderId, @RequestParam(\"newStatus\") OrderStatus newStatus))"
+  }, {
+    "feature_name" : "review-system",
+    "module" : "backend/src/main/java/com/prakashstores/model/Review.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; productId: Long; userId: Integer; rating: Integer; comment: String; reviewDate: LocalDateTime",
+    "reconciled_interface" : "id: Long; productId: Long; userId: Integer; rating: Integer; comment: String; reviewDate: LocalDateTime"
+  }, {
+    "feature_name" : "review-system",
+    "module" : "backend/src/main/java/com/prakashstores/repository/ReviewRepository.java",
+    "kind" : "METHODS",
+    "planned_interface" : "findByProductId(Long productId)",
+    "reconciled_interface" : "findByProductId(List<Review> findByProductId(Long productId))"
+  }, {
+    "feature_name" : "review-system",
+    "module" : "backend/src/main/java/com/prakashstores/service/ReviewService.java",
+    "kind" : "METHODS",
+    "planned_interface" : "createReview(CreateReviewRequest request, Integer userId); getReviewsByProductId(Long productId); getAllReviews()",
+    "reconciled_interface" : "createReview(ReviewDto createReview(CreateReviewRequest request, Integer userId)); getReviewsByProductId(List<ReviewDto> getReviewsByProductId(Long productId)); getAllReviews(List<ReviewDto> getAllReviews())"
+  }, {
+    "feature_name" : "review-system",
+    "module" : "backend/src/main/java/com/prakashstores/dto/ReviewDto.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; productId: Long; userId: Integer; rating: Integer; comment: String; reviewDate: LocalDateTime",
+    "reconciled_interface" : "id: Long; productId: Long; userId: Integer; rating: Integer; comment: String; reviewDate: LocalDateTime"
+  }, {
+    "feature_name" : "review-system",
+    "module" : "backend/src/main/java/com/prakashstores/dto/CreateReviewRequest.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "productId: Long; rating: Integer; comment: String",
+    "reconciled_interface" : "productId: Long; rating: Integer; comment: String"
+  }, {
+    "feature_name" : "review-system",
+    "module" : "backend/src/main/java/com/prakashstores/controller/ReviewController.java",
+    "kind" : "METHODS",
+    "planned_interface" : "createReview(CreateReviewRequest request, @CurrentUser Integer userId); getReviewsByProductId(@PathVariable Long productId); getAllReviews()",
+    "reconciled_interface" : "createReview(ReviewDto createReview(CreateReviewRequest request, Integer userId)); getReviewsByProductId(List<ReviewDto> getReviewsByProductId(Long productId)); getAllReviews(List<ReviewDto> getAllReviews())"
+  }, {
+    "feature_name" : "event-management",
+    "module" : "backend/src/main/java/com/prakashstores/model/Event.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; name: String; description: String; eventDate: LocalDate; eventTime: LocalTime; imageUrl: String",
+    "reconciled_interface" : "id: Long; name: String; description: String; eventDate: LocalDate; eventTime: LocalTime; imageUrl: String"
+  }, {
+    "feature_name" : "event-management",
+    "module" : "backend/src/main/java/com/prakashstores/repository/EventRepository.java",
+    "kind" : "METHODS",
+    "planned_interface" : "findAllByEventDateAfterOrderByEventDateAsc(LocalDate date)",
+    "reconciled_interface" : "findAllByEventDateAfterOrderByEventDateAsc(findAllByEventDateAfterOrderByEventDateAsc(LocalDate date): List<Event>)"
+  }, {
+    "feature_name" : "event-management",
+    "module" : "backend/src/main/java/com/prakashstores/service/EventService.java",
+    "kind" : "METHODS",
+    "planned_interface" : "createEvent(EventDto eventDto); getEventById(Long id); getAllEvents(); updateEvent(Long id, EventDto eventDto); deleteEvent(Long id)",
+    "reconciled_interface" : "createEvent(createEvent(EventDto eventDto): EventDto); getEventById(getEventById(Long id): EventDto); getAllEvents(getAllEvents(): List<EventDto>); updateEvent(updateEvent(Long id, EventDto eventDto): EventDto); deleteEvent(deleteEvent(Long id): void)"
+  }, {
+    "feature_name" : "event-management",
+    "module" : "backend/src/main/java/com/prakashstores/dto/EventDto.java",
+    "kind" : "FIELDS",
+    "planned_interface" : "id: Long; name: String; description: String; eventDate: LocalDate; eventTime: LocalTime; imageUrl: String",
+    "reconciled_interface" : "id: Long; name: String; description: String; eventDate: LocalDate; eventTime: LocalTime; imageUrl: String"
+  }, {
+    "feature_name" : "event-management",
+    "module" : "backend/src/main/java/com/prakashstores/controller/EventController.java",
+    "kind" : "METHODS",
+    "planned_interface" : "getAllEvents(); getEventById(Long eventId)",
+    "reconciled_interface" : "getAllEvents(getAllEvents(): List<EventDto>); getEventById(getEventById(Long eventId): EventDto)"
+  }, {
+    "feature_name" : "event-management",
+    "module" : "backend/src/main/java/com/prakashstores/controller/admin/AdminEventController.java",
+    "kind" : "METHODS",
+    "planned_interface" : "createEvent(EventDto eventDto); updateEvent(Long eventId, EventDto eventDto); deleteEvent(Long eventId)",
+    "reconciled_interface" : "createEvent(createEvent(EventDto eventDto): EventDto); updateEvent(updateEvent(Long eventId, EventDto eventDto): EventDto); deleteEvent(deleteEvent(Long eventId): void)"
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/types/product.ts",
+    "kind" : "NONE",
+    "planned_interface" : "",
+    "reconciled_interface" : ""
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/services/productService.ts",
+    "kind" : "METHODS",
+    "planned_interface" : "getAllProducts(ProductFilterRequest? filter); getProductById(Long productId); getAllProductCategories(); getAllBrands()",
+    "reconciled_interface" : "getAllProducts(getAllProducts(filter?: ProductFilterRequest): Promise<Page<ProductDto>>); getProductById(getProductById(productId: number): Promise<ProductDto>); getAllProductCategories(getAllProductCategories(): Promise<ProductCategoryDto[]>); getAllBrands(getAllBrands(): Promise<BrandDto[]>)"
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/pages/HomePage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "",
+    "reconciled_interface" : ""
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/components/home/HeroSection.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "HeroSection()",
+    "reconciled_interface" : "HeroSection()"
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/components/home/FeaturedProducts.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "FeaturedProducts()",
+    "reconciled_interface" : "FeaturedProducts()"
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/components/home/CategoryShowcase.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "CategoryShowcase()",
+    "reconciled_interface" : "CategoryShowcase()"
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/pages/ProductsPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "",
+    "reconciled_interface" : ""
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/components/product/ProductFilterSidebar.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ProductFilterSidebar({ onFilterChange: (filters: ProductFilterRequest) => void })",
+    "reconciled_interface" : "ProductFilterSidebar(onFilterChange: (filters: ProductFilterRequest) => void)"
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/components/product/ProductGrid.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ProductGrid({ products: ProductDto[] })",
+    "reconciled_interface" : "ProductGrid(products: ProductDto[])"
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/components/product/ProductCard.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ProductCard({ product: ProductDto })",
+    "reconciled_interface" : "ProductCard(product: ProductDto)"
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/pages/ProductDetailPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "",
+    "reconciled_interface" : ""
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/components/product/ProductImageGallery.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ProductImageGallery({ imageUrls: string[] })",
+    "reconciled_interface" : "ProductImageGallery(imageUrls: string[])"
+  }, {
+    "feature_name" : "product-browsing",
+    "module" : "frontend/src/components/product/ProductDetails.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ProductDetails({ product: ProductDto })",
+    "reconciled_interface" : "ProductDetails(product: ProductDto)"
+  }, {
+    "feature_name" : "shopping-cart",
+    "module" : "frontend/src/pages/CartPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "CartPage()",
+    "reconciled_interface" : "CartPage()"
+  }, {
+    "feature_name" : "shopping-cart",
+    "module" : "frontend/src/components/cart/CartItemsTable.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "CartItemsTable()",
+    "reconciled_interface" : "CartItemsTable()"
+  }, {
+    "feature_name" : "shopping-cart",
+    "module" : "frontend/src/components/cart/CartSummary.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "CartSummary()",
+    "reconciled_interface" : "CartSummary()"
+  }, {
+    "feature_name" : "shopping-cart",
+    "module" : "frontend/src/components/cart/CartIcon.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "CartIcon()",
+    "reconciled_interface" : "CartIcon()"
+  }, {
+    "feature_name" : "shopping-cart",
+    "module" : "frontend/src/components/cart/CartDrawer.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "",
+    "reconciled_interface" : "CartDrawer(isOpen: boolean, onClose: () => void)"
+  }, {
+    "feature_name" : "checkout-flow",
+    "module" : "frontend/src/services/orderService.ts",
+    "kind" : "METHODS",
+    "planned_interface" : "",
+    "reconciled_interface" : "createOrder(createOrder(request: CreateOrderRequest): Promise<Order>); getAllOrders(getAllOrders(): Promise<Order[]>)"
+  }, {
+    "feature_name" : "checkout-flow",
+    "module" : "frontend/src/pages/CheckoutPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "CheckoutPage()",
+    "reconciled_interface" : "CheckoutPage()"
+  }, {
+    "feature_name" : "checkout-flow",
+    "module" : "frontend/src/components/checkout/ShippingAddressForm.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ShippingAddressForm({ onAddressSubmit: (address: { shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP' }) => void })",
+    "reconciled_interface" : "ShippingAddressForm(initialData: ShippingDetails | undefined, onValidSubmit: (details: ShippingDetails) => void)"
+  }, {
+    "feature_name" : "checkout-flow",
+    "module" : "frontend/src/components/checkout/PaymentSelection.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "PaymentSelection({ totalAmount: BigDecimal; onPaymentSuccess: () => void; onPaymentError: (error: string) => void })",
+    "reconciled_interface" : "PaymentSelection(orderDetails: OrderDetailsForPayment, totalAmount: number, onOrderSuccess: (order: Order) => void, onOrderError: (error: string) => void)"
+  }, {
+    "feature_name" : "checkout-flow",
+    "module" : "frontend/src/components/checkout/OrderSummary.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "OrderSummary({ cartItems: CartItem[]; totals: { subtotal: BigDecimal; adjustments: BigDecimal; total: BigDecimal } })",
+    "reconciled_interface" : "OrderSummary(cartItems: CartItem[], totals: CartTotals)"
+  }, {
+    "feature_name" : "checkout-flow",
+    "module" : "frontend/src/pages/OrderConfirmationPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "OrderConfirmationPage()",
+    "reconciled_interface" : "OrderConfirmationPage()"
+  }, {
+    "feature_name" : "checkout-flow",
+    "module" : "frontend/src/types/order.ts",
+    "kind" : "NONE",
+    "planned_interface" : "",
+    "reconciled_interface" : ""
+  }, {
+    "feature_name" : "auth-ui",
+    "module" : "frontend/src/components/ProtectedRoute.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ProtectedRoute({ children: React.ReactNode, roles?: string[] })",
+    "reconciled_interface" : "ProtectedRoute(children: React.ReactNode, roles: string[] | undefined)"
+  }, {
+    "feature_name" : "auth-ui",
+    "module" : "frontend/src/pages/LoginPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "LoginPage()",
+    "reconciled_interface" : "LoginPage()"
+  }, {
+    "feature_name" : "auth-ui",
+    "module" : "frontend/src/pages/SignupPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "SignupPage()",
+    "reconciled_interface" : "SignupPage()"
+  }, {
+    "feature_name" : "auth-ui",
+    "module" : "frontend/src/pages/AccountPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "AccountPage()",
+    "reconciled_interface" : "AccountPage()"
+  }, {
+    "feature_name" : "auth-ui",
+    "module" : "frontend/src/components/account/ProfileDetails.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ProfileDetails()",
+    "reconciled_interface" : "ProfileDetails()"
+  }, {
+    "feature_name" : "auth-ui",
+    "module" : "frontend/src/components/account/OrderHistory.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "OrderHistory()",
+    "reconciled_interface" : "OrderHistory()"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/services/reviewService.ts",
+    "kind" : "METHODS",
+    "planned_interface" : "",
+    "reconciled_interface" : "getReviewsByProductId(getReviewsByProductId(productId: number): Promise<ReviewDto[]>); createReview(createReview(request: { productId: number; rating: number; comment: string; }): Promise<ReviewDto>)"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/services/eventService.ts",
+    "kind" : "METHODS",
+    "planned_interface" : "",
+    "reconciled_interface" : "getAllEvents(getAllEvents(): Promise<EventDto[]>)"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/components/home/InstagramFeed.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "InstagramFeed()",
+    "reconciled_interface" : "InstagramFeed()"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/components/review/ReviewList.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ReviewList(productId: Long)",
+    "reconciled_interface" : "ReviewList(productId: number)"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/components/review/ReviewForm.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ReviewForm(productId: Long, onReviewSubmitted: () => void)",
+    "reconciled_interface" : "ReviewForm(productId: number, onReviewSubmitted: (review: ReviewDto) => void)"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/pages/EventsPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "EventsPage()",
+    "reconciled_interface" : "EventsPage()"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/components/event/EventList.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "EventList(events: EventDto[])",
+    "reconciled_interface" : "EventList(events: EventDto[])"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/components/event/EventCard.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "EventCard(event: EventDto)",
+    "reconciled_interface" : "EventCard(event: EventDto)"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/pages/AboutPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "AboutPage()",
+    "reconciled_interface" : "AboutPage()"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/pages/ContactPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ContactPage()",
+    "reconciled_interface" : "ContactPage()"
+  }, {
+    "feature_name" : "customer-engagement",
+    "module" : "frontend/src/components/shared/WhatsAppCta.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "WhatsAppCta()",
+    "reconciled_interface" : "WhatsAppCta()"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/components/AdminLayout.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "AdminLayout({ children: React.ReactNode })",
+    "reconciled_interface" : "AdminLayout(children: React.ReactNode)"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/pages/admin/AdminDashboardPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "AdminDashboardPage()",
+    "reconciled_interface" : "AdminDashboardPage()"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/pages/admin/AdminProductsPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "AdminProductsPage()",
+    "reconciled_interface" : "AdminProductsPage()"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/components/admin/product/ProductTable.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ProductTable({ products: ProductDto[]; onEdit: (product: ProductDto) => void; onDelete: (productId: Long) => void; onUpdateStock: (productId: Long, quantityChange: Integer) => void })",
+    "reconciled_interface" : "ProductTable(products: ProductDto[], onEdit: (product: ProductDto) => void, onDelete: (product: ProductDto) => void, onUpdateStock: (product: ProductDto, newQuantity: number) => void)"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/components/admin/product/ProductForm.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "ProductForm({ initialData?: ProductDto; onSubmit: (product: ProductDto) => void; onCancel: () => void })",
+    "reconciled_interface" : "ProductForm(initialData: ProductDto | null, onSubmit: (data: ProductDto) => void, onCancel: () => void)"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/pages/admin/AdminOrdersPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "AdminOrdersPage()",
+    "reconciled_interface" : "AdminOrdersPage()"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/components/admin/order/OrderTable.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "OrderTable({ orders: OrderResponse[]; onUpdateStatus: (orderId: Long, newStatus: OrderStatus) => void })",
+    "reconciled_interface" : "OrderTable(orders: Order[], onUpdateStatus: (order: Order, newStatus: OrderStatus) => void)"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/pages/admin/AdminEventsPage.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "AdminEventsPage()",
+    "reconciled_interface" : "AdminEventsPage()"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/components/admin/event/EventTable.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "EventTable({ events: EventDto[]; onEdit: (event: EventDto) => void; onDelete: (eventId: Long) => void })",
+    "reconciled_interface" : "EventTable(events: EventDto[], onEdit: (event: EventDto) => void, onDelete: (event: EventDto) => void)"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/components/admin/event/EventForm.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "EventForm({ initialData?: EventDto; onSubmit: (event: EventDto) => void; onCancel: () => void })",
+    "reconciled_interface" : "EventForm(initialData: EventDto | null, onSubmit: (data: EventDto) => void, onCancel: () => void)"
+  }, {
+    "feature_name" : "admin-portal",
+    "module" : "frontend/src/components/admin/shared/DeleteConfirmationDialog.tsx",
+    "kind" : "PROPS",
+    "planned_interface" : "DeleteConfirmationDialog({ isOpen: boolean; onClose: () => void; onConfirm: () => void; itemToDeleteName: string })",
+    "reconciled_interface" : "DeleteConfirmationDialog(isOpen: boolean, onClose: () => void, onConfirm: () => void, itemToDeleteName: string)"
+  } ]
+}

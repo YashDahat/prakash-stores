@@ -20,95 +20,95 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the product. Generated automatically."
+      "description" : null
     }, {
       "name" : "name",
       "type" : "String",
-      "description" : "Name of the product. Not null, max 255 characters."
+      "description" : null
     }, {
       "name" : "description",
       "type" : "String",
-      "description" : "Detailed description of the product. Max 1000 characters."
+      "description" : null
     }, {
       "name" : "price",
       "type" : "BigDecimal",
-      "description" : "Selling price of the product. Not null, positive value."
+      "description" : null
     }, {
       "name" : "imageUrl",
       "type" : "String",
-      "description" : "URL of the product's main image. Max 500 characters."
+      "description" : null
     }, {
       "name" : "stockQuantity",
       "type" : "Integer",
-      "description" : "Current stock level of the product. Not null, non-negative."
+      "description" : null
     }, {
       "name" : "size",
       "type" : "String",
-      "description" : "Available size of the product (e.g., S, M, L, XL). Max 50 characters."
+      "description" : null
     }, {
       "name" : "color",
       "type" : "String",
-      "description" : "Color of the product. Max 50 characters."
+      "description" : null
     }, {
       "name" : "material",
       "type" : "String",
-      "description" : "Material of the product (e.g., Cotton, Denim). Max 100 characters."
+      "description" : null
     }, {
       "name" : "gender",
       "type" : "String",
-      "description" : "Target gender for the product (e.g., Men, Women, Unisex). Max 50 characters."
+      "description" : null
     }, {
       "name" : "active",
       "type" : "Boolean",
-      "description" : "Indicates if the product is currently active and visible. Not null."
+      "description" : null
     }, {
       "name" : "category",
       "type" : "ProductCategory",
-      "description" : "The category to which this product belongs. Many-to-one relationship."
+      "description" : null
     }, {
       "name" : "brand",
       "type" : "Brand",
-      "description" : "The brand of this product. Many-to-one relationship."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/ProductCategory.java", "backend/src/main/java/com/prakashstores/model/Brand.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : "JPA Entity — Represents a clothing item with attributes like name, price, stock, and relationships to ProductCategory and Brand.",
+    "file_role" : "JPA Entity — Represents a clothing item with attributes like name, price, stock, and relationships to ProductCategory and Brand.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String; price: BigDecimal; imageUrl: String; stockQuantity: Integer; size: String; color: String; material: String; gender: String; active: Boolean; category: ProductCategory; brand: Brand }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductCategory.java",
     "file_path" : "backend/src/main/java/com/prakashstores/model/ProductCategory.java",
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-07-31",
-    "updated_date" : "2024-07-31",
-    "status" : "PLANNED",
+    "updated_date" : "2026-09-02",
+    "status" : "GENERATED",
     "description" : "Defines a category for products, such as 'Men', 'Women', or 'Kids'.",
     "public_functions" : null,
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the product category. Generated automatically."
+      "description" : null
     }, {
       "name" : "name",
       "type" : "String",
-      "description" : "Name of the product category (e.g., 'Men', 'Women'). Not null, unique, max 100 characters."
+      "description" : null
     }, {
       "name" : "description",
       "type" : "String",
-      "description" : "Description of the product category. Max 500 characters."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : "JPA Entity — Defines a category for products, such as 'Men' or 'Women'.",
+    "file_role" : "JPA Entity — Defines a category for products, such as 'Men' or 'Women'.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "Brand.java",
     "file_path" : "backend/src/main/java/com/prakashstores/model/Brand.java",
@@ -122,24 +122,24 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the brand. Generated automatically."
+      "description" : null
     }, {
       "name" : "name",
       "type" : "String",
-      "description" : "Name of the brand (e.g., 'Wrangler'). Not null, unique, max 100 characters."
+      "description" : null
     }, {
       "name" : "description",
       "type" : "String",
-      "description" : "Description of the brand. Max 500 characters."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : "JPA Entity — Represents a product brand, like 'Wrangler'.",
+    "file_role" : "JPA Entity — Represents a product brand, like 'Wrangler'.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductRepository.java",
     "file_path" : "backend/src/main/java/com/prakashstores/repository/ProductRepository.java",
@@ -150,45 +150,15 @@
     "status" : "PLANNED",
     "description" : "Provides data access methods for Product entities, including filtering and searching.",
     "public_functions" : [ {
-      "name" : "findByCategory_Name",
-      "parameters" : [ "String categoryName", "Pageable pageable" ],
-      "return_type" : "Page<Product>",
-      "description" : "Finds products by category name with pagination."
-    }, {
-      "name" : "findByBrand_Name",
-      "parameters" : [ "String brandName", "Pageable pageable" ],
-      "return_type" : "Page<Product>",
-      "description" : "Finds products by brand name with pagination."
-    }, {
-      "name" : "findByGender",
-      "parameters" : [ "String gender", "Pageable pageable" ],
-      "return_type" : "Page<Product>",
-      "description" : "Finds products by gender with pagination."
-    }, {
-      "name" : "findBySize",
-      "parameters" : [ "String size", "Pageable pageable" ],
-      "return_type" : "Page<Product>",
-      "description" : "Finds products by size with pagination."
-    }, {
-      "name" : "findByColor",
-      "parameters" : [ "String color", "Pageable pageable" ],
-      "return_type" : "Page<Product>",
-      "description" : "Finds products by color with pagination."
-    }, {
-      "name" : "findByPriceBetween",
-      "parameters" : [ "BigDecimal minPrice", "BigDecimal maxPrice", "Pageable pageable" ],
-      "return_type" : "Page<Product>",
-      "description" : "Finds products within a price range with pagination."
-    }, {
-      "name" : "findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase",
-      "parameters" : [ "String nameKeyword", "String descriptionKeyword", "Pageable pageable" ],
-      "return_type" : "Page<Product>",
-      "description" : "Finds products by name or description containing a keyword, case-insensitively, with pagination."
+      "name" : "searchProducts",
+      "parameters" : [ "Page<Product> searchProducts(String searchTerm, String categoryName, String brandName, String gender, String size, String color, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "findAllByIdIn",
-      "parameters" : [ "List<Long> ids" ],
-      "return_type" : "List<Product>",
-      "description" : "Finds all products whose IDs are in the given list."
+      "parameters" : [ "List<Product> findAllByIdIn(List<Long> productIds)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -196,9 +166,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : "REPOSITORY layer — Provides data access methods for Product entities, including custom queries for filtering and searching. It exposes methods like findByCategory_Name and findByBrand_Name.",
+    "file_role" : "REPOSITORY layer — Provides data access methods for Product entities, including custom queries for filtering and searching. It exposes methods like findByCategory_Name and findByBrand_Name.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: Page<Product> searchProducts(String searchTerm, String categoryName, String brandName, String gender, String size, String color, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable); List<Product> findAllByIdIn(List<Long> productIds)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductCategoryRepository.java",
     "file_path" : "backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java",
@@ -210,9 +180,9 @@
     "description" : "Provides data access methods for ProductCategory entities.",
     "public_functions" : [ {
       "name" : "findByName",
-      "parameters" : [ "String name" ],
-      "return_type" : "Optional<ProductCategory>",
-      "description" : "Finds a product category by its name."
+      "parameters" : [ "Optional<ProductCategory> findByName(String name)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -220,9 +190,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/ProductCategory.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : "REPOSITORY layer — Provides data access methods for ProductCategory entities, including finding by name. It exposes methods like findByName.",
+    "file_role" : "REPOSITORY layer — Provides data access methods for ProductCategory entities, including finding by name. It exposes methods like findByName.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: Optional<ProductCategory> findByName(String name)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "BrandRepository.java",
     "file_path" : "backend/src/main/java/com/prakashstores/repository/BrandRepository.java",
@@ -234,9 +204,9 @@
     "description" : "Provides data access methods for Brand entities.",
     "public_functions" : [ {
       "name" : "findByName",
-      "parameters" : [ "String name" ],
-      "return_type" : "Optional<Brand>",
-      "description" : "Finds a brand by its name."
+      "parameters" : [ "Optional<Brand> findByName(String name)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -244,9 +214,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Brand.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : "REPOSITORY layer — Provides data access methods for Brand entities, including finding by name. It exposes methods like findByName.",
+    "file_role" : "REPOSITORY layer — Provides data access methods for Brand entities, including finding by name. It exposes methods like findByName.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: Optional<Brand> findByName(String name)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductService.java",
     "file_path" : "backend/src/main/java/com/prakashstores/service/ProductService.java",
@@ -258,59 +228,59 @@
     "description" : "Handles business logic for products, including search, filtering, and inventory management.",
     "public_functions" : [ {
       "name" : "createProduct",
-      "parameters" : [ "Product product" ],
-      "return_type" : "Product",
-      "description" : "Creates a new product after validating its category and brand. Throws ResourceNotFoundException if category or brand not found."
+      "parameters" : [ "Product createProduct(Product product)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "updateProduct",
-      "parameters" : [ "Long id", "Product product" ],
-      "return_type" : "Product",
-      "description" : "Updates an existing product by ID, validating category and brand. Throws ResourceNotFoundException if product, category, or brand not found."
+      "parameters" : [ "Product updateProduct(Long id, Product product)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "deleteProduct",
-      "parameters" : [ "Long id" ],
-      "return_type" : "void",
-      "description" : "Deletes a product by ID. Throws ResourceNotFoundException if product not found."
+      "parameters" : [ "void deleteProduct(Long id)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getProductById",
-      "parameters" : [ "Long id" ],
-      "return_type" : "Product",
-      "description" : "Retrieves a product by ID. Throws ResourceNotFoundException if product not found."
+      "parameters" : [ "Product getProductById(Long id)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllProducts",
-      "parameters" : [ "String categoryName", "String brandName", "String gender", "String size", "String color", "BigDecimal minPrice", "BigDecimal maxPrice", "String searchTerm", "Pageable pageable" ],
-      "return_type" : "Page<Product>",
-      "description" : "Retrieves a paginated list of products based on various filtering and search criteria."
+      "parameters" : [ "Page<Product> getAllProducts(String categoryName, String brandName, String gender, String size, String color, BigDecimal minPrice, BigDecimal maxPrice, String searchTerm, Pageable pageable)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "updateProductStock",
-      "parameters" : [ "Long productId", "int quantityChange" ],
-      "return_type" : "Product",
-      "description" : "Adjusts the stock quantity of a product. Throws ResourceNotFoundException if product not found, or IllegalArgumentException if stock becomes negative."
+      "parameters" : [ "Product updateProductStock(Long productId, int quantityChange)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getProductsByIds",
-      "parameters" : [ "List<Long> productIds" ],
-      "return_type" : "List<Product>",
-      "description" : "Retrieves a list of products by their IDs."
+      "parameters" : [ "List<Product> getProductsByIds(List<Long> productIds)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllProductCategories",
-      "parameters" : [ ],
-      "return_type" : "List<ProductCategory>",
-      "description" : "Retrieves a list of all available product categories."
+      "parameters" : [ "List<ProductCategory> getAllProductCategories()" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllBrands",
-      "parameters" : [ ],
-      "return_type" : "List<Brand>",
-      "description" : "Retrieves a list of all available brands."
+      "parameters" : [ "List<Brand> getAllBrands()" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
-    "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java", "backend/src/main/java/com/prakashstores/repository/BrandRepository.java", "backend/src/main/java/com/prakashstores/exception/ResourceNotFoundException.java" ],
+    "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java", "backend/src/main/java/com/prakashstores/repository/BrandRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-core",
-    "file_role" : "SERVICE layer — Implements business logic for products, including CRUD operations, search, filtering, and inventory management. It exposes methods like createProduct(Product), getProductById(Long), and updateProductStock(Long, int).",
+    "file_role" : "SERVICE layer — Implements business logic for products, including CRUD operations, search, filtering, and inventory management. It exposes methods like createProduct(Product), getProductById(Long), and updateProductStock(Long, int).\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: Product createProduct(Product product); Product updateProduct(Long id, Product product); void deleteProduct(Long id); Product getProductById(Long id); Page<Product> getAllProducts(String categoryName, String brandName, String gender, String size, String color, BigDecimal minPrice, BigDecimal maxPrice, String searchTerm, Pageable pageable); Product updateProductStock(Long productId, int quantityChange); List<Product> getProductsByIds(List<Long> productIds); List<ProductCategory> getAllProductCategories(); List<Brand> getAllBrands()",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductDto.java",
     "file_path" : "backend/src/main/java/com/prakashstores/dto/ProductDto.java",
@@ -324,64 +294,64 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the product."
+      "description" : null
     }, {
       "name" : "name",
       "type" : "String",
-      "description" : "Name of the product. Not null, max 255 characters."
+      "description" : null
     }, {
       "name" : "description",
       "type" : "String",
-      "description" : "Detailed description of the product. Max 1000 characters."
+      "description" : null
     }, {
       "name" : "price",
-      "type" : "BigDecimal",
-      "description" : "Price of the product. Not null, positive value."
+      "type" : "java.math.BigDecimal",
+      "description" : null
     }, {
       "name" : "imageUrl",
       "type" : "String",
-      "description" : "URL of the product's main image. Max 500 characters."
+      "description" : null
     }, {
       "name" : "stockQuantity",
       "type" : "Integer",
-      "description" : "Current stock quantity of the product. Not null, non-negative value."
+      "description" : null
     }, {
       "name" : "size",
       "type" : "String",
-      "description" : "Size of the product (e.g., S, M, L, XL). Max 50 characters."
+      "description" : null
     }, {
       "name" : "color",
       "type" : "String",
-      "description" : "Color of the product. Max 50 characters."
+      "description" : null
     }, {
       "name" : "material",
       "type" : "String",
-      "description" : "Material of the product. Max 100 characters."
+      "description" : null
     }, {
       "name" : "gender",
       "type" : "String",
-      "description" : "Target gender for the product (e.g., Men, Women, Kids). Max 50 characters."
+      "description" : null
     }, {
       "name" : "active",
       "type" : "Boolean",
-      "description" : "Indicates if the product is active and visible on the storefront. Not null."
+      "description" : null
     }, {
       "name" : "category",
       "type" : "String",
-      "description" : "Name of the product category."
+      "description" : null
     }, {
       "name" : "brand",
       "type" : "String",
-      "description" : "Name of the product brand."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-api",
-    "file_role" : "Data transfer object for sending product details to the client, including fields for product information, category, and brand.",
+    "file_role" : "Data transfer object for sending product details to the client, including fields for product information, category, and brand.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String; price: java.math.BigDecimal; imageUrl: String; stockQuantity: Integer; size: String; color: String; material: String; gender: String; active: Boolean; category: String; brand: String }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductFilterRequest.java",
     "file_path" : "backend/src/main/java/com/prakashstores/dto/ProductFilterRequest.java",
@@ -395,60 +365,56 @@
     "public_variables" : [ {
       "name" : "categoryName",
       "type" : "String",
-      "description" : "Filter by product category name."
+      "description" : null
     }, {
       "name" : "brandName",
       "type" : "String",
-      "description" : "Filter by product brand name."
+      "description" : null
     }, {
       "name" : "gender",
       "type" : "String",
-      "description" : "Filter by target gender."
+      "description" : null
     }, {
       "name" : "size",
       "type" : "String",
-      "description" : "Filter by product size."
+      "description" : null
     }, {
       "name" : "color",
       "type" : "String",
-      "description" : "Filter by product color."
+      "description" : null
     }, {
       "name" : "minPrice",
-      "type" : "BigDecimal",
-      "description" : "Minimum price for filtering."
+      "type" : "java.math.BigDecimal",
+      "description" : null
     }, {
       "name" : "maxPrice",
-      "type" : "BigDecimal",
-      "description" : "Maximum price for filtering."
+      "type" : "java.math.BigDecimal",
+      "description" : null
     }, {
       "name" : "searchTerm",
       "type" : "String",
-      "description" : "General search term for product name or description."
+      "description" : null
     }, {
       "name" : "page",
       "type" : "Integer",
-      "description" : "Page number for pagination, defaults to 0."
-    }, {
-      "name" : "size",
-      "type" : "Integer",
-      "description" : "Number of items per page for pagination, defaults to 10."
+      "description" : null
     }, {
       "name" : "sortBy",
       "type" : "String",
-      "description" : "Field to sort by (e.g., 'price', 'name')."
+      "description" : null
     }, {
       "name" : "sortDir",
       "type" : "String",
-      "description" : "Sort direction ('asc' or 'desc')."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-api",
-    "file_role" : "Data transfer object for encapsulating product filtering and pagination criteria.",
+    "file_role" : "Data transfer object for encapsulating product filtering and pagination criteria.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { categoryName: String; brandName: String; gender: String; size: String; color: String; minPrice: java.math.BigDecimal; maxPrice: java.math.BigDecimal; searchTerm: String; page: Integer; size: Integer; sortBy: String; sortDir: String }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductController.java",
     "file_path" : "backend/src/main/java/com/prakashstores/controller/ProductController.java",
@@ -460,14 +426,14 @@
     "description" : "Exposes public API endpoints for browsing and searching products.",
     "public_functions" : [ {
       "name" : "getAllProducts",
-      "parameters" : [ "ProductFilterRequest filterRequest" ],
-      "return_type" : "ResponseEntity<Page<ProductDto>>",
-      "description" : "Retrieves a paginated list of products based on various filtering criteria. Returns 200 OK."
+      "parameters" : [ "public org.springframework.data.domain.Page<com.prakashstores.dto.ProductDto> getAllProducts(com.prakashstores.dto.ProductFilterRequest filterRequest)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getProductById",
-      "parameters" : [ "Long productId" ],
-      "return_type" : "ResponseEntity<ProductDto>",
-      "description" : "Retrieves a single product by its ID. Returns 200 OK or 404 NOT FOUND if the product does not exist."
+      "parameters" : [ "public com.prakashstores.dto.ProductDto getProductById(Long productId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : [ {
@@ -489,9 +455,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ProductService.java", "backend/src/main/java/com/prakashstores/dto/ProductDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-api",
-    "file_role" : "CONTROLLER layer — exposes public API endpoints for browsing and searching products; delegates to ProductService.",
+    "file_role" : "CONTROLLER layer — exposes public API endpoints for browsing and searching products; delegates to ProductService.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: public org.springframework.data.domain.Page<com.prakashstores.dto.ProductDto> getAllProducts(com.prakashstores.dto.ProductFilterRequest filterRequest); public com.prakashstores.dto.ProductDto getProductById(Long productId)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "AdminProductController.java",
     "file_path" : "backend/src/main/java/com/prakashstores/controller/admin/AdminProductController.java",
@@ -503,24 +469,24 @@
     "description" : "Provides secured admin endpoints for creating, updating, and deleting products and managing inventory.",
     "public_functions" : [ {
       "name" : "createProduct",
-      "parameters" : [ "ProductDto productDto" ],
-      "return_type" : "ResponseEntity<ProductDto>",
-      "description" : "Creates a new product. Returns 201 CREATED."
+      "parameters" : [ "public com.prakashstores.dto.ProductDto createProduct(com.prakashstores.dto.ProductDto productDto)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "updateProduct",
-      "parameters" : [ "Long productId", "ProductDto productDto" ],
-      "return_type" : "ResponseEntity<ProductDto>",
-      "description" : "Updates an existing product. Returns 200 OK or 404 NOT FOUND if the product does not exist."
+      "parameters" : [ "public com.prakashstores.dto.ProductDto updateProduct(Long productId, com.prakashstores.dto.ProductDto productDto)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "deleteProduct",
-      "parameters" : [ "Long productId" ],
-      "return_type" : "ResponseEntity<Void>",
-      "description" : "Deletes a product by its ID. Returns 204 NO CONTENT or 404 NOT FOUND if the product does not exist."
+      "parameters" : [ "public void deleteProduct(Long productId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "updateProductStock",
-      "parameters" : [ "Long productId", "Integer quantityChange" ],
-      "return_type" : "ResponseEntity<ProductDto>",
-      "description" : "Updates the stock quantity of a product. Returns 200 OK or 404 NOT FOUND if the product does not exist."
+      "parameters" : [ "public com.prakashstores.dto.ProductDto updateProductStock(Long productId, Integer quantityChange)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : [ {
@@ -556,9 +522,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ProductService.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog-api",
-    "file_role" : "CONTROLLER layer — provides secured admin endpoints for creating, updating, and deleting products and managing inventory; delegates to ProductService.",
+    "file_role" : "CONTROLLER layer — provides secured admin endpoints for creating, updating, and deleting products and managing inventory; delegates to ProductService.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: public com.prakashstores.dto.ProductDto createProduct(com.prakashstores.dto.ProductDto productDto); public com.prakashstores.dto.ProductDto updateProduct(Long productId, com.prakashstores.dto.ProductDto productDto); public void deleteProduct(Long productId); public com.prakashstores.dto.ProductDto updateProductStock(Long productId, Integer quantityChange)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "Order.java",
     "file_path" : "backend/src/main/java/com/prakashstores/model/Order.java",
@@ -572,48 +538,48 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the order. Generated automatically."
+      "description" : null
     }, {
       "name" : "userId",
       "type" : "Integer",
-      "description" : "Identifier of the user who placed the order. Not null."
+      "description" : null
     }, {
       "name" : "orderDate",
-      "type" : "LocalDateTime",
-      "description" : "Timestamp when the order was placed. Not null."
+      "type" : "java.time.LocalDateTime",
+      "description" : null
     }, {
       "name" : "totalAmount",
-      "type" : "BigDecimal",
-      "description" : "Total monetary value of the order. Not null, precision 10, scale 2."
+      "type" : "java.math.BigDecimal",
+      "description" : null
     }, {
       "name" : "status",
       "type" : "OrderStatus",
-      "description" : "Current status of the order (e.g., PENDING, SHIPPED, DELIVERED). Not null."
+      "description" : null
     }, {
       "name" : "orderType",
       "type" : "OrderType",
-      "description" : "Fulfillment method for the order (DELIVERY or PICKUP). Not null."
+      "description" : null
     }, {
       "name" : "shippingAddress",
       "type" : "String",
-      "description" : "Full shipping address for delivery orders. Nullable if orderType is PICKUP, max 500 characters."
+      "description" : null
     }, {
       "name" : "contactPhone",
       "type" : "String",
-      "description" : "Contact phone number for the order. Not null, max 20 characters."
+      "description" : null
     }, {
       "name" : "orderItems",
-      "type" : "List<OrderItem>",
-      "description" : "List of items included in this order. Cascade all operations, orphan removal."
+      "type" : "java.util.List<OrderItem>",
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/OrderItem.java", "backend/src/main/java/com/prakashstores/model/OrderStatus.java", "backend/src/main/java/com/prakashstores/model/OrderType.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : "MODEL layer — represents a customer's order, containing order items, shipping details, and status.",
+    "file_role" : "MODEL layer — represents a customer's order, containing order items, shipping details, and status.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; userId: Integer; orderDate: java.time.LocalDateTime; totalAmount: java.math.BigDecimal; status: OrderStatus; orderType: OrderType; shippingAddress: String; contactPhone: String; orderItems: java.util.List<OrderItem> }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderItem.java",
     "file_path" : "backend/src/main/java/com/prakashstores/model/OrderItem.java",
@@ -627,106 +593,106 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the order item. Generated automatically."
+      "description" : null
     }, {
       "name" : "order",
       "type" : "Order",
-      "description" : "The order this item belongs to. Not null."
+      "description" : null
     }, {
       "name" : "productId",
       "type" : "Long",
-      "description" : "ID of the product being ordered. Not null."
+      "description" : null
     }, {
       "name" : "productName",
       "type" : "String",
-      "description" : "Name of the product at the time of order. Not null, max 255 characters."
+      "description" : null
     }, {
       "name" : "quantity",
       "type" : "Integer",
-      "description" : "Number of units of the product ordered. Not null, min 1."
+      "description" : null
     }, {
       "name" : "unitPrice",
-      "type" : "BigDecimal",
-      "description" : "Price of a single unit of the product at the time of order. Not null, precision 10, scale 2."
+      "type" : "java.math.BigDecimal",
+      "description" : null
     }, {
       "name" : "imageUrl",
       "type" : "String",
-      "description" : "URL of the product image at the time of order. Nullable, max 500 characters."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : "MODEL layer — represents a single item within an order, linking to a product and quantity.",
+    "file_role" : "MODEL layer — represents a single item within an order, linking to a product and quantity.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; order: Order; productId: Long; productName: String; quantity: Integer; unitPrice: java.math.BigDecimal; imageUrl: String }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderStatus.java",
     "file_path" : "backend/src/main/java/com/prakashstores/model/OrderStatus.java",
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-07-31",
-    "updated_date" : "2024-07-31",
-    "status" : "PLANNED",
+    "updated_date" : "2026-09-02",
+    "status" : "GENERATED",
     "description" : "Enumeration of possible statuses for an order (e.g., PENDING, SHIPPED, DELIVERED).",
     "public_functions" : null,
     "public_variables" : [ {
       "name" : "PENDING",
-      "type" : "OrderStatus",
-      "description" : "Order has been placed but not yet processed."
+      "type" : "enum",
+      "description" : null
     }, {
       "name" : "CONFIRMED",
-      "type" : "OrderStatus",
-      "description" : "Order has been confirmed and is being prepared."
+      "type" : "enum",
+      "description" : null
     }, {
       "name" : "SHIPPED",
-      "type" : "OrderStatus",
-      "description" : "Order has been dispatched for delivery."
+      "type" : "enum",
+      "description" : null
     }, {
       "name" : "DELIVERED",
-      "type" : "OrderStatus",
-      "description" : "Order has been successfully delivered to the customer."
+      "type" : "enum",
+      "description" : null
     }, {
       "name" : "CANCELLED",
-      "type" : "OrderStatus",
-      "description" : "Order has been cancelled."
+      "type" : "enum",
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : "MODEL layer — enumeration of possible statuses for an order (e.g., PENDING, SHIPPED, DELIVERED).",
+    "file_role" : "MODEL layer — enumeration of possible statuses for an order (e.g., PENDING, SHIPPED, DELIVERED).\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { PENDING: enum; CONFIRMED: enum; SHIPPED: enum; DELIVERED: enum; CANCELLED: enum }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderType.java",
     "file_path" : "backend/src/main/java/com/prakashstores/model/OrderType.java",
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-07-31",
-    "updated_date" : "2024-07-31",
-    "status" : "PLANNED",
+    "updated_date" : "2026-09-02",
+    "status" : "GENERATED",
     "description" : "Enumeration for order fulfillment method: DELIVERY or PICKUP (Click and Collect).",
     "public_functions" : null,
     "public_variables" : [ {
       "name" : "DELIVERY",
-      "type" : "OrderType",
-      "description" : "Order will be delivered to a specified address."
+      "type" : "enum",
+      "description" : null
     }, {
       "name" : "PICKUP",
-      "type" : "OrderType",
-      "description" : "Order will be picked up by the customer from the store."
+      "type" : "enum",
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : "MODEL layer — enumeration for order fulfillment method: DELIVERY or PICKUP (Click and Collect).",
+    "file_role" : "MODEL layer — enumeration for order fulfillment method: DELIVERY or PICKUP (Click and Collect).\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { DELIVERY: enum; PICKUP: enum }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderRepository.java",
     "file_path" : "backend/src/main/java/com/prakashstores/repository/OrderRepository.java",
@@ -738,14 +704,14 @@
     "description" : "Provides data access methods for Order entities.",
     "public_functions" : [ {
       "name" : "findByUserId",
-      "parameters" : [ "Integer userId" ],
-      "return_type" : "List<Order>",
-      "description" : "Retrieves all orders placed by a specific user."
+      "parameters" : [ "java.util.List<Order> findByUserId(Integer userId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "findByStatus",
-      "parameters" : [ "OrderStatus status" ],
-      "return_type" : "List<Order>",
-      "description" : "Retrieves all orders with a specific status."
+      "parameters" : [ "java.util.List<Order> findByStatus(OrderStatus status)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -753,9 +719,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Order.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : "REPOSITORY layer — provides data access methods for Order entities, including `findByUserId(Integer userId)` and `findByStatus(OrderStatus status)`.",
+    "file_role" : "REPOSITORY layer — provides data access methods for Order entities, including `findByUserId(Integer userId)` and `findByStatus(OrderStatus status)`.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<Order> findByUserId(Integer userId); java.util.List<Order> findByStatus(OrderStatus status)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderItemRepository.java",
     "file_path" : "backend/src/main/java/com/prakashstores/repository/OrderItemRepository.java",
@@ -786,24 +752,24 @@
     "description" : "Handles business logic for creating and managing orders, and integrates with the PaymentService.",
     "public_functions" : [ {
       "name" : "createOrder",
-      "parameters" : [ "CreateOrderRequest request", "Integer userId" ],
-      "return_type" : "OrderResponse",
-      "description" : "1. Validates the incoming CreateOrderRequest. 2. Fetches product details for each item in the request using `productService.getProductsByIds(List<Long> productIds)`. 3. Calculates the total amount of the order. 4. Creates a new Order entity with PENDING status, associating it with the provided userId. 5. Creates OrderItem entities for each product, capturing current price and details. 6. Updates the stock quantity for each product using `productService.updateProductStock(Long productId, int quantityChange)` (quantityChange will be negative for order creation). 7. Saves the Order and OrderItems to the database via `orderRepository.save()` and `orderItemRepository.saveAll()`. 8. Returns an OrderResponse DTO."
+      "parameters" : [ "OrderResponse createOrder(CreateOrderRequest request, Integer userId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getOrderById",
-      "parameters" : [ "Long orderId", "Integer userId" ],
-      "return_type" : "OrderResponse",
-      "description" : "1. Retrieves an order by its ID and ensures it belongs to the specified userId using `orderRepository.findById(orderId)`. 2. Throws `ResourceNotFoundException` if the order is not found or does not belong to the user. 3. Returns an OrderResponse DTO."
+      "parameters" : [ "OrderResponse getOrderById(Long orderId, Integer userId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllOrders",
-      "parameters" : [ "Integer userId" ],
-      "return_type" : "List<OrderResponse>",
-      "description" : "1. Retrieves all orders for a specific user using `orderRepository.findByUserId(userId)`. 2. Maps the list of Order entities to a list of OrderResponse DTOs. 3. Returns the list of OrderResponse DTOs."
+      "parameters" : [ "java.util.List<OrderResponse> getAllOrders(Integer userId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "updateOrderStatus",
-      "parameters" : [ "Long orderId", "OrderStatus newStatus" ],
-      "return_type" : "OrderResponse",
-      "description" : "1. Retrieves an order by its ID using `orderRepository.findById(orderId)`. 2. Throws `ResourceNotFoundException` if the order is not found. 3. Updates the order's status to `newStatus`. 4. Saves the updated order via `orderRepository.save()`. 5. Returns an OrderResponse DTO."
+      "parameters" : [ "OrderResponse updateOrderStatus(Long orderId, OrderStatus newStatus)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -811,9 +777,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/OrderRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/service/ProductService.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : "SERVICE layer — implements `createOrder(CreateOrderRequest request, Integer userId): OrderResponse`, `getOrderById(Long orderId, Integer userId): OrderResponse`, `getAllOrders(Integer userId): List<OrderResponse>`, and `updateOrderStatus(Long orderId, OrderStatus newStatus): OrderResponse`; delegates persistence to `OrderRepository` and `OrderItemRepository`, and product details/stock updates to `ProductService`.",
+    "file_role" : "SERVICE layer — implements `createOrder(CreateOrderRequest request, Integer userId): OrderResponse`, `getOrderById(Long orderId, Integer userId): OrderResponse`, `getAllOrders(Integer userId): List<OrderResponse>`, and `updateOrderStatus(Long orderId, OrderStatus newStatus): OrderResponse`; delegates persistence to `OrderRepository` and `OrderItemRepository`, and product details/stock updates to `ProductService`.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: OrderResponse createOrder(CreateOrderRequest request, Integer userId); OrderResponse getOrderById(Long orderId, Integer userId); java.util.List<OrderResponse> getAllOrders(Integer userId); OrderResponse updateOrderStatus(Long orderId, OrderStatus newStatus)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "CreateOrderRequest.java",
     "file_path" : "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java",
@@ -825,30 +791,30 @@
     "description" : "Data transfer object for creating a new order from the client's cart.",
     "public_functions" : null,
     "public_variables" : [ {
-      "name" : "orderItems",
-      "type" : "List<OrderItemRequest>",
-      "description" : "List of items included in the order. Not null, not empty."
+      "name" : "orderType",
+      "type" : "OrderType",
+      "description" : null
     }, {
       "name" : "shippingAddress",
       "type" : "String",
-      "description" : "Shipping address for the order. Not null, max 255 characters."
+      "description" : null
     }, {
       "name" : "contactPhone",
       "type" : "String",
-      "description" : "Contact phone number for the order. Not null, max 20 characters."
+      "description" : null
     }, {
-      "name" : "orderType",
-      "type" : "OrderType",
-      "description" : "Type of order (DELIVERY or PICKUP). Not null."
+      "name" : "items",
+      "type" : "java.util.List<OrderItemRequest>",
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : "Data transfer object for creating a new order from the client's cart.",
+    "file_role" : "Data transfer object for creating a new order from the client's cart.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { orderType: OrderType; shippingAddress: String; contactPhone: String; items: java.util.List<OrderItemRequest> }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderItemRequest.java",
     "file_path" : "backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java",
@@ -862,20 +828,20 @@
     "public_variables" : [ {
       "name" : "productId",
       "type" : "Long",
-      "description" : "ID of the product. Not null."
+      "description" : null
     }, {
       "name" : "quantity",
       "type" : "Integer",
-      "description" : "Quantity of the product. Must be positive."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : "Represents a single item within a new order request.",
+    "file_role" : "Represents a single item within a new order request.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { productId: Long; quantity: Integer }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderResponse.java",
     "file_path" : "backend/src/main/java/com/prakashstores/dto/OrderResponse.java",
@@ -889,48 +855,48 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier of the order."
+      "description" : null
     }, {
       "name" : "userId",
       "type" : "Integer",
-      "description" : "ID of the user who placed the order."
+      "description" : null
     }, {
       "name" : "orderDate",
-      "type" : "LocalDateTime",
-      "description" : "Date and time when the order was placed."
+      "type" : "java.time.LocalDateTime",
+      "description" : null
     }, {
       "name" : "totalAmount",
-      "type" : "BigDecimal",
-      "description" : "Total amount of the order in INR."
+      "type" : "java.math.BigDecimal",
+      "description" : null
     }, {
       "name" : "status",
       "type" : "OrderStatus",
-      "description" : "Current status of the order."
+      "description" : null
     }, {
       "name" : "orderType",
       "type" : "OrderType",
-      "description" : "Type of order (DELIVERY or PICKUP)."
+      "description" : null
     }, {
       "name" : "shippingAddress",
       "type" : "String",
-      "description" : "Shipping address for the order."
+      "description" : null
     }, {
       "name" : "contactPhone",
       "type" : "String",
-      "description" : "Contact phone number for the order."
+      "description" : null
     }, {
-      "name" : "orderItems",
-      "type" : "List<OrderItemResponse>",
-      "description" : "List of items in the order."
+      "name" : "items",
+      "type" : "java.util.List<OrderItemResponse>",
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : "Data transfer object for sending detailed order information to the client.",
+    "file_role" : "Data transfer object for sending detailed order information to the client.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; userId: Integer; orderDate: java.time.LocalDateTime; totalAmount: java.math.BigDecimal; status: OrderStatus; orderType: OrderType; shippingAddress: String; contactPhone: String; items: java.util.List<OrderItemResponse> }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderController.java",
     "file_path" : "backend/src/main/java/com/prakashstores/controller/OrderController.java",
@@ -942,19 +908,19 @@
     "description" : "Exposes API endpoints for customers to create orders and view their order history.",
     "public_functions" : [ {
       "name" : "createOrder",
-      "parameters" : [ "CreateOrderRequest createOrderRequest", "@CurrentUser Integer userId" ],
-      "return_type" : "ResponseEntity<OrderResponse>",
-      "description" : "Creates a new order for the authenticated user. Returns 201 Created on success, 400 Bad Request for invalid input, or 404 Not Found if products are not found."
+      "parameters" : [ "OrderResponse createOrder(@RequestBody CreateOrderRequest createOrderRequest, @CurrentUser Integer userId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllOrders",
-      "parameters" : [ "@CurrentUser Integer userId" ],
-      "return_type" : "ResponseEntity<List<OrderResponse>>",
-      "description" : "Retrieves all orders for the authenticated user. Returns 200 OK."
+      "parameters" : [ "java.util.List<OrderResponse> getAllOrders(@CurrentUser Integer userId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getOrderById",
-      "parameters" : [ "@PathVariable Long orderId", "@CurrentUser Integer userId" ],
-      "return_type" : "ResponseEntity<OrderResponse>",
-      "description" : "Retrieves a specific order by ID for the authenticated user. Returns 200 OK on success, or 404 Not Found if the order does not exist or does not belong to the user."
+      "parameters" : [ "OrderResponse getOrderById(@PathVariable Long orderId, @CurrentUser Integer userId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : [ {
@@ -983,9 +949,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/OrderService.java", "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : "CONTROLLER layer — exposes API endpoints for customers to create orders and view their order history.",
+    "file_role" : "CONTROLLER layer — exposes API endpoints for customers to create orders and view their order history.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: OrderResponse createOrder(@RequestBody CreateOrderRequest createOrderRequest, @CurrentUser Integer userId); java.util.List<OrderResponse> getAllOrders(@CurrentUser Integer userId); OrderResponse getOrderById(@PathVariable Long orderId, @CurrentUser Integer userId)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "AdminOrderController.java",
     "file_path" : "backend/src/main/java/com/prakashstores/controller/admin/AdminOrderController.java",
@@ -997,14 +963,14 @@
     "description" : "Provides secured admin endpoints for viewing and managing all customer orders.",
     "public_functions" : [ {
       "name" : "getAllOrders",
-      "parameters" : [ ],
-      "return_type" : "ResponseEntity<List<OrderResponse>>",
-      "description" : "Retrieves all customer orders. Returns 200 OK."
+      "parameters" : [ "java.util.List<OrderResponse> getAllOrders()" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "updateOrderStatus",
-      "parameters" : [ "@PathVariable Long orderId", "@RequestParam OrderStatus newStatus" ],
-      "return_type" : "ResponseEntity<OrderResponse>",
-      "description" : "Updates the status of a specific order. Returns 200 OK on success, 404 Not Found if the order does not exist, or 400 Bad Request for an invalid status transition."
+      "parameters" : [ "OrderResponse updateOrderStatus(@PathVariable Long orderId, @RequestParam(\"newStatus\") OrderStatus newStatus)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : [ {
@@ -1026,9 +992,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/OrderService.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-api",
-    "file_role" : "CONTROLLER layer — provides secured admin endpoints for viewing and managing all customer orders.",
+    "file_role" : "CONTROLLER layer — provides secured admin endpoints for viewing and managing all customer orders.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<OrderResponse> getAllOrders(); OrderResponse updateOrderStatus(@PathVariable Long orderId, @RequestParam(\"newStatus\") OrderStatus newStatus)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "Review.java",
     "file_path" : "backend/src/main/java/com/prakashstores/model/Review.java",
@@ -1042,36 +1008,36 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the review. Generated automatically."
+      "description" : null
     }, {
       "name" : "productId",
       "type" : "Long",
-      "description" : "ID of the product being reviewed. Not null."
+      "description" : null
     }, {
       "name" : "userId",
       "type" : "Integer",
-      "description" : "ID of the user who submitted the review. Not null."
+      "description" : null
     }, {
       "name" : "rating",
       "type" : "Integer",
-      "description" : "Rating given by the user (1-5). Not null, min 1, max 5."
+      "description" : null
     }, {
       "name" : "comment",
       "type" : "String",
-      "description" : "Text comment of the review. Max 500 characters."
+      "description" : null
     }, {
       "name" : "reviewDate",
       "type" : "LocalDateTime",
-      "description" : "Timestamp when the review was submitted. Not null."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : "MODEL layer — represents a customer review for a product, including a rating and comment.",
+    "file_role" : "MODEL layer — represents a customer review for a product, including a rating and comment.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; productId: Long; userId: Integer; rating: Integer; comment: String; reviewDate: LocalDateTime }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ReviewRepository.java",
     "file_path" : "backend/src/main/java/com/prakashstores/repository/ReviewRepository.java",
@@ -1083,9 +1049,9 @@
     "description" : "Provides data access methods for Review entities.",
     "public_functions" : [ {
       "name" : "findByProductId",
-      "parameters" : [ "Long productId" ],
-      "return_type" : "List<Review>",
-      "description" : "Retrieves all reviews associated with a specific product ID."
+      "parameters" : [ "List<Review> findByProductId(Long productId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -1093,9 +1059,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Review.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : "REPOSITORY layer — provides data access methods for Review entities, including finding reviews by product ID.",
+    "file_role" : "REPOSITORY layer — provides data access methods for Review entities, including finding reviews by product ID.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: List<Review> findByProductId(Long productId)",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ReviewService.java",
     "file_path" : "backend/src/main/java/com/prakashstores/service/ReviewService.java",
@@ -1107,19 +1073,19 @@
     "description" : "Handles business logic for creating and managing product reviews.",
     "public_functions" : [ {
       "name" : "createReview",
-      "parameters" : [ "CreateReviewRequest request", "Integer userId" ],
-      "return_type" : "ReviewDto",
-      "description" : "Creates a new product review for the given product and user. Throws ResourceNotFoundException if the product does not exist."
+      "parameters" : [ "ReviewDto createReview(CreateReviewRequest request, Integer userId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getReviewsByProductId",
-      "parameters" : [ "Long productId" ],
-      "return_type" : "List<ReviewDto>",
-      "description" : "Retrieves all reviews for a specified product ID."
+      "parameters" : [ "List<ReviewDto> getReviewsByProductId(Long productId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllReviews",
-      "parameters" : [ ],
-      "return_type" : "List<ReviewDto>",
-      "description" : "Retrieves all reviews in the system (for admin purposes)."
+      "parameters" : [ "List<ReviewDto> getAllReviews()" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -1127,9 +1093,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/ReviewRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : "SERVICE layer — implements createReview(CreateReviewRequest, Integer): ReviewDto, getReviewsByProductId(Long): List<ReviewDto>, and getAllReviews(): List<ReviewDto>; delegates persistence to ReviewRepository and product lookup to ProductService.",
+    "file_role" : "SERVICE layer — implements createReview(CreateReviewRequest, Integer): ReviewDto, getReviewsByProductId(Long): List<ReviewDto>, and getAllReviews(): List<ReviewDto>; delegates persistence to ReviewRepository and product lookup to ProductService.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: ReviewDto createReview(CreateReviewRequest request, Integer userId); List<ReviewDto> getReviewsByProductId(Long productId); List<ReviewDto> getAllReviews()",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ReviewDto.java",
     "file_path" : "backend/src/main/java/com/prakashstores/dto/ReviewDto.java",
@@ -1143,36 +1109,36 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the review."
+      "description" : null
     }, {
       "name" : "productId",
       "type" : "Long",
-      "description" : "ID of the product being reviewed."
+      "description" : null
     }, {
       "name" : "userId",
       "type" : "Integer",
-      "description" : "ID of the user who submitted the review."
+      "description" : null
     }, {
       "name" : "rating",
       "type" : "Integer",
-      "description" : "Rating given by the user (1-5)."
+      "description" : null
     }, {
       "name" : "comment",
       "type" : "String",
-      "description" : "Text comment of the review."
+      "description" : null
     }, {
       "name" : "reviewDate",
       "type" : "LocalDateTime",
-      "description" : "Timestamp when the review was submitted."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : "DTO layer — data transfer object for sending review details to the client.",
+    "file_role" : "DTO layer — data transfer object for sending review details to the client.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; productId: Long; userId: Integer; rating: Integer; comment: String; reviewDate: LocalDateTime }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "CreateReviewRequest.java",
     "file_path" : "backend/src/main/java/com/prakashstores/dto/CreateReviewRequest.java",
@@ -1186,24 +1152,24 @@
     "public_variables" : [ {
       "name" : "productId",
       "type" : "Long",
-      "description" : "ID of the product being reviewed. Not null."
+      "description" : null
     }, {
       "name" : "rating",
       "type" : "Integer",
-      "description" : "Rating given by the user (1-5). Not null, min 1, max 5."
+      "description" : null
     }, {
       "name" : "comment",
       "type" : "String",
-      "description" : "Text comment of the review. Max 500 characters."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : "DTO layer — data transfer object for creating a new product review.",
+    "file_role" : "DTO layer — data transfer object for creating a new product review.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { productId: Long; rating: Integer; comment: String }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ReviewController.java",
     "file_path" : "backend/src/main/java/com/prakashstores/controller/ReviewController.java",
@@ -1215,19 +1181,19 @@
     "description" : "Exposes API endpoints for submitting and retrieving product reviews.",
     "public_functions" : [ {
       "name" : "createReview",
-      "parameters" : [ "CreateReviewRequest request", "@CurrentUser Integer userId" ],
-      "return_type" : "ResponseEntity<ReviewDto>",
-      "description" : "Handles POST requests to create a new product review. Requires authentication. Returns 201 Created on success, 404 Not Found if product doesn't exist."
+      "parameters" : [ "ReviewDto createReview(CreateReviewRequest request, Integer userId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getReviewsByProductId",
-      "parameters" : [ "@PathVariable Long productId" ],
-      "return_type" : "ResponseEntity<List<ReviewDto>>",
-      "description" : "Handles GET requests to retrieve all reviews for a specific product ID. Publicly accessible. Returns 200 OK."
+      "parameters" : [ "List<ReviewDto> getReviewsByProductId(Long productId)" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllReviews",
-      "parameters" : [ ],
-      "return_type" : "ResponseEntity<List<ReviewDto>>",
-      "description" : "Handles GET requests to retrieve all reviews in the system. Accessible only by administrators. Returns 200 OK."
+      "parameters" : [ "List<ReviewDto> getAllReviews()" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : [ {
@@ -1256,9 +1222,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ReviewService.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : "CONTROLLER layer — exposes API endpoints for submitting and retrieving product reviews.",
+    "file_role" : "CONTROLLER layer — exposes API endpoints for submitting and retrieving product reviews.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: ReviewDto createReview(CreateReviewRequest request, Integer userId); List<ReviewDto> getReviewsByProductId(Long productId); List<ReviewDto> getAllReviews()",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "Event.java",
     "file_path" : "backend/src/main/java/com/prakashstores/model/Event.java",
@@ -1272,36 +1238,36 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the event, auto-generated."
+      "description" : null
     }, {
       "name" : "name",
       "type" : "String",
-      "description" : "Name of the event, not null, max 255 characters."
+      "description" : null
     }, {
       "name" : "description",
       "type" : "String",
-      "description" : "Detailed description of the event, not null, max 1000 characters."
+      "description" : null
     }, {
       "name" : "eventDate",
       "type" : "LocalDate",
-      "description" : "Date of the event, not null."
+      "description" : null
     }, {
       "name" : "eventTime",
       "type" : "LocalTime",
-      "description" : "Time of the event, not null."
+      "description" : null
     }, {
       "name" : "imageUrl",
       "type" : "String",
-      "description" : "URL of the event's image, nullable, max 500 characters."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : "MODEL layer — defines the `Event` entity with fields for name, description, date, time, and imageUrl.",
+    "file_role" : "MODEL layer — defines the `Event` entity with fields for name, description, date, time, and imageUrl.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String; eventDate: LocalDate; eventTime: LocalTime; imageUrl: String }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "EventRepository.java",
     "file_path" : "backend/src/main/java/com/prakashstores/repository/EventRepository.java",
@@ -1313,9 +1279,9 @@
     "description" : "Provides data access methods for Event entities.",
     "public_functions" : [ {
       "name" : "findAllByEventDateAfterOrderByEventDateAsc",
-      "parameters" : [ "LocalDate date" ],
-      "return_type" : "List<Event>",
-      "description" : "Retrieves all events scheduled after a given date, ordered by event date ascending."
+      "parameters" : [ "findAllByEventDateAfterOrderByEventDateAsc(LocalDate date): List<Event>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : [ ],
     "api_endpoints" : null,
@@ -1323,9 +1289,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Event.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : "REPOSITORY layer — provides data access methods for `Event` entities, including `findAllByEventDateAfterOrderByEventDateAsc(LocalDate date)`.",
+    "file_role" : "REPOSITORY layer — provides data access methods for `Event` entities, including `findAllByEventDateAfterOrderByEventDateAsc(LocalDate date)`.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: findAllByEventDateAfterOrderByEventDateAsc(LocalDate date): List<Event>",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "EventService.java",
     "file_path" : "backend/src/main/java/com/prakashstores/service/EventService.java",
@@ -1337,29 +1303,29 @@
     "description" : "Handles business logic for creating and managing in-store events.",
     "public_functions" : [ {
       "name" : "createEvent",
-      "parameters" : [ "EventDto eventDto" ],
-      "return_type" : "EventDto",
-      "description" : "Creates a new event from the provided DTO and returns the saved event DTO. Throws IllegalArgumentException if event date is in the past."
+      "parameters" : [ "createEvent(EventDto eventDto): EventDto" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getEventById",
-      "parameters" : [ "Long id" ],
-      "return_type" : "EventDto",
-      "description" : "Retrieves an event by its ID. Throws ResourceNotFoundException if the event is not found."
+      "parameters" : [ "getEventById(Long id): EventDto" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllEvents",
-      "parameters" : [ ],
-      "return_type" : "List<EventDto>",
-      "description" : "Retrieves all upcoming events, ordered by date."
+      "parameters" : [ "getAllEvents(): List<EventDto>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "updateEvent",
-      "parameters" : [ "Long id", "EventDto eventDto" ],
-      "return_type" : "EventDto",
-      "description" : "Updates an existing event with the provided DTO. Throws ResourceNotFoundException if the event is not found, or IllegalArgumentException if event date is in the past."
+      "parameters" : [ "updateEvent(Long id, EventDto eventDto): EventDto" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "deleteEvent",
-      "parameters" : [ "Long id" ],
-      "return_type" : "void",
-      "description" : "Deletes an event by its ID. Throws ResourceNotFoundException if the event is not found."
+      "parameters" : [ "deleteEvent(Long id): void" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : [ ],
     "api_endpoints" : null,
@@ -1367,9 +1333,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/EventRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : "SERVICE layer — implements `createEvent(EventDto eventDto): EventDto`, `getEventById(Long id): EventDto`, `getAllEvents(): List<EventDto>`, `updateEvent(Long id, EventDto eventDto): EventDto`, and `deleteEvent(Long id): void`.",
+    "file_role" : "SERVICE layer — implements `createEvent(EventDto eventDto): EventDto`, `getEventById(Long id): EventDto`, `getAllEvents(): List<EventDto>`, `updateEvent(Long id, EventDto eventDto): EventDto`, and `deleteEvent(Long id): void`.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: createEvent(EventDto eventDto): EventDto; getEventById(Long id): EventDto; getAllEvents(): List<EventDto>; updateEvent(Long id, EventDto eventDto): EventDto; deleteEvent(Long id): void",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "EventDto.java",
     "file_path" : "backend/src/main/java/com/prakashstores/dto/EventDto.java",
@@ -1383,36 +1349,36 @@
     "public_variables" : [ {
       "name" : "id",
       "type" : "Long",
-      "description" : "Unique identifier for the event."
+      "description" : null
     }, {
       "name" : "name",
       "type" : "String",
-      "description" : "Name of the event, @NotBlank, @Size(max = 255)."
+      "description" : null
     }, {
       "name" : "description",
       "type" : "String",
-      "description" : "Detailed description of the event, @NotBlank, @Size(max = 1000)."
+      "description" : null
     }, {
       "name" : "eventDate",
       "type" : "LocalDate",
-      "description" : "Date of the event, @NotNull."
+      "description" : null
     }, {
       "name" : "eventTime",
       "type" : "LocalTime",
-      "description" : "Time of the event, @NotNull."
+      "description" : null
     }, {
       "name" : "imageUrl",
       "type" : "String",
-      "description" : "URL of the event's image, @Size(max = 500)."
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : "DTO layer — defines the `EventDto` for transferring event data between the client and server.",
+    "file_role" : "DTO layer — defines the `EventDto` for transferring event data between the client and server.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String; eventDate: LocalDate; eventTime: LocalTime; imageUrl: String }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "EventController.java",
     "file_path" : "backend/src/main/java/com/prakashstores/controller/EventController.java",
@@ -1424,14 +1390,14 @@
     "description" : "Exposes public API endpoints for retrieving information about store events.",
     "public_functions" : [ {
       "name" : "getAllEvents",
-      "parameters" : [ ],
-      "return_type" : "ResponseEntity<List<EventDto>>",
-      "description" : "Retrieves a list of all upcoming events."
+      "parameters" : [ "getAllEvents(): List<EventDto>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getEventById",
-      "parameters" : [ "Long eventId" ],
-      "return_type" : "ResponseEntity<EventDto>",
-      "description" : "Retrieves details for a specific event by its ID."
+      "parameters" : [ "getEventById(Long eventId): EventDto" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ {
@@ -1453,9 +1419,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/EventService.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : "CONTROLLER layer — exposes public API endpoints for retrieving event information, including `getAllEvents()` and `getEventById(Long eventId)`.",
+    "file_role" : "CONTROLLER layer — exposes public API endpoints for retrieving event information, including `getAllEvents()` and `getEventById(Long eventId)`.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getAllEvents(): List<EventDto>; getEventById(Long eventId): EventDto",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "AdminEventController.java",
     "file_path" : "backend/src/main/java/com/prakashstores/controller/admin/AdminEventController.java",
@@ -1467,19 +1433,19 @@
     "description" : "Provides secured admin endpoints for creating, updating, and deleting events.",
     "public_functions" : [ {
       "name" : "createEvent",
-      "parameters" : [ "EventDto eventDto" ],
-      "return_type" : "ResponseEntity<EventDto>",
-      "description" : "Creates a new event."
+      "parameters" : [ "createEvent(EventDto eventDto): EventDto" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "updateEvent",
-      "parameters" : [ "Long eventId", "EventDto eventDto" ],
-      "return_type" : "ResponseEntity<EventDto>",
-      "description" : "Updates an existing event by ID."
+      "parameters" : [ "updateEvent(Long eventId, EventDto eventDto): EventDto" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "deleteEvent",
-      "parameters" : [ "Long eventId" ],
-      "return_type" : "ResponseEntity<Void>",
-      "description" : "Deletes an event by ID."
+      "parameters" : [ "deleteEvent(Long eventId): void" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : [ ],
     "api_endpoints" : [ {
@@ -1508,9 +1474,9 @@
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/EventService.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : "CONTROLLER layer — provides secured admin endpoints for managing events, including `createEvent(EventDto eventDto)`, `updateEvent(Long eventId, EventDto eventDto)`, and `deleteEvent(Long eventId)`.",
+    "file_role" : "CONTROLLER layer — provides secured admin endpoints for managing events, including `createEvent(EventDto eventDto)`, `updateEvent(Long eventId, EventDto eventDto)`, and `deleteEvent(Long eventId)`.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: createEvent(EventDto eventDto): EventDto; updateEvent(Long eventId, EventDto eventDto): EventDto; deleteEvent(Long eventId): void",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "GlobalExceptionHandler.java",
     "file_path" : "backend/src/main/java/com/prakashstores/exception/GlobalExceptionHandler.java",
@@ -1534,7 +1500,7 @@
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
-    "imports_from" : [ "backend/src/main/java/com/prakashstores/dto/ErrorResponse.java", "backend/src/main/java/com/prakashstores/exception/ResourceNotFoundException.java" ],
+    "imports_from" : [ "backend/src/main/java/com/prakashstores/dto/ErrorResponse.java" ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend",
     "file_role" : "Centralized exception handler for the application, providing consistent error responses by mapping exceptions to `ErrorResponse` DTOs with appropriate HTTP status codes.",
@@ -1572,25 +1538,6 @@
     "change_required" : null,
     "contract_reconciled" : null
   }, {
-    "file_name" : "ResourceNotFoundException.java",
-    "file_path" : "backend/src/main/java/com/prakashstores/exception/ResourceNotFoundException.java",
-    "file_type" : "BACKEND",
-    "layer" : "EXCEPTION",
-    "created_date" : "2024-07-31",
-    "updated_date" : "2024-07-31",
-    "status" : "PLANNED",
-    "description" : "Custom exception for cases where a requested resource is not found.",
-    "public_functions" : null,
-    "public_variables" : null,
-    "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
-    "imports_from" : [ ],
-    "depends_on" : [ ],
-    "feature_name" : "shared-backend",
-    "file_role" : "Custom exception class to be thrown when a requested resource (e.g., product, order) cannot be found in the system.",
-    "change_required" : null,
-    "contract_reconciled" : null
-  }, {
     "file_name" : "App.tsx",
     "file_path" : "frontend/src/App.tsx",
     "file_type" : "FRONTEND",
@@ -1620,30 +1567,38 @@
     "description" : "Defines TypeScript types and interfaces for products, categories, and brands.",
     "public_functions" : null,
     "public_variables" : [ {
+      "name" : "ProductCategoryDto",
+      "type" : "{ id: number; name: string; }",
+      "description" : null
+    }, {
+      "name" : "BrandDto",
+      "type" : "{ id: number; name: string; }",
+      "description" : null
+    }, {
+      "name" : "ProductVariantDto",
+      "type" : "{ size: string; color: string; stock: number; }",
+      "description" : null
+    }, {
       "name" : "ProductDto",
-      "type" : "{ id: Long; name: String; description: String; price: BigDecimal; imageUrl: String; stockQuantity: Integer; size: String; color: String; material: String; gender: String; active: Boolean; category: String; brand: String; }",
-      "description" : "Represents a product with its details."
+      "type" : "{ id: number; name: string; description: string; price: number; imageUrl: string; additionalImages: string[]; category: ProductCategoryDto; brand: BrandDto; variants: ProductVariantDto[]; }",
+      "description" : null
     }, {
       "name" : "ProductFilterRequest",
-      "type" : "{ categoryName?: String; brandName?: String; gender?: String; size?: String; color?: String; minPrice?: BigDecimal; maxPrice?: BigDecimal; searchTerm?: String; page?: Integer; size?: Integer; sortBy?: String; sortDir?: String; }",
-      "description" : "Request object for filtering products."
+      "type" : "{ categoryId?: number; brandId?: number; size?: string; color?: string; minPrice?: number; maxPrice?: number; searchTerm?: string; page?: number; pageSize?: number; sort?: string; }",
+      "description" : null
     }, {
-      "name" : "ProductCategory",
-      "type" : "{ id: Long; name: String; description: String; }",
-      "description" : "Represents a product category."
-    }, {
-      "name" : "Brand",
-      "type" : "{ id: Long; name: String; description: String; }",
-      "description" : "Represents a product brand."
+      "name" : "Page<T>",
+      "type" : "{ content: T[]; totalPages: number; totalElements: number; number: number; size: number; }",
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : "Generated from the backend API contract — defines TypeScript types for products, categories, and brands.",
+    "file_role" : "Generated from the backend API contract — defines TypeScript types for products, categories, and brands.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { ProductCategoryDto: { id: number; name: string; }; BrandDto: { id: number; name: string; }; ProductVariantDto: { size: string; color: string; stock: number; }; ProductDto: { id: number; name: string; description: string; price: number; imageUrl: string; additionalImages: string[]; category: ProductCategoryDto; brand: BrandDto; variants: ProductVariantDto[]; }; ProductFilterRequest: { categoryId?: number; brandId?: number; size?: string; color?: string; minPrice?: number; maxPrice?: number; searchTerm?: string; page?: number; pageSize?: number; sort?: string; }; Page<T>: { content: T[]; totalPages: number; totalElements: number; number: number; size: number; } }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "productService.ts",
     "file_path" : "frontend/src/services/productService.ts",
@@ -1655,24 +1610,24 @@
     "description" : "Provides functions for interacting with the product-related API endpoints.",
     "public_functions" : [ {
       "name" : "getAllProducts",
-      "parameters" : [ "ProductFilterRequest? filter" ],
-      "return_type" : "Promise<Page<ProductDto>>",
-      "description" : "Fetches a paginated list of products, optionally filtered by various criteria."
+      "parameters" : [ "getAllProducts(filter?: ProductFilterRequest): Promise<Page<ProductDto>>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getProductById",
-      "parameters" : [ "Long productId" ],
-      "return_type" : "Promise<ProductDto>",
-      "description" : "Fetches detailed information for a single product by its ID."
+      "parameters" : [ "getProductById(productId: number): Promise<ProductDto>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllProductCategories",
-      "parameters" : [ ],
-      "return_type" : "Promise<List<ProductCategory>>",
-      "description" : "Fetches a list of all available product categories."
+      "parameters" : [ "getAllProductCategories(): Promise<ProductCategoryDto[]>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     }, {
       "name" : "getAllBrands",
-      "parameters" : [ ],
-      "return_type" : "Promise<List<Brand>>",
-      "description" : "Fetches a list of all available product brands."
+      "parameters" : [ "getAllBrands(): Promise<BrandDto[]>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -1694,9 +1649,9 @@
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : "SERVICE layer — provides asynchronous functions for interacting with the product-related API endpoints, including getAllProducts(ProductFilterRequest): Promise<Page<ProductDto>>, getProductById(Long): Promise<ProductDto>, getAllProductCategories(): Promise<List<ProductCategory>>, and getAllBrands(): Promise<List<Brand>>.",
+    "file_role" : "SERVICE layer — provides asynchronous functions for interacting with the product-related API endpoints, including getAllProducts(ProductFilterRequest): Promise<Page<ProductDto>>, getProductById(Long): Promise<ProductDto>, getAllProductCategories(): Promise<List<ProductCategory>>, and getAllBrands(): Promise<List<Brand>>.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getAllProducts(filter?: ProductFilterRequest): Promise<Page<ProductDto>>; getProductById(productId: number): Promise<ProductDto>; getAllProductCategories(): Promise<ProductCategoryDto[]>; getAllBrands(): Promise<BrandDto[]>",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "order.ts",
     "file_path" : "frontend/src/types/order.ts",
@@ -1708,30 +1663,38 @@
     "description" : "Defines TypeScript types and interfaces for orders and order items.",
     "public_functions" : null,
     "public_variables" : [ {
-      "name" : "Order",
-      "type" : "{ id: Long; userId: Integer; orderDate: string; totalAmount: BigDecimal; status: 'PENDING' | 'CONFIRMED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED'; orderType: 'DELIVERY' | 'PICKUP'; shippingAddress: string; contactPhone: string; orderItems: OrderItem[]; }",
-      "description" : "Interface for an order, mirroring backend OrderResponse."
-    }, {
-      "name" : "OrderItem",
-      "type" : "{ id: Long; productId: Long; productName: string; quantity: Integer; unitPrice: BigDecimal; imageUrl: string; }",
-      "description" : "Interface for an item within an order, mirroring backend OrderItemResponse."
+      "name" : "OrderItemRequest",
+      "type" : "{ productId: string | number; quantity: number; unitPrice: number; }",
+      "description" : null
     }, {
       "name" : "CreateOrderRequest",
-      "type" : "{ orderItems: OrderItemRequest[]; shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP'; }",
-      "description" : "Interface for creating a new order, mirroring backend CreateOrderRequest."
+      "type" : "{ items: OrderItemRequest[]; shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP'; paymentMethod: string; }",
+      "description" : null
     }, {
-      "name" : "OrderItemRequest",
-      "type" : "{ productId: Long; quantity: Integer; }",
-      "description" : "Interface for an item within a CreateOrderRequest."
+      "name" : "ShippingDetails",
+      "type" : "{ shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP'; }",
+      "description" : null
+    }, {
+      "name" : "OrderDetailsForPayment",
+      "type" : "{ items: OrderItemRequest[]; shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP'; }",
+      "description" : null
+    }, {
+      "name" : "OrderItem",
+      "type" : "{ id: number; productId: string | number; productName: string; quantity: number; unitPrice: number; imageUrl: string | null; }",
+      "description" : null
+    }, {
+      "name" : "Order",
+      "type" : "{ id: string; orderItems: OrderItem[]; totalAmount: number; shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP'; status: string; createdAt: string; }",
+      "description" : null
     } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow",
-    "file_role" : "Generated from the backend API contract — defines TypeScript types for orders and order items.",
+    "file_role" : "Generated from the backend API contract — defines TypeScript types for orders and order items.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { OrderItemRequest: { productId: string | number; quantity: number; unitPrice: number; }; CreateOrderRequest: { items: OrderItemRequest[]; shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP'; paymentMethod: string; }; ShippingDetails: { shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP'; }; OrderDetailsForPayment: { items: OrderItemRequest[]; shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP'; }; OrderItem: { id: number; productId: string | number; productName: string; quantity: number; unitPrice: number; imageUrl: string | null; }; Order: { id: string; orderItems: OrderItem[]; totalAmount: number; shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP'; status: string; createdAt: string; } }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "orderService.ts",
     "file_path" : "frontend/src/services/orderService.ts",
@@ -1741,16 +1704,26 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides functions for creating orders and fetching order history from the API.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "createOrder(request: CreateOrderRequest): Promise<Order>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
+    }, {
+      "name" : "getAllOrders",
+      "parameters" : [ "getAllOrders(): Promise<Order[]>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/order.ts" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow",
-    "file_role" : "Generated from the backend API contract — provides functions for creating orders and fetching order history.",
+    "file_role" : "Generated from the backend API contract — provides functions for creating orders and fetching order history.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: createOrder(request: CreateOrderRequest): Promise<Order>; getAllOrders(): Promise<Order[]>",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "review.ts",
     "file_path" : "frontend/src/types/review.ts",
@@ -1779,16 +1752,26 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides functions for submitting and fetching product reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getReviewsByProductId",
+      "parameters" : [ "getReviewsByProductId(productId: number): Promise<ReviewDto[]>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
+    }, {
+      "name" : "createReview",
+      "parameters" : [ "createReview(request: { productId: number; rating: number; comment: string; }): Promise<ReviewDto>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/review.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : "Generated from the backend API contract — provides functions for submitting and fetching product reviews.",
+    "file_role" : "Generated from the backend API contract — provides functions for submitting and fetching product reviews.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getReviewsByProductId(productId: number): Promise<ReviewDto[]>; createReview(request: { productId: number; rating: number; comment: string; }): Promise<ReviewDto>",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "event.ts",
     "file_path" : "frontend/src/types/event.ts",
@@ -1817,16 +1800,21 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides functions for fetching event data from the API.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllEvents",
+      "parameters" : [ "getAllEvents(): Promise<EventDto[]>" ],
+      "return_type" : null,
+      "description" : "Reconciled method contract"
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : "Generated from the backend API contract — provides functions for fetching event data from the API.",
+    "file_role" : "Generated from the backend API contract — provides functions for fetching event data from the API.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getAllEvents(): Promise<EventDto[]>",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProtectedRoute.tsx",
     "file_path" : "frontend/src/components/ProtectedRoute.tsx",
@@ -1838,9 +1826,9 @@
     "description" : "A route guard component that restricts access to authenticated users or specific roles.",
     "public_functions" : [ {
       "name" : "ProtectedRoute",
-      "parameters" : [ "{ children: React.ReactNode, roles?: string[] }" ],
+      "parameters" : [ "children: React.ReactNode", "roles: string[] | undefined" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders children if the user is authenticated and has the required roles, otherwise redirects to login."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -1848,9 +1836,9 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : "A React component that acts as a route guard, restricting access to its children based on user authentication status and optional roles.",
+    "file_role" : "A React component that acts as a route guard, restricting access to its children based on user authentication status and optional roles.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { children: React.ReactNode; roles: string[] | undefined }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "AdminLayout.tsx",
     "file_path" : "frontend/src/components/AdminLayout.tsx",
@@ -1862,9 +1850,9 @@
     "description" : "The main layout for the admin section, including a sidebar for navigation.",
     "public_functions" : [ {
       "name" : "AdminLayout",
-      "parameters" : [ "{ children: React.ReactNode }" ],
+      "parameters" : [ "children: React.ReactNode" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders the admin layout with a sidebar and header, wrapping the provided children."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -1872,9 +1860,9 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : "Admin layout component — provides the consistent navigation sidebar and header for all admin pages, rendering its children within the main content area.",
+    "file_role" : "Admin layout component — provides the consistent navigation sidebar and header for all admin pages, rendering its children within the main content area.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { children: React.ReactNode }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "HomePage.tsx",
     "file_path" : "frontend/src/pages/HomePage.tsx",
@@ -2020,9 +2008,9 @@
     "description" : "A sidebar with controls to filter products by category, brand, size, color, and price.",
     "public_functions" : [ {
       "name" : "ProductFilterSidebar",
-      "parameters" : [ "{ onFilterChange: (filters: ProductFilterRequest) => void }" ],
+      "parameters" : [ "onFilterChange: (filters: ProductFilterRequest) => void" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a sidebar with product filtering options and calls onFilterChange when filters are applied."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2030,9 +2018,9 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : "COMPONENT layer — provides UI controls for filtering products by category, brand, size, color, and price range.",
+    "file_role" : "COMPONENT layer — provides UI controls for filtering products by category, brand, size, color, and price range.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { onFilterChange: (filters: ProductFilterRequest) => void }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductGrid.tsx",
     "file_path" : "frontend/src/components/product/ProductGrid.tsx",
@@ -2044,9 +2032,9 @@
     "description" : "Renders a responsive grid of product cards.",
     "public_functions" : [ {
       "name" : "ProductGrid",
-      "parameters" : [ "{ products: ProductDto[] }" ],
+      "parameters" : [ "products: ProductDto[]" ],
       "return_type" : "JSX.Element",
-      "description" : "Displays a grid of product cards based on the provided product data."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2054,9 +2042,9 @@
     "imports_from" : [ "frontend/src/components/product/ProductCard.tsx", "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : "COMPONENT layer — receives a list of ProductDto objects and renders them in a responsive grid using ProductCard components.",
+    "file_role" : "COMPONENT layer — receives a list of ProductDto objects and renders them in a responsive grid using ProductCard components.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { products: ProductDto[] }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductCard.tsx",
     "file_path" : "frontend/src/components/product/ProductCard.tsx",
@@ -2068,9 +2056,9 @@
     "description" : "A reusable card component to display a single product's image, name, price, and an 'Add to Cart' button.",
     "public_functions" : [ {
       "name" : "ProductCard",
-      "parameters" : [ "{ product: ProductDto }" ],
+      "parameters" : [ "product: ProductDto" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a card for a single product with its details and an 'Add to Cart' button."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2078,9 +2066,9 @@
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : "COMPONENT layer — displays a single product's image, name, price, and an 'Add to Cart' button, and navigates to the product detail page.",
+    "file_role" : "COMPONENT layer — displays a single product's image, name, price, and an 'Add to Cart' button, and navigates to the product detail page.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { product: ProductDto }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductDetailPage.tsx",
     "file_path" : "frontend/src/pages/ProductDetailPage.tsx",
@@ -2111,9 +2099,9 @@
     "description" : "A component to display multiple high-quality images of a product.",
     "public_functions" : [ {
       "name" : "ProductImageGallery",
-      "parameters" : [ "{ imageUrls: string[] }" ],
+      "parameters" : [ "imageUrls: string[]" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders an image gallery for a product."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2121,9 +2109,9 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : "COMPONENT layer — displays multiple high-quality images of a product in a gallery format.",
+    "file_role" : "COMPONENT layer — displays multiple high-quality images of a product in a gallery format.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { imageUrls: string[] }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductDetails.tsx",
     "file_path" : "frontend/src/components/product/ProductDetails.tsx",
@@ -2135,9 +2123,9 @@
     "description" : "Displays product name, price, description, size/color selectors, and the 'Add to Cart' button.",
     "public_functions" : [ {
       "name" : "ProductDetails",
-      "parameters" : [ "{ product: ProductDto }" ],
+      "parameters" : [ "product: ProductDto" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders the detailed information for a product, including an 'Add to Cart' button."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2145,9 +2133,9 @@
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-browsing",
-    "file_role" : "COMPONENT layer — displays product name, price, description, size/color selectors, and the 'Add to Cart' button.",
+    "file_role" : "COMPONENT layer — displays product name, price, description, size/color selectors, and the 'Add to Cart' button.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { product: ProductDto }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ReviewList.tsx",
     "file_path" : "frontend/src/components/review/ReviewList.tsx",
@@ -2159,9 +2147,9 @@
     "description" : "Displays a list of customer reviews for a product and a form to submit a new review.",
     "public_functions" : [ {
       "name" : "ReviewList",
-      "parameters" : [ "productId: Long" ],
+      "parameters" : [ "productId: number" ],
       "return_type" : "JSX.Element",
-      "description" : "Fetches and displays reviews for a given product, and provides a form to submit new reviews. Monetary values are formatted using en-IN locale."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2169,9 +2157,9 @@
     "imports_from" : [ "frontend/src/services/reviewService.ts", "frontend/src/types/review.ts", "frontend/src/components/review/ReviewForm.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : "COMPONENT layer — displays a list of customer reviews for a product and integrates ReviewForm for new submissions. It consumes the generated service function getReviewsByProductId(productId: Long): Promise<ReviewDto[]>.",
+    "file_role" : "COMPONENT layer — displays a list of customer reviews for a product and integrates ReviewForm for new submissions. It consumes the generated service function getReviewsByProductId(productId: Long): Promise<ReviewDto[]>.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { productId: number }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ReviewForm.tsx",
     "file_path" : "frontend/src/components/review/ReviewForm.tsx",
@@ -2183,9 +2171,9 @@
     "description" : "A form for authenticated users to submit a rating and a written review for a product.",
     "public_functions" : [ {
       "name" : "ReviewForm",
-      "parameters" : [ "productId: Long", "onReviewSubmitted: () => void" ],
+      "parameters" : [ "productId: number", "onReviewSubmitted: (review: ReviewDto) => void" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a form for submitting a product review, including rating and comment fields. Monetary values are formatted using en-IN locale."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2193,9 +2181,9 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : "COMPONENT layer — a form for authenticated users to submit a rating and a written review. It consumes the generated service function createReview(request: CreateReviewRequest): Promise<ReviewDto>.",
+    "file_role" : "COMPONENT layer — a form for authenticated users to submit a rating and a written review. It consumes the generated service function createReview(request: CreateReviewRequest): Promise<ReviewDto>.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { productId: number; onReviewSubmitted: (review: ReviewDto) => void }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "CartPage.tsx",
     "file_path" : "frontend/src/pages/CartPage.tsx",
@@ -2214,101 +2202,10 @@
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
-    "imports_from" : [ "frontend/src/components/cart/CartItemsTable.tsx", "frontend/src/components/cart/CartSummary.tsx" ],
+    "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "shopping-cart",
     "file_role" : "PAGE layer — displays the full shopping cart details using CartItemsTable and CartSummary components.",
-    "change_required" : null,
-    "contract_reconciled" : null
-  }, {
-    "file_name" : "CartItemsTable.tsx",
-    "file_path" : "frontend/src/components/cart/CartItemsTable.tsx",
-    "file_type" : "FRONTEND",
-    "layer" : "COMPONENT",
-    "created_date" : "2024-07-31",
-    "updated_date" : "2024-07-31",
-    "status" : "PLANNED",
-    "description" : "Displays cart items in a table with quantity controls and remove buttons.",
-    "public_functions" : [ {
-      "name" : "CartItemsTable",
-      "parameters" : [ ],
-      "return_type" : "JSX.Element",
-      "description" : "Renders a table of cart items with controls for quantity and removal. Displays monetary values in Indian Rupees (₹)."
-    } ],
-    "public_variables" : null,
-    "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
-    "imports_from" : [ ],
-    "depends_on" : [ ],
-    "feature_name" : "shopping-cart",
-    "file_role" : "COMPONENT layer — displays cart items in a table, allowing quantity updates and item removal.",
-    "change_required" : null,
-    "contract_reconciled" : null
-  }, {
-    "file_name" : "CartSummary.tsx",
-    "file_path" : "frontend/src/components/cart/CartSummary.tsx",
-    "file_type" : "FRONTEND",
-    "layer" : "COMPONENT",
-    "created_date" : "2024-07-31",
-    "updated_date" : "2024-07-31",
-    "status" : "PLANNED",
-    "description" : "Shows the cart subtotal, taxes, and total, with a prominent 'Checkout' button.",
-    "public_functions" : [ {
-      "name" : "CartSummary",
-      "parameters" : [ ],
-      "return_type" : "JSX.Element",
-      "description" : "Renders the cart's financial summary (subtotal, adjustments, total) and a 'Proceed to Checkout' button. Displays monetary values in Indian Rupees (₹)."
-    } ],
-    "public_variables" : null,
-    "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
-    "imports_from" : [ ],
-    "depends_on" : [ ],
-    "feature_name" : "shopping-cart",
-    "file_role" : "COMPONENT layer — displays the cart's financial summary and a checkout button.",
-    "change_required" : null,
-    "contract_reconciled" : null
-  }, {
-    "file_name" : "CartIcon.tsx",
-    "file_path" : "frontend/src/components/cart/CartIcon.tsx",
-    "file_type" : "FRONTEND",
-    "layer" : "COMPONENT",
-    "created_date" : "2024-07-31",
-    "updated_date" : "2024-07-31",
-    "status" : "PLANNED",
-    "description" : "A cart icon, typically in the header, showing the number of items and opening a drawer on click.",
-    "public_functions" : [ {
-      "name" : "CartIcon",
-      "parameters" : [ ],
-      "return_type" : "JSX.Element",
-      "description" : "Renders a shopping cart icon with a badge showing the number of items in the cart. Toggles the CartDrawer on click."
-    } ],
-    "public_variables" : null,
-    "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
-    "imports_from" : [ "frontend/src/components/cart/CartDrawer.tsx" ],
-    "depends_on" : [ ],
-    "feature_name" : "shopping-cart",
-    "file_role" : "COMPONENT layer — displays a cart icon with item count and toggles the CartDrawer.",
-    "change_required" : null,
-    "contract_reconciled" : null
-  }, {
-    "file_name" : "CartDrawer.tsx",
-    "file_path" : "frontend/src/components/cart/CartDrawer.tsx",
-    "file_type" : "FRONTEND",
-    "layer" : "COMPONENT",
-    "created_date" : "2024-07-31",
-    "updated_date" : "2024-07-31",
-    "status" : "PLANNED",
-    "description" : "A slide-out panel providing a quick summary of the cart and a link to the full cart page.",
-    "public_functions" : null,
-    "public_variables" : null,
-    "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
-    "imports_from" : [ ],
-    "depends_on" : [ ],
-    "feature_name" : "shopping-cart",
-    "file_role" : null,
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2346,9 +2243,9 @@
     "description" : "A form for users to enter their shipping address or select 'Click and Collect'.",
     "public_functions" : [ {
       "name" : "ShippingAddressForm",
-      "parameters" : [ "{ onAddressSubmit: (address: { shippingAddress: string; contactPhone: string; orderType: 'DELIVERY' | 'PICKUP' }) => void }" ],
+      "parameters" : [ "initialData: ShippingDetails | undefined", "onValidSubmit: (details: ShippingDetails) => void" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a form for shipping address or click and collect selection. Calls onAddressSubmit with collected data."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2356,9 +2253,9 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow",
-    "file_role" : "COMPONENT layer — provides a form for users to input shipping details or select 'Click and Collect'.",
+    "file_role" : "COMPONENT layer — provides a form for users to input shipping details or select 'Click and Collect'.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { initialData: ShippingDetails | undefined; onValidSubmit: (details: ShippingDetails) => void }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "PaymentSelection.tsx",
     "file_path" : "frontend/src/components/checkout/PaymentSelection.tsx",
@@ -2370,9 +2267,9 @@
     "description" : "Handles the payment gateway integration, allowing users to pay via UPI, cards, etc.",
     "public_functions" : [ {
       "name" : "PaymentSelection",
-      "parameters" : [ "{ totalAmount: BigDecimal; onPaymentSuccess: () => void; onPaymentError: (error: string) => void }" ],
+      "parameters" : [ "orderDetails: OrderDetailsForPayment", "totalAmount: number", "onOrderSuccess: (order: Order) => void", "onOrderError: (error: string) => void" ],
       "return_type" : "JSX.Element",
-      "description" : "Displays payment options and initiates payment. Calls onPaymentSuccess or onPaymentError based on outcome."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2380,9 +2277,9 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow",
-    "file_role" : "COMPONENT layer — handles the selection of payment methods and triggers the payment process.",
+    "file_role" : "COMPONENT layer — handles the selection of payment methods and triggers the payment process.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { orderDetails: OrderDetailsForPayment; totalAmount: number; onOrderSuccess: (order: Order) => void; onOrderError: (error: string) => void }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderSummary.tsx",
     "file_path" : "frontend/src/components/checkout/OrderSummary.tsx",
@@ -2394,9 +2291,9 @@
     "description" : "A final summary of the order details before payment confirmation.",
     "public_functions" : [ {
       "name" : "OrderSummary",
-      "parameters" : [ "{ cartItems: CartItem[]; totals: { subtotal: BigDecimal; adjustments: BigDecimal; total: BigDecimal } }" ],
+      "parameters" : [ "cartItems: CartItem[]", "totals: CartTotals" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a summary of cart items, subtotal, adjustments, and total, formatted in INR."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2404,9 +2301,9 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow",
-    "file_role" : "COMPONENT layer — displays a detailed summary of the items in the cart and total amount.",
+    "file_role" : "COMPONENT layer — displays a detailed summary of the items in the cart and total amount.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { cartItems: CartItem[]; totals: CartTotals }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "OrderConfirmationPage.tsx",
     "file_path" : "frontend/src/pages/OrderConfirmationPage.tsx",
@@ -2595,7 +2492,7 @@
       "name" : "EventList",
       "parameters" : [ "events: EventDto[]" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a list of EventCard components based on the provided events array. Monetary values are formatted using en-IN locale."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2603,9 +2500,9 @@
     "imports_from" : [ "frontend/src/components/event/EventCard.tsx", "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : "COMPONENT layer — displays a list of event cards.",
+    "file_role" : "COMPONENT layer — displays a list of event cards.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { events: EventDto[] }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "EventCard.tsx",
     "file_path" : "frontend/src/components/event/EventCard.tsx",
@@ -2619,7 +2516,7 @@
       "name" : "EventCard",
       "parameters" : [ "event: EventDto" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a card with details of a single event, including name, description, date, time, and image. Monetary values are formatted using en-IN locale."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2627,9 +2524,9 @@
     "imports_from" : [ "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : "COMPONENT layer — displays information about a single store event.",
+    "file_role" : "COMPONENT layer — displays information about a single store event.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { event: EventDto }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "AboutPage.tsx",
     "file_path" : "frontend/src/pages/AboutPage.tsx",
@@ -2829,9 +2726,9 @@
     "description" : "A table displaying all products with options to edit, delete, and manage stock.",
     "public_functions" : [ {
       "name" : "ProductTable",
-      "parameters" : [ "{ products: ProductDto[]; onEdit: (product: ProductDto) => void; onDelete: (productId: Long) => void; onUpdateStock: (productId: Long, quantityChange: Integer) => void }" ],
+      "parameters" : [ "products: ProductDto[]", "onEdit: (product: ProductDto) => void", "onDelete: (product: ProductDto) => void", "onUpdateStock: (product: ProductDto, newQuantity: number) => void" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a table of products with edit, delete, and stock update actions. Displays price in INR."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2839,9 +2736,9 @@
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : "Product table component — displays a list of products with actions for editing, deleting, and updating stock.",
+    "file_role" : "Product table component — displays a list of products with actions for editing, deleting, and updating stock.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { products: ProductDto[]; onEdit: (product: ProductDto) => void; onDelete: (product: ProductDto) => void; onUpdateStock: (product: ProductDto, newQuantity: number) => void }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "ProductForm.tsx",
     "file_path" : "frontend/src/components/admin/product/ProductForm.tsx",
@@ -2853,9 +2750,9 @@
     "description" : "A form (used in a dialog/modal) for creating and editing product details.",
     "public_functions" : [ {
       "name" : "ProductForm",
-      "parameters" : [ "{ initialData?: ProductDto; onSubmit: (product: ProductDto) => void; onCancel: () => void }" ],
+      "parameters" : [ "initialData: ProductDto | null", "onSubmit: (data: ProductDto) => void", "onCancel: () => void" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a form to create or edit product details, with fields for name, description, price, image, stock, size, color, material, gender, active status, category, and brand."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2877,9 +2774,9 @@
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : "Product form component — provides a form for creating or editing product details, including fetching categories and brands.",
+    "file_role" : "Product form component — provides a form for creating or editing product details, including fetching categories and brands.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { initialData: ProductDto | null; onSubmit: (data: ProductDto) => void; onCancel: () => void }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "AdminOrdersPage.tsx",
     "file_path" : "frontend/src/pages/admin/AdminOrdersPage.tsx",
@@ -2929,9 +2826,9 @@
     "description" : "A table displaying all customer orders with filtering and status update capabilities.",
     "public_functions" : [ {
       "name" : "OrderTable",
-      "parameters" : [ "{ orders: OrderResponse[]; onUpdateStatus: (orderId: Long, newStatus: OrderStatus) => void }" ],
+      "parameters" : [ "orders: Order[]", "onUpdateStatus: (order: Order, newStatus: OrderStatus) => void" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a table of customer orders with details like ID, date, total amount (in INR), status, type, shipping address, and contact phone. Allows updating order status."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -2939,9 +2836,9 @@
     "imports_from" : [ "frontend/src/types/order.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : "Order table component — displays a list of customer orders with options to filter and update order status.",
+    "file_role" : "Order table component — displays a list of customer orders with options to filter and update order status.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { orders: Order[]; onUpdateStatus: (order: Order, newStatus: OrderStatus) => void }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "AdminEventsPage.tsx",
     "file_path" : "frontend/src/pages/admin/AdminEventsPage.tsx",
@@ -3005,9 +2902,9 @@
     "description" : "A table displaying all store events with options to edit and delete.",
     "public_functions" : [ {
       "name" : "EventTable",
-      "parameters" : [ "{ events: EventDto[]; onEdit: (event: EventDto) => void; onDelete: (eventId: Long) => void }" ],
+      "parameters" : [ "events: EventDto[]", "onEdit: (event: EventDto) => void", "onDelete: (event: EventDto) => void" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a table of events with edit and delete actions."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -3015,9 +2912,9 @@
     "imports_from" : [ "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : "Event table component — displays a list of store events with actions for editing and deleting.",
+    "file_role" : "Event table component — displays a list of store events with actions for editing and deleting.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { events: EventDto[]; onEdit: (event: EventDto) => void; onDelete: (event: EventDto) => void }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "EventForm.tsx",
     "file_path" : "frontend/src/components/admin/event/EventForm.tsx",
@@ -3029,9 +2926,9 @@
     "description" : "A form for creating and editing store event details.",
     "public_functions" : [ {
       "name" : "EventForm",
-      "parameters" : [ "{ initialData?: EventDto; onSubmit: (event: EventDto) => void; onCancel: () => void }" ],
+      "parameters" : [ "initialData: EventDto | null", "onSubmit: (data: EventDto) => void", "onCancel: () => void" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a form to create or edit event details, with fields for name, description, date, time, and image URL."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -3039,9 +2936,9 @@
     "imports_from" : [ "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : "Event form component — provides a form for creating or editing event details.",
+    "file_role" : "Event form component — provides a form for creating or editing event details.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { initialData: EventDto | null; onSubmit: (data: EventDto) => void; onCancel: () => void }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   }, {
     "file_name" : "DeleteConfirmationDialog.tsx",
     "file_path" : "frontend/src/components/admin/shared/DeleteConfirmationDialog.tsx",
@@ -3053,9 +2950,9 @@
     "description" : "A reusable dialog component to confirm delete actions across the admin panel.",
     "public_functions" : [ {
       "name" : "DeleteConfirmationDialog",
-      "parameters" : [ "{ isOpen: boolean; onClose: () => void; onConfirm: () => void; itemToDeleteName: string }" ],
+      "parameters" : [ "isOpen: boolean", "onClose: () => void", "onConfirm: () => void", "itemToDeleteName: string" ],
       "return_type" : "JSX.Element",
-      "description" : "Renders a modal dialog to confirm a delete action for a specified item."
+      "description" : "Reconciled prop contract"
     } ],
     "public_variables" : null,
     "api_endpoints" : null,
@@ -3063,9 +2960,9 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : "Reusable delete confirmation dialog component — prompts the user to confirm a delete action.",
+    "file_role" : "Reusable delete confirmation dialog component — prompts the user to confirm a delete action.\n\nRECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { isOpen: boolean; onClose: () => void; onConfirm: () => void; itemToDeleteName: string }",
     "change_required" : null,
-    "contract_reconciled" : null
+    "contract_reconciled" : true
   } ],
   "features" : [ {
     "feature_name" : "product-catalog-core",
@@ -3125,7 +3022,7 @@
     "feature_name" : "shared-backend",
     "feature_display_name" : "Shared Backend Utilities",
     "feature_type" : "SHARED",
-    "file_paths" : [ "backend/src/main/java/com/prakashstores/exception/GlobalExceptionHandler.java", "backend/src/main/java/com/prakashstores/dto/ErrorResponse.java", "backend/src/main/java/com/prakashstores/exception/ResourceNotFoundException.java" ],
+    "file_paths" : [ "backend/src/main/java/com/prakashstores/exception/GlobalExceptionHandler.java", "backend/src/main/java/com/prakashstores/dto/ErrorResponse.java" ],
     "feature_instruction" : "The Shared Backend Utilities feature provides foundational components for consistent error handling across the Prakash Stores backend application. It defines a standard `ErrorResponse` DTO for API error messages, a `ResourceNotFoundException` for common 'resource not found' scenarios, and a `GlobalExceptionHandler` to centralize the handling of these and other exceptions. The `GlobalExceptionHandler` ensures that all API errors are returned in a consistent `ErrorResponse` format with appropriate HTTP status codes. Specifically, it will catch `ResourceNotFoundException` and return an `ErrorResponse` with HTTP 404 Not Found. Other unhandled exceptions will return an `ErrorResponse` with HTTP 500 Internal Server Error. Services and controllers across the application will throw `ResourceNotFoundException` when an entity cannot be found by its ID or other criteria, and the `GlobalExceptionHandler` will automatically translate this into a user-friendly API response.",
     "depends_on_features" : [ ],
     "change_required" : true,
@@ -3143,7 +3040,7 @@
     "feature_name" : "shopping-cart",
     "feature_display_name" : "Shopping Cart",
     "feature_type" : "FRONTEND",
-    "file_paths" : [ "frontend/src/pages/CartPage.tsx", "frontend/src/components/cart/CartItemsTable.tsx", "frontend/src/components/cart/CartSummary.tsx", "frontend/src/components/cart/CartIcon.tsx", "frontend/src/components/cart/CartDrawer.tsx" ],
+    "file_paths" : [ "frontend/src/pages/CartPage.tsx" ],
     "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46A00] text-white font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Secondary CTA: border border-[#E87A00] text-[#E87A00] hover:bg-[#FFF3E0] font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-lg shadow-sm border border-gray-100 p-4\n- Section container: <section className=\"py-12 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\nThis feature provides the user interface for managing the shopping cart, including viewing items, updating quantities, removing items, and proceeding to checkout. It integrates with the pre-scaffolded headless cart framework (`@/cart`) for all cart logic and state management. The feature consists of a `CartPage` for a full cart view, `CartItemsTable` and `CartSummary` components for displaying cart details, and `CartIcon` and `CartDrawer` components for quick access and a summary from anywhere on the site.\n\n### CartIcon.tsx\nThis component will display a shopping cart icon, typically in the site header. It will use the `useCart()` hook from `@/cart` to display the `cartCount` as a badge. Clicking the icon will open the `CartDrawer` component. The icon should be styled with `text-white` and the badge with `bg-[#E87A00] text-white`.\n\n### CartDrawer.tsx\nThis component is a slide-out panel that provides a quick overview of the items in the cart. It will use the `useCart()` hook to display `cartItems` and `totals.total`. Each item will show its name, quantity, and unit price. The drawer will include a \"View Full Cart\" button that navigates to the `/cart` page and a \"Proceed to Checkout\" button that navigates to the `/checkout` page. The drawer should be styled with `bg-white` and `shadow-lg`.\n\n### CartPage.tsx\nThis page (`/cart`) provides a comprehensive view of the shopping cart. It will use the `useCart()` hook to access `cartItems` and `totals`. It will render the `CartItemsTable` component to display the individual items and the `CartSummary` component to show the financial breakdown. The page will have a clear heading \"Your Shopping Cart\" and a call to action to proceed to checkout.\n\n### CartItemsTable.tsx\nThis component will display the `cartItems` in a tabular format. For each item, it will show the product image, name, unit price, quantity, and total price for that item. It will provide controls to `setItemQuantity(id, qty, variantKey?)` and `removeItem(id, variantKey?)` using the `useCart()` hook. All monetary values will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`. The table will have a header row for \"Product\", \"Price\", \"Quantity\", \"Total\", and \"Actions\".\n\n### CartSummary.tsx\nThis component will display the `totals` from the `useCart()` hook, including `subtotal`, `adjustments`, and `total`. It will have a prominent \"Proceed to Checkout\" button that navigates to the `/checkout` page. All monetary values will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`. The summary will be styled as a `Card` with `bg-white` and `shadow-md`.\n\n### Inter-file Wiring\n- `CartIcon.tsx` imports and renders `CartDrawer.tsx` when clicked.\n- `CartPage.tsx` imports and renders `CartItemsTable.tsx` and `CartSummary.tsx`.\n- All components (`CartIcon`, `CartDrawer`, `CartPage`, `CartItemsTable`, `CartSummary`) will import and utilize the `useCart()` hook from `@/cart` to interact with the cart state and logic. `CartItemsTable` will call `setItemQuantity` and `removeItem`. `CartDrawer` and `CartSummary` will provide navigation to `/cart` and `/checkout` respectively using `react-router-dom`'s `useNavigate` hook.",
     "depends_on_features" : [ ],
     "change_required" : true,
