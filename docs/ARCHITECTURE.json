@@ -1767,7 +1767,7 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — defines TypeScript types for product reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1786,7 +1786,7 @@
     "imports_from" : [ "frontend/src/types/review.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — provides functions for submitting and fetching product reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1805,7 +1805,7 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — defines TypeScript types for in-store events.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1824,7 +1824,7 @@
     "imports_from" : [ "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — provides functions for fetching event data from the API.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1970,14 +1970,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Displays a grid of recent Instagram posts to showcase new styles and user content.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "InstagramFeed",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a grid of placeholder Instagram posts."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a grid of recent Instagram posts with placeholder content.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2147,14 +2152,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Displays a list of customer reviews for a product and a form to submit a new review.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ReviewList",
+      "parameters" : [ "productId: Long" ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and displays reviews for a given product, and provides a form to submit new reviews. Monetary values are formatted using en-IN locale."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ ],
     "imports_from" : [ "frontend/src/services/reviewService.ts", "frontend/src/types/review.ts", "frontend/src/components/review/ReviewForm.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a list of customer reviews for a product and integrates ReviewForm for new submissions. It consumes the generated service function getReviewsByProductId(productId: Long): Promise<ReviewDto[]>.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2166,14 +2176,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A form for authenticated users to submit a rating and a written review for a product.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ReviewForm",
+      "parameters" : [ "productId: Long", "onReviewSubmitted: () => void" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a form for submitting a product review, including rating and comment fields. Monetary values are formatted using en-IN locale."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ ],
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a form for authenticated users to submit a rating and a written review. It consumes the generated service function createReview(request: CreateReviewRequest): Promise<ReviewDto>.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2547,14 +2562,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A page listing upcoming in-store events with details and dates.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the Events page, fetching and displaying all upcoming events. Monetary values are formatted using en-IN locale."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ ],
     "imports_from" : [ "frontend/src/components/event/EventList.tsx", "frontend/src/services/eventService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "PAGE layer — displays a list of upcoming in-store events. It consumes the generated service function getAllEvents(): Promise<EventDto[]>.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2566,14 +2586,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Displays a list of event cards.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventList",
+      "parameters" : [ "events: EventDto[]" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a list of EventCard components based on the provided events array. Monetary values are formatted using en-IN locale."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/event/EventCard.tsx", "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a list of event cards.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2585,14 +2610,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A card component to display information about a single store event.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventCard",
+      "parameters" : [ "event: EventDto" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a card with details of a single event, including name, description, date, time, and image. Monetary values are formatted using en-IN locale."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays information about a single store event.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2604,14 +2634,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A static page telling the story of Prakash Stores, a trusted local family business.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AboutPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the About Us page with business history, values, and commitment. Monetary values are formatted using en-IN locale."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "PAGE layer — a static page telling the story of Prakash Stores.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2623,14 +2658,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A static page with store address, contact details, opening hours, and an embedded map.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ContactPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the Contact Us page with business contact information and an embedded map. Monetary values are formatted using en-IN locale."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "PAGE layer — a static page with store address, contact details, opening hours, and an embedded map.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2642,14 +2682,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A floating action button for WhatsApp chat integration for customer service.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "WhatsAppCta",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a floating WhatsApp chat button. Monetary values are formatted using en-IN locale."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-engagement",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a floating action button for WhatsApp chat integration.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2966,8 +3011,8 @@
     "feature_display_name" : "Customer Engagement",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/types/review.ts", "frontend/src/services/reviewService.ts", "frontend/src/types/event.ts", "frontend/src/services/eventService.ts", "frontend/src/components/home/InstagramFeed.tsx", "frontend/src/components/review/ReviewList.tsx", "frontend/src/components/review/ReviewForm.tsx", "frontend/src/pages/EventsPage.tsx", "frontend/src/components/event/EventList.tsx", "frontend/src/components/event/EventCard.tsx", "frontend/src/pages/AboutPage.tsx", "frontend/src/pages/ContactPage.tsx", "frontend/src/components/shared/WhatsAppCta.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\nThis `customer-engagement` feature provides components and pages for customer interaction, including product reviews, in-store events, and static content like About Us and Contact Us pages. It also includes a floating WhatsApp CTA for direct customer service.\n\n### Data Flow and Interactions\n\n1.  **Reviews:**\n    *   `ReviewList.tsx` displays reviews for a specific product and integrates `ReviewForm.tsx` for submitting new reviews. It fetches existing reviews using the generated service function `getReviewsByProductId(productId: Long): Promise<ReviewDto[]>` from the `review-system` backend feature.\n    *   `ReviewForm.tsx` allows authenticated users to submit a rating and comment. Upon submission, it calls the generated service function `createReview(request: CreateReviewRequest): Promise<ReviewDto>` from the `review-system` backend feature. The `CreateReviewRequest` object will contain `productId`, `rating`, and `comment`.\n    *   `review.ts` defines the `Review` and `CreateReviewRequest` TypeScript interfaces, mirroring the backend DTOs.\n    *   `reviewService.ts` provides the client-side functions to interact with the `/api/v1/reviews` and `/api/v1/reviews/product/{productId}` endpoints of the `review-system` backend feature.\n\n2.  **Events:**\n    *   `EventsPage.tsx` is the main page for displaying upcoming events. It fetches all events using the generated service function `getAllEvents(): Promise<EventDto[]>` from the `event-management` backend feature.\n    *   `EventList.tsx` receives a list of `EventDto` objects and renders them using `EventCard.tsx` components.\n    *   `EventCard.tsx` displays individual event details such as name, description, date, time, and image.\n    *   `event.ts` defines the `Event` and `EventDto` TypeScript interfaces, mirroring the backend DTOs.\n    *   `eventService.ts` provides the client-side functions to interact with the `/api/v1/events` endpoint of the `event-management` backend feature.\n\n3.  **Static Pages:**\n    *   `AboutPage.tsx` presents information about Prakash Stores, its history, and values. It will include a hero section with a relevant image and text, followed by sections detailing the business's story and commitment to the community. The hero image should be `https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80` with a `bg-black bg-opacity-50` overlay.\n    *   `ContactPage.tsx` displays the store's address (Showroom No 1, 90 Madhukunj, Aundh Rd, Pune, Maharashtra 411020), phone number (093710 25731), opening hours, and an embedded Google Map using the coordinates 18.562196, 73.813639. The map should be a simple iframe or a react-google-maps component if available in the scaffolded project, displaying a marker at the given coordinates.\n\n4.  **Instagram Feed:**\n    *   `InstagramFeed.tsx` is a component intended for the home page (or similar landing pages) to display a grid of recent Instagram posts. It will contain placeholder content as there is no direct API integration for Instagram in this project. It should visually represent an Instagram feed with image placeholders and engagement metrics.\n\n5.  **WhatsApp CTA:**\n    *   `WhatsAppCta.tsx` is a floating action button that provides a direct link to WhatsApp for customer service. It should be positioned at the bottom right of the screen and include the WhatsApp icon and a link to `https://wa.me/919371025731` (using the business phone number).\n\n### Styling and Design\nAll components and pages will adhere to the defined design tokens and visual direction. Use Tailwind CSS classes for all styling. Monetary values, if any, should be formatted using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.",
+    "depends_on_features" : [ "review-system", "event-management" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
