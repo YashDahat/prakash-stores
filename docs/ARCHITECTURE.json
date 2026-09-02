@@ -1836,14 +1836,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A route guard component that restricts access to authenticated users or specific roles.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProtectedRoute",
+      "parameters" : [ "{ children: React.ReactNode, roles?: string[] }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders children if the user is authenticated and has the required roles, otherwise redirects to login."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : null,
+    "file_role" : "A React component that acts as a route guard, restricting access to its children based on user authentication status and optional roles.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2415,14 +2420,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A simple page with a form for users to log in to their account.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "LoginPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a login form and handles user authentication."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : null,
+    "file_role" : "A React page component providing a login form for user authentication.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2434,14 +2444,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A page with a form for new customers to create an account.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "SignupPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a signup form and handles new user registration."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : null,
+    "file_role" : "A React page component providing a signup form for new user registration.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2453,14 +2468,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Customer account dashboard with tabs for viewing profile details and order history.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AccountPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the customer account dashboard with tabbed navigation."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/account/ProfileDetails.tsx", "frontend/src/components/account/OrderHistory.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : null,
+    "file_role" : "A React page component serving as the customer's account dashboard with tabs for profile details and order history.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2472,14 +2492,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A component within the account page to view and edit user profile information.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProfileDetails",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays the current user's name and email."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : null,
+    "file_role" : "A React component displaying the authenticated user's profile information within the account page.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2491,14 +2516,26 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A component that displays a list of the user's past orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderHistory",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and displays a list of the authenticated user's orders, formatted in Indian Rupees."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/orders",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all orders for the currently authenticated user.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/services/orderService.ts", "frontend/src/types/order.ts" ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : null,
+    "file_role" : "A React component displaying a list of the authenticated user's past orders.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2920,8 +2957,8 @@
     "feature_display_name" : "Authentication UI",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/components/ProtectedRoute.tsx", "frontend/src/pages/LoginPage.tsx", "frontend/src/pages/SignupPage.tsx", "frontend/src/pages/AccountPage.tsx", "frontend/src/components/account/ProfileDetails.tsx", "frontend/src/components/account/OrderHistory.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Secondary CTA: bg-gray-200 hover:bg-gray-300 text-[#212121] font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-[#F5F5F5] (odd sections) / bg-white (even sections)\n- Card: bg-white rounded-lg shadow-sm border border-gray-100 p-5\n- Section container: <section className=\"py-12 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n- Input field: border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent\n\nThis `auth-ui` feature provides the user interface for authentication, including login, signup, and a protected account dashboard. It consists of three main pages: `LoginPage`, `SignupPage`, and `AccountPage`, along with a `ProtectedRoute` component to guard routes and two sub-components for the account page: `ProfileDetails` and `OrderHistory`.\n\n### `ProtectedRoute.tsx`\nThis component acts as a route guard. It uses the `useAuth()` hook (from the fenced foundation) to check if a user is authenticated. If the user is not authenticated, they are redirected to the `/login` page. Optionally, it can also check for specific user roles. The component renders its children only if the authentication and role conditions are met.\n\n### `LoginPage.tsx`\nThis page provides a form for users to log in. It will use the `useAuth()` hook to access the `login` function. The form will include fields for email and password. Upon successful login, the user will be redirected to the home page (`/`). The UI should be clean and modern, with clear input fields and a prominent call to action button using the primary CTA design token. It should also include a link to the `SignupPage` for new users.\n\n### `SignupPage.tsx`\nThis page offers a form for new users to create an account. It will use the `useAuth()` hook to access the `signup` function. The form will include fields for name, email, and password. Upon successful signup, the user will be redirected to the `LoginPage`. The UI should be welcoming and straightforward, consistent with the `LoginPage`'s design, using the primary CTA design token for the signup button.\n\n### `AccountPage.tsx`\nThis page serves as the customer's personal dashboard. It will display user-specific information and actions. The page will feature a tabbed interface, with tabs for \"Profile Details\" and \"Order History\". It will use the `useAuth()` hook to retrieve the current user's details (`user` object) and display a welcome message. The page will render the `ProfileDetails` component when the \"Profile Details\" tab is active and the `OrderHistory` component when the \"Order History\" tab is active. The layout should be clean and easy to navigate, reflecting a reliable and community-focused tone.\n\n### `ProfileDetails.tsx`\nThis component, rendered within `AccountPage`, displays the authenticated user's profile information. It will retrieve user details from the `useAuth()` hook. It should display fields such as name and email, and potentially offer an option to edit these details (though the edit functionality itself is out of scope for this feature). The design should be simple and clear, using standard input field design tokens.\n\n### `OrderHistory.tsx`\nThis component, rendered within `AccountPage`, displays a list of the authenticated user's past orders. It will fetch the order history by calling the generated service function `getAllOrders(): Promise<List<OrderResponse>>` from the `order-management-api` feature. The orders should be displayed in a clear, tabular format, showing details like `orderDate`, `totalAmount`, `status`, and `orderItems`. Each order item should display `productName`, `quantity`, and `unitPrice`. Monetary values (`totalAmount`, `unitPrice`) must be formatted in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`. If there are no orders, a friendly message should be displayed. The component will use the `OrderResponse` data shape from `order-management-api` to render the order details.",
+    "depends_on_features" : [ "order-management-api" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
