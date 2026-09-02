@@ -1268,14 +1268,38 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Represents an in-store event like a styling workshop or collection preview.",
-    "public_functions" : null,
-    "public_variables" : null,
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the event, auto-generated."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the event, not null, max 255 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the event, not null, max 1000 characters."
+    }, {
+      "name" : "eventDate",
+      "type" : "LocalDate",
+      "description" : "Date of the event, not null."
+    }, {
+      "name" : "eventTime",
+      "type" : "LocalTime",
+      "description" : "Time of the event, not null."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the event's image, nullable, max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "MODEL layer — defines the `Event` entity with fields for name, description, date, time, and imageUrl.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1287,14 +1311,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides data access methods for Event entities.",
-    "public_functions" : null,
-    "public_variables" : null,
+    "public_functions" : [ {
+      "name" : "findAllByEventDateAfterOrderByEventDateAsc",
+      "parameters" : [ "LocalDate date" ],
+      "return_type" : "List<Event>",
+      "description" : "Retrieves all events scheduled after a given date, ordered by event date ascending."
+    } ],
+    "public_variables" : [ ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Event.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access methods for `Event` entities, including `findAllByEventDateAfterOrderByEventDateAsc(LocalDate date)`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1306,14 +1335,39 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Handles business logic for creating and managing in-store events.",
-    "public_functions" : null,
-    "public_variables" : null,
+    "public_functions" : [ {
+      "name" : "createEvent",
+      "parameters" : [ "EventDto eventDto" ],
+      "return_type" : "EventDto",
+      "description" : "Creates a new event from the provided DTO and returns the saved event DTO. Throws IllegalArgumentException if event date is in the past."
+    }, {
+      "name" : "getEventById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "EventDto",
+      "description" : "Retrieves an event by its ID. Throws ResourceNotFoundException if the event is not found."
+    }, {
+      "name" : "getAllEvents",
+      "parameters" : [ ],
+      "return_type" : "List<EventDto>",
+      "description" : "Retrieves all upcoming events, ordered by date."
+    }, {
+      "name" : "updateEvent",
+      "parameters" : [ "Long id", "EventDto eventDto" ],
+      "return_type" : "EventDto",
+      "description" : "Updates an existing event with the provided DTO. Throws ResourceNotFoundException if the event is not found, or IllegalArgumentException if event date is in the past."
+    }, {
+      "name" : "deleteEvent",
+      "parameters" : [ "Long id" ],
+      "return_type" : "void",
+      "description" : "Deletes an event by its ID. Throws ResourceNotFoundException if the event is not found."
+    } ],
+    "public_variables" : [ ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/EventRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements `createEvent(EventDto eventDto): EventDto`, `getEventById(Long id): EventDto`, `getAllEvents(): List<EventDto>`, `updateEvent(Long id, EventDto eventDto): EventDto`, and `deleteEvent(Long id): void`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1325,14 +1379,38 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Data transfer object for sending event details to the client.",
-    "public_functions" : null,
-    "public_variables" : null,
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the event."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the event, @NotBlank, @Size(max = 255)."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the event, @NotBlank, @Size(max = 1000)."
+    }, {
+      "name" : "eventDate",
+      "type" : "LocalDate",
+      "description" : "Date of the event, @NotNull."
+    }, {
+      "name" : "eventTime",
+      "type" : "LocalTime",
+      "description" : "Time of the event, @NotNull."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the event's image, @Size(max = 500)."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "DTO layer — defines the `EventDto` for transferring event data between the client and server.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1344,14 +1422,38 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Exposes public API endpoints for retrieving information about store events.",
-    "public_functions" : null,
-    "public_variables" : null,
-    "api_endpoints" : null,
+    "public_functions" : [ {
+      "name" : "getAllEvents",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<EventDto>>",
+      "description" : "Retrieves a list of all upcoming events."
+    }, {
+      "name" : "getEventById",
+      "parameters" : [ "Long eventId" ],
+      "return_type" : "ResponseEntity<EventDto>",
+      "description" : "Retrieves details for a specific event by its ID."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/events",
+      "request_body" : null,
+      "response_body" : "List<EventDto>",
+      "description" : "Get all upcoming events.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/events/{eventId}",
+      "request_body" : null,
+      "response_body" : "EventDto",
+      "description" : "Get event details by ID.",
+      "access" : "public"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/EventService.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — exposes public API endpoints for retrieving event information, including `getAllEvents()` and `getEventById(Long eventId)`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1363,14 +1465,50 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Provides secured admin endpoints for creating, updating, and deleting events.",
-    "public_functions" : null,
-    "public_variables" : null,
-    "api_endpoints" : null,
+    "public_functions" : [ {
+      "name" : "createEvent",
+      "parameters" : [ "EventDto eventDto" ],
+      "return_type" : "ResponseEntity<EventDto>",
+      "description" : "Creates a new event."
+    }, {
+      "name" : "updateEvent",
+      "parameters" : [ "Long eventId", "EventDto eventDto" ],
+      "return_type" : "ResponseEntity<EventDto>",
+      "description" : "Updates an existing event by ID."
+    }, {
+      "name" : "deleteEvent",
+      "parameters" : [ "Long eventId" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Deletes an event by ID."
+    } ],
+    "public_variables" : [ ],
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/admin/events",
+      "request_body" : "EventDto",
+      "response_body" : "EventDto",
+      "description" : "Create a new event.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/events/{eventId}",
+      "request_body" : "EventDto",
+      "response_body" : "EventDto",
+      "description" : "Update an existing event by ID.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/events/{eventId}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Delete an event by ID.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/EventService.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — provides secured admin endpoints for managing events, including `createEvent(EventDto eventDto)`, `updateEvent(Long eventId, EventDto eventDto)`, and `deleteEvent(Long eventId)`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2586,8 +2724,8 @@
     "feature_display_name" : "Event Management",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Event.java", "backend/src/main/java/com/prakashstores/repository/EventRepository.java", "backend/src/main/java/com/prakashstores/service/EventService.java", "backend/src/main/java/com/prakashstores/dto/EventDto.java", "backend/src/main/java/com/prakashstores/controller/EventController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminEventController.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "The Event Management feature provides a complete backend solution for managing in-store events at Prakash Stores. It includes data models, repository interfaces, service logic, and both public and administrative API endpoints. Events are defined by their name, description, date, time, and an optional image URL. The `Event` entity stores these details, with `EventRepository` providing standard CRUD operations and custom queries to find events by date. The `EventService` encapsulates the core business logic, handling the creation, retrieval, update, and deletion of events, and performing necessary validations. It interacts with `EventRepository` for persistence. Public access to event information is provided by `EventController`, which exposes endpoints for fetching all upcoming events and individual event details. Administrative operations, such as creating, updating, and deleting events, are handled by `AdminEventController`, which secures these endpoints to ensure only authorized personnel can modify event data. Both controllers consume and produce `EventDto` objects, which are simplified representations of the `Event` entity for client-side communication, ensuring data consistency and preventing direct exposure of internal model details. The `EventService` maps between `Event` entities and `EventDto` objects. Error handling is consistent, throwing `ResourceNotFoundException` for non-existent events, which is handled globally.",
+    "depends_on_features" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
