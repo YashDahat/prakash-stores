@@ -1,0 +1,428 @@
+{
+  "endpoints" : [ {
+    "method" : "POST",
+    "path" : "/api/v1/admin/products",
+    "handler" : "createProduct",
+    "request" : "ProductDto",
+    "response" : "ProductDto"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/admin/products/{productId}",
+    "handler" : "updateProduct",
+    "request" : "ProductDto",
+    "response" : "ProductDto"
+  }, {
+    "method" : "DELETE",
+    "path" : "/api/v1/admin/products/{productId}",
+    "handler" : "deleteProduct",
+    "request" : null,
+    "response" : null
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/admin/products/{productId}/stock",
+    "handler" : "updateProductStock",
+    "request" : "Map",
+    "response" : "ProductDto"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/orders",
+    "handler" : "getAllOrders",
+    "request" : null,
+    "response" : "OrderResponse[]"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/admin/orders/{orderId}/status",
+    "handler" : "updateOrderStatus",
+    "request" : null,
+    "response" : "OrderResponse"
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/admin/events",
+    "handler" : "createEvent",
+    "request" : "EventDto",
+    "response" : "EventDto"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/admin/events/{eventId}",
+    "handler" : "updateEvent",
+    "request" : "EventDto",
+    "response" : "EventDto"
+  }, {
+    "method" : "DELETE",
+    "path" : "/api/v1/admin/events/{eventId}",
+    "handler" : "deleteEvent",
+    "request" : null,
+    "response" : null
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/reviews",
+    "handler" : "createReview",
+    "request" : "CreateReviewRequest",
+    "response" : "ReviewDto"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/reviews/product/{productId}",
+    "handler" : "getReviewsByProductId",
+    "request" : null,
+    "response" : "ReviewDto[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/reviews",
+    "handler" : "getAllReviews",
+    "request" : null,
+    "response" : "ReviewDto[]"
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/orders",
+    "handler" : "createOrder",
+    "request" : "CreateOrderRequest",
+    "response" : "OrderResponse"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/orders",
+    "handler" : "getAllOrders",
+    "request" : null,
+    "response" : "OrderResponse[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/orders/{orderId}",
+    "handler" : "getOrderById",
+    "request" : null,
+    "response" : "OrderResponse"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/events",
+    "handler" : "getAllEvents",
+    "request" : null,
+    "response" : "EventDto[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/events/{eventId}",
+    "handler" : "getEventById",
+    "request" : null,
+    "response" : "EventDto"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/products",
+    "handler" : "getAllProducts",
+    "request" : null,
+    "response" : null
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/products/{productId}",
+    "handler" : "getProductById",
+    "request" : null,
+    "response" : "ProductDto"
+  } ],
+  "types" : {
+    "OrderItem" : {
+      "fields" : {
+        "id" : "Long",
+        "order" : "Order",
+        "productId" : "Long",
+        "productName" : "String",
+        "quantity" : "Integer",
+        "unitPrice" : "BigDecimal",
+        "imageUrl" : "String"
+      }
+    },
+    "GallerySection" : {
+      "constants" : [ "WEBSITE", "EVENT" ]
+    },
+    "User" : {
+      "fields" : {
+        "id" : "Integer",
+        "firstName" : "String",
+        "lastName" : "String",
+        "email" : "String",
+        "phone" : "String",
+        "password" : "String",
+        "role" : "Role"
+      }
+    },
+    "Event" : {
+      "fields" : {
+        "id" : "Long",
+        "name" : "String",
+        "description" : "String",
+        "eventDate" : "LocalDate",
+        "eventTime" : "LocalTime",
+        "imageUrl" : "String"
+      }
+    },
+    "Brand" : {
+      "fields" : {
+        "id" : "Long",
+        "name" : "String",
+        "description" : "String"
+      }
+    },
+    "Order" : {
+      "fields" : {
+        "id" : "Long",
+        "userId" : "Integer",
+        "orderDate" : "LocalDateTime",
+        "totalAmount" : "BigDecimal",
+        "status" : "OrderStatus",
+        "orderType" : "OrderType",
+        "shippingAddress" : "String",
+        "contactPhone" : "String",
+        "orderItems" : "List<OrderItem>"
+      }
+    },
+    "OrderStatus" : {
+      "constants" : [ "PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED" ]
+    },
+    "Product" : {
+      "fields" : {
+        "id" : "Long",
+        "name" : "String",
+        "description" : "String",
+        "price" : "BigDecimal",
+        "imageUrl" : "String",
+        "stockQuantity" : "Integer",
+        "size" : "String",
+        "color" : "String",
+        "material" : "String",
+        "gender" : "String",
+        "active" : "Boolean",
+        "category" : "ProductCategory",
+        "brand" : "Brand"
+      }
+    },
+    "MediaAsset" : {
+      "fields" : {
+        "id" : "Long",
+        "objectKey" : "String",
+        "filename" : "String",
+        "contentType" : "String",
+        "sizeBytes" : "Long",
+        "label" : "String",
+        "showInGallery" : "Boolean",
+        "section" : "GallerySection",
+        "eventName" : "String",
+        "eventDate" : "LocalDate",
+        "sortOrder" : "Integer",
+        "uploadedAt" : "Instant"
+      }
+    },
+    "OrderType" : {
+      "constants" : [ "DELIVERY", "PICKUP" ]
+    },
+    "ProductCategory" : {
+      "fields" : {
+        "id" : "Long",
+        "name" : "String",
+        "description" : "String"
+      }
+    },
+    "owned" : {
+      "fields" : {
+        "id" : "Long",
+        "referenceId" : "String",
+        "gatewayOrderId" : "String",
+        "gatewayPaymentId" : "String",
+        "amount" : "BigDecimal",
+        "currency" : "String",
+        "status" : "PaymentStatus",
+        "createdAt" : "Instant"
+      }
+    },
+    "Role" : {
+      "constants" : [ "ADMIN", "USER" ]
+    },
+    "Review" : {
+      "fields" : {
+        "id" : "Long",
+        "productId" : "Long",
+        "userId" : "Integer",
+        "rating" : "Integer",
+        "comment" : "String",
+        "reviewDate" : "LocalDateTime"
+      }
+    },
+    "PaymentStatus" : {
+      "constants" : [ "CREATED", "CAPTURED", "FAILED" ]
+    },
+    "GalleryItemDto" : {
+      "fields" : {
+        "id" : "Long",
+        "url" : "String",
+        "caption" : "String",
+        "section" : "GallerySection",
+        "eventName" : "String",
+        "eventDate" : "LocalDate",
+        "sortOrder" : "Integer"
+      }
+    },
+    "CreateReviewRequest" : {
+      "fields" : {
+        "productId" : "Long",
+        "rating" : "Integer",
+        "comment" : "String"
+      }
+    },
+    "EventDto" : {
+      "fields" : {
+        "id" : "Long",
+        "name" : "String",
+        "description" : "String",
+        "eventDate" : "java.time.LocalDate",
+        "eventTime" : "LocalTime",
+        "imageUrl" : "String"
+      }
+    },
+    "ProductDto" : {
+      "fields" : {
+        "id" : "Long",
+        "name" : "String",
+        "description" : "String",
+        "price" : "java.math.BigDecimal",
+        "imageUrl" : "String",
+        "stockQuantity" : "Integer",
+        "size" : "String",
+        "color" : "String",
+        "material" : "String",
+        "gender" : "String",
+        "active" : "Boolean",
+        "category" : "String",
+        "brand" : "String"
+      }
+    },
+    "MediaAssetDto" : {
+      "fields" : {
+        "id" : "Long",
+        "url" : "String",
+        "filename" : "String",
+        "contentType" : "String",
+        "sizeBytes" : "Long",
+        "label" : "String",
+        "showInGallery" : "Boolean",
+        "section" : "GallerySection",
+        "eventName" : "String",
+        "eventDate" : "LocalDate",
+        "sortOrder" : "Integer",
+        "uploadedAt" : "Instant"
+      }
+    },
+    "AuthResponse" : {
+      "fields" : {
+        "token" : "String"
+      }
+    },
+    "OrderResponse" : {
+      "fields" : {
+        "id" : "Long",
+        "userId" : "Integer",
+        "orderDate" : "java.time.LocalDateTime",
+        "totalAmount" : "java.math.BigDecimal",
+        "status" : "OrderStatus",
+        "orderType" : "OrderType",
+        "shippingAddress" : "String",
+        "contactPhone" : "String",
+        "items" : "java.util.List<OrderItemResponse>"
+      }
+    },
+    "OrderItemRequest" : {
+      "fields" : {
+        "productId" : "Long",
+        "quantity" : "Integer"
+      }
+    },
+    "CreatePaymentRequest" : {
+      "fields" : {
+        "amount" : "BigDecimal",
+        "currency" : "String",
+        "referenceId" : "String"
+      }
+    },
+    "AuthRequest" : {
+      "fields" : {
+        "username" : "String",
+        "password" : "String"
+      }
+    },
+    "CreateOrderRequest" : {
+      "fields" : {
+        "orderType" : "OrderType",
+        "shippingAddress" : "String",
+        "contactPhone" : "String",
+        "items" : "java.util.List<OrderItemRequest>"
+      }
+    },
+    "PaymentVerificationResponse" : {
+      "fields" : {
+        "verified" : "boolean",
+        "status" : "String",
+        "referenceId" : "String"
+      }
+    },
+    "OrderItemResponse" : {
+      "fields" : {
+        "id" : "Long",
+        "productId" : "Long",
+        "productName" : "String",
+        "quantity" : "Integer",
+        "unitPrice" : "BigDecimal",
+        "imageUrl" : "String"
+      }
+    },
+    "ErrorResponse" : {
+      "fields" : {
+        "timestamp" : "LocalDateTime",
+        "message" : "String",
+        "details" : "String"
+      }
+    },
+    "ReviewDto" : {
+      "fields" : {
+        "id" : "Long",
+        "productId" : "Long",
+        "userId" : "Integer",
+        "rating" : "Integer",
+        "comment" : "String",
+        "reviewDate" : "LocalDateTime"
+      }
+    },
+    "PaymentOrderResponse" : {
+      "fields" : {
+        "gatewayOrderId" : "String",
+        "gatewayKeyId" : "String",
+        "amount" : "int",
+        "currency" : "String",
+        "paymentRecordId" : "Long"
+      }
+    },
+    "VerifyPaymentRequest" : {
+      "fields" : {
+        "gatewayOrderId" : "String",
+        "gatewayPaymentId" : "String",
+        "signature" : "String"
+      }
+    },
+    "ProductFilterRequest" : {
+      "fields" : {
+        "categoryName" : "String",
+        "brandName" : "String",
+        "gender" : "String",
+        "size" : "String",
+        "color" : "String",
+        "minPrice" : "java.math.BigDecimal",
+        "maxPrice" : "java.math.BigDecimal",
+        "searchTerm" : "String",
+        "page" : "Integer",
+        "sortBy" : "String",
+        "sortDir" : "String"
+      }
+    },
+    "RegisterRequest" : {
+      "fields" : {
+        "firstName" : "String",
+        "lastName" : "String",
+        "email" : "String",
+        "phone" : "String",
+        "password" : "String"
+      }
+    }
+  }
+}

@@ -32,4 +32,12 @@ public class GlobalExceptionHandler {
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(org.springframework.security.core.AuthenticationException.class)
+    public org.springframework.http.ResponseEntity<String> handleAuthenticationException(
+            org.springframework.security.core.AuthenticationException ex) {
+        return org.springframework.http.ResponseEntity
+                .status(org.springframework.http.HttpStatus.UNAUTHORIZED)
+                .body(ex.getMessage());
+    }
 }
