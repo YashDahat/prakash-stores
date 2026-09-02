@@ -2164,14 +2164,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A dedicated page showing all items in the shopping cart with options to update quantities or proceed to checkout.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CartPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the shopping cart page, displaying cart items and summary."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/cart/CartItemsTable.tsx", "frontend/src/components/cart/CartSummary.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "shopping-cart",
-    "file_role" : null,
+    "file_role" : "PAGE layer — displays the full shopping cart details using CartItemsTable and CartSummary components.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2183,14 +2188,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Displays cart items in a table with quantity controls and remove buttons.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CartItemsTable",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of cart items with controls for quantity and removal. Displays monetary values in Indian Rupees (₹)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "shopping-cart",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays cart items in a table, allowing quantity updates and item removal.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2202,14 +2212,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "Shows the cart subtotal, taxes, and total, with a prominent 'Checkout' button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CartSummary",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the cart's financial summary (subtotal, adjustments, total) and a 'Proceed to Checkout' button. Displays monetary values in Indian Rupees (₹)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "shopping-cart",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays the cart's financial summary and a checkout button.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2221,14 +2236,19 @@
     "updated_date" : "2024-07-31",
     "status" : "PLANNED",
     "description" : "A cart icon, typically in the header, showing the number of items and opening a drawer on click.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CartIcon",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a shopping cart icon with a badge showing the number of items in the cart. Toggles the CartDrawer on click."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/cart/CartDrawer.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "shopping-cart",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a cart icon with item count and toggles the CartDrawer.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2841,8 +2861,8 @@
     "feature_display_name" : "Shopping Cart",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/pages/CartPage.tsx", "frontend/src/components/cart/CartItemsTable.tsx", "frontend/src/components/cart/CartSummary.tsx", "frontend/src/components/cart/CartIcon.tsx", "frontend/src/components/cart/CartDrawer.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46A00] text-white font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Secondary CTA: border border-[#E87A00] text-[#E87A00] hover:bg-[#FFF3E0] font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-lg shadow-sm border border-gray-100 p-4\n- Section container: <section className=\"py-12 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\nThis feature provides the user interface for managing the shopping cart, including viewing items, updating quantities, removing items, and proceeding to checkout. It integrates with the pre-scaffolded headless cart framework (`@/cart`) for all cart logic and state management. The feature consists of a `CartPage` for a full cart view, `CartItemsTable` and `CartSummary` components for displaying cart details, and `CartIcon` and `CartDrawer` components for quick access and a summary from anywhere on the site.\n\n### CartIcon.tsx\nThis component will display a shopping cart icon, typically in the site header. It will use the `useCart()` hook from `@/cart` to display the `cartCount` as a badge. Clicking the icon will open the `CartDrawer` component. The icon should be styled with `text-white` and the badge with `bg-[#E87A00] text-white`.\n\n### CartDrawer.tsx\nThis component is a slide-out panel that provides a quick overview of the items in the cart. It will use the `useCart()` hook to display `cartItems` and `totals.total`. Each item will show its name, quantity, and unit price. The drawer will include a \"View Full Cart\" button that navigates to the `/cart` page and a \"Proceed to Checkout\" button that navigates to the `/checkout` page. The drawer should be styled with `bg-white` and `shadow-lg`.\n\n### CartPage.tsx\nThis page (`/cart`) provides a comprehensive view of the shopping cart. It will use the `useCart()` hook to access `cartItems` and `totals`. It will render the `CartItemsTable` component to display the individual items and the `CartSummary` component to show the financial breakdown. The page will have a clear heading \"Your Shopping Cart\" and a call to action to proceed to checkout.\n\n### CartItemsTable.tsx\nThis component will display the `cartItems` in a tabular format. For each item, it will show the product image, name, unit price, quantity, and total price for that item. It will provide controls to `setItemQuantity(id, qty, variantKey?)` and `removeItem(id, variantKey?)` using the `useCart()` hook. All monetary values will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`. The table will have a header row for \"Product\", \"Price\", \"Quantity\", \"Total\", and \"Actions\".\n\n### CartSummary.tsx\nThis component will display the `totals` from the `useCart()` hook, including `subtotal`, `adjustments`, and `total`. It will have a prominent \"Proceed to Checkout\" button that navigates to the `/checkout` page. All monetary values will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`. The summary will be styled as a `Card` with `bg-white` and `shadow-md`.\n\n### Inter-file Wiring\n- `CartIcon.tsx` imports and renders `CartDrawer.tsx` when clicked.\n- `CartPage.tsx` imports and renders `CartItemsTable.tsx` and `CartSummary.tsx`.\n- All components (`CartIcon`, `CartDrawer`, `CartPage`, `CartItemsTable`, `CartSummary`) will import and utilize the `useCart()` hook from `@/cart` to interact with the cart state and logic. `CartItemsTable` will call `setItemQuantity` and `removeItem`. `CartDrawer` and `CartSummary` will provide navigation to `/cart` and `/checkout` respectively using `react-router-dom`'s `useNavigate` hook.",
+    "depends_on_features" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
