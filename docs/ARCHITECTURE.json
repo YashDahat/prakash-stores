@@ -3595,13 +3595,21 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for the customer review domain.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "ReviewDto",
+      "type" : "{ id: Long, productId: Long, userId: Integer, rating: Integer, comment: String, reviewDate: LocalDate }",
+      "description" : "Represents a customer review."
+    }, {
+      "name" : "CreateReviewRequest",
+      "type" : "{ productId: Long, rating: Integer, comment: String }",
+      "description" : "Request body for creating a new review."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — TypeScript types and interfaces for the customer review domain.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3613,14 +3621,38 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Provides functions for interacting with the review-related API endpoints.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createReview",
+      "parameters" : [ "CreateReviewRequest request" ],
+      "return_type" : "Promise<ReviewDto>",
+      "description" : "Submits a new customer review to the backend."
+    }, {
+      "name" : "getReviewsByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "Promise<ReviewDto[]>",
+      "description" : "Fetches all reviews for a specific product."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/reviews",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Endpoint to create a new review.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{productId}/reviews",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Endpoint to get reviews for a specific product.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/review.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "Provides functions for interacting with the review-related API endpoints, specifically `createReview(request: CreateReviewRequest): Promise<ReviewDto>` and `getReviewsByProductId(productId: Long): Promise<ReviewDto[]>`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3633,13 +3665,17 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for the loyalty program domain.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "LoyaltyPointsDto",
+      "type" : "{ id: Long, userId: Integer, pointsBalance: Integer, lastUpdated: LocalDateTime }",
+      "description" : "Represents a user's loyalty points balance."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — TypeScript types and interfaces for the loyalty program domain.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3651,14 +3687,26 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Provides functions for interacting with the loyalty program API endpoints.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getMyLoyaltyPoints",
+      "parameters" : [ ],
+      "return_type" : "Promise<LoyaltyPointsDto>",
+      "description" : "Fetches the current user's loyalty points balance."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/loyalty/my",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Endpoint to get the current user's loyalty points.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/loyalty.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "Provides functions for interacting with the loyalty program API endpoints, specifically `getMyLoyaltyPoints(): Promise<LoyaltyPointsDto>`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3670,14 +3718,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Customer account dashboard showing profile details, order history, and loyalty points.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AccountPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the customer account dashboard."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/orderService.ts", "frontend/src/services/loyaltyService.ts", "frontend/src/components/account/ProfileDetails.tsx", "frontend/src/components/account/OrderHistory.tsx", "frontend/src/components/account/LoyaltyPointsSummary.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "Customer account dashboard page, displaying profile details, order history, and loyalty points by orchestrating data from various services and rendering sub-components.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3689,14 +3742,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays the user's personal information and saved addresses.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProfileDetails",
+      "parameters" : [ "{ userProfile: any }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays the user's profile details."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "React component that displays the user's personal information and saved addresses.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3708,14 +3766,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a list of the user's past orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderHistory",
+      "parameters" : [ "{ orders: OrderResponse[] }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays a list of past orders for the user."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/order.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "React component that displays a list of the user's past orders, formatted with Indian currency conventions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3727,14 +3790,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays the user's current loyalty points balance.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "LoyaltyPointsSummary",
+      "parameters" : [ "{ loyaltyPoints: LoyaltyPointsDto }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays the user's current loyalty points balance."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/loyalty.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "React component that displays the user's current loyalty points balance.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -4015,9 +4083,9 @@
     "feature_display_name" : "Customer Account",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/types/review.ts", "frontend/src/services/reviewService.ts", "frontend/src/types/loyalty.ts", "frontend/src/services/loyaltyService.ts", "frontend/src/pages/AccountPage.tsx", "frontend/src/components/account/ProfileDetails.tsx", "frontend/src/components/account/OrderHistory.tsx", "frontend/src/components/account/LoyaltyPointsSummary.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature implements the customer's account dashboard, providing a centralized place for users to view their profile details, order history, and loyalty points. It consists of TypeScript type definitions for reviews and loyalty, service files for interacting with the backend API for reviews and loyalty, and React components for the account page itself and its sub-sections.\n\n## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46A00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\n### `frontend/src/types/review.ts`\nThis file defines the `ReviewDto` interface, which represents a customer review, and `CreateReviewRequest` for submitting new reviews. These types are used throughout the frontend when interacting with review-related data.\n\n### `frontend/src/services/reviewService.ts`\nThis service provides functions to interact with the backend review API. It exports `createReview(request: CreateReviewRequest): Promise<ReviewDto>` to submit a new review and `getReviewsByProductId(productId: Long): Promise<ReviewDto[]>` to fetch reviews for a specific product. These functions will internally use the generated API client to make HTTP requests to `/api/v1/reviews` (POST) and `/api/v1/products/{productId}/reviews` (GET) respectively. Error handling should be implemented to catch network errors or API-specific error responses.\n\n### `frontend/src/types/loyalty.ts`\nThis file defines the `LoyaltyPointsDto` interface, representing a user's loyalty points balance. This type is used when displaying loyalty information to the user.\n\n### `frontend/src/services/loyaltyService.ts`\nThis service provides a function to fetch the current user's loyalty points. It exports `getMyLoyaltyPoints(): Promise<LoyaltyPointsDto>` which internally calls the generated API client to make an HTTP GET request to `/api/v1/loyalty/my`. This function requires authentication and will rely on the `@/api/client` interceptor to attach the JWT.\n\n### `frontend/src/pages/AccountPage.tsx`\nThis page serves as the main customer account dashboard. It will use the `useAuth()` hook to get the current user's ID and ensure the user is authenticated. It will fetch the user's order history using the `getOrdersByUserId()` function from the `order-management-api` feature and their loyalty points using `getMyLoyaltyPoints()` from `loyaltyService.ts`. The page will render the `ProfileDetails`, `OrderHistory`, and `LoyaltyPointsSummary` components, passing the relevant data as props. The layout should be clean and modern, using the defined design tokens for sections and cards. The page title should be \"My Account\" and sections should be clearly delineated.\n\n### `frontend/src/components/account/ProfileDetails.tsx`\nThis component displays the user's personal information and saved addresses. It will receive user profile data as props. The component should present the information in a readable format, using the defined design tokens for text and card styling. Placeholder data for name, email, and addresses should be used initially.\n\n### `frontend/src/components/account/OrderHistory.tsx`\nThis component displays a list of the user's past orders. It will receive a `List<OrderResponse>` as props. Each order should be displayed in a card-like format, showing the order ID, date (formatted for en-IN locale), total amount (formatted as INR), and status. A \"View Details\" button for each order could be included, though the detail view itself is not part of this feature. Monetary values must be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### `frontend/src/components/account/LoyaltyPointsSummary.tsx`\nThis component displays the user's current loyalty points balance. It will receive a `LoyaltyPointsDto` as props. It should prominently display the `pointsBalance` with a friendly message, reinforcing the community-focused tone. The component should use the defined design tokens for styling, perhaps a card with an accent color for the points value.",
+    "depends_on_features" : [ "order-management-api", "customer-features-api" ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
