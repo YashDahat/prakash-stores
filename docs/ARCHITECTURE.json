@@ -1545,14 +1545,39 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Business logic for managing customer reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createReview",
+      "parameters" : [ "Integer userId", "CreateReviewRequest request" ],
+      "return_type" : "ReviewDto",
+      "description" : "Creates a new product review for the given user and product. Throws ResourceNotFoundException if the product does not exist. Throws IllegalStateException if the user has already reviewed the product."
+    }, {
+      "name" : "getReviewsByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews for a specific product."
+    }, {
+      "name" : "getReviewById",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ReviewDto",
+      "description" : "Retrieves a single review by its ID. Throws ResourceNotFoundException if the review does not exist."
+    }, {
+      "name" : "approveReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ReviewDto",
+      "description" : "Approves a review, making it visible. Throws ResourceNotFoundException if the review does not exist."
+    }, {
+      "name" : "deleteReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "void",
+      "description" : "Deletes a review by its ID. Throws ResourceNotFoundException if the review does not exist."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/ReviewRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-api",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements createReview(Integer userId, CreateReviewRequest request): ReviewDto, getReviewsByProductId(Long productId): List<ReviewDto>, getReviewById(Long reviewId): ReviewDto, approveReview(Long reviewId): ReviewDto, deleteReview(Long reviewId): void; delegates persistence to ReviewRepository and product validation to ProductService.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1564,14 +1589,24 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Business logic for managing the customer loyalty program.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getLoyaltyPointsByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "LoyaltyPointsDto",
+      "description" : "Retrieves the loyalty points balance for a given user. Returns a new LoyaltyPointsDto with 0 points if no record exists."
+    }, {
+      "name" : "awardLoyaltyPoints",
+      "parameters" : [ "Integer userId", "BigDecimal amount" ],
+      "return_type" : "LoyaltyPointsDto",
+      "description" : "Awards loyalty points to a user based on a given monetary amount. For every ₹100 spent, 1 point is awarded. Points are rounded down to the nearest integer. Updates existing loyalty points or creates a new record if none exists."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/LoyaltyPointsRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-api",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements getLoyaltyPointsByUserId(Integer userId): LoyaltyPointsDto and awardLoyaltyPoints(Integer userId, BigDecimal amount): LoyaltyPointsDto; delegates persistence to LoyaltyPointsRepository.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1583,14 +1618,38 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Public API endpoints for submitting and viewing product reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createReview",
+      "parameters" : [ "Integer userId", "CreateReviewRequest request" ],
+      "return_type" : "ResponseEntity<ReviewDto>",
+      "description" : "Handles the creation of a new product review."
+    }, {
+      "name" : "getReviewsByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "ResponseEntity<List<ReviewDto>>",
+      "description" : "Retrieves all reviews for a specific product."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/reviews",
+      "request_body" : "CreateReviewRequest",
+      "response_body" : "ReviewDto",
+      "description" : "Submits a new product review. Requires authentication.",
+      "access" : "authenticated"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{productId}/reviews",
+      "request_body" : null,
+      "response_body" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews for a specific product. Accessible to all.",
+      "access" : "public"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ReviewService.java" ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-api",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — exposes public API endpoints for submitting and viewing product reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1602,14 +1661,62 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin-only API endpoints for moderating customer reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllReviews",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<ReviewDto>>",
+      "description" : "Retrieves all submitted reviews."
+    }, {
+      "name" : "getReviewById",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ResponseEntity<ReviewDto>",
+      "description" : "Retrieves a single review by its ID."
+    }, {
+      "name" : "approveReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ResponseEntity<ReviewDto>",
+      "description" : "Approves a review."
+    }, {
+      "name" : "deleteReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Deletes a review."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/reviews",
+      "request_body" : null,
+      "response_body" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews. Requires admin access.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/reviews/{reviewId}",
+      "request_body" : null,
+      "response_body" : "ReviewDto",
+      "description" : "Retrieves a single review by ID. Requires admin access.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/reviews/{reviewId}/approve",
+      "request_body" : null,
+      "response_body" : "ReviewDto",
+      "description" : "Approves a review. Requires admin access.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/reviews/{reviewId}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Deletes a review. Requires admin access.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ReviewService.java" ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-api",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — exposes admin-only API endpoints for moderating customer reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1621,14 +1728,26 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "API endpoints for customers to view their loyalty points balance.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getMyLoyaltyPoints",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "ResponseEntity<LoyaltyPointsDto>",
+      "description" : "Retrieves the loyalty points balance for the authenticated user."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/loyalty/my",
+      "request_body" : null,
+      "response_body" : "LoyaltyPointsDto",
+      "description" : "Retrieves the authenticated user's loyalty points balance. Requires authentication.",
+      "access" : "authenticated"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/LoyaltyService.java" ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-api",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — exposes API endpoints for customers to view their loyalty points balance.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1641,13 +1760,37 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for Review entities.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the review."
+    }, {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product being reviewed."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the user who submitted the review."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "Rating given by the user (1-5 stars)."
+    }, {
+      "name" : "comment",
+      "type" : "String",
+      "description" : "User's comment for the review. Max 500 characters."
+    }, {
+      "name" : "reviewDate",
+      "type" : "LocalDate",
+      "description" : "Date when the review was submitted."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-api",
-    "file_role" : null,
+    "file_role" : "DTO — Data Transfer Object for Review entities.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1660,13 +1803,25 @@
     "status" : "PLANNED",
     "description" : "DTO for creating a new product review.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product being reviewed. Not null."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "Rating given by the user (1-5 stars). Not null, min 1, max 5."
+    }, {
+      "name" : "comment",
+      "type" : "String",
+      "description" : "User's comment for the review. Optional, max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-api",
-    "file_role" : null,
+    "file_role" : "DTO — DTO for creating a new product review.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1679,13 +1834,29 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for LoyaltyPoints entities.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the loyalty points record."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the user who owns these loyalty points."
+    }, {
+      "name" : "pointsBalance",
+      "type" : "Integer",
+      "description" : "Current balance of loyalty points."
+    }, {
+      "name" : "lastUpdated",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp of the last update to the points balance."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-api",
-    "file_role" : null,
+    "file_role" : "DTO — Data Transfer Object for LoyaltyPoints entities.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1697,14 +1868,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Listens for order completion events to award loyalty points to the customer.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "handleOrderCompletedEvent",
+      "parameters" : [ "OrderCompletedEvent event" ],
+      "return_type" : "void",
+      "description" : "Awards loyalty points to the user after an order is completed, based on the order's total amount."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/LoyaltyService.java" ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-api",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — Listens for order completion events to award loyalty points to the customer.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3255,9 +3431,9 @@
     "feature_display_name" : "Customer Features (API)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/service/ReviewService.java", "backend/src/main/java/com/prakashstores/service/LoyaltyService.java", "backend/src/main/java/com/prakashstores/controller/ReviewController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminReviewController.java", "backend/src/main/java/com/prakashstores/controller/LoyaltyController.java", "backend/src/main/java/com/prakashstores/dto/ReviewDto.java", "backend/src/main/java/com/prakashstores/dto/CreateReviewRequest.java", "backend/src/main/java/com/prakashstores/dto/LoyaltyPointsDto.java", "backend/src/main/java/com/prakashstores/event/OrderCompletedListener.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature provides the backend API for customer reviews and loyalty points. It consists of services, controllers, DTOs, and an event listener. The `ReviewService` handles the business logic for creating, retrieving, and moderating product reviews. It interacts with the `ReviewRepository` from `customer-features-core` for persistence and `ProductService` from `product-catalog-api` to validate product existence. The `ReviewController` exposes public endpoints for customers to submit and view reviews, while the `AdminReviewController` provides administrative endpoints for managing reviews (e.g., approving, deleting). The `LoyaltyService` manages customer loyalty points, interacting with the `LoyaltyPointsRepository` from `customer-features-core`. The `LoyaltyController` provides an authenticated endpoint for customers to view their loyalty points balance. The `OrderCompletedListener` listens for `OrderCompletedEvent` (from `order-management-api` or a similar event source) and awards loyalty points to the customer via `LoyaltyService.awardLoyaltyPoints(Integer userId, BigDecimal orderTotal)`. DTOs (`ReviewDto`, `CreateReviewRequest`, `LoyaltyPointsDto`) are used for data transfer between the controllers and services. All monetary values, such as `orderTotal` for loyalty points calculation, should be handled as `BigDecimal` and represent Indian Rupees (INR). When returning review lists, ensure the `reviewDate` is formatted according to Indian conventions if displayed on the frontend.",
+    "depends_on_features" : [ "product-catalog-api", "customer-features-core", "order-management-api" ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
