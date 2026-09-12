@@ -1410,13 +1410,37 @@
     "status" : "PLANNED",
     "description" : "Represents a customer review for a specific product.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the review. Auto-generated."
+    }, {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "The ID of the product being reviewed. Not null."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "The ID of the user who submitted the review. Not null."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "The rating given by the user (1-5). Not null, min 1, max 5."
+    }, {
+      "name" : "comment",
+      "type" : "String",
+      "description" : "The review text. Max 1000 characters."
+    }, {
+      "name" : "reviewDate",
+      "type" : "LocalDate",
+      "description" : "The date the review was submitted. Not null."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — represents a customer review for a specific product, including its content, rating, and the associated product and user.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1429,13 +1453,29 @@
     "status" : "PLANNED",
     "description" : "Tracks loyalty points for a user, including transaction history.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the loyalty points record. Auto-generated."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "The ID of the user associated with these loyalty points. Not null, unique."
+    }, {
+      "name" : "pointsBalance",
+      "type" : "Integer",
+      "description" : "The current balance of loyalty points for the user. Not null, min 0."
+    }, {
+      "name" : "lastUpdated",
+      "type" : "LocalDateTime",
+      "description" : "The timestamp when the loyalty points balance was last updated. Not null."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — tracks loyalty points for a user, including their current balance and last update timestamp.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1447,14 +1487,29 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Review entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "List<Review>",
+      "description" : "Retrieves all reviews for a given product ID."
+    }, {
+      "name" : "findByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "List<Review>",
+      "description" : "Retrieves all reviews submitted by a given user ID."
+    }, {
+      "name" : "findByProductIdAndUserId",
+      "parameters" : [ "Long productId", "Integer userId" ],
+      "return_type" : "Optional<Review>",
+      "description" : "Retrieves a specific review by product ID and user ID."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Review.java" ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access operations for `Review` entities, including custom queries to find reviews by product and user.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1466,14 +1521,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for LoyaltyPoints entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "Optional<LoyaltyPoints>",
+      "description" : "Retrieves the loyalty points record for a given user ID."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/LoyaltyPoints.java" ],
     "depends_on" : [ ],
     "feature_name" : "customer-features-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access operations for `LoyaltyPoints` entities, including a custom query to find loyalty points by user.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3185,9 +3245,9 @@
     "feature_display_name" : "Customer Features (Core)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Review.java", "backend/src/main/java/com/prakashstores/model/LoyaltyPoints.java", "backend/src/main/java/com/prakashstores/repository/ReviewRepository.java", "backend/src/main/java/com/prakashstores/repository/LoyaltyPointsRepository.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature, Customer Features (Core), defines the core data models and repositories for customer-centric functionalities: product reviews and loyalty points. It establishes the persistence layer for these features, allowing other features (like `customer-features-api`) to build business logic and API endpoints on top of these foundational entities.\n\n`Review.java` defines the `Review` entity, which captures customer feedback for a specific product. It includes fields for the review text, rating, submission date, and a reference to the `Product` it reviews, as well as the `userId` of the customer who submitted it. The `Review` entity will be persisted in the database.\n\n`LoyaltyPoints.java` defines the `LoyaltyPoints` entity, which tracks a customer's loyalty points balance and transaction history. It includes fields for the `userId`, current `pointsBalance`, and the `lastUpdated` timestamp. This entity will also be persisted.\n\n`ReviewRepository.java` is a Spring Data JPA repository that provides standard CRUD operations for the `Review` entity. It will also include custom query methods to retrieve reviews by product ID and user ID, and to find all reviews.\n\n`LoyaltyPointsRepository.java` is a Spring Data JPA repository for the `LoyaltyPoints` entity. It will provide standard CRUD operations and a custom query method to find loyalty points by user ID.\n\nThese repositories will be injected into service layers (e.g., `ReviewService` and `LoyaltyService` in the `customer-features-api` feature) to perform database operations. The `Review` entity depends on the `Product` entity from the `product-catalog-core` feature, referencing it by its `productId` (Long).",
+    "depends_on_features" : [ "product-catalog-core" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
