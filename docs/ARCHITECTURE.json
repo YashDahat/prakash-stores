@@ -2193,14 +2193,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "The root application component that sets up providers and the router outlet.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "App",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Sets up the application's routing and global context providers."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "FRONTEND PAGE layer — the root application component that sets up React Router and global providers.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3815,13 +3820,17 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for the store event domain.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "StoreEvent",
+      "type" : "{ id: Long; title: string; description: string; eventDate: string; startTime: string; endTime: string; imageUrl: string; }",
+      "description" : "Interface representing a store event, mirroring the backend's StoreEventDto."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — defines the TypeScript interface for store event data.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3833,14 +3842,38 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Provides functions for interacting with the store event API endpoints.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getUpcomingEvents",
+      "parameters" : [ ],
+      "return_type" : "Promise<StoreEvent[]>",
+      "description" : "Fetches a list of all upcoming store events, ordered by event date."
+    }, {
+      "name" : "getEventById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "Promise<StoreEvent>",
+      "description" : "Fetches a single store event by its ID."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/events/upcoming",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a list of upcoming store events.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/events/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single store event by ID.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/storeEvent.ts" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "FRONTEND SERVICE layer — provides functions for fetching store event data from the backend API, including getUpcomingEvents(): Promise<StoreEvent[]> and getEventById(id: Long): Promise<StoreEvent>.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3852,14 +3885,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A static page describing the history and values of Prakash Stores.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AboutPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the About Us page with business history and values."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "FRONTEND PAGE layer — renders the 'About Us' page, providing information about Prakash Stores' history and values.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3871,14 +3909,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays contact information, business hours, and an embedded location map.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ContactPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the Contact Us page with contact details, a form, and a map."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/contact/ContactForm.tsx", "frontend/src/components/contact/LocationMap.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "FRONTEND PAGE layer — displays contact information, business hours, and an embedded map for Prakash Stores, integrating ContactForm and LocationMap components.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3890,14 +3933,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A page listing upcoming in-store events and workshops.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the Events page, displaying a list of upcoming store events."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/storeEventService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "FRONTEND PAGE layer — fetches and displays a list of upcoming in-store events using the storeEventService.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3909,14 +3957,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A user-friendly 404 page to handle invalid routes.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "NotFoundPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the 404 Not Found page."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "FRONTEND PAGE layer — renders a user-friendly 404 page for invalid routes.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3928,14 +3981,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A simple form for users to send inquiries.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ContactForm",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a contact inquiry form."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "FRONTEND COMPONENT layer — provides a form for users to send inquiries to Prakash Stores.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3947,14 +4005,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "An embedded Google Map showing the physical store location.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "LocationMap",
+      "parameters" : [ "{ latitude: number; longitude: number; }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders an embedded Google Map centered at the given coordinates."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "FRONTEND COMPONENT layer — embeds a Google Map to display the physical store location.",
     "change_required" : null,
     "contract_reconciled" : null
   } ],
@@ -4093,9 +4156,9 @@
     "feature_display_name" : "Static Pages",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/types/storeEvent.ts", "frontend/src/services/storeEventService.ts", "frontend/src/pages/AboutPage.tsx", "frontend/src/pages/ContactPage.tsx", "frontend/src/pages/EventsPage.tsx", "frontend/src/pages/NotFoundPage.tsx", "frontend/src/components/contact/ContactForm.tsx", "frontend/src/components/contact/LocationMap.tsx", "frontend/src/App.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\nThis `static-pages` feature provides foundational static content for the Prakash Stores frontend, including informational pages like 'About Us', 'Contact Us', and 'Events', as well as a 404 'Not Found' page. It also defines the core TypeScript types and service functions for interacting with store events, which are consumed by the `EventsPage`.\n\n`frontend/src/types/storeEvent.ts` defines the `StoreEvent` interface, mirroring the `StoreEventDto` from the `site-content` backend feature. This ensures type safety across the frontend when handling event data.\n\n`frontend/src/services/storeEventService.ts` provides a set of asynchronous functions to fetch store event data from the backend. It includes `getUpcomingEvents()` to retrieve events scheduled for the future and `getEventById(id: Long)` to fetch a specific event. These functions utilize the generated API client to make HTTP requests to the `/api/v1/events/upcoming` and `/api/v1/events/{id}` endpoints, respectively, from the `site-content` backend feature.\n\n`frontend/src/pages/AboutPage.tsx` renders a static page detailing the history and values of Prakash Stores. It will feature a hero section with a relevant image, a welcoming headline, and several content sections describing the business's journey and commitment to the community. The page will use the defined design tokens for consistent styling.\n\n`frontend/src/pages/ContactPage.tsx` displays essential contact information for Prakash Stores. It integrates the `ContactForm` component for user inquiries and the `LocationMap` component to show the physical store location using Google Maps. The page will prominently display the business address, phone number, and opening hours. The map will be centered on the provided coordinates.\n\n`frontend/src/components/contact/ContactForm.tsx` is a reusable component that provides a form for users to submit inquiries. It will include fields for name, email, subject, and message. Upon submission, it should display a success or error toast message using `sonner`.\n\n`frontend/src/components/contact/LocationMap.tsx` is a component that embeds a Google Map. It takes `latitude` and `longitude` as props to pinpoint the store's location. The map should be interactive, allowing users to zoom and pan.\n\n`frontend/src/pages/EventsPage.tsx` fetches and displays a list of upcoming in-store events. It uses the `storeEventService.getUpcomingEvents()` function to retrieve event data. Each event will be rendered as a card, showing its title, date, time, and a brief description. The page will handle loading states and display a message if no upcoming events are found.\n\n`frontend/src/pages/NotFoundPage.tsx` serves as a user-friendly 404 error page. It will display a clear message indicating that the requested page could not be found and provide a link back to the homepage, styled according to the brand's tone.\n\n`frontend/src/App.tsx` is the root component of the application. It sets up the `react-router-dom` for navigation, defining routes for all public pages including the `AboutPage`, `ContactPage`, `EventsPage`, and `NotFoundPage`. It also ensures the `SiteLayout` (which includes the header and footer) is applied globally to public routes, and the `AdminLayout` is applied to admin routes. It will also include the `Toaster` component from `sonner` for displaying notifications.",
+    "depends_on_features" : [ "site-content" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
