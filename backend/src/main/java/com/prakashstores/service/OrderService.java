@@ -15,9 +15,9 @@ import com.prakashstores.exception.ResourceNotFoundException;
 import com.prakashstores.exception.PaymentGatewayException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import PaymentService;
-import CreatePaymentRequest;
-import PaymentOrderResponse;
+import com.prakashstores.service.PaymentService;
+import com.prakashstores.dto.CreatePaymentRequest;
+import com.prakashstores.dto.PaymentOrderResponse;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -25,9 +25,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.prakashstores.service.PaymentService;
-import com.prakashstores.dto.CreatePaymentRequest;
-import com.prakashstores.dto.PaymentOrderResponse;
 
 @Service
 public class OrderService {
@@ -62,7 +59,6 @@ public class OrderService {
             }
 
             OrderItem orderItem = new OrderItem();
-            orderItem.setProduct(order); // This will be set correctly after order is saved
             orderItem.setProductId(product.getId());
             orderItem.setQuantity(itemRequest.getQuantity());
             orderItem.setPriceAtPurchase(product.getPrice());

@@ -13,6 +13,7 @@ public class Review {
     private Integer rating;
     private String comment;
     private LocalDate reviewDate;
+    private String status;
 
     public Review() {
     }
@@ -63,5 +64,13 @@ public class Review {
 
     public void setReviewDate(LocalDate reviewDate) {
         this.reviewDate = reviewDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

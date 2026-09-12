@@ -8,11 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.prakashstores.model.User;
 import com.prakashstores.security.CurrentUser;
-import com.prakashstores.model.User; // FENCED FOUNDATION CONTRACT
-import org.springframework.security.core.annotation.AuthenticationPrincipal; // FENCED FOUNDATION CONTRACT
-import com.prakashstores.annotation.CurrentUser; // FENCED FOUNDATION CONTRACT
 
 
 @RestController

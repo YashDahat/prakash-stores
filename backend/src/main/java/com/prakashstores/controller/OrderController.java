@@ -6,10 +6,9 @@ import com.prakashstores.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import CurrentUser;
+import com.prakashstores.security.CurrentUser;
 
 import java.util.List;
-import com.prakashstores.security.CurrentUser;
 
 @RestController
 @RequestMapping("/api/v1/orders")
