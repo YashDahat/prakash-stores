@@ -873,13 +873,41 @@
     "status" : "PLANNED",
     "description" : "Represents a customer's order, containing order items, shipping details, and status.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the order, auto-generated."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the customer who placed the order."
+    }, {
+      "name" : "orderDate",
+      "type" : "LocalDate",
+      "description" : "Date when the order was placed."
+    }, {
+      "name" : "totalAmount",
+      "type" : "BigDecimal",
+      "description" : "Total amount of the order, including all items and charges."
+    }, {
+      "name" : "status",
+      "type" : "OrderStatus",
+      "description" : "Current status of the order (e.g., PENDING, SHIPPED)."
+    }, {
+      "name" : "shippingAddress",
+      "type" : "ShippingAddress",
+      "description" : "Shipping address for the order."
+    }, {
+      "name" : "orderItems",
+      "type" : "List<OrderItem>",
+      "description" : "List of items included in the order."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/OrderItem.java", "backend/src/main/java/com/prakashstores/model/OrderStatus.java", "backend/src/main/java/com/prakashstores/model/ShippingAddress.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — represents a customer's order, containing order items, shipping details, and status.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -892,13 +920,33 @@
     "status" : "PLANNED",
     "description" : "Represents a single line item within an order.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the order item, auto-generated."
+    }, {
+      "name" : "order",
+      "type" : "Order",
+      "description" : "The order this item belongs to."
+    }, {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product ordered."
+    }, {
+      "name" : "quantity",
+      "type" : "Integer",
+      "description" : "Quantity of the product ordered."
+    }, {
+      "name" : "priceAtPurchase",
+      "type" : "BigDecimal",
+      "description" : "Price of the product at the time of purchase."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Order.java", "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — represents a single line item within an order.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -917,7 +965,7 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — enum representing the various states of an order (e.g., PENDING, PROCESSING, SHIPPED).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -930,13 +978,41 @@
     "status" : "PLANNED",
     "description" : "Represents a customer's shipping address, linked to their account and copied to orders.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the shipping address, auto-generated."
+    }, {
+      "name" : "fullName",
+      "type" : "String",
+      "description" : "Full name of the recipient, not null, max 255 characters."
+    }, {
+      "name" : "streetAddress",
+      "type" : "String",
+      "description" : "Street address, not null, max 255 characters."
+    }, {
+      "name" : "city",
+      "type" : "String",
+      "description" : "City, not null, max 100 characters."
+    }, {
+      "name" : "state",
+      "type" : "String",
+      "description" : "State, not null, max 100 characters."
+    }, {
+      "name" : "postalCode",
+      "type" : "String",
+      "description" : "Postal code, not null, max 10 characters."
+    }, {
+      "name" : "phoneNumber",
+      "type" : "String",
+      "description" : "Phone number, not null, max 20 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — represents a customer's shipping address, linked to their account and copied to orders.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -948,14 +1024,24 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Order entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "List<Order>",
+      "description" : "Retrieves all orders placed by a specific user."
+    }, {
+      "name" : "findByStatus",
+      "parameters" : [ "OrderStatus status" ],
+      "return_type" : "List<Order>",
+      "description" : "Retrieves all orders with a specific status."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Order.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Spring Data JPA repository for Order entities, providing methods to find orders by user ID and status.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -967,14 +1053,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for OrderItem entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByOrderId",
+      "parameters" : [ "Long orderId" ],
+      "return_type" : "List<OrderItem>",
+      "description" : "Retrieves all order items belonging to a specific order."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/OrderItem.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Spring Data JPA repository for OrderItem entities, providing methods to find order items by order.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -986,14 +1077,14 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for ShippingAddress entities.",
-    "public_functions" : null,
+    "public_functions" : [ ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/ShippingAddress.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Spring Data JPA repository for ShippingAddress entities.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2913,9 +3004,9 @@
     "feature_display_name" : "Order Management (Core)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Order.java", "backend/src/main/java/com/prakashstores/model/OrderItem.java", "backend/src/main/java/com/prakashstores/model/OrderStatus.java", "backend/src/main/java/com/prakashstores/model/ShippingAddress.java", "backend/src/main/java/com/prakashstores/repository/OrderRepository.java", "backend/src/main/java/com/prakashstores/repository/OrderItemRepository.java", "backend/src/main/java/com/prakashstores/repository/ShippingAddressRepository.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "The Order Management (Core) feature provides the foundational data models and persistence logic for handling customer orders within Prakash Stores. It defines the `Order`, `OrderItem`, `OrderStatus`, and `ShippingAddress` entities, which are crucial for tracking customer purchases, the products included in each order, the order's current state, and the delivery destination. These models are designed to be robust and support the full lifecycle of an order, from creation to fulfillment.\n\n`Order.java` represents the main order entity, linking to a customer (via `userId`), containing a list of `OrderItem`s, a `ShippingAddress`, and its current `OrderStatus`. It also stores the total amount and the order date.\n\n`OrderItem.java` captures the details of a single product within an order, including the product ID, quantity, and the price at the time of purchase. This ensures that historical order data remains accurate even if product prices change.\n\n`OrderStatus.java` is an enum that enumerates the possible states an order can be in, such as PENDING, PROCESSING, SHIPPED, DELIVERED, and CANCELLED. This provides a clear and consistent way to manage order progression.\n\n`ShippingAddress.java` stores the delivery address details for an order, including the recipient's name, street, city, state, postal code, and phone number. This address is copied to the order at the time of creation.\n\n`OrderRepository.java`, `OrderItemRepository.java`, and `ShippingAddressRepository.java` are Spring Data JPA repositories that provide standard CRUD operations and custom query methods for their respective entities. These repositories abstract away the database interaction, allowing the service layer to focus on business logic.\n\nThis core feature primarily serves as the data foundation for the `order-management-api` feature, which will build the service and controller layers on top of these models and repositories. The `order-management-api` feature will inject these repositories to perform persistence operations related to orders. For example, when a new order is created, the `OrderService` (from `order-management-api`) will use `OrderRepository` to save the `Order` entity, `OrderItemRepository` to save `OrderItem` entities, and `ShippingAddressRepository` to manage `ShippingAddress` entities.",
+    "depends_on_features" : [ "product-catalog-core" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
