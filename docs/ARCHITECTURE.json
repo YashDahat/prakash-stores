@@ -2851,13 +2851,29 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for the product domain.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "ProductDto",
+      "type" : "{ id: Long, name: String, description: String, price: BigDecimal, stock: Integer, imageUrl: String, categoryId: Long, brandId: Long }",
+      "description" : "Represents a product with its details."
+    }, {
+      "name" : "ProductCategoryDto",
+      "type" : "{ id: Long, name: String, description: String }",
+      "description" : "Represents a product category."
+    }, {
+      "name" : "BrandDto",
+      "type" : "{ id: Long, name: String, description: String }",
+      "description" : "Represents a product brand."
+    }, {
+      "name" : "ProductFilterRequest",
+      "type" : "{ searchTerm?: String, categoryId?: Long, brandId?: Long, minPrice?: BigDecimal, maxPrice?: BigDecimal }",
+      "description" : "Request object for filtering products."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — defines TypeScript types for product, category, brand, and product filter request.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2869,14 +2885,74 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Provides functions for interacting with the product-related API endpoints.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllProducts",
+      "parameters" : [ ],
+      "return_type" : "Promise<ProductDto[]>",
+      "description" : "Fetches all products from the backend."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "Promise<ProductDto>",
+      "description" : "Fetches a single product by its ID."
+    }, {
+      "name" : "searchProducts",
+      "parameters" : [ "ProductFilterRequest filter" ],
+      "return_type" : "Promise<ProductDto[]>",
+      "description" : "Searches for products based on provided filters."
+    }, {
+      "name" : "getAllCategories",
+      "parameters" : [ ],
+      "return_type" : "Promise<ProductCategoryDto[]>",
+      "description" : "Fetches all product categories."
+    }, {
+      "name" : "getAllBrands",
+      "parameters" : [ ],
+      "return_type" : "Promise<BrandDto[]>",
+      "description" : "Fetches all product brands."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/products",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all products.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{productId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a product by ID.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/search",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Searches for products with filters.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all product categories.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/brands",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all product brands.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — provides functions for interacting with the product-related API endpoints: getAllProducts(): Promise<ProductDto[]>, getProductById(id: Long): Promise<ProductDto>, searchProducts(filter: ProductFilterRequest): Promise<ProductDto[]>, getAllCategories(): Promise<ProductCategoryDto[]>, getAllBrands(): Promise<BrandDto[]>.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2895,7 +2971,7 @@
     "imports_from" : [ "frontend/src/components/home/HeroSection.tsx", "frontend/src/components/home/FeaturedProducts.tsx", "frontend/src/components/home/CategoryShowcase.tsx", "frontend/src/components/home/InstagramFeed.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "PAGE layer — the main landing page, orchestrating HeroSection, FeaturedProducts, CategoryShowcase, and InstagramFeed components.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2914,7 +2990,7 @@
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/components/product/ProductGrid.tsx", "frontend/src/components/product/ProductFilterSidebar.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "PAGE layer — displays the full product catalog, integrating ProductFilterSidebar and ProductGrid. Displays all monetary values in Indian Rupees (₹).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2933,7 +3009,7 @@
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/services/reviewService.ts", "frontend/src/components/product/ProductImageGallery.tsx", "frontend/src/components/product/ProductInfo.tsx", "frontend/src/components/product/ProductReviews.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "PAGE layer — shows details for a single product, including an image gallery, info, and customer reviews. Displays all monetary values in Indian Rupees (₹).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2945,14 +3021,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A full-width hero component for the homepage with a welcoming message.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "HeroSection",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the hero section with a background image, headline, subheadline, and a 'Shop Now' button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a full-width hero component for the homepage with a welcoming message and call to action.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2964,14 +3045,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A grid or carousel showcasing a selection of featured products.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "FeaturedProducts",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and displays a grid of featured products using ProductCard components."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/components/product/ProductCard.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a grid showcasing a selection of featured products, each with an 'Add to Cart' button.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2983,14 +3069,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays main product categories with images to guide users.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CategoryShowcase",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and displays a grid of product categories."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays main product categories with images and links to filtered product listings.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3002,14 +3093,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A static component showcasing recent styles, linking to the store's Instagram page.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "InstagramFeed",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a static grid of images and a link to the store's Instagram."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a static component showcasing recent styles, linking to the store's Instagram page.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3021,14 +3117,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A responsive grid that displays a list of products.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductGrid",
+      "parameters" : [ "{ products: ProductDto[] }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a grid of ProductCard components."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts", "frontend/src/components/product/ProductCard.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a responsive grid that displays a list of products using ProductCard components. Displays all monetary values in Indian Rupees (₹).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3040,14 +3141,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A sidebar with controls to filter products by category, brand, price, etc.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductFilterSidebar",
+      "parameters" : [ "{ onFilterChange: (filters: ProductFilterRequest) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides UI controls for filtering products and emits filter changes."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a sidebar with controls to filter products by category, brand, price, etc.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3059,14 +3165,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A reusable card component to display a single product in a grid.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductCard",
+      "parameters" : [ "{ product: ProductDto }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays a single product with its image, name, price, and an 'Add to Cart' button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a reusable card component to display a single product in a grid, including an 'Add to Cart' button. Displays all monetary values in Indian Rupees (₹).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3078,14 +3189,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays the main product image and thumbnails for the detail page.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductImageGallery",
+      "parameters" : [ "{ images: string[] }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a main image and clickable thumbnails for a product."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays the main product image and thumbnails for the detail page.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3097,14 +3213,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays product details, price, size/color selectors, and the 'Add to Cart' button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductInfo",
+      "parameters" : [ "{ product: ProductDto }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays product name, description, price, quantity selector, and 'Add to Cart' button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays product details, price, quantity selector, and the 'Add to Cart' button. Displays all monetary values in Indian Rupees (₹).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3116,14 +3237,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a list of customer reviews for a product and a form to submit a new one.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductReviews",
+      "parameters" : [ "{ productId: Long }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and displays reviews for a product, and includes a form for new reviews."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/review.ts", "frontend/src/components/product/ReviewForm.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a list of customer reviews for a product and a form to submit a new one.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3135,14 +3261,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A form for authenticated users to submit a rating and review for a product.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ReviewForm",
+      "parameters" : [ "{ productId: Long, onReviewSubmitted: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form for users to submit a product review, requiring authentication."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a form for authenticated users to submit a rating and review for a product.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3154,14 +3285,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A site-wide floating button that opens a WhatsApp chat for customer service.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "FloatingWhatsAppButton",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a floating button that links to a WhatsApp chat with the business."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-discovery",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a site-wide floating button that opens a WhatsApp chat for customer service.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3783,9 +3919,9 @@
     "feature_display_name" : "Product Discovery",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/types/product.ts", "frontend/src/services/productService.ts", "frontend/src/pages/HomePage.tsx", "frontend/src/pages/ProductsPage.tsx", "frontend/src/pages/ProductDetailPage.tsx", "frontend/src/components/home/HeroSection.tsx", "frontend/src/components/home/FeaturedProducts.tsx", "frontend/src/components/home/CategoryShowcase.tsx", "frontend/src/components/home/InstagramFeed.tsx", "frontend/src/components/product/ProductGrid.tsx", "frontend/src/components/product/ProductFilterSidebar.tsx", "frontend/src/components/product/ProductCard.tsx", "frontend/src/components/product/ProductImageGallery.tsx", "frontend/src/components/product/ProductInfo.tsx", "frontend/src/components/product/ProductReviews.tsx", "frontend/src/components/product/ReviewForm.tsx", "frontend/src/components/common/FloatingWhatsAppButton.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Secondary CTA: border border-[#1A3A6D] text-[#1A3A6D] font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\nThis `product-discovery` feature provides the user interface for browsing products, viewing product details, and adding products to the cart. It consists of several pages and components that interact with the `product-catalog-api` and `customer-features-api` (for reviews) backend features, as well as the pre-scaffolded `cart` foundation feature.\n\n### `frontend/src/types/product.ts`\nThis file defines the TypeScript interfaces for `ProductDto`, `ProductCategoryDto`, `BrandDto`, and `ProductFilterRequest` which are derived directly from the backend API contracts of the `product-catalog-api` feature. These types ensure strong typing throughout the frontend application when dealing with product-related data.\n\n### `frontend/src/services/productService.ts`\nThis service file provides functions to interact with the `product-catalog-api` backend endpoints. It will expose `getAllProducts`, `getProductById`, `searchProducts`, `getAllCategories`, and `getAllBrands`. These functions will internally use an API client to make HTTP requests to the respective backend endpoints and return the parsed JSON responses as promises of the defined TypeScript types. Error handling should be implemented to catch network errors or API-specific error responses.\n\n### `frontend/src/pages/HomePage.tsx`\nThis page serves as the main landing page for Prakash Stores. It will feature a prominent `HeroSection` at the top, followed by a `FeaturedProducts` component showcasing a selection of popular items. Below that, a `CategoryShowcase` will highlight key product categories to aid navigation. Finally, an `InstagramFeed` component will display static images to simulate a social media presence. The page will fetch featured products and categories using the generated service functions from `productService.ts`.\n\n### `frontend/src/pages/ProductsPage.tsx`\nThis page displays the full product catalog. It will include a `ProductFilterSidebar` on the left for filtering products by category, brand, and price range. The main content area will feature a `ProductGrid` component that displays the filtered products. The page will use the generated service functions from `productService.ts` to fetch all products and apply filters based on user selections from the sidebar. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### `frontend/src/pages/ProductDetailPage.tsx`\nThis page shows detailed information for a single product. It will dynamically fetch product details based on a `productId` from the URL. The page will include a `ProductImageGallery` to display product images, a `ProductInfo` component for details like name, description, price, and an \"Add to Cart\" button, and a `ProductReviews` component to display existing customer reviews and allow authenticated users to submit new ones. It will use `productService.getProductById(productId)` to fetch product data and `reviewService.getReviewsByProductId(productId)` to fetch reviews. The \"Add to Cart\" button in `ProductInfo` will call `useCart().addItem()` from the `cart` foundation feature. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### `frontend/src/components/home/HeroSection.tsx`\nThis component will render a full-width hero section for the homepage. It will feature a background image (Unsplash URL for clothing store: `https://images.unsplash.com/photo-1523381294911-8d3cead1858b?w=1920&q=80`) with a dark overlay, a prominent headline \"Discover the Latest Trends at Prakash Stores\" and a subheadline \"Your trusted local family store for quality apparel since 1970.\" It will include a primary call-to-action button \"Shop Now\" that navigates to the `/products` page.\n\n### `frontend/src/components/home/FeaturedProducts.tsx`\nThis component will display a selection of featured products in a responsive grid. It will fetch a limited number of products using `productService.getAllProducts()` and render each product using the `ProductCard` component. Each `ProductCard` will include an \"Add to Cart\" button that calls `useCart().addItem()`.\n\n### `frontend/src/components/home/CategoryShowcase.tsx`\nThis component will display a grid of prominent product categories. It will fetch categories using `productService.getAllCategories()` and render each category with an image and name, linking to the `ProductsPage` with the respective category filter applied.\n\n### `frontend/src/components/home/InstagramFeed.tsx`\nThis component will display a static grid of images, simulating an Instagram feed. It will have a heading \"#PrakashStoresStyle\" and a button \"Follow us on Instagram\" that links to a placeholder Instagram profile URL (e.g., `https://www.instagram.com/prakashstores/`).\n\n### `frontend/src/components/product/ProductGrid.tsx`\nThis component will render a responsive grid of `ProductCard` components. It will receive a `products` array as a prop and iterate over it to display each product. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### `frontend/src/components/product/ProductFilterSidebar.tsx`\nThis component will provide filtering options for products. It will allow users to filter by `ProductCategoryDto` (fetched via `productService.getAllCategories()`), `BrandDto` (fetched via `productService.getAllBrands()`), and a price range. It will emit filter change events to its parent (`ProductsPage`) to trigger product searches.\n\n### `frontend/src/components/product/ProductCard.tsx`\nThis reusable component will display a single product's information, including its `name`, `price`, and `imageUrl`. It will have a button \"Add to Cart\" that, when clicked, calls `useCart().addItem({ id: product.id, name: product.name, unitPrice: product.price, imageUrl: product.imageUrl })` from the `cart` foundation feature. The product name will link to the `ProductDetailPage` for that product. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### `frontend/src/components/product/ProductImageGallery.tsx`\nThis component will display a main product image and a set of thumbnail images. It will receive an array of image URLs as a prop and allow users to switch between images.\n\n### `frontend/src/components/product/ProductInfo.tsx`\nThis component will display detailed product information, including the product's `name`, `description`, and `price`. It will also include a quantity selector and an \"Add to Cart\" button. The \"Add to Cart\" button will call `useCart().addItem({ id: product.id, name: product.name, unitPrice: product.price, imageUrl: product.imageUrl, quantity: selectedQuantity })` from the `cart` foundation feature. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### `frontend/src/components/product/ProductReviews.tsx`\nThis component will display a list of `ReviewDto`s for a given product. It will fetch reviews using `reviewService.getReviewsByProductId(productId)`. It will also include a `ReviewForm` component, allowing authenticated users to submit new reviews. The `ReviewForm` will use `useAuth()` to check if a user is logged in before allowing submission.\n\n### `frontend/src/components/product/ReviewForm.tsx`\nThis component will provide a form for authenticated users to submit a `rating` (1-5 stars) and `comment` for a product. It will use `useAuth()` to determine if the user is logged in. If logged in, it will allow submission, calling `reviewService.createReview(userId, { productId, rating, comment })`. If not logged in, it will prompt the user to log in. Upon successful submission, it will display a toast notification.\n\n### `frontend/src/components/common/FloatingWhatsAppButton.tsx`\nThis component will render a floating WhatsApp button at the bottom right of the screen. Clicking it will open a WhatsApp chat with the business phone number `093710 25731`.\n",
+    "depends_on_features" : [ "product-catalog-api", "customer-features-api" ],
+    "consumes_foundation" : [ "cart", "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
