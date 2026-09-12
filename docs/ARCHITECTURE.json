@@ -2274,14 +2274,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "The main layout for the admin section, including a sidebar for navigation.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminLayout",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin layout with a sidebar and an outlet for content."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Admin layout component — provides the main structure for admin pages, including a persistent sidebar navigation and an outlet for child routes.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2293,14 +2298,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "The landing page for the admin portal, showing key stats and quick links.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminDashboardPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin dashboard with an overview of the store's performance and quick access to management sections."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Admin page — the landing page for the admin portal, displaying key statistics and quick navigation links.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2312,14 +2322,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for managing the product catalog, composing a product table and creation/edit forms.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminProductsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the product management interface, allowing administrators to view, add, edit, and delete products."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/components/admin/product/ProductTable.tsx", "frontend/src/components/admin/product/ProductForm.tsx", "frontend/src/components/admin/product/DeleteProductDialog.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Admin page — manages the product catalog, composing a product table, and forms for creation/editing, and a dialog for deletion. It uses generated service functions to interact with the product-catalog-api.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2331,14 +2346,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a table of all products with actions for editing and deleting.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductTable",
+      "parameters" : [ "{ products: ProductDto[], onEdit: (product: ProductDto) => void, onDelete: (productId: Long) => void, isLoading: boolean, error: Error | null }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of products, providing functionality to edit or delete individual products."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — displays a paginated table of products with actions for editing and deleting. It expects `ProductDto[]` as data.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2350,14 +2370,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A form for creating or editing a product, typically used within a dialog.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductForm",
+      "parameters" : [ "{ initialData?: ProductDto, onSubmit: (data: ProductDto) => void, onCancel: () => void, isLoading: boolean }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form to create a new product or edit an existing one, handling form state and submission."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — a form for creating or editing a product, handling input validation and submission. It expects an optional `ProductDto` for editing.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2369,14 +2394,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A confirmation dialog for deleting a product.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "DeleteProductDialog",
+      "parameters" : [ "{ productId: Long, productName: String, isOpen: boolean, onClose: () => void, onConfirm: (productId: Long) => void, isLoading: boolean }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a confirmation dialog for deleting a product, requiring user confirmation."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — a confirmation dialog for deleting a product. It expects the product ID and callbacks for confirmation and cancellation.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2388,14 +2418,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for managing product categories.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminCategoriesPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the category management interface, allowing administrators to view, add, edit, and delete product categories."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/components/admin/category/CategoryTable.tsx", "frontend/src/components/admin/category/CategoryForm.tsx", "frontend/src/components/admin/category/DeleteCategoryDialog.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Admin page — manages product categories, composing a category table, and forms for creation/editing, and a dialog for deletion. It uses generated service functions to interact with the product-catalog-api.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2407,14 +2442,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a table of all product categories with edit/delete actions.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CategoryTable",
+      "parameters" : [ "{ categories: ProductCategoryDto[], onEdit: (category: ProductCategoryDto) => void, onDelete: (categoryId: Long) => void, isLoading: boolean, error: Error | null }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of product categories, providing functionality to edit or delete individual categories."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — displays a table of product categories with actions for editing and deleting. It expects `ProductCategoryDto[]` as data.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2426,14 +2466,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A form for creating or editing a product category.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CategoryForm",
+      "parameters" : [ "{ initialData?: ProductCategoryDto, onSubmit: (data: ProductCategoryDto) => void, onCancel: () => void, isLoading: boolean }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form to create a new product category or edit an existing one, handling form state and submission."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — a form for creating or editing a product category, handling input validation and submission. It expects an optional `ProductCategoryDto` for editing.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2445,14 +2490,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A confirmation dialog for deleting a product category.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "DeleteCategoryDialog",
+      "parameters" : [ "{ categoryId: Long, categoryName: String, isOpen: boolean, onClose: () => void, onConfirm: (categoryId: Long) => void, isLoading: boolean }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a confirmation dialog for deleting a product category, requiring user confirmation."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — a confirmation dialog for deleting a product category. It expects the category ID and callbacks for confirmation and cancellation.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2464,14 +2514,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for managing product brands.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminBrandsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the brand management interface, allowing administrators to view, add, edit, and delete product brands."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/components/admin/brand/BrandTable.tsx", "frontend/src/components/admin/brand/BrandForm.tsx", "frontend/src/components/admin/brand/DeleteBrandDialog.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Admin page — manages product brands, composing a brand table, and forms for creation/editing, and a dialog for deletion. It uses generated service functions to interact with the product-catalog-api.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2483,14 +2538,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a table of all product brands with edit/delete actions.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "BrandTable",
+      "parameters" : [ "{ brands: BrandDto[], onEdit: (brand: BrandDto) => void, onDelete: (brandId: Long) => void, isLoading: boolean, error: Error | null }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of product brands, providing functionality to edit or delete individual brands."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — displays a table of product brands with actions for editing and deleting. It expects `BrandDto[]` as data.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2502,14 +2562,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A form for creating or editing a product brand.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "BrandForm",
+      "parameters" : [ "{ initialData?: BrandDto, onSubmit: (data: BrandDto) => void, onCancel: () => void, isLoading: boolean }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form to create a new product brand or edit an existing one, handling form state and submission."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — a form for creating or editing a product brand, handling input validation and submission. It expects an optional `BrandDto` for editing.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2521,14 +2586,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A confirmation dialog for deleting a product brand.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "DeleteBrandDialog",
+      "parameters" : [ "{ brandId: Long, brandName: String, isOpen: boolean, onClose: () => void, onConfirm: (brandId: Long) => void, isLoading: boolean }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a confirmation dialog for deleting a product brand, requiring user confirmation."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — a confirmation dialog for deleting a product brand. It expects the brand ID and callbacks for confirmation and cancellation.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2540,14 +2610,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for viewing and managing customer orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminOrdersPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the order management interface, allowing administrators to view all orders and update their statuses."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/orderService.ts", "frontend/src/components/admin/order/OrderTable.tsx", "frontend/src/components/admin/order/OrderDetailView.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Admin page — views and manages customer orders, composing an order table and a detailed view. It uses generated service functions to interact with the order-management-api.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2559,14 +2634,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a table of all customer orders with filtering and status updates.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderTable",
+      "parameters" : [ "{ orders: OrderResponse[], onViewDetails: (order: OrderResponse) => void, onUpdateStatus: (orderId: Long, newStatus: OrderStatus) => void, isLoading: boolean, error: Error | null }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of customer orders, providing functionality to view details and update order statuses."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/order.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — displays a table of customer orders with filtering and status updates. It expects `OrderResponse[]` as data.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2578,14 +2658,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A detailed view of a single order, typically shown in a dialog or drawer.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderDetailView",
+      "parameters" : [ "{ order: OrderResponse, onClose: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a detailed view of a specific order, including order items, shipping address, and total amount."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/order.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — a detailed view of a single order, typically shown in a dialog or drawer. It expects an `OrderResponse` object.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2597,14 +2682,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for moderating customer-submitted product reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminReviewsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the review moderation interface, allowing administrators to view, approve, and delete customer reviews."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/reviewService.ts", "frontend/src/components/admin/review/ReviewTable.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Admin page — moderates customer-submitted product reviews, composing a review table. It uses generated service functions to interact with the customer-features-api.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2616,14 +2706,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a table of all reviews with actions for approval or deletion.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ReviewTable",
+      "parameters" : [ "{ reviews: ReviewDto[], onApprove: (reviewId: Long) => void, onDelete: (reviewId: Long) => void, isLoading: boolean, error: Error | null }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of customer reviews, providing functionality to approve or delete reviews."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/review.ts", "frontend/src/components/admin/review/ReviewModerationActions.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — displays a table of reviews with actions for approval or deletion. It expects `ReviewDto[]` as data.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2635,14 +2730,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Component with buttons to approve or reject a pending review.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ReviewModerationActions",
+      "parameters" : [ "{ reviewId: Long, onApprove: (reviewId: Long) => void, onDelete: (reviewId: Long) => void, isApproving: boolean, isDeleting: boolean }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders action buttons for moderating a review, allowing approval or deletion."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — provides buttons to approve or reject a pending review. It expects the review ID and callbacks for approval and rejection.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2654,14 +2754,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for managing in-store events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminEventsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the event management interface, allowing administrators to view, add, edit, and delete store events."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/storeEventService.ts", "frontend/src/components/admin/event/EventTable.tsx", "frontend/src/components/admin/event/EventForm.tsx", "frontend/src/components/admin/event/DeleteEventDialog.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Admin page — manages in-store events, composing an event table, and forms for creation/editing, and a dialog for deletion. It uses generated service functions to interact with the site-content feature.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2673,14 +2778,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a table of all store events with edit/delete actions.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventTable",
+      "parameters" : [ "{ events: StoreEventDto[], onEdit: (event: StoreEventDto) => void, onDelete: (eventId: Long) => void, isLoading: boolean, error: Error | null }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of store events, providing functionality to edit or delete individual events."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/storeEvent.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — displays a table of store events with actions for editing and deleting. It expects `StoreEventDto[]` as data.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2692,14 +2802,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A form for creating or editing a store event.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventForm",
+      "parameters" : [ "{ initialData?: StoreEventDto, onSubmit: (data: StoreEventDto) => void, onCancel: () => void, isLoading: boolean }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form to create a new store event or edit an existing one, handling form state and submission."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/storeEvent.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — a form for creating or editing a store event, handling input validation and submission. It expects an optional `StoreEventDto` for editing.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2711,14 +2826,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A confirmation dialog for deleting a store event.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "DeleteEventDialog",
+      "parameters" : [ "{ eventId: Long, eventTitle: String, isOpen: boolean, onClose: () => void, onConfirm: (eventId: Long) => void, isLoading: boolean }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a confirmation dialog for deleting a store event, requiring user confirmation."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "Component — a confirmation dialog for deleting a store event. It expects the event ID and callbacks for confirmation and cancellation.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3653,9 +3773,9 @@
     "feature_display_name" : "Admin Portal",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/components/AdminLayout.tsx", "frontend/src/pages/AdminDashboardPage.tsx", "frontend/src/pages/admin/AdminProductsPage.tsx", "frontend/src/components/admin/product/ProductTable.tsx", "frontend/src/components/admin/product/ProductForm.tsx", "frontend/src/components/admin/product/DeleteProductDialog.tsx", "frontend/src/pages/admin/AdminCategoriesPage.tsx", "frontend/src/components/admin/category/CategoryTable.tsx", "frontend/src/components/admin/category/CategoryForm.tsx", "frontend/src/components/admin/category/DeleteCategoryDialog.tsx", "frontend/src/pages/admin/AdminBrandsPage.tsx", "frontend/src/components/admin/brand/BrandTable.tsx", "frontend/src/components/admin/brand/BrandForm.tsx", "frontend/src/components/admin/brand/DeleteBrandDialog.tsx", "frontend/src/pages/admin/AdminOrdersPage.tsx", "frontend/src/components/admin/order/OrderTable.tsx", "frontend/src/components/admin/order/OrderDetailView.tsx", "frontend/src/pages/admin/AdminReviewsPage.tsx", "frontend/src/components/admin/review/ReviewTable.tsx", "frontend/src/components/admin/review/ReviewModerationActions.tsx", "frontend/src/pages/admin/AdminEventsPage.tsx", "frontend/src/components/admin/event/EventTable.tsx", "frontend/src/components/admin/event/EventForm.tsx", "frontend/src/components/admin/event/DeleteEventDialog.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "The Admin Portal feature provides a comprehensive web interface for managing various aspects of the Prakash Stores e-commerce platform. It consists of a main layout (`AdminLayout.tsx`) that includes a sidebar for navigation to different administrative sections. The portal's landing page is `AdminDashboardPage.tsx`, offering an overview and quick links.\n\nKey management pages include:\n- `AdminProductsPage.tsx`: For managing the product catalog. This page composes `ProductTable.tsx` to display products, `ProductForm.tsx` for creation/editing, and `DeleteProductDialog.tsx` for deletion. It interacts with the generated product service functions (e.g., `getAllProducts`, `createProduct`, `updateProduct`, `deleteProduct`).\n- `AdminCategoriesPage.tsx`: For managing product categories. It uses `CategoryTable.tsx`, `CategoryForm.tsx`, and `DeleteCategoryDialog.tsx`, interacting with generated category service functions.\n- `AdminBrandsPage.tsx`: For managing product brands. It uses `BrandTable.tsx`, `BrandForm.tsx`, and `DeleteBrandDialog.tsx`, interacting with generated brand service functions.\n- `AdminOrdersPage.tsx`: For viewing and managing customer orders. This page uses `OrderTable.tsx` to display orders and `OrderDetailView.tsx` for detailed views. It interacts with generated order service functions (e.g., `getAllOrders`, `getOrderById`, `updateOrderStatus`).\n- `AdminReviewsPage.tsx`: For moderating customer reviews. It uses `ReviewTable.tsx` and `ReviewModerationActions.tsx`, interacting with generated review service functions (e.g., `getAllReviews`, `approveReview`, `deleteReview`).\n- `AdminEventsPage.tsx`: For managing in-store events. It uses `EventTable.tsx`, `EventForm.tsx`, and `DeleteEventDialog.tsx`, interacting with generated store event service functions (e.g., `getAllEvents`, `createEvent`, `updateEvent`, `deleteEvent`).\n\nAll admin pages are protected routes, ensuring only authenticated users with appropriate roles can access them. The forms (`ProductForm.tsx`, `CategoryForm.tsx`, `BrandForm.tsx`, `EventForm.tsx`) handle form submission, including validation, and call the respective generated service functions to create or update entities. The tables (`ProductTable.tsx`, `CategoryTable.tsx`, `BrandTable.tsx`, `OrderTable.tsx`, `ReviewTable.tsx`, `EventTable.tsx`) fetch data using the generated service functions and provide actions for editing, deleting, or moderating. Dialogs (`DeleteProductDialog.tsx`, `DeleteCategoryDialog.tsx`, `DeleteBrandDialog.tsx`, `DeleteEventDialog.tsx`) confirm deletion operations before calling the corresponding delete service functions.\n\n## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Sidebar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-md px-4 py-2 transition-all duration-200\n- Secondary CTA: border border-[#E87A00] text-[#E87A00] hover:bg-[#E87A00] hover:text-white font-semibold rounded-md px-4 py-2 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-lg shadow-sm border border-gray-100 p-4\n- Section container: <div className=\"max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8\">\n- Body: text-[#212121] leading-relaxed",
+    "depends_on_features" : [ "product-catalog-api", "order-management-api", "customer-features-api", "site-content" ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
