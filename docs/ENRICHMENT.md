@@ -1,0 +1,1052 @@
+# Feature Enrichment — Attempt 1
+
+Generated: 2026-09-12
+
+Each section is one LLM call (~5–8K tokens). The instruction tells the generator how all files in the feature interact and what contracts they must honour.
+
+---
+
+## Shared Backend Utilities
+
+**Name:** `shared-backend`  
+**Type:** SHARED  
+**Change required:** true
+
+**Files in this feature:**
+- `backend/src/main/java/com/prakashstores/exception/GlobalExceptionHandler.java` — Centralized exception handler for the backend, mapping various exceptions to standardized HTTP responses and `ErrorResponse` DTOs.
+- `backend/src/main/java/com/prakashstores/dto/ErrorResponse.java` — Data Transfer Object (DTO) for standardizing error responses across the API, providing consistent error details to clients.
+- `backend/src/main/java/com/prakashstores/exception/ResourceNotFoundException.java` — Custom exception class to be thrown when a requested resource is not found, allowing for specific error handling.
+
+**Feature Instruction:**
+
+This feature provides shared backend utilities for error handling and custom exceptions, ensuring a consistent API response format for errors across the application. The `ErrorResponse` DTO defines a standard structure for error messages, including a timestamp, HTTP status, error message, and optional details. The `ResourceNotFoundException` is a custom exception that should be thrown by services when a requested entity (e.g., Product, Order) cannot be found in the database. The `GlobalExceptionHandler` is a Spring `@ControllerAdvice` that centrally catches exceptions thrown by controllers and services. It maps `ResourceNotFoundException` to an HTTP 404 Not Found status and other uncaught exceptions to an HTTP 500 Internal Server Error, returning a standardized `ErrorResponse` DTO in both cases. Services across the application should throw `ResourceNotFoundException` when an entity is not found, and controllers will rely on `GlobalExceptionHandler` to translate this into a proper HTTP response.
+
+---
+
+## Product Catalog (Core)
+
+**Name:** `product-catalog-core`  
+**Type:** BACKEND  
+**Change required:** true
+
+**Files in this feature:**
+- `backend/src/main/java/com/prakashstores/model/Product.java` — MODEL layer — defines the Product entity with fields for name, description, price, stock, and relationships to ProductCategory and Brand.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String; price: java.math.BigDecimal; stock: Integer; imageUrl: String; category: ProductCategory; brand: Brand }
+- `backend/src/main/java/com/prakashstores/model/ProductCategory.java` — MODEL layer — defines the ProductCategory entity with fields for name and description.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String }
+- `backend/src/main/java/com/prakashstores/model/Brand.java` — MODEL layer — defines the Brand entity with fields for name and description.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String }
+- `backend/src/main/java/com/prakashstores/repository/ProductRepository.java` — REPOSITORY layer — provides data access for Product entities, including custom queries for filtering by category, brand, and price range.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<Product> findAll(); java.util.Optional<Product> findById(Long id); Product save(Product product); void deleteById(Long id); java.util.List<Product> findByCategoryIdAndBrandIdAndPriceBetween(Long categoryId, Long brandId, java.math.BigDecimal minPrice, java.math.BigDecimal maxPrice); java.util.List<Product> findByCategoryId(Long categoryId); java.util.List<Product> findByBrandId(Long brandId); java.util.List<Product> findByNameContainingIgnoreCase(String name)
+- `backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java` — REPOSITORY layer — provides data access for ProductCategory entities.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<ProductCategory> findAll(); java.util.Optional<ProductCategory> findById(Long id); ProductCategory save(ProductCategory category); void deleteById(Long id)
+- `backend/src/main/java/com/prakashstores/repository/BrandRepository.java` — REPOSITORY layer — provides data access for Brand entities.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<Brand> findAll(); java.util.Optional<Brand> findById(Long id); Brand save(Brand brand); void deleteById(Long id)
+
+**Feature Instruction:**
+
+The Product Catalog (Core) feature provides the foundational backend models and repositories for managing products, categories, and brands for Prakash Stores. It defines the `Product`, `ProductCategory`, and `Brand` entities, which represent the core data structures for the clothing store's inventory. The `Product` entity includes details such as name, description, price, stock, and references to its `ProductCategory` and `Brand`. `ProductCategory` defines the various categories of clothing (e.g., 'Men's Wear', 'Kurtis'), and `Brand` defines the clothing brands (e.g., 'Wrangler').
+
+This feature also includes the Spring Data JPA repositories (`ProductRepository`, `ProductCategoryRepository`, `BrandRepository`) for performing basic CRUD operations and custom queries on these entities. `ProductRepository` will include a custom query to find products based on category, brand, and price range, which will be consumed by the `ProductService` in the `product-catalog-api` feature. The repositories handle the persistence layer, abstracting database interactions for the services that will consume them.
+
+All IDs for these entities are `Long` and are auto-generated. This feature does not expose any API endpoints directly; it serves as the data and persistence layer for other features, primarily `product-catalog-api`, which will build services and controllers on top of these core components.
+
+---
+
+## Product Catalog (API)
+
+**Name:** `product-catalog-api`  
+**Type:** BACKEND  
+**Change required:** true
+
+**Files in this feature:**
+- `backend/src/main/java/com/prakashstores/service/ProductService.java` — SERVICE layer — implements business logic for managing products, categories, and brands, including search and filtering; delegates persistence to ProductRepository, ProductCategoryRepository, and BrandRepository.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<ProductDto> getAllProducts(); ProductDto getProductById(Long id); java.util.List<ProductDto> searchProducts(ProductFilterRequest filterRequest); ProductDto createProduct(ProductDto productDto); ProductDto updateProduct(Long id, ProductDto productDto); void deleteProduct(Long id); java.util.List<ProductCategoryDto> getAllCategories(); ProductCategoryDto getCategoryById(Long id); ProductCategoryDto createCategory(ProductCategoryDto categoryDto); ProductCategoryDto updateCategory(Long id, ProductCategoryDto categoryDto); void deleteCategory(Long id); java.util.List<BrandDto> getAllBrands(); BrandDto getBrandById(Long id); BrandDto createBrand(BrandDto brandDto); BrandDto updateBrand(Long id, BrandDto brandDto); void deleteBrand(Long id)
+- `backend/src/main/java/com/prakashstores/controller/ProductController.java` — CONTROLLER layer — exposes public REST API endpoints for browsing products, categories, and brands; delegates business logic to ProductService.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: org.springframework.http.ResponseEntity<java.util.List<ProductDto>> getAllProducts(); org.springframework.http.ResponseEntity<ProductDto> getProductById(Long productId); org.springframework.http.ResponseEntity<java.util.List<ProductDto>> searchProducts(ProductFilterRequest filterRequest); org.springframework.http.ResponseEntity<java.util.List<ProductCategoryDto>> getAllCategories(); org.springframework.http.ResponseEntity<ProductCategoryDto> getCategoryById(Long categoryId); org.springframework.http.ResponseEntity<java.util.List<BrandDto>> getAllBrands(); org.springframework.http.ResponseEntity<BrandDto> getBrandById(Long brandId)
+- `backend/src/main/java/com/prakashstores/controller/admin/AdminProductController.java` — CONTROLLER layer — exposes admin-only REST API endpoints for CRUD operations on products; delegates business logic to ProductService.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: org.springframework.http.ResponseEntity<ProductDto> createProduct(ProductDto productDto); org.springframework.http.ResponseEntity<ProductDto> updateProduct(Long productId, ProductDto productDto); org.springframework.http.ResponseEntity<Void> deleteProduct(Long productId)
+- `backend/src/main/java/com/prakashstores/controller/admin/AdminCategoryController.java` — CONTROLLER layer — exposes admin-only REST API endpoints for CRUD operations on product categories; delegates business logic to ProductService.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: org.springframework.http.ResponseEntity<ProductCategoryDto> createCategory(ProductCategoryDto categoryDto); org.springframework.http.ResponseEntity<ProductCategoryDto> updateCategory(Long categoryId, ProductCategoryDto categoryDto); org.springframework.http.ResponseEntity<Void> deleteCategory(Long categoryId)
+- `backend/src/main/java/com/prakashstores/controller/admin/AdminBrandController.java` — CONTROLLER layer — exposes admin-only REST API endpoints for CRUD operations on brands; delegates business logic to ProductService.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: org.springframework.http.ResponseEntity<BrandDto> createBrand(BrandDto brandDto); org.springframework.http.ResponseEntity<BrandDto> updateBrand(Long brandId, BrandDto brandDto); org.springframework.http.ResponseEntity<Void> deleteBrand(Long brandId)
+- `backend/src/main/java/com/prakashstores/dto/ProductDto.java` — DTO layer — Data Transfer Object for Product entities, used for API requests and responses.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String; price: java.math.BigDecimal; stock: Integer; imageUrl: String; categoryId: Long; brandId: Long }
+- `backend/src/main/java/com/prakashstores/dto/ProductCategoryDto.java` — DTO layer — Data Transfer Object for ProductCategory entities, used for API requests and responses.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String }
+- `backend/src/main/java/com/prakashstores/dto/BrandDto.java` — DTO layer — Data Transfer Object for Brand entities, used for API requests and responses.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; name: String; description: String }
+- `backend/src/main/java/com/prakashstores/dto/ProductFilterRequest.java` — DTO layer — Data Transfer Object for capturing product search and filter criteria from API requests.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { searchTerm: String; categoryId: Long; brandId: Long; minPrice: java.math.BigDecimal; maxPrice: java.math.BigDecimal }
+
+**Feature Instruction:**
+
+The Product Catalog API feature provides a comprehensive backend solution for managing products, categories, and brands for Prakash Stores. It exposes public endpoints for customers to browse the catalog and admin-only endpoints for CRUD operations. 
+
+**ProductService.java** acts as the central business logic layer, orchestrating interactions with `ProductRepository`, `ProductCategoryRepository`, and `BrandRepository` (from the `product-catalog-core` feature). It handles all data transformations between entities and DTOs, and implements search and filtering logic. 
+
+**ProductController.java** provides the public-facing API for customers to retrieve product listings, product details, categories, and brands. All endpoints in this controller are accessible to unauthenticated users, allowing for public browsing of the store's offerings.
+
+**AdminProductController.java**, **AdminCategoryController.java**, and **AdminBrandController.java** provide the administrative API endpoints. These controllers are responsible for handling CRUD operations (create, read, update, delete) for products, categories, and brands, respectively. All endpoints within these admin controllers require administrator authentication.
+
+**ProductDto.java**, **ProductCategoryDto.java**, **BrandDto.java**, and **ProductFilterRequest.java** are Data Transfer Objects (DTOs) used for transferring data between the controllers and the service layer, and for defining the request and response bodies of the API endpoints.
+
+### ProductService.java
+
+This service is responsible for all business logic related to products, categories, and brands. It injects `ProductRepository`, `ProductCategoryRepository`, and `BrandRepository` from the `product-catalog-core` feature.
+
+**Public Functions:**
+
+1.  `List<ProductDto> getAllProducts()`
+    *   **Logic:**
+        1.  Calls `productRepository.findAll()` to retrieve all `Product` entities.
+        2.  Maps each `Product` entity to a `ProductDto`.
+        3.  Returns a list of `ProductDto`.
+
+2.  `ProductDto getProductById(Long id)`
+    *   **Logic:**
+        1.  Calls `productRepository.findById(id)`.
+        2.  If the product is found, maps the `Product` entity to a `ProductDto` and returns it.
+        3.  If not found, throws `ResourceNotFoundException`.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if no product with the given ID exists.
+
+3.  `List<ProductDto> searchProducts(ProductFilterRequest filterRequest)`
+    *   **Logic:**
+        1.  Initializes a list of `Product` entities.
+        2.  If `filterRequest.getSearchTerm()` is not null or empty, calls `productRepository.findByNameContainingIgnoreCase(filterRequest.getSearchTerm())`.
+        3.  If `filterRequest.getCategoryId()` is not null, filters the results by category using `productRepository.findByCategoryId(filterRequest.getCategoryId())`.
+        4.  If `filterRequest.getBrandId()` is not null, filters the results by brand using `productRepository.findByBrandId(filterRequest.getBrandId())`.
+        5.  If `filterRequest.getMinPrice()` and `filterRequest.getMaxPrice()` are not null, filters the results by price range using `productRepository.findByCategoryIdAndBrandIdAndPriceBetween(filterRequest.getCategoryId(), filterRequest.getBrandId(), filterRequest.getMinPrice(), filterRequest.getMaxPrice())` (if category and brand are also present) or appropriate combinations.
+        6.  Maps the filtered `Product` entities to `ProductDto`s.
+        7.  Returns the list of `ProductDto`.
+
+4.  `ProductDto createProduct(ProductDto productDto)`
+    *   **Logic:**
+        1.  Maps the `ProductDto` to a `Product` entity.
+        2.  Ensures `ProductCategory` and `Brand` entities linked by ID exist using `productCategoryRepository.findById()` and `brandRepository.findById()`. Throws `ResourceNotFoundException` if not found.
+        3.  Calls `productRepository.save()` to persist the new `Product`.
+        4.  Maps the saved `Product` entity back to a `ProductDto` and returns it.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if the specified category or brand does not exist.
+
+5.  `ProductDto updateProduct(Long id, ProductDto productDto)`
+    *   **Logic:**
+        1.  Calls `productRepository.findById(id)` to find the existing product. Throws `ResourceNotFoundException` if not found.
+        2.  Updates the fields of the existing `Product` entity with values from `productDto`.
+        3.  Ensures `ProductCategory` and `Brand` entities linked by ID exist using `productCategoryRepository.findById()` and `brandRepository.findById()`. Throws `ResourceNotFoundException` if not found.
+        4.  Calls `productRepository.save()` to update the `Product`.
+        5.  Maps the updated `Product` entity back to a `ProductDto` and returns it.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if no product with the given ID exists, or if the specified category or brand does not exist.
+
+6.  `void deleteProduct(Long id)`
+    *   **Logic:**
+        1.  Calls `productRepository.findById(id)`. Throws `ResourceNotFoundException` if not found.
+        2.  Calls `productRepository.deleteById(id)`.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if no product with the given ID exists.
+
+7.  `List<ProductCategoryDto> getAllCategories()`
+    *   **Logic:**
+        1.  Calls `productCategoryRepository.findAll()`.
+        2.  Maps each `ProductCategory` entity to a `ProductCategoryDto`.
+        3.  Returns a list of `ProductCategoryDto`.
+
+8.  `ProductCategoryDto getCategoryById(Long id)`
+    *   **Logic:**
+        1.  Calls `productCategoryRepository.findById(id)`.
+        2.  If found, maps to `ProductCategoryDto` and returns.
+        3.  If not found, throws `ResourceNotFoundException`.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if no category with the given ID exists.
+
+9.  `ProductCategoryDto createCategory(ProductCategoryDto categoryDto)`
+    *   **Logic:**
+        1.  Maps `categoryDto` to a `ProductCategory` entity.
+        2.  Calls `productCategoryRepository.save()`.
+        3.  Maps the saved entity back to `ProductCategoryDto` and returns.
+
+10. `ProductCategoryDto updateCategory(Long id, ProductCategoryDto categoryDto)`
+    *   **Logic:**
+        1.  Calls `productCategoryRepository.findById(id)`. Throws `ResourceNotFoundException` if not found.
+        2.  Updates the existing `ProductCategory` entity with values from `categoryDto`.
+        3.  Calls `productCategoryRepository.save()`.
+        4.  Maps the updated entity back to `ProductCategoryDto` and returns.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if no category with the given ID exists.
+
+11. `void deleteCategory(Long id)`
+    *   **Logic:**
+        1.  Calls `productCategoryRepository.findById(id)`. Throws `ResourceNotFoundException` if not found.
+        2.  Calls `productCategoryRepository.deleteById(id)`.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if no category with the given ID exists.
+
+12. `List<BrandDto> getAllBrands()`
+    *   **Logic:**
+        1.  Calls `brandRepository.findAll()`.
+        2.  Maps each `Brand` entity to a `BrandDto`.
+        3.  Returns a list of `BrandDto`.
+
+13. `BrandDto getBrandById(Long id)`
+    *   **Logic:**
+        1.  Calls `brandRepository.findById(id)`.
+        2.  If found, maps to `BrandDto` and returns.
+        3.  If not found, throws `ResourceNotFoundException`.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if no brand with the given ID exists.
+
+14. `BrandDto createBrand(BrandDto brandDto)`
+    *   **Logic:**
+        1.  Maps `brandDto` to a `Brand` entity.
+        2.  Calls `brandRepository.save()`.
+        3.  Maps the saved entity back to `BrandDto` and returns.
+
+15. `BrandDto updateBrand(Long id, BrandDto brandDto)`
+    *   **Logic:**
+        1.  Calls `brandRepository.findById(id)`. Throws `ResourceNotFoundException` if not found.
+        2.  Updates the existing `Brand` entity with values from `brandDto`.
+        3.  Calls `brandRepository.save()`.
+        4.  Maps the updated entity back to `BrandDto` and returns.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if no brand with the given ID exists.
+
+16. `void deleteBrand(Long id)`
+    *   **Logic:**
+        1.  Calls `brandRepository.findById(id)`. Throws `ResourceNotFoundException` if not found.
+        2.  Calls `brandRepository.deleteById(id)`.
+    *   **Error Cases:**
+        *   `ResourceNotFoundException` (HTTP 404) if no brand with the given ID exists.
+
+### ProductController.java
+
+This controller exposes public API endpoints for browsing products, categories, and brands. It injects `ProductService`.
+
+**Public Functions:**
+
+1.  `ResponseEntity<List<ProductDto>> getAllProducts()`
+    *   **Logic:** Calls `productService.getAllProducts()` and returns the result with HTTP 200 OK.
+
+2.  `ResponseEntity<ProductDto> getProductById(Long productId)`
+    *   **Logic:** Calls `productService.getProductById(productId)` and returns the result with HTTP 200 OK. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+3.  `ResponseEntity<List<ProductDto>> searchProducts(ProductFilterRequest filterRequest)`
+    *   **Logic:** Calls `productService.searchProducts(filterRequest)` and returns the result with HTTP 200 OK.
+
+4.  `ResponseEntity<List<ProductCategoryDto>> getAllCategories()`
+    *   **Logic:** Calls `productService.getAllCategories()` and returns the result with HTTP 200 OK.
+
+5.  `ResponseEntity<ProductCategoryDto> getCategoryById(Long categoryId)`
+    *   **Logic:** Calls `productService.getCategoryById(categoryId)` and returns the result with HTTP 200 OK. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+6.  `ResponseEntity<List<BrandDto>> getAllBrands()`
+    *   **Logic:** Calls `productService.getAllBrands()` and returns the result with HTTP 200 OK.
+
+7.  `ResponseEntity<BrandDto> getBrandById(Long brandId)`
+    *   **Logic:** Calls `productService.getBrandById(brandId)` and returns the result with HTTP 200 OK. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+### AdminProductController.java
+
+This controller exposes admin-only API endpoints for CRUD operations on products. It injects `ProductService`.
+
+**Public Functions:**
+
+1.  `ResponseEntity<ProductDto> createProduct(ProductDto productDto)`
+    *   **Logic:** Calls `productService.createProduct(productDto)` and returns the result with HTTP 201 CREATED. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+2.  `ResponseEntity<ProductDto> updateProduct(Long productId, ProductDto productDto)`
+    *   **Logic:** Calls `productService.updateProduct(productId, productDto)` and returns the result with HTTP 200 OK. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+3.  `ResponseEntity<Void> deleteProduct(Long productId)`
+    *   **Logic:** Calls `productService.deleteProduct(productId)` and returns HTTP 204 NO CONTENT. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+### AdminCategoryController.java
+
+This controller exposes admin-only API endpoints for CRUD operations on product categories. It injects `ProductService`.
+
+**Public Functions:**
+
+1.  `ResponseEntity<ProductCategoryDto> createCategory(ProductCategoryDto categoryDto)`
+    *   **Logic:** Calls `productService.createCategory(categoryDto)` and returns the result with HTTP 201 CREATED.
+
+2.  `ResponseEntity<ProductCategoryDto> updateCategory(Long categoryId, ProductCategoryDto categoryDto)`
+    *   **Logic:** Calls `productService.updateCategory(categoryId, categoryDto)` and returns the result with HTTP 200 OK. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+3.  `ResponseEntity<Void> deleteCategory(Long categoryId)`
+    *   **Logic:** Calls `productService.deleteCategory(categoryId)` and returns HTTP 204 NO CONTENT. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+### AdminBrandController.java
+
+This controller exposes admin-only API endpoints for CRUD operations on brands. It injects `ProductService`.
+
+**Public Functions:**
+
+1.  `ResponseEntity<BrandDto> createBrand(BrandDto brandDto)`
+    *   **Logic:** Calls `productService.createBrand(brandDto)` and returns the result with HTTP 201 CREATED.
+
+2.  `ResponseEntity<BrandDto> updateBrand(Long brandId, BrandDto brandDto)`
+    *   **Logic:** Calls `productService.updateBrand(brandId, brandDto)` and returns the result with HTTP 200 OK. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+3.  `ResponseEntity<Void> deleteBrand(Long brandId)`
+    *   **Logic:** Calls `productService.deleteBrand(brandId)` and returns HTTP 204 NO CONTENT. Handles `ResourceNotFoundException` by returning HTTP 404 NOT FOUND.
+
+---
+
+## Order Management (Core)
+
+**Name:** `order-management-core`  
+**Type:** BACKEND  
+**Change required:** true
+
+**Files in this feature:**
+- `backend/src/main/java/com/prakashstores/model/Order.java` — MODEL layer — represents a customer's order, containing order items, shipping details, and status.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; userId: Integer; orderDate: java.time.LocalDateTime; totalAmount: java.math.BigDecimal; status: OrderStatus; shippingAddress: ShippingAddress; orderItems: java.util.List<OrderItem> }
+- `backend/src/main/java/com/prakashstores/model/OrderItem.java` — MODEL layer — represents a single line item within an order.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; order: Order; productId: Long; quantity: Integer; priceAtPurchase: java.math.BigDecimal }
+- `backend/src/main/java/com/prakashstores/model/OrderStatus.java` — MODEL layer — enum representing the various states of an order (e.g., PENDING, PROCESSING, SHIPPED).
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { PENDING: enum; PROCESSING: enum; SHIPPED: enum; DELIVERED: enum; CANCELLED: enum }
+- `backend/src/main/java/com/prakashstores/model/ShippingAddress.java` — MODEL layer — represents a customer's shipping address, linked to their account and copied to orders.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; fullName: String; streetAddress: String; city: String; state: String; postalCode: String; phoneNumber: String }
+- `backend/src/main/java/com/prakashstores/repository/OrderRepository.java` — REPOSITORY layer — Spring Data JPA repository for Order entities, providing methods to find orders by user ID and status.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<Order> findByUserId(Integer userId); java.util.List<Order> findByStatus(OrderStatus status)
+- `backend/src/main/java/com/prakashstores/repository/OrderItemRepository.java` — REPOSITORY layer — Spring Data JPA repository for OrderItem entities, providing methods to find order items by order.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<OrderItem> findByOrderId(Long orderId)
+- `backend/src/main/java/com/prakashstores/repository/ShippingAddressRepository.java` — REPOSITORY layer — Spring Data JPA repository for ShippingAddress entities.
+
+**Feature Instruction:**
+
+The Order Management (Core) feature provides the foundational data models and persistence logic for handling customer orders within Prakash Stores. It defines the `Order`, `OrderItem`, `OrderStatus`, and `ShippingAddress` entities, which are crucial for tracking customer purchases, the products included in each order, the order's current state, and the delivery destination. These models are designed to be robust and support the full lifecycle of an order, from creation to fulfillment.
+
+`Order.java` represents the main order entity, linking to a customer (via `userId`), containing a list of `OrderItem`s, a `ShippingAddress`, and its current `OrderStatus`. It also stores the total amount and the order date.
+
+`OrderItem.java` captures the details of a single product within an order, including the product ID, quantity, and the price at the time of purchase. This ensures that historical order data remains accurate even if product prices change.
+
+`OrderStatus.java` is an enum that enumerates the possible states an order can be in, such as PENDING, PROCESSING, SHIPPED, DELIVERED, and CANCELLED. This provides a clear and consistent way to manage order progression.
+
+`ShippingAddress.java` stores the delivery address details for an order, including the recipient's name, street, city, state, postal code, and phone number. This address is copied to the order at the time of creation.
+
+`OrderRepository.java`, `OrderItemRepository.java`, and `ShippingAddressRepository.java` are Spring Data JPA repositories that provide standard CRUD operations and custom query methods for their respective entities. These repositories abstract away the database interaction, allowing the service layer to focus on business logic.
+
+This core feature primarily serves as the data foundation for the `order-management-api` feature, which will build the service and controller layers on top of these models and repositories. The `order-management-api` feature will inject these repositories to perform persistence operations related to orders. For example, when a new order is created, the `OrderService` (from `order-management-api`) will use `OrderRepository` to save the `Order` entity, `OrderItemRepository` to save `OrderItem` entities, and `ShippingAddressRepository` to manage `ShippingAddress` entities.
+
+---
+
+## Order Management (API)
+
+**Name:** `order-management-api`  
+**Type:** BACKEND  
+**Change required:** true
+
+**Files in this feature:**
+- `backend/src/main/java/com/prakashstores/service/OrderService.java` — SERVICE layer — implements createOrder(Integer userId, CreateOrderRequest request): OrderResponse, getOrderById(Long orderId): OrderResponse, getOrdersByUserId(Integer userId): List<OrderResponse>, getAllOrders(): List<OrderResponse>, and updateOrderStatus(Long orderId, OrderStatus newStatus): OrderResponse; delegates payment to PaymentService and persistence to OrderRepository and ProductRepository.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: com.prakashstores.dto.OrderResponse createOrder(Integer userId, com.prakashstores.dto.CreateOrderRequest request); com.prakashstores.dto.OrderResponse getOrderById(Long orderId); java.util.List<com.prakashstores.dto.OrderResponse> getOrdersByUserId(Integer userId); java.util.List<com.prakashstores.dto.OrderResponse> getAllOrders(); com.prakashstores.dto.OrderResponse updateOrderStatus(Long orderId, com.prakashstores.model.OrderStatus newStatus)
+- `backend/src/main/java/com/prakashstores/controller/OrderController.java` — CONTROLLER layer — exposes REST API endpoints for customers to create orders and view their order history.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: com.prakashstores.dto.OrderResponse createOrder(com.prakashstores.dto.CreateOrderRequest request, Integer userId); java.util.List<com.prakashstores.dto.OrderResponse> getMyOrders(Integer userId)
+- `backend/src/main/java/com/prakashstores/controller/admin/AdminOrderController.java` — CONTROLLER layer — exposes admin-only REST API endpoints for viewing and managing all customer orders.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<com.prakashstores.dto.OrderResponse> getAllOrders(); com.prakashstores.dto.OrderResponse getOrderById(Long orderId); com.prakashstores.dto.OrderResponse updateOrderStatus(Long orderId, com.prakashstores.dto.UpdateOrderStatusRequest request)
+- `backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java` — DTO — defines the structure for requests to create a new order, including a list of items and shipping information.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { orderItems: java.util.List<com.prakashstores.dto.OrderItemRequest>; shippingAddress: com.prakashstores.dto.ShippingAddressDto }
+- `backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java` — DTO — defines the structure for a single item within a create order request.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { productId: Long; quantity: Integer }
+- `backend/src/main/java/com/prakashstores/dto/OrderResponse.java` — DTO — defines the structure for returning detailed order information via the API.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; userId: Integer; orderDate: java.time.Instant; totalAmount: java.math.BigDecimal; status: com.prakashstores.model.OrderStatus; shippingAddress: com.prakashstores.dto.ShippingAddressDto; orderItems: java.util.List<com.prakashstores.dto.OrderItemResponse>; paymentGatewayOrderId: String }
+- `backend/src/main/java/com/prakashstores/dto/ShippingAddressDto.java` — DTO — defines the structure for shipping address information.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { fullName: String; streetAddress: String; city: String; state: String; postalCode: String; phoneNumber: String }
+- `backend/src/main/java/com/prakashstores/dto/UpdateOrderStatusRequest.java` — DTO — defines the structure for requests to update an order's status.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { newStatus: com.prakashstores.model.OrderStatus }
+
+**Feature Instruction:**
+
+This feature, Order Management (API), provides the backend logic and API endpoints for customers to create and view their orders, and for administrators to manage all orders. It interacts with the `product-catalog-core` feature to retrieve product details and the `payment` foundation feature to process payments.
+
+The `OrderService` is the core business logic component. It orchestrates the creation of new orders, including fetching product details, calculating totals, and initiating payment via the `PaymentService`. It also handles retrieving order details for both customers and administrators, and updating order statuses. The `OrderService` interacts with the `OrderRepository` and `OrderItemRepository` (from `order-management-core`) for persistence and `ProductRepository` (from `product-catalog-core`) to get product information.
+
+`OrderController` exposes public API endpoints for authenticated customers to create new orders and retrieve their order history. It uses `@CurrentUser Integer userId` to identify the customer placing the order. `AdminOrderController` provides administrative endpoints for viewing all orders, retrieving specific order details, and updating order statuses.
+
+The DTOs (`CreateOrderRequest`, `OrderItemRequest`, `OrderResponse`, `ShippingAddressDto`, `UpdateOrderStatusRequest`) define the data structures for API requests and responses. `CreateOrderRequest` contains a list of `OrderItemRequest` objects and `ShippingAddressDto`. `OrderResponse` provides a comprehensive view of an order, including its items and shipping details. `UpdateOrderStatusRequest` is used by administrators to change an order's status.
+
+### Order Creation Flow
+1. A `POST /api/v1/orders` request is received by `OrderController.createOrder` with a `CreateOrderRequest` and the `@CurrentUser Integer userId`.
+2. `OrderController` calls `OrderService.createOrder(userId, request)`.
+3. `OrderService.createOrder` performs the following steps:
+    a. Initializes a new `Order` entity with status `PENDING`.
+    b. Iterates through `request.getOrderItems()`:
+        i. For each `OrderItemRequest`, it fetches the `Product` from `ProductRepository.findById(item.getProductId())`. If the product is not found, it throws `ResourceNotFoundException`.
+        ii. Validates that the requested `quantity` is available in `product.getStock()`. If not, it throws `IllegalArgumentException`.
+        iii. Creates an `OrderItem` entity, storing `productId`, `quantity`, and `priceAtPurchase` (from the fetched product).
+        iv. Decrements the `product.stock` and saves the updated `Product`.
+        v. Adds the `OrderItem` to the `Order`'s list of items and updates the `Order`'s `totalAmount`.
+    c. Creates a `ShippingAddress` entity from `request.getShippingAddress()` and associates it with the `Order`.
+    d. Saves the `Order` and its `OrderItem`s using `OrderRepository.save()`.
+    e. Calls `PaymentService.createOrder(new CreatePaymentRequest(order.getTotalAmount(), "INR", "order_" + order.getId()))` to initiate a payment order. If this fails, it throws `PaymentGatewayException`.
+    f. Updates the `Order`'s `paymentGatewayOrderId` with the `gatewayOrderId` from the `PaymentOrderResponse`.
+    g. Saves the updated `Order`.
+    h. Returns an `OrderResponse` containing the created order details and payment gateway information.
+
+### Order Status Updates (Admin)
+1. An `PUT /api/v1/admin/orders/{orderId}/status` request is received by `AdminOrderController.updateOrderStatus` with `orderId`, `UpdateOrderStatusRequest`, and the `@CurrentUser Integer userId` (for authorization).
+2. `AdminOrderController` calls `OrderService.updateOrderStatus(orderId, request.getNewStatus())`.
+3. `OrderService.updateOrderStatus` performs the following steps:
+    a. Fetches the `Order` by `orderId` from `OrderRepository.findById()`. If not found, it throws `ResourceNotFoundException`.
+    b. Updates the `order.status` to `request.getNewStatus()`.
+    c. Saves the updated `Order` using `OrderRepository.save()`.
+    d. Returns the updated `OrderResponse`.
+
+### Error Handling
+- `ResourceNotFoundException` is thrown when an entity (e.g., product, order) is not found. Controllers will return HTTP 404.
+- `IllegalArgumentException` is thrown for invalid input or business rule violations (e.g., insufficient stock). Controllers will return HTTP 400.
+- `PaymentGatewayException` is thrown if there's an issue communicating with the payment gateway. Controllers will return HTTP 500.
+
+All monetary values are in Indian Rupees (₹) and should be handled as `BigDecimal` for precision.
+
+---
+
+## Customer Features (Core)
+
+**Name:** `customer-features-core`  
+**Type:** BACKEND  
+**Change required:** true
+
+**Files in this feature:**
+- `backend/src/main/java/com/prakashstores/model/Review.java` — MODEL layer — represents a customer review for a specific product, including its content, rating, and the associated product and user.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; productId: Long; userId: Integer; rating: Integer; comment: String; reviewDate: java.time.LocalDate }
+- `backend/src/main/java/com/prakashstores/model/LoyaltyPoints.java` — MODEL layer — tracks loyalty points for a user, including their current balance and last update timestamp.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; userId: Integer; pointsBalance: Integer; lastUpdated: java.time.LocalDateTime }
+- `backend/src/main/java/com/prakashstores/repository/ReviewRepository.java` — REPOSITORY layer — provides data access operations for `Review` entities, including custom queries to find reviews by product and user.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.List<Review> findByProductId(Long productId); java.util.List<Review> findByUserId(Integer userId); java.util.List<Review> findByProductIdAndUserId(Long productId, Integer userId)
+- `backend/src/main/java/com/prakashstores/repository/LoyaltyPointsRepository.java` — REPOSITORY layer — provides data access operations for `LoyaltyPoints` entities, including a custom query to find loyalty points by user.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: java.util.Optional<LoyaltyPoints> findByUserId(Integer userId)
+
+**Feature Instruction:**
+
+This feature, Customer Features (Core), defines the core data models and repositories for customer-centric functionalities: product reviews and loyalty points. It establishes the persistence layer for these features, allowing other features (like `customer-features-api`) to build business logic and API endpoints on top of these foundational entities.
+
+`Review.java` defines the `Review` entity, which captures customer feedback for a specific product. It includes fields for the review text, rating, submission date, and a reference to the `Product` it reviews, as well as the `userId` of the customer who submitted it. The `Review` entity will be persisted in the database.
+
+`LoyaltyPoints.java` defines the `LoyaltyPoints` entity, which tracks a customer's loyalty points balance and transaction history. It includes fields for the `userId`, current `pointsBalance`, and the `lastUpdated` timestamp. This entity will also be persisted.
+
+`ReviewRepository.java` is a Spring Data JPA repository that provides standard CRUD operations for the `Review` entity. It will also include custom query methods to retrieve reviews by product ID and user ID, and to find all reviews.
+
+`LoyaltyPointsRepository.java` is a Spring Data JPA repository for the `LoyaltyPoints` entity. It will provide standard CRUD operations and a custom query method to find loyalty points by user ID.
+
+These repositories will be injected into service layers (e.g., `ReviewService` and `LoyaltyService` in the `customer-features-api` feature) to perform database operations. The `Review` entity depends on the `Product` entity from the `product-catalog-core` feature, referencing it by its `productId` (Long).
+
+---
+
+## Customer Features (API)
+
+**Name:** `customer-features-api`  
+**Type:** BACKEND  
+**Change required:** true
+
+**Files in this feature:**
+- `backend/src/main/java/com/prakashstores/service/ReviewService.java` — SERVICE layer — implements createReview(Integer userId, CreateReviewRequest request): ReviewDto, getReviewsByProductId(Long productId): List<ReviewDto>, getReviewById(Long reviewId): ReviewDto, approveReview(Long reviewId): ReviewDto, deleteReview(Long reviewId): void; delegates persistence to ReviewRepository and product validation to ProductService.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: createReview(Integer userId, CreateReviewRequest request): com.prakashstores.dto.ReviewDto; getReviewsByProductId(Long productId): java.util.List<com.prakashstores.dto.ReviewDto>; getAllReviews(): java.util.List<com.prakashstores.dto.ReviewDto>; getReviewById(Long reviewId): com.prakashstores.dto.ReviewDto; approveReview(Long reviewId): com.prakashstores.dto.ReviewDto; deleteReview(Long reviewId): void
+- `backend/src/main/java/com/prakashstores/service/LoyaltyService.java` — SERVICE layer — implements getLoyaltyPointsByUserId(Integer userId): LoyaltyPointsDto and awardLoyaltyPoints(Integer userId, BigDecimal amount): LoyaltyPointsDto; delegates persistence to LoyaltyPointsRepository.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getLoyaltyPointsByUserId(Integer userId): com.prakashstores.dto.LoyaltyPointsDto; awardLoyaltyPoints(Integer userId, java.math.BigDecimal orderTotal): com.prakashstores.dto.LoyaltyPointsDto
+- `backend/src/main/java/com/prakashstores/controller/ReviewController.java` — CONTROLLER layer — exposes public API endpoints for submitting and viewing product reviews.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: createReview(Integer userId, com.prakashstores.dto.CreateReviewRequest request): com.prakashstores.dto.ReviewDto; getReviewsByProductId(Long productId): java.util.List<com.prakashstores.dto.ReviewDto>
+- `backend/src/main/java/com/prakashstores/controller/admin/AdminReviewController.java` — CONTROLLER layer — exposes admin-only API endpoints for moderating customer reviews.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getAllReviews(): java.util.List<com.prakashstores.dto.ReviewDto>; getReviewById(Long reviewId): com.prakashstores.dto.ReviewDto; approveReview(Long reviewId): com.prakashstores.dto.ReviewDto; deleteReview(Long reviewId): void
+- `backend/src/main/java/com/prakashstores/controller/LoyaltyController.java` — CONTROLLER layer — exposes API endpoints for customers to view their loyalty points balance.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getMyLoyaltyPoints(Integer userId): com.prakashstores.dto.LoyaltyPointsDto
+- `backend/src/main/java/com/prakashstores/dto/ReviewDto.java` — DTO — Data Transfer Object for Review entities.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; productId: Long; userId: Integer; customerName: String; rating: Integer; comment: String; reviewDate: java.time.LocalDate; status: String }
+- `backend/src/main/java/com/prakashstores/dto/CreateReviewRequest.java` — DTO — DTO for creating a new product review.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { productId: Long; rating: Integer; comment: String }
+- `backend/src/main/java/com/prakashstores/dto/LoyaltyPointsDto.java` — DTO — Data Transfer Object for LoyaltyPoints entities.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { userId: Integer; pointsBalance: Integer; lastUpdated: java.time.LocalDateTime }
+- `backend/src/main/java/com/prakashstores/event/OrderCompletedListener.java` — SERVICE layer — Listens for order completion events to award loyalty points to the customer.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: handleOrderCompletedEvent(com.prakashstores.event.OrderCompletedEvent event): void
+
+**Feature Instruction:**
+
+This feature provides the backend API for customer reviews and loyalty points. It consists of services, controllers, DTOs, and an event listener. The `ReviewService` handles the business logic for creating, retrieving, and moderating product reviews. It interacts with the `ReviewRepository` from `customer-features-core` for persistence and `ProductService` from `product-catalog-api` to validate product existence. The `ReviewController` exposes public endpoints for customers to submit and view reviews, while the `AdminReviewController` provides administrative endpoints for managing reviews (e.g., approving, deleting). The `LoyaltyService` manages customer loyalty points, interacting with the `LoyaltyPointsRepository` from `customer-features-core`. The `LoyaltyController` provides an authenticated endpoint for customers to view their loyalty points balance. The `OrderCompletedListener` listens for `OrderCompletedEvent` (from `order-management-api` or a similar event source) and awards loyalty points to the customer via `LoyaltyService.awardLoyaltyPoints(Integer userId, BigDecimal orderTotal)`. DTOs (`ReviewDto`, `CreateReviewRequest`, `LoyaltyPointsDto`) are used for data transfer between the controllers and services. All monetary values, such as `orderTotal` for loyalty points calculation, should be handled as `BigDecimal` and represent Indian Rupees (INR). When returning review lists, ensure the `reviewDate` is formatted according to Indian conventions if displayed on the frontend.
+
+---
+
+## Site Content Management
+
+**Name:** `site-content`  
+**Type:** BACKEND  
+**Change required:** true
+
+**Files in this feature:**
+- `backend/src/main/java/com/prakashstores/model/StoreEvent.java` — JPA Entity — Represents an in-store event with details like title, date, and time.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; title: String; description: String; eventDate: LocalDate; startTime: LocalTime; endTime: LocalTime; imageUrl: String }
+- `backend/src/main/java/com/prakashstores/repository/StoreEventRepository.java` — Spring Data JPA Repository — Provides data access operations for `StoreEvent` entities, including finding upcoming events.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: List<StoreEvent> findByEventDateAfterOrderByEventDateAsc(LocalDate eventDate)
+- `backend/src/main/java/com/prakashstores/service/StoreEventService.java` — SERVICE layer — Implements business logic for managing store events, including `getAllEvents()`, `getUpcomingEvents()`, `getEventById(Long id)`, `createEvent(StoreEventDto eventDto)`, `updateEvent(Long id, StoreEventDto eventDto)`, and `deleteEvent(Long id)`.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: List<StoreEventDto> getAllEvents(); List<StoreEventDto> getUpcomingEvents(); StoreEventDto getEventById(Long id); StoreEventDto createEvent(StoreEventDto eventDto); StoreEventDto updateEvent(Long id, StoreEventDto eventDto); void deleteEvent(Long id)
+- `backend/src/main/java/com/prakashstores/controller/StoreEventController.java` — REST Controller — Exposes public API endpoints for viewing store events.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: List<StoreEventDto> getAllEvents(); List<StoreEventDto> getUpcomingEvents(); StoreEventDto getEventById(Long id)
+- `backend/src/main/java/com/prakashstores/controller/admin/AdminStoreEventController.java` — REST Controller — Exposes admin-only API endpoints for CRUD operations on store events.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: List<StoreEventDto> getAllEvents(); StoreEventDto getEventById(Long id); StoreEventDto createEvent(StoreEventDto eventDto); StoreEventDto updateEvent(Long id, StoreEventDto eventDto); void deleteEvent(Long id)
+- `backend/src/main/java/com/prakashstores/dto/StoreEventDto.java` — Data Transfer Object — Used to transfer store event data between layers, exposing only necessary fields.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: Long; title: String; description: String; eventDate: LocalDate; startTime: LocalTime; endTime: LocalTime; imageUrl: String }
+
+**Feature Instruction:**
+
+This feature manages in-store events for Prakash Stores, providing both public read-only access and admin-level CRUD operations. It consists of a `StoreEvent` JPA entity, a `StoreEventRepository` for data access, a `StoreEventService` for business logic, and two controllers: `StoreEventController` for public access and `AdminStoreEventController` for administrative tasks. A `StoreEventDto` is used for data transfer between the service and controllers.
+
+**Data Model:**
+- `StoreEvent.java` defines the entity with fields for `id` (Long), `title` (String), `description` (String), `eventDate` (LocalDate), `startTime` (LocalTime), `endTime` (LocalTime), and `imageUrl` (String).
+
+**Persistence:**
+- `StoreEventRepository.java` extends `JpaRepository<StoreEvent, Long>` and provides standard CRUD operations. It will also include a custom query method `findByEventDateAfterOrderByEventDateAsc` to retrieve upcoming events.
+
+**Business Logic:**
+- `StoreEventService.java` orchestrates interactions between the controllers and the repository. It defines the following public methods:
+    1. `getAllEvents(): List<StoreEventDto>`:
+        - Fetches all `StoreEvent` entities from the repository.
+        - Maps each `StoreEvent` to a `StoreEventDto`.
+        - Returns a list of `StoreEventDto`.
+    2. `getUpcomingEvents(): List<StoreEventDto>`:
+        - Calls `storeEventRepository.findByEventDateAfterOrderByEventDateAsc(LocalDate.now())` to get events scheduled for today or later.
+        - Maps each `StoreEvent` to a `StoreEventDto`.
+        - Returns a list of `StoreEventDto`.
+    3. `getEventById(Long id): StoreEventDto`:
+        - Retrieves a `StoreEvent` by its `id` from the repository.
+        - Throws `ResourceNotFoundException` if the event is not found.
+        - Maps the `StoreEvent` to a `StoreEventDto`.
+        - Returns the `StoreEventDto`.
+    4. `createEvent(StoreEventDto eventDto): StoreEventDto`:
+        - Maps the `StoreEventDto` to a `StoreEvent` entity.
+        - Saves the new `StoreEvent` using the repository.
+        - Maps the saved `StoreEvent` back to a `StoreEventDto`.
+        - Returns the created `StoreEventDto`.
+    5. `updateEvent(Long id, StoreEventDto eventDto): StoreEventDto`:
+        - Retrieves the existing `StoreEvent` by `id` from the repository.
+        - Throws `ResourceNotFoundException` if the event is not found.
+        - Updates the fields of the existing `StoreEvent` with values from `eventDto`.
+        - Saves the updated `StoreEvent` using the repository.
+        - Maps the updated `StoreEvent` back to a `StoreEventDto`.
+        - Returns the updated `StoreEventDto`.
+    6. `deleteEvent(Long id): void`:
+        - Checks if an event with the given `id` exists.
+        - Throws `ResourceNotFoundException` if the event is not found.
+        - Deletes the `StoreEvent` by `id` from the repository.
+
+**API Endpoints:**
+- `StoreEventController.java` exposes public read-only endpoints:
+    - `GET /api/v1/events`: Returns a list of all `StoreEventDto`.
+    - `GET /api/v1/events/upcoming`: Returns a list of `StoreEventDto` for upcoming events.
+    - `GET /api/v1/events/{id}`: Returns a single `StoreEventDto` by ID.
+- `AdminStoreEventController.java` exposes admin-only CRUD endpoints:
+    - `GET /api/v1/admin/events`: Returns a list of all `StoreEventDto`.
+    - `GET /api/v1/admin/events/{id}`: Returns a single `StoreEventDto` by ID.
+    - `POST /api/v1/admin/events`: Creates a new `StoreEvent` from a `StoreEventDto`.
+    - `PUT /api/v1/admin/events/{id}`: Updates an existing `StoreEvent` from a `StoreEventDto`.
+    - `DELETE /api/v1/admin/events/{id}`: Deletes a `StoreEvent` by ID.
+
+**Error Handling:**
+- Both controllers will catch `ResourceNotFoundException` (from `StoreEventService`) and return an HTTP 404 Not Found response. This exception is part of the `shared-backend` feature.
+
+---
+
+## Authentication UI
+
+**Name:** `auth-ui`  
+**Type:** FRONTEND  
+**Change required:** true
+
+**Files in this feature:**
+- `frontend/src/pages/LoginPage.tsx` — PAGE layer — provides a login form and handles user authentication using the `useAuth()` hook.
+- `frontend/src/pages/SignupPage.tsx` — PAGE layer — provides a signup form and handles new user registration using the `useAuth()` hook.
+- `frontend/src/components/ProtectedRoute.tsx` — COMPONENT layer — a React component that guards routes, ensuring only authenticated users (and optionally those with specific roles) can access child routes.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { children: React.ReactNode; roles: string[] | undefined }
+
+**Feature Instruction:**
+
+This feature provides the user interface for authentication, including login and signup pages, and a protected route component to guard access to authenticated sections of the application. It leverages the pre-scaffolded `useAuth()` hook for all authentication logic, including managing user sessions, login, and signup.
+
+## Design Tokens
+- Navbar: bg-[#1A3A6D] text-white
+- Primary CTA: bg-[#E87A00] hover:bg-[#D46A00] text-white font-semibold rounded-md px-6 py-3 transition-all duration-200
+- Secondary CTA: bg-gray-200 hover:bg-gray-300 text-[#212121] font-semibold rounded-md px-6 py-3 transition-all duration-200
+- Brand text accent: text-[#E87A00]
+- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)
+- Card: bg-white rounded-xl shadow-sm border border-gray-100 p-6
+- Section container: <section className="py-12 px-4"><div className="max-w-4xl mx-auto">
+- Hero h1: text-4xl md:text-5xl font-bold text-white
+- Body: text-[#212121] leading-relaxed
+- Input field: border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent
+
+### LoginPage.tsx
+This page provides a user-friendly form for existing users to log in. It will include fields for email and password, and a 'Forgot Password' link (which will not be functional in this iteration). Upon successful login, the user should be redirected to the homepage or the previously intended private route. The page will use the `useAuth()` hook's `login` function. Error messages from the `useAuth()` hook should be displayed to the user.
+
+### SignupPage.tsx
+This page provides a form for new users to create an account. It will include fields for name, email, and password. Upon successful signup, the user should be automatically logged in and redirected to the homepage. The page will use the `useAuth()` hook's `signup` function. Error messages from the `useAuth()` hook should be displayed to the user.
+
+### ProtectedRoute.tsx
+This component acts as a route guard. It will check the user's authentication status using the `useAuth()` hook. If the user is not authenticated, they will be redirected to the login page. If the user is authenticated, the component will render its children. It can optionally take a `roles` prop (e.g., `['ADMIN']`) to restrict access based on user roles. If the user is authenticated but does not have the required role, they should be redirected to a '403 Forbidden' page (which is not part of this feature).
+
+**Inter-file Wiring:**
+- `LoginPage.tsx` and `SignupPage.tsx` both import and use the `useAuth()` hook from `@/context/AuthContext` to perform login and signup operations, respectively. They will navigate using `react-router-dom`'s `useNavigate` hook after successful authentication.
+- `ProtectedRoute.tsx` imports and uses the `useAuth()` hook from `@/context/AuthContext` to check the authentication status and user roles. It uses `react-router-dom`'s `Navigate` component for redirection.
+
+---
+
+## Admin Portal
+
+**Name:** `admin-portal`  
+**Type:** FRONTEND  
+**Change required:** true
+
+**Files in this feature:**
+- `frontend/src/components/AdminLayout.tsx` — Admin layout component — provides the main structure for admin pages, including a persistent sidebar navigation and an outlet for child routes.
+- `frontend/src/pages/AdminDashboardPage.tsx` — Admin page — the landing page for the admin portal, displaying key statistics and quick navigation links.
+- `frontend/src/pages/admin/AdminProductsPage.tsx` — Admin page — manages the product catalog, composing a product table, and forms for creation/editing, and a dialog for deletion. It uses generated service functions to interact with the product-catalog-api.
+- `frontend/src/components/admin/product/ProductTable.tsx` — Component — displays a paginated table of products with actions for editing and deleting. It expects `ProductDto[]` as data.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { products: ProductDto[]; onEdit: (product: ProductDto) => void; onDelete: (product: ProductDto) => void; isLoading: boolean; error: Error | null }
+- `frontend/src/components/admin/product/ProductForm.tsx` — Component — a form for creating or editing a product, handling input validation and submission. It expects an optional `ProductDto` for editing.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { initialData: ProductDto | null; onSubmit: (data: Partial<ProductDto>) => void; onCancel: () => void; isLoading: boolean }
+- `frontend/src/components/admin/product/DeleteProductDialog.tsx` — Component — a confirmation dialog for deleting a product. It expects the product ID and callbacks for confirmation and cancellation.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { product: ProductDto | null; isOpen: boolean; onClose: () => void; onConfirm: () => void; isLoading: boolean }
+- `frontend/src/pages/admin/AdminCategoriesPage.tsx` — Admin page — manages product categories, composing a category table, and forms for creation/editing, and a dialog for deletion. It uses generated service functions to interact with the product-catalog-api.
+- `frontend/src/components/admin/category/CategoryTable.tsx` — Component — displays a table of product categories with actions for editing and deleting. It expects `ProductCategoryDto[]` as data.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { categories: ProductCategoryDto[]; onEdit: (category: ProductCategoryDto) => void; onDelete: (category: ProductCategoryDto) => void; isLoading: boolean; error: Error | null }
+- `frontend/src/components/admin/category/CategoryForm.tsx` — Component — a form for creating or editing a product category, handling input validation and submission. It expects an optional `ProductCategoryDto` for editing.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { initialData: ProductCategoryDto | null; onSubmit: (data: Partial<ProductCategoryDto>) => void; onCancel: () => void; isLoading: boolean }
+- `frontend/src/components/admin/category/DeleteCategoryDialog.tsx` — Component — a confirmation dialog for deleting a product category. It expects the category ID and callbacks for confirmation and cancellation.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { category: ProductCategoryDto | null; isOpen: boolean; onClose: () => void; onConfirm: () => void; isLoading: boolean }
+- `frontend/src/pages/admin/AdminBrandsPage.tsx` — Admin page — manages product brands, composing a brand table, and forms for creation/editing, and a dialog for deletion. It uses generated service functions to interact with the product-catalog-api.
+- `frontend/src/components/admin/brand/BrandTable.tsx` — Component — displays a table of product brands with actions for editing and deleting. It expects `BrandDto[]` as data.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { brands: BrandDto[]; onEdit: (brand: BrandDto) => void; onDelete: (brand: BrandDto) => void; isLoading: boolean; error: Error | null }
+- `frontend/src/components/admin/brand/BrandForm.tsx` — Component — a form for creating or editing a product brand, handling input validation and submission. It expects an optional `BrandDto` for editing.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { initialData: BrandDto | null; onSubmit: (data: Partial<BrandDto>) => void; onCancel: () => void; isLoading: boolean }
+- `frontend/src/components/admin/brand/DeleteBrandDialog.tsx` — Component — a confirmation dialog for deleting a product brand. It expects the brand ID and callbacks for confirmation and cancellation.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { brand: BrandDto | null; isOpen: boolean; onClose: () => void; onConfirm: () => void; isLoading: boolean }
+- `frontend/src/pages/admin/AdminOrdersPage.tsx` — Admin page — views and manages customer orders, composing an order table and a detailed view. It uses generated service functions to interact with the order-management-api.
+- `frontend/src/components/admin/order/OrderTable.tsx` — Component — displays a table of customer orders with filtering and status updates. It expects `OrderResponse[]` as data.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { orders: OrderResponse[]; onViewDetails: (order: OrderResponse) => void; onUpdateStatus: (order: OrderResponse, newStatus: OrderStatus) => void; isLoading: boolean; error: Error | null }
+- `frontend/src/components/admin/order/OrderDetailView.tsx` — Component — a detailed view of a single order, typically shown in a dialog or drawer. It expects an `OrderResponse` object.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { order: OrderResponse | null; onClose: () => void }
+- `frontend/src/pages/admin/AdminReviewsPage.tsx` — Admin page — moderates customer-submitted product reviews, composing a review table. It uses generated service functions to interact with the customer-features-api.
+- `frontend/src/components/admin/review/ReviewTable.tsx` — Component — displays a table of reviews with actions for approval or deletion. It expects `ReviewDto[]` as data.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { reviews: ReviewDto[]; onApprove: (review: ReviewDto) => void; onDelete: (review: ReviewDto) => void; isLoading: boolean; error: Error | null }
+- `frontend/src/components/admin/review/ReviewModerationActions.tsx` — Component — provides buttons to approve or reject a pending review. It expects the review ID and callbacks for approval and rejection.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { review: ReviewDto; onApprove: () => void; onDelete: () => void; isApproving: boolean; isDeleting: boolean }
+- `frontend/src/pages/admin/AdminEventsPage.tsx` — Admin page — manages in-store events, composing an event table, and forms for creation/editing, and a dialog for deletion. It uses generated service functions to interact with the site-content feature.
+- `frontend/src/components/admin/event/EventTable.tsx` — Component — displays a table of store events with actions for editing and deleting. It expects `StoreEventDto[]` as data.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { events: StoreEventDto[]; onEdit: (event: StoreEventDto) => void; onDelete: (event: StoreEventDto) => void; isLoading: boolean; error: Error | null }
+- `frontend/src/components/admin/event/EventForm.tsx` — Component — a form for creating or editing a store event, handling input validation and submission. It expects an optional `StoreEventDto` for editing.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { initialData: StoreEventDto | null; onSubmit: (data: Partial<StoreEventDto>) => void; onCancel: () => void; isLoading: boolean }
+- `frontend/src/components/admin/event/DeleteEventDialog.tsx` — Component — a confirmation dialog for deleting a store event. It expects the event ID and callbacks for confirmation and cancellation.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { event: StoreEventDto | null; isOpen: boolean; onClose: () => void; onConfirm: () => void; isLoading: boolean }
+
+**Feature Instruction:**
+
+The Admin Portal feature provides a comprehensive web interface for managing various aspects of the Prakash Stores e-commerce platform. It consists of a main layout (`AdminLayout.tsx`) that includes a sidebar for navigation to different administrative sections. The portal's landing page is `AdminDashboardPage.tsx`, offering an overview and quick links.
+
+Key management pages include:
+- `AdminProductsPage.tsx`: For managing the product catalog. This page composes `ProductTable.tsx` to display products, `ProductForm.tsx` for creation/editing, and `DeleteProductDialog.tsx` for deletion. It interacts with the generated product service functions (e.g., `getAllProducts`, `createProduct`, `updateProduct`, `deleteProduct`).
+- `AdminCategoriesPage.tsx`: For managing product categories. It uses `CategoryTable.tsx`, `CategoryForm.tsx`, and `DeleteCategoryDialog.tsx`, interacting with generated category service functions.
+- `AdminBrandsPage.tsx`: For managing product brands. It uses `BrandTable.tsx`, `BrandForm.tsx`, and `DeleteBrandDialog.tsx`, interacting with generated brand service functions.
+- `AdminOrdersPage.tsx`: For viewing and managing customer orders. This page uses `OrderTable.tsx` to display orders and `OrderDetailView.tsx` for detailed views. It interacts with generated order service functions (e.g., `getAllOrders`, `getOrderById`, `updateOrderStatus`).
+- `AdminReviewsPage.tsx`: For moderating customer reviews. It uses `ReviewTable.tsx` and `ReviewModerationActions.tsx`, interacting with generated review service functions (e.g., `getAllReviews`, `approveReview`, `deleteReview`).
+- `AdminEventsPage.tsx`: For managing in-store events. It uses `EventTable.tsx`, `EventForm.tsx`, and `DeleteEventDialog.tsx`, interacting with generated store event service functions (e.g., `getAllEvents`, `createEvent`, `updateEvent`, `deleteEvent`).
+
+All admin pages are protected routes, ensuring only authenticated users with appropriate roles can access them. The forms (`ProductForm.tsx`, `CategoryForm.tsx`, `BrandForm.tsx`, `EventForm.tsx`) handle form submission, including validation, and call the respective generated service functions to create or update entities. The tables (`ProductTable.tsx`, `CategoryTable.tsx`, `BrandTable.tsx`, `OrderTable.tsx`, `ReviewTable.tsx`, `EventTable.tsx`) fetch data using the generated service functions and provide actions for editing, deleting, or moderating. Dialogs (`DeleteProductDialog.tsx`, `DeleteCategoryDialog.tsx`, `DeleteBrandDialog.tsx`, `DeleteEventDialog.tsx`) confirm deletion operations before calling the corresponding delete service functions.
+
+## Design Tokens
+- Navbar: bg-[#1A3A6D] text-white
+- Sidebar: bg-[#1A3A6D] text-white
+- Primary CTA: bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-md px-4 py-2 transition-all duration-200
+- Secondary CTA: border border-[#E87A00] text-[#E87A00] hover:bg-[#E87A00] hover:text-white font-semibold rounded-md px-4 py-2 transition-all duration-200
+- Brand text accent: text-[#E87A00]
+- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)
+- Card: bg-white rounded-lg shadow-sm border border-gray-100 p-4
+- Section container: <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+- Body: text-[#212121] leading-relaxed
+
+---
+
+## Product Discovery
+
+**Name:** `product-discovery`  
+**Type:** FRONTEND  
+**Change required:** true
+
+**Files in this feature:**
+- `frontend/src/types/product.ts` — Generated from the backend API contract — defines TypeScript types for product, category, brand, and product filter request.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { ProductDto: { id: number; name: string; description: string; price: number; imageUrl: string; imageUrls: string[]; }; ProductCategoryDto: { id: number; name: string; imageUrl: string; }; BrandDto: { id: number; name: string; }; ProductFilterRequest: { query?: string; categoryId?: number; brandId?: number; minPrice?: number; maxPrice?: number; } }
+- `frontend/src/services/productService.ts` — SERVICE layer — provides functions for interacting with the product-related API endpoints: getAllProducts(): Promise<ProductDto[]>, getProductById(id: Long): Promise<ProductDto>, searchProducts(filter: ProductFilterRequest): Promise<ProductDto[]>, getAllCategories(): Promise<ProductCategoryDto[]>, getAllBrands(): Promise<BrandDto[]>.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getAllProducts(): Promise<ProductDto[]>; getProductById(id: number): Promise<ProductDto>; searchProducts(filter: ProductFilterRequest): Promise<ProductDto[]>; getAllCategories(): Promise<ProductCategoryDto[]>; getAllBrands(): Promise<BrandDto[]>
+- `frontend/src/pages/HomePage.tsx` — PAGE layer — the main landing page, orchestrating HeroSection, FeaturedProducts, CategoryShowcase, and InstagramFeed components.
+- `frontend/src/pages/ProductsPage.tsx` — PAGE layer — displays the full product catalog, integrating ProductFilterSidebar and ProductGrid. Displays all monetary values in Indian Rupees (₹).
+- `frontend/src/pages/ProductDetailPage.tsx` — PAGE layer — shows details for a single product, including an image gallery, info, and customer reviews. Displays all monetary values in Indian Rupees (₹).
+- `frontend/src/components/home/HeroSection.tsx` — COMPONENT layer — a full-width hero component for the homepage with a welcoming message and call to action.
+- `frontend/src/components/home/FeaturedProducts.tsx` — COMPONENT layer — a grid showcasing a selection of featured products, each with an 'Add to Cart' button.
+- `frontend/src/components/home/CategoryShowcase.tsx` — COMPONENT layer — displays main product categories with images and links to filtered product listings.
+- `frontend/src/components/home/InstagramFeed.tsx` — COMPONENT layer — a static component showcasing recent styles, linking to the store's Instagram page.
+- `frontend/src/components/product/ProductGrid.tsx` — COMPONENT layer — a responsive grid that displays a list of products using ProductCard components. Displays all monetary values in Indian Rupees (₹).
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { products: ProductDto[] }
+- `frontend/src/components/product/ProductFilterSidebar.tsx` — COMPONENT layer — a sidebar with controls to filter products by category, brand, price, etc.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { onFilterChange: (filters: ProductFilterRequest) => void }
+- `frontend/src/components/product/ProductCard.tsx` — COMPONENT layer — a reusable card component to display a single product in a grid, including an 'Add to Cart' button. Displays all monetary values in Indian Rupees (₹).
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { product: ProductDto }
+- `frontend/src/components/product/ProductImageGallery.tsx` — COMPONENT layer — displays the main product image and thumbnails for the detail page.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { imageUrls: string[] }
+- `frontend/src/components/product/ProductInfo.tsx` — COMPONENT layer — displays product details, price, quantity selector, and the 'Add to Cart' button. Displays all monetary values in Indian Rupees (₹).
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { product: ProductDto }
+- `frontend/src/components/product/ProductReviews.tsx` — COMPONENT layer — displays a list of customer reviews for a product and a form to submit a new one.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { productId: number }
+- `frontend/src/components/product/ReviewForm.tsx` — COMPONENT layer — a form for authenticated users to submit a rating and review for a product.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { productId: number; onReviewSubmitted: () => void }
+- `frontend/src/components/common/FloatingWhatsAppButton.tsx` — COMPONENT layer — a site-wide floating button that opens a WhatsApp chat for customer service.
+
+**Feature Instruction:**
+
+## Design Tokens
+- Navbar: bg-[#1A3A6D] text-white
+- Primary CTA: bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200
+- Secondary CTA: border border-[#1A3A6D] text-[#1A3A6D] font-semibold rounded-full px-8 py-3 transition-all duration-200
+- Brand text accent: text-[#E87A00]
+- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)
+- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6
+- Section container: <section className="py-16 px-4"><div className="max-w-7xl mx-auto">
+- Hero h1: text-4xl md:text-6xl font-bold text-white
+- Body: text-[#212121] leading-relaxed
+
+This `product-discovery` feature provides the user interface for browsing products, viewing product details, and adding products to the cart. It consists of several pages and components that interact with the `product-catalog-api` and `customer-features-api` (for reviews) backend features, as well as the pre-scaffolded `cart` foundation feature.
+
+### `frontend/src/types/product.ts`
+This file defines the TypeScript interfaces for `ProductDto`, `ProductCategoryDto`, `BrandDto`, and `ProductFilterRequest` which are derived directly from the backend API contracts of the `product-catalog-api` feature. These types ensure strong typing throughout the frontend application when dealing with product-related data.
+
+### `frontend/src/services/productService.ts`
+This service file provides functions to interact with the `product-catalog-api` backend endpoints. It will expose `getAllProducts`, `getProductById`, `searchProducts`, `getAllCategories`, and `getAllBrands`. These functions will internally use an API client to make HTTP requests to the respective backend endpoints and return the parsed JSON responses as promises of the defined TypeScript types. Error handling should be implemented to catch network errors or API-specific error responses.
+
+### `frontend/src/pages/HomePage.tsx`
+This page serves as the main landing page for Prakash Stores. It will feature a prominent `HeroSection` at the top, followed by a `FeaturedProducts` component showcasing a selection of popular items. Below that, a `CategoryShowcase` will highlight key product categories to aid navigation. Finally, an `InstagramFeed` component will display static images to simulate a social media presence. The page will fetch featured products and categories using the generated service functions from `productService.ts`.
+
+### `frontend/src/pages/ProductsPage.tsx`
+This page displays the full product catalog. It will include a `ProductFilterSidebar` on the left for filtering products by category, brand, and price range. The main content area will feature a `ProductGrid` component that displays the filtered products. The page will use the generated service functions from `productService.ts` to fetch all products and apply filters based on user selections from the sidebar. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.
+
+### `frontend/src/pages/ProductDetailPage.tsx`
+This page shows detailed information for a single product. It will dynamically fetch product details based on a `productId` from the URL. The page will include a `ProductImageGallery` to display product images, a `ProductInfo` component for details like name, description, price, and an "Add to Cart" button, and a `ProductReviews` component to display existing customer reviews and allow authenticated users to submit new ones. It will use `productService.getProductById(productId)` to fetch product data and `reviewService.getReviewsByProductId(productId)` to fetch reviews. The "Add to Cart" button in `ProductInfo` will call `useCart().addItem()` from the `cart` foundation feature. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.
+
+### `frontend/src/components/home/HeroSection.tsx`
+This component will render a full-width hero section for the homepage. It will feature a background image (Unsplash URL for clothing store: `https://images.unsplash.com/photo-1523381294911-8d3cead1858b?w=1920&q=80`) with a dark overlay, a prominent headline "Discover the Latest Trends at Prakash Stores" and a subheadline "Your trusted local family store for quality apparel since 1970." It will include a primary call-to-action button "Shop Now" that navigates to the `/products` page.
+
+### `frontend/src/components/home/FeaturedProducts.tsx`
+This component will display a selection of featured products in a responsive grid. It will fetch a limited number of products using `productService.getAllProducts()` and render each product using the `ProductCard` component. Each `ProductCard` will include an "Add to Cart" button that calls `useCart().addItem()`.
+
+### `frontend/src/components/home/CategoryShowcase.tsx`
+This component will display a grid of prominent product categories. It will fetch categories using `productService.getAllCategories()` and render each category with an image and name, linking to the `ProductsPage` with the respective category filter applied.
+
+### `frontend/src/components/home/InstagramFeed.tsx`
+This component will display a static grid of images, simulating an Instagram feed. It will have a heading "#PrakashStoresStyle" and a button "Follow us on Instagram" that links to a placeholder Instagram profile URL (e.g., `https://www.instagram.com/prakashstores/`).
+
+### `frontend/src/components/product/ProductGrid.tsx`
+This component will render a responsive grid of `ProductCard` components. It will receive a `products` array as a prop and iterate over it to display each product. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.
+
+### `frontend/src/components/product/ProductFilterSidebar.tsx`
+This component will provide filtering options for products. It will allow users to filter by `ProductCategoryDto` (fetched via `productService.getAllCategories()`), `BrandDto` (fetched via `productService.getAllBrands()`), and a price range. It will emit filter change events to its parent (`ProductsPage`) to trigger product searches.
+
+### `frontend/src/components/product/ProductCard.tsx`
+This reusable component will display a single product's information, including its `name`, `price`, and `imageUrl`. It will have a button "Add to Cart" that, when clicked, calls `useCart().addItem({ id: product.id, name: product.name, unitPrice: product.price, imageUrl: product.imageUrl })` from the `cart` foundation feature. The product name will link to the `ProductDetailPage` for that product. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.
+
+### `frontend/src/components/product/ProductImageGallery.tsx`
+This component will display a main product image and a set of thumbnail images. It will receive an array of image URLs as a prop and allow users to switch between images.
+
+### `frontend/src/components/product/ProductInfo.tsx`
+This component will display detailed product information, including the product's `name`, `description`, and `price`. It will also include a quantity selector and an "Add to Cart" button. The "Add to Cart" button will call `useCart().addItem({ id: product.id, name: product.name, unitPrice: product.price, imageUrl: product.imageUrl, quantity: selectedQuantity })` from the `cart` foundation feature. All monetary values (prices) will be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.
+
+### `frontend/src/components/product/ProductReviews.tsx`
+This component will display a list of `ReviewDto`s for a given product. It will fetch reviews using `reviewService.getReviewsByProductId(productId)`. It will also include a `ReviewForm` component, allowing authenticated users to submit new reviews. The `ReviewForm` will use `useAuth()` to check if a user is logged in before allowing submission.
+
+### `frontend/src/components/product/ReviewForm.tsx`
+This component will provide a form for authenticated users to submit a `rating` (1-5 stars) and `comment` for a product. It will use `useAuth()` to determine if the user is logged in. If logged in, it will allow submission, calling `reviewService.createReview(userId, { productId, rating, comment })`. If not logged in, it will prompt the user to log in. Upon successful submission, it will display a toast notification.
+
+### `frontend/src/components/common/FloatingWhatsAppButton.tsx`
+This component will render a floating WhatsApp button at the bottom right of the screen. Clicking it will open a WhatsApp chat with the business phone number `093710 25731`.
+
+
+---
+
+## Checkout Flow
+
+**Name:** `checkout-flow`  
+**Type:** FRONTEND  
+**Change required:** true
+
+**Files in this feature:**
+- `frontend/src/types/order.ts` — Generated from the backend API contract — TypeScript types and interfaces for the order domain.
+- `frontend/src/services/orderService.ts` — Generated from the backend API contract — Provides functions for interacting with the order-related API endpoints.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: createOrder(request: CreateOrderRequest): Promise<OrderResponse>
+- `frontend/src/pages/CartPage.tsx` — PAGE layer — Displays the contents of the shopping cart, using the pre-scaffolded useCart() hook.
+- `frontend/src/pages/CheckoutPage.tsx` — PAGE layer — Guides the user through the multi-step checkout process using the useCheckout() hook.
+- `frontend/src/pages/OrderConfirmationPage.tsx` — PAGE layer — Displays a summary of the successfully placed order.
+- `frontend/src/components/cart/CartItemsTable.tsx` — COMPONENT layer — Displays line items in the cart with quantity controls.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { cartItems: CartItem[]; onUpdateQuantity: (id: string | number, quantity: number, variantKey?: string) => void; onRemoveItem: (id: string | number, variantKey?: string) => void }
+- `frontend/src/components/cart/CartSummary.tsx` — COMPONENT layer — Shows the cart subtotal, taxes, and total, with a button to proceed to checkout.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { totals: CartTotals; onCheckout: () => void }
+- `frontend/src/components/checkout/ShippingAddressForm.tsx` — COMPONENT layer — A form for users to enter or select their shipping address.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { onSubmit: (address: ShippingAddressDto) => void; initialData: ShippingAddressDto | undefined }
+- `frontend/src/components/checkout/DeliveryOptions.tsx` — COMPONENT layer — Allows users to choose a delivery method, including standard shipping and 'Click and Collect'.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { onSelectDeliveryMethod: (method: 'standard' | 'clickAndCollect') => void; selectedMethod: 'standard' | 'clickAndCollect' }
+- `frontend/src/components/checkout/PaymentStep.tsx` — COMPONENT layer — Handles the payment gateway integration for completing the purchase.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { orderTotal: number; onPaymentSuccess: (paymentGatewayOrderId: string) => void }
+- `frontend/src/components/checkout/OrderReviewStep.tsx` — COMPONENT layer — The final step in checkout, allowing users to review their order before payment.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { cartItems: CartItem[]; shippingAddress: ShippingAddressDto; deliveryMethod: 'standard' | 'clickAndCollect'; totals: CartTotals; onPlaceOrder: () => void }
+
+**Feature Instruction:**
+
+## Design Tokens
+- Navbar: bg-[#1A3A6D] text-white
+- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200
+- Brand text accent: text-[#E87A00]
+- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)
+- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6
+- Section container: <section className="py-16 px-4"><div className="max-w-7xl mx-auto">
+- Hero h1: text-4xl md:text-6xl font-bold text-white
+- Body: text-[#212121] leading-relaxed
+
+This feature implements the complete checkout flow for Prakash Stores, from displaying the shopping cart to confirming an order. It leverages the pre-scaffolded cart framework (`useCart()` and `useCheckout()`) for managing cart state and the order-management-api backend feature for creating orders. The flow consists of three main pages: `CartPage.tsx`, `CheckoutPage.tsx`, and `OrderConfirmationPage.tsx`.
+
+`order.ts` defines the TypeScript interfaces for `CreateOrderRequest`, `OrderItemRequest`, `OrderResponse`, `OrderItemResponse`, and `ShippingAddressDto`, which are used for communication with the backend order-management-api. These types mirror the DTOs defined in the backend `order-management-api` feature.
+
+`orderService.ts` provides the frontend service functions for interacting with the backend order API. It exports `createOrder(request: CreateOrderRequest): Promise<OrderResponse>` which makes a POST request to `/api/v1/orders` to place a new order. This function will be called by `CheckoutPage.tsx`.
+
+`CartPage.tsx` is responsible for rendering the current contents of the user's shopping cart. It imports and uses the `useCart()` hook from `@/cart` to access `cartItems`, `totals`, `addItem`, `removeItem`, and `setItemQuantity`. It renders the `CartItemsTable.tsx` component to display individual items with quantity controls and `CartSummary.tsx` to show the subtotal, adjustments, and total. The 'Proceed to Checkout' button in `CartSummary.tsx` navigates the user to the `CheckoutPage.tsx`.
+
+`CartItemsTable.tsx` is a presentational component that receives `cartItems`, `onUpdateQuantity`, and `onRemoveItem` as props. It iterates through `cartItems` and displays each item's name, price, quantity, and total. It includes controls (e.g., +/- buttons or an input field) to adjust item quantities, calling `onUpdateQuantity(id, newQuantity, variantKey?)`, and a button to remove items, calling `onRemoveItem(id, variantKey?)`. All monetary values are displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.
+
+`CartSummary.tsx` displays the financial summary of the cart. It receives `totals` (containing `subtotal`, `adjustments`, `total`) and an `onCheckout` function as props. It renders these totals, formatted in Indian Rupees (₹), and provides a 'Proceed to Checkout' button that triggers the `onCheckout` function, navigating to the checkout page.
+
+`CheckoutPage.tsx` orchestrates the multi-step checkout process. It utilizes the `useCheckout()` hook from `@/cart` to manage the checkout steps and state. The steps are: Shipping Address, Delivery Options, Order Review, and Payment. It renders the appropriate component for each step: `ShippingAddressForm.tsx`, `DeliveryOptions.tsx`, `OrderReviewStep.tsx`, and `PaymentStep.tsx`. When the final payment step is completed, it calls `orderService.createOrder` with the collected `CreateOrderRequest` data (derived from cart items and user inputs) and then navigates to `OrderConfirmationPage.tsx` upon successful order creation. It also handles error states and displays appropriate feedback.
+
+`ShippingAddressForm.tsx` is a form component that collects or allows selection of the user's shipping address. It takes `onSubmit(address: ShippingAddressDto)` and `initialData?: ShippingAddressDto` as props. It includes fields for `fullName`, `streetAddress`, `city`, `state`, `postalCode`, and `phoneNumber`. It should include validation for these fields.
+
+`DeliveryOptions.tsx` allows the user to select a delivery method. It takes `onSelectDeliveryMethod(method: 'standard' | 'clickAndCollect')` and `selectedMethod` as props. It presents options like 'Standard Shipping' and 'Click and Collect' (for in-store pickup at Prakash Stores' address: Showroom No 1, 90 Madhukunj, Aundh Rd, Pune, Maharashtra 411020).
+
+`OrderReviewStep.tsx` displays a summary of the order before final placement. It receives `cartItems`, `shippingAddress`, `deliveryMethod`, and `totals` as props. It presents all the order details, including product names, quantities, prices, shipping address, selected delivery method, and the final total amount, all formatted in Indian Rupees (₹). It includes a button to 'Place Order' which triggers the final order creation process.
+
+`PaymentStep.tsx` integrates with the payment gateway. It receives `orderTotal: BigDecimal` and `onPaymentSuccess(paymentGatewayOrderId: string)` as props. It will simulate a payment process and, upon successful completion, call `onPaymentSuccess` with a placeholder `paymentGatewayOrderId`. This component does not directly call the PaymentService; the `CheckoutPage.tsx` will handle the `orderService.createOrder` call which internally interacts with the PaymentService.
+
+`OrderConfirmationPage.tsx` displays a success message and a summary of the placed order. It receives the `OrderResponse` object (likely passed via route state or a query parameter) and displays the `orderId`, `totalAmount`, `orderDate`, `shippingAddress`, and `orderItems`. All monetary values are displayed in Indian Rupees (₹). It should also include a call to action, such as 'Continue Shopping' or 'View My Orders'.
+
+---
+
+## Customer Account
+
+**Name:** `customer-account`  
+**Type:** FRONTEND  
+**Change required:** true
+
+**Files in this feature:**
+- `frontend/src/types/review.ts` — Generated from the backend API contract — TypeScript types and interfaces for the customer review domain.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: number; productId: number; userId: number; userName: string; rating: number; comment: string; createdAt: string }
+- `frontend/src/services/reviewService.ts` — Provides functions for interacting with the review-related API endpoints, specifically `createReview(request: CreateReviewRequest): Promise<ReviewDto>` and `getReviewsByProductId(productId: Long): Promise<ReviewDto[]>`.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: createReview(request: { productId: number; rating: number; comment: string; }): Promise<ReviewDto>; getReviewsByProductId(productId: number): Promise<ReviewDto[]>
+- `frontend/src/types/loyalty.ts` — Generated from the backend API contract — TypeScript types and interfaces for the loyalty program domain.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { pointsBalance: number; userId: number }
+- `frontend/src/services/loyaltyService.ts` — Provides functions for interacting with the loyalty program API endpoints, specifically `getMyLoyaltyPoints(): Promise<LoyaltyPointsDto>`.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getMyLoyaltyPoints(): Promise<LoyaltyPointsDto>
+- `frontend/src/pages/AccountPage.tsx` — Customer account dashboard page, displaying profile details, order history, and loyalty points by orchestrating data from various services and rendering sub-components.
+- `frontend/src/components/account/ProfileDetails.tsx` — React component that displays the user's personal information and saved addresses.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { user: AuthUser | null }
+- `frontend/src/components/account/OrderHistory.tsx` — React component that displays a list of the user's past orders, formatted with Indian currency conventions.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { orders: OrderResponse[] }
+- `frontend/src/components/account/LoyaltyPointsSummary.tsx` — React component that displays the user's current loyalty points balance.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { loyaltyPoints: LoyaltyPointsDto | null }
+
+**Feature Instruction:**
+
+This feature implements the customer's account dashboard, providing a centralized place for users to view their profile details, order history, and loyalty points. It consists of TypeScript type definitions for reviews and loyalty, service files for interacting with the backend API for reviews and loyalty, and React components for the account page itself and its sub-sections.
+
+## Design Tokens
+- Navbar: bg-[#1A3A6D] text-white
+- Primary CTA: bg-[#E87A00] hover:bg-[#D46A00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200
+- Brand text accent: text-[#E87A00]
+- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)
+- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6
+- Section container: <section className="py-16 px-4"><div className="max-w-7xl mx-auto">
+- Hero h1: text-4xl md:text-6xl font-bold text-white
+- Body: text-[#212121] leading-relaxed
+
+### `frontend/src/types/review.ts`
+This file defines the `ReviewDto` interface, which represents a customer review, and `CreateReviewRequest` for submitting new reviews. These types are used throughout the frontend when interacting with review-related data.
+
+### `frontend/src/services/reviewService.ts`
+This service provides functions to interact with the backend review API. It exports `createReview(request: CreateReviewRequest): Promise<ReviewDto>` to submit a new review and `getReviewsByProductId(productId: Long): Promise<ReviewDto[]>` to fetch reviews for a specific product. These functions will internally use the generated API client to make HTTP requests to `/api/v1/reviews` (POST) and `/api/v1/products/{productId}/reviews` (GET) respectively. Error handling should be implemented to catch network errors or API-specific error responses.
+
+### `frontend/src/types/loyalty.ts`
+This file defines the `LoyaltyPointsDto` interface, representing a user's loyalty points balance. This type is used when displaying loyalty information to the user.
+
+### `frontend/src/services/loyaltyService.ts`
+This service provides a function to fetch the current user's loyalty points. It exports `getMyLoyaltyPoints(): Promise<LoyaltyPointsDto>` which internally calls the generated API client to make an HTTP GET request to `/api/v1/loyalty/my`. This function requires authentication and will rely on the `@/api/client` interceptor to attach the JWT.
+
+### `frontend/src/pages/AccountPage.tsx`
+This page serves as the main customer account dashboard. It will use the `useAuth()` hook to get the current user's ID and ensure the user is authenticated. It will fetch the user's order history using the `getOrdersByUserId()` function from the `order-management-api` feature and their loyalty points using `getMyLoyaltyPoints()` from `loyaltyService.ts`. The page will render the `ProfileDetails`, `OrderHistory`, and `LoyaltyPointsSummary` components, passing the relevant data as props. The layout should be clean and modern, using the defined design tokens for sections and cards. The page title should be "My Account" and sections should be clearly delineated.
+
+### `frontend/src/components/account/ProfileDetails.tsx`
+This component displays the user's personal information and saved addresses. It will receive user profile data as props. The component should present the information in a readable format, using the defined design tokens for text and card styling. Placeholder data for name, email, and addresses should be used initially.
+
+### `frontend/src/components/account/OrderHistory.tsx`
+This component displays a list of the user's past orders. It will receive a `List<OrderResponse>` as props. Each order should be displayed in a card-like format, showing the order ID, date (formatted for en-IN locale), total amount (formatted as INR), and status. A "View Details" button for each order could be included, though the detail view itself is not part of this feature. Monetary values must be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.
+
+### `frontend/src/components/account/LoyaltyPointsSummary.tsx`
+This component displays the user's current loyalty points balance. It will receive a `LoyaltyPointsDto` as props. It should prominently display the `pointsBalance` with a friendly message, reinforcing the community-focused tone. The component should use the defined design tokens for styling, perhaps a card with an accent color for the points value.
+
+---
+
+## Static Pages
+
+**Name:** `static-pages`  
+**Type:** FRONTEND  
+**Change required:** true
+
+**Files in this feature:**
+- `frontend/src/types/storeEvent.ts` — Generated from the backend API contract — defines the TypeScript interface for store event data.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { id: number; title: string; date: string; time: string; description: string }
+- `frontend/src/services/storeEventService.ts` — FRONTEND SERVICE layer — provides functions for fetching store event data from the backend API, including getUpcomingEvents(): Promise<StoreEvent[]> and getEventById(id: Long): Promise<StoreEvent>.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): methods: getUpcomingEvents: () => Promise<StoreEvent[]>; getEventById: (id: number) => Promise<StoreEvent>
+- `frontend/src/pages/AboutPage.tsx` — FRONTEND PAGE layer — renders the 'About Us' page, providing information about Prakash Stores' history and values.
+- `frontend/src/pages/ContactPage.tsx` — FRONTEND PAGE layer — displays contact information, business hours, and an embedded map for Prakash Stores, integrating ContactForm and LocationMap components.
+- `frontend/src/pages/EventsPage.tsx` — FRONTEND PAGE layer — fetches and displays a list of upcoming in-store events using the storeEventService.
+- `frontend/src/pages/NotFoundPage.tsx` — FRONTEND PAGE layer — renders a user-friendly 404 page for invalid routes.
+- `frontend/src/components/contact/ContactForm.tsx` — FRONTEND COMPONENT layer — provides a form for users to send inquiries to Prakash Stores.
+- `frontend/src/components/contact/LocationMap.tsx` — FRONTEND COMPONENT layer — embeds a Google Map to display the physical store location.
+
+RECONCILED CONTRACT (ground truth — implement EXACTLY this interface): { latitude: number; longitude: number }
+- `frontend/src/App.tsx` — FRONTEND PAGE layer — the root application component that sets up React Router and global providers.
+
+**Feature Instruction:**
+
+## Design Tokens
+- Navbar: bg-[#1A3A6D] text-white
+- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200
+- Brand text accent: text-[#E87A00]
+- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)
+- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6
+- Section container: <section className="py-16 px-4"><div className="max-w-7xl mx-auto">
+- Hero h1: text-4xl md:text-6xl font-bold text-white
+- Body: text-[#212121] leading-relaxed
+
+This `static-pages` feature provides foundational static content for the Prakash Stores frontend, including informational pages like 'About Us', 'Contact Us', and 'Events', as well as a 404 'Not Found' page. It also defines the core TypeScript types and service functions for interacting with store events, which are consumed by the `EventsPage`.
+
+`frontend/src/types/storeEvent.ts` defines the `StoreEvent` interface, mirroring the `StoreEventDto` from the `site-content` backend feature. This ensures type safety across the frontend when handling event data.
+
+`frontend/src/services/storeEventService.ts` provides a set of asynchronous functions to fetch store event data from the backend. It includes `getUpcomingEvents()` to retrieve events scheduled for the future and `getEventById(id: Long)` to fetch a specific event. These functions utilize the generated API client to make HTTP requests to the `/api/v1/events/upcoming` and `/api/v1/events/{id}` endpoints, respectively, from the `site-content` backend feature.
+
+`frontend/src/pages/AboutPage.tsx` renders a static page detailing the history and values of Prakash Stores. It will feature a hero section with a relevant image, a welcoming headline, and several content sections describing the business's journey and commitment to the community. The page will use the defined design tokens for consistent styling.
+
+`frontend/src/pages/ContactPage.tsx` displays essential contact information for Prakash Stores. It integrates the `ContactForm` component for user inquiries and the `LocationMap` component to show the physical store location using Google Maps. The page will prominently display the business address, phone number, and opening hours. The map will be centered on the provided coordinates.
+
+`frontend/src/components/contact/ContactForm.tsx` is a reusable component that provides a form for users to submit inquiries. It will include fields for name, email, subject, and message. Upon submission, it should display a success or error toast message using `sonner`.
+
+`frontend/src/components/contact/LocationMap.tsx` is a component that embeds a Google Map. It takes `latitude` and `longitude` as props to pinpoint the store's location. The map should be interactive, allowing users to zoom and pan.
+
+`frontend/src/pages/EventsPage.tsx` fetches and displays a list of upcoming in-store events. It uses the `storeEventService.getUpcomingEvents()` function to retrieve event data. Each event will be rendered as a card, showing its title, date, time, and a brief description. The page will handle loading states and display a message if no upcoming events are found.
+
+`frontend/src/pages/NotFoundPage.tsx` serves as a user-friendly 404 error page. It will display a clear message indicating that the requested page could not be found and provide a link back to the homepage, styled according to the brand's tone.
+
+`frontend/src/App.tsx` is the root component of the application. It sets up the `react-router-dom` for navigation, defining routes for all public pages including the `AboutPage`, `ContactPage`, `EventsPage`, and `NotFoundPage`. It also ensures the `SiteLayout` (which includes the header and footer) is applied globally to public routes, and the `AdminLayout` is applied to admin routes. It will also include the `Toaster` component from `sonner` for displaying notifications.
+
+---
+
+## Infrastructure
+
+**Name:** `infrastructure`  
+**Type:** INFRA  
+**Change required:** true
+
+**Feature Instruction:**
+
+_Not enriched (INFRA or skipped)._
+
+---
+
