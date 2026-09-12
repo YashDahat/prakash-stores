@@ -1893,13 +1893,41 @@
     "status" : "PLANNED",
     "description" : "Represents an in-store event like a workshop or collection preview.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the store event. Generated automatically."
+    }, {
+      "name" : "title",
+      "type" : "String",
+      "description" : "Title of the event. Not null, max 255 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the event. Not null."
+    }, {
+      "name" : "eventDate",
+      "type" : "LocalDate",
+      "description" : "Date of the event. Not null."
+    }, {
+      "name" : "startTime",
+      "type" : "LocalTime",
+      "description" : "Start time of the event. Not null."
+    }, {
+      "name" : "endTime",
+      "type" : "LocalTime",
+      "description" : "End time of the event. Not null."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the event's image. Nullable, max 1024 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "site-content",
-    "file_role" : null,
+    "file_role" : "JPA Entity — Represents an in-store event with details like title, date, and time.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1911,14 +1939,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for StoreEvent entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByEventDateAfterOrderByEventDateAsc",
+      "parameters" : [ "LocalDate eventDate" ],
+      "return_type" : "List<StoreEvent>",
+      "description" : "Retrieves a list of store events scheduled after the given date, ordered by event date ascending."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/StoreEvent.java" ],
     "depends_on" : [ ],
     "feature_name" : "site-content",
-    "file_role" : null,
+    "file_role" : "Spring Data JPA Repository — Provides data access operations for `StoreEvent` entities, including finding upcoming events.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1930,14 +1963,44 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Business logic for managing in-store events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllEvents",
+      "parameters" : [ ],
+      "return_type" : "List<StoreEventDto>",
+      "description" : "Fetches all store events."
+    }, {
+      "name" : "getUpcomingEvents",
+      "parameters" : [ ],
+      "return_type" : "List<StoreEventDto>",
+      "description" : "Fetches all upcoming store events, ordered by date."
+    }, {
+      "name" : "getEventById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "StoreEventDto",
+      "description" : "Retrieves a single store event by its ID."
+    }, {
+      "name" : "createEvent",
+      "parameters" : [ "StoreEventDto eventDto" ],
+      "return_type" : "StoreEventDto",
+      "description" : "Creates a new store event."
+    }, {
+      "name" : "updateEvent",
+      "parameters" : [ "Long id", "StoreEventDto eventDto" ],
+      "return_type" : "StoreEventDto",
+      "description" : "Updates an existing store event."
+    }, {
+      "name" : "deleteEvent",
+      "parameters" : [ "Long id" ],
+      "return_type" : "void",
+      "description" : "Deletes a store event by its ID."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/StoreEventRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "site-content",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — Implements business logic for managing store events, including `getAllEvents()`, `getUpcomingEvents()`, `getEventById(Long id)`, `createEvent(StoreEventDto eventDto)`, `updateEvent(Long id, StoreEventDto eventDto)`, and `deleteEvent(Long id)`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1949,14 +2012,50 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Public API endpoints for viewing upcoming store events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllEvents",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<StoreEventDto>>",
+      "description" : "Handles GET requests to retrieve all store events."
+    }, {
+      "name" : "getUpcomingEvents",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<StoreEventDto>>",
+      "description" : "Handles GET requests to retrieve upcoming store events."
+    }, {
+      "name" : "getEventById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<StoreEventDto>",
+      "description" : "Handles GET requests to retrieve a store event by ID."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/events",
+      "request_body" : null,
+      "response_body" : "List<StoreEventDto>",
+      "description" : "Retrieves a list of all store events.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/events/upcoming",
+      "request_body" : null,
+      "response_body" : "List<StoreEventDto>",
+      "description" : "Retrieves a list of upcoming store events.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/events/{id}",
+      "request_body" : null,
+      "response_body" : "StoreEventDto",
+      "description" : "Retrieves a single store event by its ID.",
+      "access" : "public"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/StoreEventService.java" ],
     "depends_on" : [ ],
     "feature_name" : "site-content",
-    "file_role" : null,
+    "file_role" : "REST Controller — Exposes public API endpoints for viewing store events.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1968,14 +2067,74 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin-only API endpoints for CRUD operations on store events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllEvents",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<StoreEventDto>>",
+      "description" : "Handles GET requests to retrieve all store events for admin."
+    }, {
+      "name" : "getEventById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<StoreEventDto>",
+      "description" : "Handles GET requests to retrieve a store event by ID for admin."
+    }, {
+      "name" : "createEvent",
+      "parameters" : [ "StoreEventDto eventDto" ],
+      "return_type" : "ResponseEntity<StoreEventDto>",
+      "description" : "Handles POST requests to create a new store event."
+    }, {
+      "name" : "updateEvent",
+      "parameters" : [ "Long id", "StoreEventDto eventDto" ],
+      "return_type" : "ResponseEntity<StoreEventDto>",
+      "description" : "Handles PUT requests to update an existing store event."
+    }, {
+      "name" : "deleteEvent",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Handles DELETE requests to delete a store event by ID."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/events",
+      "request_body" : null,
+      "response_body" : "List<StoreEventDto>",
+      "description" : "Retrieves a list of all store events for administrative purposes.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : null,
+      "response_body" : "StoreEventDto",
+      "description" : "Retrieves a single store event by its ID for administrative purposes.",
+      "access" : "admin"
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/events",
+      "request_body" : "StoreEventDto",
+      "response_body" : "StoreEventDto",
+      "description" : "Creates a new store event.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : "StoreEventDto",
+      "response_body" : "StoreEventDto",
+      "description" : "Updates an existing store event by its ID.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Deletes a store event by its ID.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/StoreEventService.java" ],
     "depends_on" : [ ],
     "feature_name" : "site-content",
-    "file_role" : null,
+    "file_role" : "REST Controller — Exposes admin-only API endpoints for CRUD operations on store events.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1988,13 +2147,41 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for StoreEvent entities.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the store event."
+    }, {
+      "name" : "title",
+      "type" : "String",
+      "description" : "Title of the event. @NotBlank, @Size(max = 255)."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the event. @NotBlank."
+    }, {
+      "name" : "eventDate",
+      "type" : "LocalDate",
+      "description" : "Date of the event. @NotNull."
+    }, {
+      "name" : "startTime",
+      "type" : "LocalTime",
+      "description" : "Start time of the event. @NotNull."
+    }, {
+      "name" : "endTime",
+      "type" : "LocalTime",
+      "description" : "End time of the event. @NotNull."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the event's image. @Size(max = 1024)."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "site-content",
-    "file_role" : null,
+    "file_role" : "Data Transfer Object — Used to transfer store event data between layers, exposing only necessary fields.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3441,9 +3628,9 @@
     "feature_display_name" : "Site Content Management",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/StoreEvent.java", "backend/src/main/java/com/prakashstores/repository/StoreEventRepository.java", "backend/src/main/java/com/prakashstores/service/StoreEventService.java", "backend/src/main/java/com/prakashstores/controller/StoreEventController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminStoreEventController.java", "backend/src/main/java/com/prakashstores/dto/StoreEventDto.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature manages in-store events for Prakash Stores, providing both public read-only access and admin-level CRUD operations. It consists of a `StoreEvent` JPA entity, a `StoreEventRepository` for data access, a `StoreEventService` for business logic, and two controllers: `StoreEventController` for public access and `AdminStoreEventController` for administrative tasks. A `StoreEventDto` is used for data transfer between the service and controllers.\n\n**Data Model:**\n- `StoreEvent.java` defines the entity with fields for `id` (Long), `title` (String), `description` (String), `eventDate` (LocalDate), `startTime` (LocalTime), `endTime` (LocalTime), and `imageUrl` (String).\n\n**Persistence:**\n- `StoreEventRepository.java` extends `JpaRepository<StoreEvent, Long>` and provides standard CRUD operations. It will also include a custom query method `findByEventDateAfterOrderByEventDateAsc` to retrieve upcoming events.\n\n**Business Logic:**\n- `StoreEventService.java` orchestrates interactions between the controllers and the repository. It defines the following public methods:\n    1. `getAllEvents(): List<StoreEventDto>`:\n        - Fetches all `StoreEvent` entities from the repository.\n        - Maps each `StoreEvent` to a `StoreEventDto`.\n        - Returns a list of `StoreEventDto`.\n    2. `getUpcomingEvents(): List<StoreEventDto>`:\n        - Calls `storeEventRepository.findByEventDateAfterOrderByEventDateAsc(LocalDate.now())` to get events scheduled for today or later.\n        - Maps each `StoreEvent` to a `StoreEventDto`.\n        - Returns a list of `StoreEventDto`.\n    3. `getEventById(Long id): StoreEventDto`:\n        - Retrieves a `StoreEvent` by its `id` from the repository.\n        - Throws `ResourceNotFoundException` if the event is not found.\n        - Maps the `StoreEvent` to a `StoreEventDto`.\n        - Returns the `StoreEventDto`.\n    4. `createEvent(StoreEventDto eventDto): StoreEventDto`:\n        - Maps the `StoreEventDto` to a `StoreEvent` entity.\n        - Saves the new `StoreEvent` using the repository.\n        - Maps the saved `StoreEvent` back to a `StoreEventDto`.\n        - Returns the created `StoreEventDto`.\n    5. `updateEvent(Long id, StoreEventDto eventDto): StoreEventDto`:\n        - Retrieves the existing `StoreEvent` by `id` from the repository.\n        - Throws `ResourceNotFoundException` if the event is not found.\n        - Updates the fields of the existing `StoreEvent` with values from `eventDto`.\n        - Saves the updated `StoreEvent` using the repository.\n        - Maps the updated `StoreEvent` back to a `StoreEventDto`.\n        - Returns the updated `StoreEventDto`.\n    6. `deleteEvent(Long id): void`:\n        - Checks if an event with the given `id` exists.\n        - Throws `ResourceNotFoundException` if the event is not found.\n        - Deletes the `StoreEvent` by `id` from the repository.\n\n**API Endpoints:**\n- `StoreEventController.java` exposes public read-only endpoints:\n    - `GET /api/v1/events`: Returns a list of all `StoreEventDto`.\n    - `GET /api/v1/events/upcoming`: Returns a list of `StoreEventDto` for upcoming events.\n    - `GET /api/v1/events/{id}`: Returns a single `StoreEventDto` by ID.\n- `AdminStoreEventController.java` exposes admin-only CRUD endpoints:\n    - `GET /api/v1/admin/events`: Returns a list of all `StoreEventDto`.\n    - `GET /api/v1/admin/events/{id}`: Returns a single `StoreEventDto` by ID.\n    - `POST /api/v1/admin/events`: Creates a new `StoreEvent` from a `StoreEventDto`.\n    - `PUT /api/v1/admin/events/{id}`: Updates an existing `StoreEvent` from a `StoreEventDto`.\n    - `DELETE /api/v1/admin/events/{id}`: Deletes a `StoreEvent` by ID.\n\n**Error Handling:**\n- Both controllers will catch `ResourceNotFoundException` (from `StoreEventService`) and return an HTTP 404 Not Found response. This exception is part of the `shared-backend` feature.",
+    "depends_on_features" : [ "shared-backend" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
