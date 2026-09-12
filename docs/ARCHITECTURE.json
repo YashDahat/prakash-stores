@@ -2212,14 +2212,14 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Provides a form for users to log in, calling the pre-scaffolded useAuth() hook.",
-    "public_functions" : null,
-    "public_variables" : null,
+    "public_functions" : [ ],
+    "public_variables" : [ ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : null,
+    "file_role" : "PAGE layer — provides a login form and handles user authentication using the `useAuth()` hook.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2231,14 +2231,14 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Provides a form for new users to create an account, calling the pre-scaffolded useAuth() hook.",
-    "public_functions" : null,
-    "public_variables" : null,
+    "public_functions" : [ ],
+    "public_variables" : [ ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : null,
+    "file_role" : "PAGE layer — provides a signup form and handles new user registration using the `useAuth()` hook.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2250,14 +2250,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A route guard component that checks authentication status and roles using useAuth().",
-    "public_functions" : null,
-    "public_variables" : null,
+    "public_functions" : [ {
+      "name" : "ProtectedRoute",
+      "parameters" : [ "{ children: React.ReactNode, roles?: string[] }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders children if authenticated and authorized, otherwise redirects to login or a forbidden page."
+    } ],
+    "public_variables" : [ ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a React component that guards routes, ensuring only authenticated users (and optionally those with specific roles) can access child routes.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3638,9 +3643,9 @@
     "feature_display_name" : "Authentication UI",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/pages/LoginPage.tsx", "frontend/src/pages/SignupPage.tsx", "frontend/src/components/ProtectedRoute.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature provides the user interface for authentication, including login and signup pages, and a protected route component to guard access to authenticated sections of the application. It leverages the pre-scaffolded `useAuth()` hook for all authentication logic, including managing user sessions, login, and signup.\n\n## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46A00] text-white font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Secondary CTA: bg-gray-200 hover:bg-gray-300 text-[#212121] font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-sm border border-gray-100 p-6\n- Section container: <section className=\"py-12 px-4\"><div className=\"max-w-4xl mx-auto\">\n- Hero h1: text-4xl md:text-5xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n- Input field: border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent\n\n### LoginPage.tsx\nThis page provides a user-friendly form for existing users to log in. It will include fields for email and password, and a 'Forgot Password' link (which will not be functional in this iteration). Upon successful login, the user should be redirected to the homepage or the previously intended private route. The page will use the `useAuth()` hook's `login` function. Error messages from the `useAuth()` hook should be displayed to the user.\n\n### SignupPage.tsx\nThis page provides a form for new users to create an account. It will include fields for name, email, and password. Upon successful signup, the user should be automatically logged in and redirected to the homepage. The page will use the `useAuth()` hook's `signup` function. Error messages from the `useAuth()` hook should be displayed to the user.\n\n### ProtectedRoute.tsx\nThis component acts as a route guard. It will check the user's authentication status using the `useAuth()` hook. If the user is not authenticated, they will be redirected to the login page. If the user is authenticated, the component will render its children. It can optionally take a `roles` prop (e.g., `['ADMIN']`) to restrict access based on user roles. If the user is authenticated but does not have the required role, they should be redirected to a '403 Forbidden' page (which is not part of this feature).\n\n**Inter-file Wiring:**\n- `LoginPage.tsx` and `SignupPage.tsx` both import and use the `useAuth()` hook from `@/context/AuthContext` to perform login and signup operations, respectively. They will navigate using `react-router-dom`'s `useNavigate` hook after successful authentication.\n- `ProtectedRoute.tsx` imports and uses the `useAuth()` hook from `@/context/AuthContext` to check the authentication status and user roles. It uses `react-router-dom`'s `Navigate` component for redirection.",
+    "depends_on_features" : [ ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
