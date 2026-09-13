@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { OrderResponse, OrderItemResponse } from '@/types/order';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';

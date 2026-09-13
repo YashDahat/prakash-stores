@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 type AuthUser = { username: string; role: string };

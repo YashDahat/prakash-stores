@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import { Button } from '@/components/ui/button';
 // FIXME[invalid-icon]: 'Instagram' is not exported by lucide-react. Replace it (import + all usages) with one of these real icons: Star, Sparkles, Circle.
 import { Star } from 'lucide-react';

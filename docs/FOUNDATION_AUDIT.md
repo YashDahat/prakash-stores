@@ -11,5 +11,8 @@ Clean — no residual foundation impedance.
 <!-- AUDIT:FRONTEND:START -->
 ## FRONTEND
 
-Clean — no residual foundation impedance.
+1 finding(s). The domain reference to the platform user should be the foundation handle `userId`.
+
+### REDECLARED_USER_SHAPE (1)
+- `frontend/src/components/account/ProfileDetails.tsx:3` — type AuthUser = { username: string; role: string };
 <!-- AUDIT:FRONTEND:END -->

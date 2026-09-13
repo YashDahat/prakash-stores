@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import ProductCard from './ProductCard';
 import type { ProductDto } from '@/types/product';
 

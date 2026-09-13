@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import { OrderResponse, OrderStatus } from '@/types/order';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
