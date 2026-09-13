@@ -1,5 +1,7 @@
+import type { JSX } from 'react';
 import { Button } from '@/components/ui/button';
-import { Instagram } from 'lucide-react';
+// FIXME[invalid-icon]: 'Instagram' is not exported by lucide-react. Replace it (import + all usages) with one of these real icons: Star, Sparkles, Circle.
+import { Star } from 'lucide-react';
 
 export default function InstagramFeed(): React.JSX.Element {
   const instagramImages = [
@@ -24,7 +26,7 @@ export default function InstagramFeed(): React.JSX.Element {
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <Instagram className="h-8 w-8 text-white" />
+                <Star className="h-8 w-8 text-white" />
               </div>
             </div>
           ))}

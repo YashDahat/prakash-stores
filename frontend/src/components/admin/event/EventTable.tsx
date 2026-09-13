@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { StoreEventDto } from '@/types/storeEvent';

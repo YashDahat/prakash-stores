@@ -3,15 +3,16 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Slider } from '@/components/ui/slider';
 
-import { useCategories, useBrands } from '@/hooks/productHooks';
-import type { BrandDto, ProductCategoryDto } from '@/types/product';
+import { useCategories } from '@/hooks/productHooks';
+import { useBrands } from '@/hooks/brandHooks';
+import type { ProductCategoryDto } from '@/types/product';
+import type { BrandDto } from '@/types/brand';
 
 interface ProductFilterRequest {
   query?: string;

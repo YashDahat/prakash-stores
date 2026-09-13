@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -110,7 +111,7 @@ export default function EventForm({ initialData, onSubmit, onCancel, isLoading }
                     selected={field.value}
                     onSelect={field.onChange}
                     disabled={(date) => date < new Date('1900-01-01')}
-                    initialFocus
+                    autoFocus
                   />
                 </PopoverContent>
               </Popover>

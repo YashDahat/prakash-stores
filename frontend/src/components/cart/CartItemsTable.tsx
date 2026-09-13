@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { CartItem } from '@/cart/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

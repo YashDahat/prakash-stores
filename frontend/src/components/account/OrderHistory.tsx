@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { OrderResponse, OrderStatus } from '@/types/order';
+import type { OrderResponse } from '@/types/order';
 
 interface OrderHistoryProps {
   orders: OrderResponse[];

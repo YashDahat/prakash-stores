@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { useProducts, useCategories, useBrands, useSearchProducts } from '@/hooks/productHooks';
+import { useCategories, useSearchProducts } from '@/hooks/productHooks';
+import { useBrands } from '@/hooks/brandHooks';
 import ProductFilterSidebar from '@/components/product/ProductFilterSidebar';
 import ProductGrid from '@/components/product/ProductGrid';
-import { ProductFilterRequest } from '@/types/product';
 import { Skeleton } from '@/components/ui/skeleton';
+
+interface ProductFilterRequest {
+  query?: string;
+  categoryId?: number;
+  brandId?: number;
+  minPrice?: number;
+  maxPrice?: number;
+}
 
 const ProductsPage = () => {
   const [filters, setFilters] = useState<ProductFilterRequest>({});
-  const { data: products, isLoading: isLoadingProducts, isError: isErrorProducts, error: productsError } = useSearchProducts(filters);
+  const { data: products, isLoading: isLoadingProducts, isError: isErrorProducts, error: productsError } = useSearchProducts();
   const { data: categories, isLoading: isLoadingCategories, isError: isErrorCategories, error: categoriesError } = useCategories();
   const { data: brands, isLoading: isLoadingBrands, isError: isErrorBrands, error: brandsError } = useBrands();
 
@@ -53,8 +61,6 @@ const ProductsPage = () => {
         <div className="w-full md:w-1/4">
           <ProductFilterSidebar
             onFilterChange={handleFilterChange}
-            categories={categories || []}
-            brands={brands || []}
           />
         </div>
         <div className="w-full md:w-3/4">

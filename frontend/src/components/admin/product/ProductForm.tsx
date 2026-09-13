@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,7 +14,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ProductDto } from '@/types/product';
-import { useBrands, useCategories } from '@/hooks/productHooks'; // Assuming these hooks are in productHooks
+import { useCategories } from '@/hooks/productHooks';
+import { useBrands } from '@/hooks/brandHooks';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 

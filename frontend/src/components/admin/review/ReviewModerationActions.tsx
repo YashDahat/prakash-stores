@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { Button } from '@/components/ui/button';
 import { ReviewDto } from '@/types/review';
 import { CheckCircle, Trash2 } from 'lucide-react';

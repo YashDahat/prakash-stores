@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { LoyaltyPointsDto } from '@/types/loyalty';
 import { Flame } from 'lucide-react';

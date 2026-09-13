@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { useState } from 'react';
 import { useOrders, useUpdateOrderStatus } from '@/hooks/orderHooks';
 import { OrderStatus, OrderResponse } from '@/types/order';

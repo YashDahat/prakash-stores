@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CategoryTable } from '@/components/admin/category/CategoryTable';
 import CategoryForm from '@/components/admin/category/CategoryForm';
 import { DeleteCategoryDialog } from '@/components/admin/category/DeleteCategoryDialog';
-import { useCategories, useCreateCategory, useUpdateCategory, useDeleteCategory } from '@/hooks/productHooks';
+import { useCategories, useCreateCategory, useUpdateCategory } from '@/hooks/productHooks';
+import { useDeleteCategory } from '@/hooks/categoryHooks';
 import { ProductCategoryDto } from '@/types/product';
 import { toast } from 'sonner';
 

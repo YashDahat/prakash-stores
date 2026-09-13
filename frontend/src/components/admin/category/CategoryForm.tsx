@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -43,7 +44,7 @@ export default function CategoryForm({
   const handleSubmit = (values: z.infer<typeof formSchema>): void => {
     onSubmit({
       name: values.name,
-      description: values.description ?? null,
+      description: values.description ?? undefined,
     });
   };
 

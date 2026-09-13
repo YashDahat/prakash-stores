@@ -24,6 +24,8 @@ export const ROUTES = {
   ADMIN_PRODUCTS: '/admin/products',
   ADMIN_REVIEWS: '/admin/reviews',
   NOT_FOUND: '*',
+  GALLERY: '/gallery',
+  ADMIN_MEDIA: '/admin/media',
 } as const;
 
 export type RouteGate = 'public' | 'auth' | 'admin';
@@ -59,4 +61,6 @@ export const routeTable: RouteEntry[] = [
   { key: 'ADMIN_PRODUCTS', path: ROUTES.ADMIN_PRODUCTS, page: 'AdminProductsPage', importPath: './pages/admin/AdminProductsPage', label: 'Products', gate: 'admin', nav: true },
   { key: 'ADMIN_REVIEWS', path: ROUTES.ADMIN_REVIEWS, page: 'AdminReviewsPage', importPath: './pages/admin/AdminReviewsPage', label: 'Reviews', gate: 'admin', nav: true },
   { key: 'NOT_FOUND', path: ROUTES.NOT_FOUND, page: 'NotFoundPage', importPath: './pages/NotFoundPage', label: 'Not Found', gate: 'public', nav: false },
+  { key: 'GALLERY', path: ROUTES.GALLERY, page: 'GalleryPage', importPath: './pages/GalleryPage', label: 'Gallery', gate: 'public', nav: true },
+  { key: 'ADMIN_MEDIA', path: ROUTES.ADMIN_MEDIA, page: 'AdminMediaPage', importPath: './pages/admin/AdminMediaPage', label: 'Media', gate: 'admin', nav: true },
 ];

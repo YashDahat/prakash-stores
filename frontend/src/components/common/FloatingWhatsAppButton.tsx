@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { MessageCircle } from 'lucide-react';
 
 export default function FloatingWhatsAppButton(): React.JSX.Element {

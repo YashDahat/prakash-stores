@@ -63,7 +63,7 @@ export function CategoryShowcase() {
               <Card className="overflow-hidden rounded-xl shadow-md border border-gray-100 p-0">
                 <div className="relative w-full h-48 overflow-hidden">
                   <img
-                    src={category.imageUrl || 'https://via.placeholder.com/400x300?text=Category+Image'}
+                    src={'https://via.placeholder.com/400x300?text=Category+Image'}
                     alt={category.name}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
