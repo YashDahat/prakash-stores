@@ -1,54 +1,123 @@
-import { useCart } from '@/cart';
-import { useAuth } from '@/context/AuthContext';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '@/cart/CartContext';
+import { useCheckout } from '@/cart/useCheckout';
+import type { CheckoutStep } from '@/cart/types';
+import ShippingStep from '@/components/checkout/ShippingStep';
+import PaymentStep from '@/components/checkout/PaymentStep';
+import OrderSummary from '@/components/checkout/OrderSummary';
 import { Button } from '@/components/ui/button';
-import {
-  Card, CardContent, CardDescription, CardHeader, CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { ROUTES } from '@/routes';
+import type { ShippingMethod } from '@/types/shipping';
+import { toast } from 'sonner';
+import type { OrderDto } from '@/types/order';
 
-// Minimal foundation checkout — mounted behind <RequireAuth>, so a guest is sent to /login first
-// and returns here with their cart intact. A generated business replaces this with its real
-// checkout (which sends only the cart to the server; the current user is derived from the token —
-// orders link by Integer userId, never email/phone).
-export default function CheckoutPage() {
+interface ShippingDetails {
+  name: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  state: string;
+  pincode: string;
+  phone: string;
+  shippingMethod: ShippingMethod;
+}
+
+const CheckoutPage = (): React.JSX.Element => {
   const { cartItems, totals, clearCart } = useCart();
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [shippingDetails, setShippingDetails] = useState<ShippingDetails | null>(null);
+
+  const steps: CheckoutStep[] = [
+    {
+      id: 'shipping',
+      label: 'Shipping Information',
+      validate: () => {
+        if (!shippingDetails) return 'Please provide shipping details.';
+        return true;
+      },
+    },
+    {
+      id: 'payment',
+      label: 'Payment',
+    },
+  ];
+
+  const { current, next, back, isFirst, isLast, error: checkoutError } = useCheckout(steps);
+
+  const handleShippingNext = (details: ShippingDetails): void => {
+    setShippingDetails(details);
+    next();
+  };
+
+  const handlePaymentSuccess = (order: OrderDto): void => {
+    clearCart();
+    toast.success('Order placed successfully!');
+    navigate(`${ROUTES.ORDER_CONFIRMATION}?orderId=${order.id}`);
+  };
+
+  if (cartItems.length === 0) {
+    return (
+      <section className="py-16 px-4">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
+          <p className="text-lg text-gray-600 mb-8">
+            Looks like you haven&apos;t added anything to your cart yet.
+          </p>
+          <Button onClick={() => navigate(ROUTES.PRODUCTS)} className="bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200">
+            Continue Shopping
+          </Button>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12">
-      <Card data-testid="checkout-card">
-        <CardHeader>
-          <CardTitle>Checkout</CardTitle>
-          <CardDescription>
-            Logged in as <span data-testid="checkout-user">{user?.username}</span>.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {cartItems.length === 0 ? (
-            <p data-testid="checkout-empty" className="text-muted-foreground">Your cart is empty.</p>
-          ) : (
-            <ul className="space-y-1" data-testid="checkout-items">
-              {cartItems.map((item) => (
-                <li key={`${item.id}:${item.variantKey ?? ''}`} className="flex justify-between text-sm">
-                  <span>{item.name} × {item.quantity}</span>
-                  <span>₹{item.unitPrice * item.quantity}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-          <div className="flex items-center justify-between border-t pt-3 font-semibold">
-            <span>Total</span>
-            <span data-testid="checkout-total">₹{totals.total}</span>
-          </div>
-          <Button
-            className="w-full"
-            disabled={cartItems.length === 0}
-            data-testid="place-order"
-            onClick={clearCart}
-          >
-            Place order
-          </Button>
-        </CardContent>
-      </Card>
-    </div>
+    <section className="py-16 px-4 bg-[#F5F5F5]">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          <Card className="shadow-md border border-gray-100">
+            <CardHeader>
+              <CardTitle className="text-2xl font-semibold">Checkout</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {checkoutError && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                  <span className="block sm:inline">{checkoutError}</span>
+                </div>
+              )}
+
+              {current?.id === 'shipping' && (
+                <ShippingStep onNext={handleShippingNext} />
+              )}
+              {current?.id === 'payment' && shippingDetails && (
+                <PaymentStep shippingDetails={shippingDetails} onPaymentSuccess={handlePaymentSuccess} />
+              )}
+
+              <div className="flex justify-between mt-6">
+                {!isFirst && (
+                  <Button onClick={back} variant="outline" className="transition-all duration-200">
+                    Back
+                  </Button>
+                )}
+                {!isLast && current?.id === 'shipping' && shippingDetails && (
+                  <Button onClick={next} className="bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200">
+                    Proceed to Payment
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="lg:col-span-1">
+          <OrderSummary />
+        </div>
+      </div>
+    </section>
   );
-}
+};
+
+export default CheckoutPage;

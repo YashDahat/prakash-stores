@@ -1,27 +1,22 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { ROUTES } from '@/routes';
 
-// Foundation 404 page — mounted at the "*" catch-all route. AppRoutes renders it inside
-// SiteLayout (header + footer), so this is only the inner content. Generic and business-agnostic:
-// shared across every generated project so the catch-all route always resolves to a real file.
-export default function NotFoundPage() {
+const NotFoundPage = (): React.JSX.Element => {
   return (
-    <div
-      className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-4 py-24 text-center"
-      data-testid="not-found-page"
-    >
-      <p className="text-6xl font-bold text-primary" data-testid="not-found-code">
-        404
-      </p>
-      <div className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Page not found</h1>
-        <p className="text-muted-foreground">
-          The page you are looking for doesn&rsquo;t exist or may have moved.
+    <section className="py-16 px-4 min-h-[calc(100vh-var(--header-height)-var(--footer-height))] flex items-center justify-center bg-gray-50">
+      <div className="max-w-md mx-auto text-center bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-6xl font-bold text-[#1A3A6D] mb-4">404</h1>
+        <h2 className="text-3xl font-semibold text-[#212121] mb-6">Oops! Page Not Found</h2>
+        <p className="text-lg text-gray-600 mb-8">
+          The page you're looking for doesn't exist or has been moved.
         </p>
+        <Button asChild className="bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200">
+          <Link to={ROUTES.HOME}>Go to Homepage</Link>
+        </Button>
       </div>
-      <Button asChild data-testid="not-found-home">
-        <Link to="/">Back to home</Link>
-      </Button>
-    </div>
+    </section>
   );
-}
+};
+
+export default NotFoundPage;

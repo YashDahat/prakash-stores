@@ -1,111 +1,185 @@
-import { useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { useAuth } from '@/context/AuthContext';
+import { RegisterRequest } from '@/types/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
-  Form, FormControl, FormField, FormItem, FormLabel, FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
-import {
-  Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter,
-} from '@/components/ui/card';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { ROUTES } from '@/routes';
 
-// India-first signup: phone is required (a primary contact + alternate login identity).
-const schema = z.object({
+const formSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Enter a valid email'),
-  phone: z.string().min(10, 'Enter a valid phone number'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().min(10, 'Phone number must be at least 10 digits'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
-type Values = z.infer<typeof schema>;
 
-export default function SignupPage() {
+export default function SignupPage(): React.JSX.Element {
   const { register } = useAuth();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get('redirect') || '/';
-  const loginHref = redirectTo === '/' ? '/login' : `/login?redirect=${encodeURIComponent(redirectTo)}`;
-  const [formError, setFormError] = useState<string | null>(null);
 
-  const form = useForm<Values>({
-    resolver: zodResolver(schema),
-    defaultValues: { firstName: '', lastName: '', email: '', phone: '', password: '' },
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      password: '',
+    },
   });
 
-  const onSubmit = async (values: Values) => {
-    setFormError(null);
+  const onSubmit = async (values: z.infer<typeof formSchema>): Promise<void> => {
     try {
-      await register(values); // auto-logs in on success
-      navigate(redirectTo, { replace: true }); // back to where the guest was (e.g. /checkout)
-    } catch (err: unknown) {
-      const e = err as { response?: { data?: { message?: string; detail?: string } }; message?: string };
-      setFormError(e.response?.data?.message ?? e.response?.data?.detail ?? 'Could not create your account. Please try again.');
+      const registerRequest: RegisterRequest = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        password: values.password,
+      };
+      await register(registerRequest);
+      toast.success('Account created successfully! You are now logged in.');
+      navigate(ROUTES.HOME);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      toast.error(`Signup failed: ${errorMessage}`);
     }
   };
 
   return (
-    <div className="mx-auto flex max-w-md flex-col justify-center px-4 py-12">
-      <Card data-testid="signup-card">
-        <CardHeader>
-          <CardTitle>Create your account</CardTitle>
-          <CardDescription>Sign up with your details — you'll be logged in automatically.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <FormField control={form.control} name="firstName" render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>First name</FormLabel>
-                    <FormControl><Input placeholder="Aarav" data-testid="signup-firstName" {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )} />
-                <FormField control={form.control} name="lastName" render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Last name</FormLabel>
-                    <FormControl><Input placeholder="Sharma" data-testid="signup-lastName" {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )} />
-              </div>
-              <FormField control={form.control} name="email" render={({ field }) => (
+    <section className="py-12 px-4">
+      <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-100">
+        <h2 className="text-3xl font-bold text-center mb-6 text-[#212121]">Sign Up</h2>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl><Input type="email" placeholder="you@example.com" data-testid="signup-email" {...field} /></FormControl>
+                  <Label htmlFor="firstName">First Name</Label>
+                  <FormControl>
+                    <Input
+                      id="firstName"
+                      placeholder="John"
+                      {...field}
+                      className="border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent"
+                      data-testid="signup-firstName"
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
-              )} />
-              <FormField control={form.control} name="phone" render={({ field }) => (
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone</FormLabel>
-                  <FormControl><Input type="tel" placeholder="+91 98765 43210" data-testid="signup-phone" {...field} /></FormControl>
+                  <Label htmlFor="lastName">Last Name</Label>
+                  <FormControl>
+                    <Input
+                      id="lastName"
+                      placeholder="Doe"
+                      {...field}
+                      className="border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent"
+                      data-testid="signup-lastName"
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
-              )} />
-              <FormField control={form.control} name="password" render={({ field }) => (
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl><Input type="password" placeholder="••••••••" data-testid="signup-password" {...field} /></FormControl>
+                  <Label htmlFor="email">Email</Label>
+                  <FormControl>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="john.doe@example.com"
+                      {...field}
+                      className="border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent"
+                      data-testid="signup-email"
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
-              )} />
-              {formError && <p className="text-sm font-medium text-destructive" data-testid="signup-error">{formError}</p>}
-              <Button type="submit" className="w-full" disabled={form.formState.isSubmitting} data-testid="signup-submit">
-                {form.formState.isSubmitting ? 'Creating account…' : 'Create account'}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter className="justify-center text-sm text-muted-foreground">
-          Already have an account?&nbsp;
-          <Link to={loginHref} className="font-medium text-primary hover:underline" data-testid="link-login">Log in</Link>
-        </CardFooter>
-      </Card>
-    </div>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <FormControl>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="9876543210"
+                      {...field}
+                      className="border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent"
+                      data-testid="signup-phone"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <Label htmlFor="password">Password</Label>
+                  <FormControl>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      {...field}
+                      className="border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent"
+                      data-testid="signup-password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              className="w-full bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-md px-6 py-3 transition-all duration-200"
+              data-testid="signup-submit"
+            >
+              Sign Up
+            </Button>
+          </form>
+        </Form>
+        <p className="text-center text-sm text-gray-600 mt-4">
+          Already have an account?{' '}
+          <Link to={ROUTES.LOGIN} className="text-[#E87A00] hover:underline">
+            Log In
+          </Link>
+        </p>
+      </div>
+    </section>
   );
 }
