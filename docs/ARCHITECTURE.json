@@ -1310,13 +1310,41 @@
     "status" : "PLANNED",
     "description" : "Represents an in-store event like a styling workshop or collection preview.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the event, auto-generated."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the event, not null, max 255 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the event, not null."
+    }, {
+      "name" : "date",
+      "type" : "LocalDate",
+      "description" : "Date of the event, not null."
+    }, {
+      "name" : "time",
+      "type" : "LocalTime",
+      "description" : "Time of the event, not null."
+    }, {
+      "name" : "location",
+      "type" : "String",
+      "description" : "Location where the event will be held, not null, max 255 characters."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the event's image, nullable, max 2048 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "MODEL layer — defines the `Event` entity for persistence.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1328,14 +1356,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Event entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByDateAfterOrderByDateAsc",
+      "parameters" : [ "LocalDate date" ],
+      "return_type" : "List<Event>",
+      "description" : "Retrieves all events occurring after the given date, ordered by date in ascending order."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Event.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access operations for `Event` entities, including `findByDateAfterOrderByDateAsc(LocalDate date)`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1347,14 +1380,44 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Handles business logic for creating and managing in-store events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createEvent",
+      "parameters" : [ "EventDto eventDto" ],
+      "return_type" : "EventDto",
+      "description" : "Creates a new event from the provided DTO."
+    }, {
+      "name" : "getEventById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "EventDto",
+      "description" : "Retrieves an event by its unique identifier."
+    }, {
+      "name" : "getAllEvents",
+      "parameters" : [ ],
+      "return_type" : "List<EventDto>",
+      "description" : "Retrieves all events."
+    }, {
+      "name" : "getUpcomingEvents",
+      "parameters" : [ ],
+      "return_type" : "List<EventDto>",
+      "description" : "Retrieves all events scheduled for a future date, ordered by date."
+    }, {
+      "name" : "updateEvent",
+      "parameters" : [ "Long id", "EventDto eventDto" ],
+      "return_type" : "EventDto",
+      "description" : "Updates an existing event with the provided DTO."
+    }, {
+      "name" : "deleteEvent",
+      "parameters" : [ "Long id" ],
+      "return_type" : "void",
+      "description" : "Deletes an event by its unique identifier."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/EventRepository.java", "backend/src/main/java/com/prakashstores/dto/EventDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements `createEvent(EventDto)`, `getEventById(Long)`, `getAllEvents()`, `getUpcomingEvents()`, `updateEvent(Long, EventDto)`, and `deleteEvent(Long)`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1367,13 +1430,41 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for representing event information.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the event."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the event, not blank."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the event, not blank."
+    }, {
+      "name" : "date",
+      "type" : "LocalDate",
+      "description" : "Date of the event, not null."
+    }, {
+      "name" : "time",
+      "type" : "LocalTime",
+      "description" : "Time of the event, not null."
+    }, {
+      "name" : "location",
+      "type" : "String",
+      "description" : "Location where the event will be held, not blank."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the event's image, nullable."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "DTO layer — defines the `EventDto` for transferring event data.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1385,14 +1476,38 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Public-facing REST controller for listing upcoming events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getUpcomingEvents",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<EventDto>>",
+      "description" : "Retrieves a list of all upcoming events."
+    }, {
+      "name" : "getEventById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<EventDto>",
+      "description" : "Retrieves a single event by its ID."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/events/upcoming",
+      "request_body" : null,
+      "response_body" : "List<EventDto>",
+      "description" : "Retrieves all upcoming events.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/events/{id}",
+      "request_body" : null,
+      "response_body" : "EventDto",
+      "description" : "Retrieves a single event by its ID.",
+      "access" : "public"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/EventService.java", "backend/src/main/java/com/prakashstores/dto/EventDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — exposes public API endpoints for retrieving event information: `getUpcomingEvents()` and `getEventById(Long)`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1404,14 +1519,74 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for managing in-store events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createEvent",
+      "parameters" : [ "EventDto eventDto" ],
+      "return_type" : "ResponseEntity<EventDto>",
+      "description" : "Creates a new event."
+    }, {
+      "name" : "getAllEvents",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<EventDto>>",
+      "description" : "Retrieves all events."
+    }, {
+      "name" : "getEventById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<EventDto>",
+      "description" : "Retrieves a single event by its ID."
+    }, {
+      "name" : "updateEvent",
+      "parameters" : [ "Long id", "EventDto eventDto" ],
+      "return_type" : "ResponseEntity<EventDto>",
+      "description" : "Updates an existing event."
+    }, {
+      "name" : "deleteEvent",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Deletes an event by its ID."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/admin/events",
+      "request_body" : "EventDto",
+      "response_body" : "EventDto",
+      "description" : "Creates a new event.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/events",
+      "request_body" : null,
+      "response_body" : "List<EventDto>",
+      "description" : "Retrieves all events.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : null,
+      "response_body" : "EventDto",
+      "description" : "Retrieves a single event by its ID.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : "EventDto",
+      "response_body" : "EventDto",
+      "description" : "Updates an existing event.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Deletes an event by its ID.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/EventService.java", "backend/src/main/java/com/prakashstores/dto/EventDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "event-management",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — exposes admin-only API endpoints for managing events: `createEvent(EventDto)`, `getAllEvents()`, `getEventById(Long)`, `updateEvent(Long, EventDto)`, and `deleteEvent(Long)`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2563,9 +2738,9 @@
     "feature_display_name" : "Event Management",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Event.java", "backend/src/main/java/com/prakashstores/repository/EventRepository.java", "backend/src/main/java/com/prakashstores/service/EventService.java", "backend/src/main/java/com/prakashstores/dto/EventDto.java", "backend/src/main/java/com/prakashstores/controller/EventController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminEventController.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "The Event Management feature provides a complete backend solution for managing in-store events at Prakash Stores. It includes an `Event` entity for persistence, an `EventRepository` for data access, an `EventService` for business logic, and two controllers: `EventController` for public access to view events, and `AdminEventController` for authenticated administrators to create, update, and delete events. The `EventDto` serves as the data transfer object for event information between layers.\n\n### Event Entity (`Event.java`)\nRepresents an in-store event with fields for `id`, `name`, `description`, `date`, `time`, `location`, and `imageUrl`. The `id` will be a `Long` and auto-generated.\n\n### Event Repository (`EventRepository.java`)\nExtends `JpaRepository` to provide standard CRUD operations for `Event` entities. It will also include a custom query method `findByDateAfterOrderByDateAsc` to retrieve upcoming events, ordered by date.\n\n### Event DTO (`EventDto.java`)\nThis DTO will mirror the `Event` entity but will be used for data transfer. It will include fields for `id`, `name`, `description`, `date`, `time`, `location`, and `imageUrl`. All fields except `id` should have appropriate validation annotations (e.g., `@NotBlank`, `@NotNull`).\n\n### Event Service (`EventService.java`)\nThis service layer handles the core business logic for events. It injects `EventRepository` to perform database operations. It will expose the following public methods:\n\n1.  `createEvent(EventDto eventDto)`: Creates a new event. It takes an `EventDto`, converts it to an `Event` entity, saves it via `eventRepository.save()`, and returns the saved `Event` as an `EventDto`.\n2.  `getEventById(Long id)`: Retrieves an event by its ID. It calls `eventRepository.findById(id)` and throws a `ResourceNotFoundException` if the event is not found. It then converts the `Event` entity to an `EventDto` before returning.\n3.  `getAllEvents()`: Retrieves all events. It calls `eventRepository.findAll()` and maps the list of `Event` entities to a list of `EventDto`.\n4.  `getUpcomingEvents()`: Retrieves all events with a date in the future, ordered by date. It calls `eventRepository.findByDateAfterOrderByDateAsc(LocalDate.now())` and maps the list of `Event` entities to a list of `EventDto`.\n5.  `updateEvent(Long id, EventDto eventDto)`: Updates an existing event. It first retrieves the existing event using `eventRepository.findById(id)`. If not found, it throws `ResourceNotFoundException`. It then updates the fields of the existing `Event` entity with values from the `eventDto`, saves the updated entity, and returns the updated `Event` as an `EventDto`.\n6.  `deleteEvent(Long id)`: Deletes an event by its ID. It first checks if the event exists using `eventRepository.existsById(id)`. If not found, it throws `ResourceNotFoundException`. It then calls `eventRepository.deleteById(id)`.\n\n### Event Controller (`EventController.java`)\nThis controller exposes public API endpoints for viewing events. It injects `EventService`. All monetary values (if any were present) would be formatted using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n1.  `getUpcomingEvents()`: Handles GET requests to `/api/v1/events/upcoming`. It calls `eventService.getUpcomingEvents()` and returns a `ResponseEntity` containing a list of `EventDto`.\n2.  `getEventById(Long id)`: Handles GET requests to `/api/v1/events/{id}`. It calls `eventService.getEventById(id)` and returns a `ResponseEntity` containing an `EventDto`.\n\n### Admin Event Controller (`AdminEventController.java`)\nThis controller exposes admin-only API endpoints for managing events. It injects `EventService` and uses `@CurrentUser Integer userId` for authentication context, though the `userId` is not directly used in event management logic for this feature. All monetary values (if any were present) would be formatted using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n1.  `createEvent(EventDto eventDto)`: Handles POST requests to `/api/v1/admin/events`. It calls `eventService.createEvent(eventDto)` and returns a `ResponseEntity` containing the created `EventDto` with HTTP status 201 (Created).\n2.  `getAllEvents()`: Handles GET requests to `/api/v1/admin/events`. It calls `eventService.getAllEvents()` and returns a `ResponseEntity` containing a list of `EventDto`.\n3.  `getEventById(Long id)`: Handles GET requests to `/api/v1/admin/events/{id}`. It calls `eventService.getEventById(id)` and returns a `ResponseEntity` containing an `EventDto`.\n4.  `updateEvent(Long id, EventDto eventDto)`: Handles PUT requests to `/api/v1/admin/events/{id}`. It calls `eventService.updateEvent(id, eventDto)` and returns a `ResponseEntity` containing the updated `EventDto`.\n5.  `deleteEvent(Long id)`: Handles DELETE requests to `/api/v1/admin/events/{id}`. It calls `eventService.deleteEvent(id)` and returns a `ResponseEntity` with HTTP status 204 (No Content).\n\nError Handling: Both controllers will leverage `GlobalExceptionHandler` from the `shared-backend` feature to handle `ResourceNotFoundException` (returning HTTP 404) and other generic exceptions (returning HTTP 500).",
+    "depends_on_features" : [ "shared-backend" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
