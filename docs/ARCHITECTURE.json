@@ -581,13 +581,49 @@
     "status" : "PLANNED",
     "description" : "Represents a customer's order, containing order items, total amount, status, shipping details, and a link to the customer.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the order. Generated automatically."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the customer who placed the order. Not null."
+    }, {
+      "name" : "orderDate",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the order was placed. Not null."
+    }, {
+      "name" : "totalAmount",
+      "type" : "BigDecimal",
+      "description" : "Total monetary amount of the order. Not null, precision 10, scale 2."
+    }, {
+      "name" : "orderStatus",
+      "type" : "OrderStatus",
+      "description" : "Current status of the order (e.g., PENDING_PAYMENT, DELIVERED). Not null."
+    }, {
+      "name" : "shippingAddress",
+      "type" : "String",
+      "description" : "Full shipping address for the order. Not null, max 500 characters."
+    }, {
+      "name" : "shippingMethod",
+      "type" : "ShippingMethod",
+      "description" : "Selected shipping method for the order. Not null."
+    }, {
+      "name" : "paymentId",
+      "type" : "String",
+      "description" : "ID received from the payment gateway after successful payment initiation. Nullable."
+    }, {
+      "name" : "orderItems",
+      "type" : "List<OrderItem>",
+      "description" : "List of items included in this order. One-to-many relationship, eagerly fetched."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/OrderStatus.java", "backend/src/main/java/com/prakashstores/model/ShippingMethod.java", "backend/src/main/java/com/prakashstores/model/OrderItem.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "JPA Entity — Represents a customer's order, containing order items, total amount, status, shipping details, and a link to the customer.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -600,13 +636,33 @@
     "status" : "PLANNED",
     "description" : "Represents a single line item within an order, linking a product with a quantity and price.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the order item. Generated automatically."
+    }, {
+      "name" : "order",
+      "type" : "Order",
+      "description" : "The order this item belongs to. Many-to-one relationship."
+    }, {
+      "name" : "product",
+      "type" : "Product",
+      "description" : "The product being ordered. Many-to-one relationship. Not null."
+    }, {
+      "name" : "quantity",
+      "type" : "Integer",
+      "description" : "Quantity of the product ordered. Not null, must be positive."
+    }, {
+      "name" : "priceAtPurchase",
+      "type" : "BigDecimal",
+      "description" : "Price of the product at the time of purchase. Not null, precision 10, scale 2."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java", "backend/src/main/java/com/prakashstores/model/Order.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "JPA Entity — Represents a single line item within an order, linking a product with a quantity and price.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -619,13 +675,33 @@
     "status" : "PLANNED",
     "description" : "Enum representing the status of an order (e.g., PENDING_PAYMENT, PROCESSING, SHIPPED, DELIVERED, CANCELLED).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "PENDING_PAYMENT",
+      "type" : "OrderStatus",
+      "description" : "Order created, awaiting payment."
+    }, {
+      "name" : "PROCESSING",
+      "type" : "OrderStatus",
+      "description" : "Payment received, order is being prepared."
+    }, {
+      "name" : "SHIPPED",
+      "type" : "OrderStatus",
+      "description" : "Order has been dispatched."
+    }, {
+      "name" : "DELIVERED",
+      "type" : "OrderStatus",
+      "description" : "Order has been successfully delivered."
+    }, {
+      "name" : "CANCELLED",
+      "type" : "OrderStatus",
+      "description" : "Order has been cancelled."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "Enum — Defines the possible states an order can be in.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -638,13 +714,21 @@
     "status" : "PLANNED",
     "description" : "Enum representing the shipping method for an order (e.g., HOME_DELIVERY, CLICK_AND_COLLECT).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "HOME_DELIVERY",
+      "type" : "ShippingMethod",
+      "description" : "Order will be delivered to the customer's specified address."
+    }, {
+      "name" : "CLICK_AND_COLLECT",
+      "type" : "ShippingMethod",
+      "description" : "Customer will pick up the order from the store."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "Enum — Defines the available shipping methods for an order.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -656,14 +740,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for CRUD and query operations on Order entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "List<Order>",
+      "description" : "Retrieves all orders placed by a specific user."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Order.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "Spring Data JPA Repository — Provides CRUD and query operations for Order entities, including findByUserId(Integer userId).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -675,14 +764,44 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Handles business logic for creating and managing orders, and injects the pre-scaffolded PaymentService to process payments.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "CreateOrderRequest request", "Integer userId" ],
+      "return_type" : "OrderDto",
+      "description" : "Creates a new order, processes payment, and updates product stock."
+    }, {
+      "name" : "getOrdersByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "List<OrderDto>",
+      "description" : "Retrieves all orders for a specific user."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "Long orderId", "Integer userId" ],
+      "return_type" : "OrderDto",
+      "description" : "Retrieves a specific order for a user, ensuring ownership."
+    }, {
+      "name" : "getAllOrders",
+      "parameters" : [ ],
+      "return_type" : "List<OrderDto>",
+      "description" : "Retrieves all orders in the system (admin access)."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "Long orderId" ],
+      "return_type" : "OrderDto",
+      "description" : "Retrieves a specific order by ID (admin access)."
+    }, {
+      "name" : "updateOrderStatus",
+      "parameters" : [ "Long orderId", "OrderStatus newStatus" ],
+      "return_type" : "OrderDto",
+      "description" : "Updates the status of an existing order (admin access)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/OrderRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java", "backend/src/main/java/com/prakashstores/dto/OrderDto.java" ],
     "depends_on" : [ "PaymentService.createOrder" ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "Service layer — implements createOrder(CreateOrderRequest request, Integer userId): OrderDto, getOrdersByUserId(Integer userId): List<OrderDto>, getOrderById(Long orderId, Integer userId): OrderDto, getAllOrders(): List<OrderDto>, and updateOrderStatus(Long orderId, OrderStatus newStatus): OrderDto; delegates payment to PaymentService and persistence to OrderRepository.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -695,13 +814,25 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for receiving new order creation requests from the client.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "shippingAddress",
+      "type" : "String",
+      "description" : "The shipping address for the order. Not null, max 500 characters."
+    }, {
+      "name" : "shippingMethod",
+      "type" : "ShippingMethod",
+      "description" : "The chosen shipping method. Not null."
+    }, {
+      "name" : "items",
+      "type" : "List<OrderItemRequest>",
+      "description" : "List of items to be included in the order. Not empty."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "Data Transfer Object — Used for receiving new order creation requests from the client.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -714,13 +845,21 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object representing a single item within a CreateOrderRequest.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product being ordered. Not null."
+    }, {
+      "name" : "quantity",
+      "type" : "Integer",
+      "description" : "Quantity of the product. Not null, must be positive."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "Data Transfer Object — Represents a single item within a CreateOrderRequest.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -751,14 +890,50 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Authenticated REST controller for customers to create orders and view their order history.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "CreateOrderRequest request", "Integer userId" ],
+      "return_type" : "ResponseEntity<OrderDto>",
+      "description" : "Handles requests to create a new order for the authenticated user."
+    }, {
+      "name" : "getOrdersByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "ResponseEntity<List<OrderDto>>",
+      "description" : "Retrieves all orders for the authenticated user."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "Long orderId", "Integer userId" ],
+      "return_type" : "ResponseEntity<OrderDto>",
+      "description" : "Retrieves a specific order for the authenticated user."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/orders",
+      "request_body" : "CreateOrderRequest",
+      "response_body" : "OrderDto",
+      "description" : "Creates a new order for the authenticated user.",
+      "access" : "authenticated"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders",
+      "request_body" : null,
+      "response_body" : "List<OrderDto>",
+      "description" : "Retrieves all orders for the authenticated user.",
+      "access" : "authenticated"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : "OrderDto",
+      "description" : "Retrieves a specific order by ID for the authenticated user.",
+      "access" : "authenticated"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/OrderService.java", "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java", "backend/src/main/java/com/prakashstores/dto/OrderDto.java" ],
     "depends_on" : [ "@CurrentUser Integer userId" ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "REST Controller — Provides authenticated endpoints for customers to create orders and view their order history.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -770,14 +945,50 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for viewing all orders and updating their status.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllOrders",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<OrderDto>>",
+      "description" : "Retrieves all orders in the system for admin users."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "Long orderId" ],
+      "return_type" : "ResponseEntity<OrderDto>",
+      "description" : "Retrieves a specific order by ID for admin users."
+    }, {
+      "name" : "updateOrderStatus",
+      "parameters" : [ "Long orderId", "OrderStatus newStatus" ],
+      "return_type" : "ResponseEntity<OrderDto>",
+      "description" : "Updates the status of an order for admin users."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders",
+      "request_body" : null,
+      "response_body" : "List<OrderDto>",
+      "description" : "Retrieves all orders in the system.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : "OrderDto",
+      "description" : "Retrieves a specific order by ID.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/orders/{orderId}/status",
+      "request_body" : "OrderStatus",
+      "response_body" : "OrderDto",
+      "description" : "Updates the status of an order.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/OrderService.java", "backend/src/main/java/com/prakashstores/dto/OrderDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "REST Controller — Provides admin-only endpoints for viewing all orders and updating their status.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2137,9 +2348,9 @@
     "feature_display_name" : "Order Management",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Order.java", "backend/src/main/java/com/prakashstores/model/OrderItem.java", "backend/src/main/java/com/prakashstores/model/OrderStatus.java", "backend/src/main/java/com/prakashstores/model/ShippingMethod.java", "backend/src/main/java/com/prakashstores/repository/OrderRepository.java", "backend/src/main/java/com/prakashstores/service/OrderService.java", "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java", "backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java", "backend/src/main/java/com/prakashstores/dto/OrderDto.java", "backend/src/main/java/com/prakashstores/controller/OrderController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminOrderController.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "The Order Management feature handles the complete lifecycle of customer orders, from creation and payment processing to status updates and history viewing. It integrates with the pre-scaffolded PaymentService for payment processing and the Product Management feature to retrieve product details and update stock.\n\n### Order Creation Flow\n1.  **OrderController.createOrder(CreateOrderRequest request, @CurrentUser Integer userId)**:\n    *   Receives a `CreateOrderRequest` from the authenticated customer.\n    *   Validates the request, ensuring all `OrderItemRequest` entries have valid `productId` and `quantity`.\n    *   Calls `OrderService.createOrder(CreateOrderRequest request, Integer userId)`.\n    *   Returns a `ResponseEntity<OrderDto>` with HTTP status 201 (Created) on success, or 400 (Bad Request) if validation fails, or 404 (Not Found) if a product is not found.\n\n2.  **OrderService.createOrder(CreateOrderRequest request, Integer userId)**:\n    *   **Step 1**: Validates that the `CreateOrderRequest` contains at least one `OrderItemRequest`.\n    *   **Step 2**: Iterates through each `OrderItemRequest`:\n        *   Calls `productRepository.findById(item.getProductId())` to retrieve the `Product` details. If any product is not found, throws `ResourceNotFoundException`.\n        *   Checks if the product's `stock` is sufficient for the requested `quantity`. If not, throws `IllegalArgumentException`.\n    *   **Step 3**: Calculates the `totalAmount` for the order based on product prices and quantities.\n    *   **Step 4**: Creates a new `Order` entity:\n        *   Sets `userId` from the authenticated user.\n        *   Sets `orderDate` to `LocalDateTime.now()`.\n        *   Sets `orderStatus` to `OrderStatus.PENDING_PAYMENT`.\n        *   Sets `shippingAddress` and `shippingMethod` from the request.\n        *   Adds `OrderItem` entities, linking them to the `Order` and the `Product`.\n    *   **Step 5**: Saves the `Order` entity using `orderRepository.save(order)`.\n    *   **Step 6**: Calls `paymentService.createOrder(new CreatePaymentRequest(order.getTotalAmount(), \"INR\", \"order_\" + order.getId()))` to initiate payment. If payment initiation fails, throws `PaymentGatewayException`.\n    *   **Step 7**: If payment initiation is successful, updates the `Order`'s `paymentId` with the `paymentOrderResponse.getPaymentId()`.\n    *   **Step 8**: For each `OrderItem`, calls `productService.updateProductStock(item.getProductId(), -item.getQuantity())` to decrement product stock. If stock update fails, throws `IllegalStateException`.\n    *   **Step 9**: Saves the updated `Order` entity again.\n    *   **Step 10**: Returns the created `Order` mapped to an `OrderDto`.\n    *   **Error Cases**: Throws `ResourceNotFoundException` (HTTP 404) if a product is not found. Throws `IllegalArgumentException` (HTTP 400) if stock is insufficient or request is invalid. Throws `PaymentGatewayException` (HTTP 500) if payment initiation fails. Throws `IllegalStateException` (HTTP 500) if stock update fails after payment.\n\n### Order Viewing Flow (Customer)\n1.  **OrderController.getOrdersByUserId(@CurrentUser Integer userId)**:\n    *   Receives a request from the authenticated customer.\n    *   Calls `OrderService.getOrdersByUserId(Integer userId)`.\n    *   Returns a `ResponseEntity<List<OrderDto>>` with HTTP status 200 (OK).\n\n2.  **OrderService.getOrdersByUserId(Integer userId)**:\n    *   **Step 1**: Calls `orderRepository.findByUserId(userId)` to retrieve all orders for the given user.\n    *   **Step 2**: Maps the list of `Order` entities to a `List<OrderDto>`.\n    *   **Step 3**: Returns the `List<OrderDto>`.\n\n3.  **OrderController.getOrderById(Long orderId, @CurrentUser Integer userId)**:\n    *   Receives a request for a specific order ID from the authenticated customer.\n    *   Calls `OrderService.getOrderById(Long orderId, Integer userId)`.\n    *   Returns a `ResponseEntity<OrderDto>` with HTTP status 200 (OK) on success, or 404 (Not Found) if the order does not exist or does not belong to the user.\n\n4.  **OrderService.getOrderById(Long orderId, Integer userId)**:\n    *   **Step 1**: Calls `orderRepository.findById(orderId)` to retrieve the order.\n    *   **Step 2**: If the order is not found, throws `ResourceNotFoundException`.\n    *   **Step 3**: Checks if the retrieved order's `userId` matches the `userId` from the `@CurrentUser` annotation. If not, throws `AccessDeniedException` (or `ResourceNotFoundException` to obscure existence).\n    *   **Step 4**: Maps the `Order` entity to an `OrderDto`.\n    *   **Step 5**: Returns the `OrderDto`.\n    *   **Error Cases**: Throws `ResourceNotFoundException` (HTTP 404) if the order is not found or does not belong to the user.\n\n### Order Viewing and Management Flow (Admin)\n1.  **AdminOrderController.getAllOrders()**:\n    *   Receives a request from an authenticated admin user.\n    *   Calls `OrderService.getAllOrders()`.\n    *   Returns a `ResponseEntity<List<OrderDto>>` with HTTP status 200 (OK).\n\n2.  **OrderService.getAllOrders()**:\n    *   **Step 1**: Calls `orderRepository.findAll()` to retrieve all orders.\n    *   **Step 2**: Maps the list of `Order` entities to a `List<OrderDto>`.\n    *   **Step 3**: Returns the `List<OrderDto>`.\n\n3.  **AdminOrderController.getOrderById(Long orderId)**:\n    *   Receives a request for a specific order ID from an authenticated admin user.\n    *   Calls `OrderService.getOrderById(Long orderId)`.\n    *   Returns a `ResponseEntity<OrderDto>` with HTTP status 200 (OK) on success, or 404 (Not Found) if the order does not exist.\n\n4.  **OrderService.getOrderById(Long orderId)**:\n    *   **Step 1**: Calls `orderRepository.findById(orderId)` to retrieve the order.\n    *   **Step 2**: If the order is not found, throws `ResourceNotFoundException`.\n    *   **Step 3**: Maps the `Order` entity to an `OrderDto`.\n    *   **Step 4**: Returns the `OrderDto`.\n    *   **Error Cases**: Throws `ResourceNotFoundException` (HTTP 404) if the order is not found.\n\n5.  **AdminOrderController.updateOrderStatus(Long orderId, OrderStatus newStatus)**:\n    *   Receives a request from an authenticated admin user to update an order's status.\n    *   Calls `OrderService.updateOrderStatus(Long orderId, OrderStatus newStatus)`.\n    *   Returns a `ResponseEntity<OrderDto>` with HTTP status 200 (OK) on success, or 404 (Not Found) if the order does not exist.\n\n6.  **OrderService.updateOrderStatus(Long orderId, OrderStatus newStatus)**:\n    *   **Step 1**: Calls `orderRepository.findById(orderId)` to retrieve the order. If not found, throws `ResourceNotFoundException`.\n    *   **Step 2**: Updates the `orderStatus` of the retrieved `Order` entity to `newStatus`.\n    *   **Step 3**: Saves the updated `Order` entity using `orderRepository.save(order)`.\n    *   **Step 4**: Maps the updated `Order` entity to an `OrderDto`.\n    *   **Step 5**: Returns the `OrderDto`.\n    *   **Error Cases**: Throws `ResourceNotFoundException` (HTTP 404) if the order is not found.\n\n### Data Models and DTOs\n*   `Order.java`: The JPA entity for an order, containing `id`, `userId`, `orderDate`, `totalAmount`, `orderStatus`, `shippingAddress`, `shippingMethod`, `paymentId`, and a list of `OrderItem`s.\n*   `OrderItem.java`: The JPA entity for a line item within an order, containing `id`, `product`, `quantity`, `priceAtPurchase`, and a link to the `Order`.\n*   `OrderStatus.java`: Enum for order statuses (PENDING_PAYMENT, PROCESSING, SHIPPED, DELIVERED, CANCELLED).\n*   `ShippingMethod.java`: Enum for shipping methods (HOME_DELIVERY, CLICK_AND_COLLECT).\n*   `CreateOrderRequest.java`: DTO for creating new orders, including `shippingAddress`, `shippingMethod`, and a list of `OrderItemRequest`.\n*   `OrderItemRequest.java`: DTO for a single item in `CreateOrderRequest`, containing `productId` and `quantity`.\n*   `OrderDto.java`: DTO for detailed order responses, including `id`, `userId`, `orderDate`, `totalAmount`, `orderStatus`, `shippingAddress`, `shippingMethod`, `paymentId`, and a list of `OrderItemDto` (which includes `productId`, `productName`, `quantity`, `priceAtPurchase`).\n\n### Inter-feature Communication\n*   `OrderService` injects `OrderRepository` for persistence and `ProductRepository` (from product-management) to fetch product details and `ProductService` (from product-management) to update product stock. It also injects the pre-scaffolded `PaymentService` to handle payment initiation.\n*   `OrderController` and `AdminOrderController` inject `OrderService`.\n*   `OrderController` uses `@CurrentUser Integer userId` to get the authenticated user's ID.\n\n### Error Handling\n*   `ResourceNotFoundException` will be thrown when an entity (e.g., Order, Product) is not found. This maps to HTTP 404.\n*   `IllegalArgumentException` will be thrown for invalid input or business rule violations (e.g., insufficient stock). This maps to HTTP 400.\n*   `PaymentGatewayException` will be thrown if there's an issue communicating with the payment gateway. This maps to HTTP 500.\n*   `IllegalStateException` will be thrown for unexpected internal states, such as a failure to update stock after a successful payment. This maps to HTTP 500.",
+    "depends_on_features" : [ "product-management" ],
+    "consumes_foundation" : [ "payment", "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
