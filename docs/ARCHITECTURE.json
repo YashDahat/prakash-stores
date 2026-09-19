@@ -1001,13 +1001,41 @@
     "status" : "PLANNED",
     "description" : "Represents a customer review for a product, including a rating and text content.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the review. Generated automatically."
+    }, {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product being reviewed. Not null."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the user who submitted the review. Not null."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "Rating given by the user (1-5). Not null."
+    }, {
+      "name" : "comment",
+      "type" : "String",
+      "description" : "Text content of the review. Max 1000 characters."
+    }, {
+      "name" : "reviewDate",
+      "type" : "LocalDateTime",
+      "description" : "Date and time when the review was submitted. Not null."
+    }, {
+      "name" : "status",
+      "type" : "ReviewStatus",
+      "description" : "Current status of the review (PENDING, APPROVED, REJECTED). Not null."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "JPA MODEL layer — defines the schema for customer product reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1019,14 +1047,29 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Review entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByProductIdAndStatus",
+      "parameters" : [ "Long productId", "ReviewStatus status" ],
+      "return_type" : "List<Review>",
+      "description" : "Finds all reviews for a given product ID and status."
+    }, {
+      "name" : "findByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "List<Review>",
+      "description" : "Finds all reviews submitted by a given user ID."
+    }, {
+      "name" : "findByStatus",
+      "parameters" : [ "ReviewStatus status" ],
+      "return_type" : "List<Review>",
+      "description" : "Finds all reviews with a given status."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Review.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access operations for Review entities, including custom queries to find reviews by product ID, user ID, and status.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1038,14 +1081,54 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Handles business logic for submitting, retrieving, and moderating product reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "submitReview",
+      "parameters" : [ "ReviewDto reviewDto", "Integer userId" ],
+      "return_type" : "ReviewDto",
+      "description" : "Submits a new product review by an authenticated user."
+    }, {
+      "name" : "getReviewsByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "List<ReviewDto>",
+      "description" : "Retrieves all approved reviews for a specific product."
+    }, {
+      "name" : "getReviewById",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ReviewDto",
+      "description" : "Retrieves a single review by its ID."
+    }, {
+      "name" : "getAllReviews",
+      "parameters" : [ ],
+      "return_type" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews, regardless of status (admin only)."
+    }, {
+      "name" : "getPendingReviews",
+      "parameters" : [ ],
+      "return_type" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews with PENDING status (admin only)."
+    }, {
+      "name" : "approveReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ReviewDto",
+      "description" : "Approves a pending review (admin only)."
+    }, {
+      "name" : "rejectReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ReviewDto",
+      "description" : "Rejects a pending review (admin only)."
+    }, {
+      "name" : "deleteReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "void",
+      "description" : "Deletes a review by its ID (admin only)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/ReviewRepository.java", "backend/src/main/java/com/prakashstores/dto/ReviewDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements business logic for submitting, retrieving, and moderating product reviews, exposing methods like submitReview(ReviewDto, Integer) and approveReview(Long).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1058,13 +1141,41 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for representing product reviews.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the review."
+    }, {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product being reviewed. Must not be null."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the user who submitted the review."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "Rating given by the user (1-5). Must be between 1 and 5."
+    }, {
+      "name" : "comment",
+      "type" : "String",
+      "description" : "Text content of the review. Must not be blank, max 1000 characters."
+    }, {
+      "name" : "reviewDate",
+      "type" : "LocalDateTime",
+      "description" : "Date and time when the review was submitted."
+    }, {
+      "name" : "status",
+      "type" : "ReviewStatus",
+      "description" : "Current status of the review (PENDING, APPROVED, REJECTED)."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "DTO layer — defines the data transfer object for product reviews, used for request and response bodies.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1076,14 +1187,38 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "REST controller for submitting reviews and fetching reviews for a product.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "submitReview",
+      "parameters" : [ "ReviewDto reviewDto", "Integer userId" ],
+      "return_type" : "ResponseEntity<ReviewDto>",
+      "description" : "Handles POST requests to submit a new review for a product."
+    }, {
+      "name" : "getReviewsByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "ResponseEntity<List<ReviewDto>>",
+      "description" : "Handles GET requests to retrieve all approved reviews for a specific product."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/reviews",
+      "request_body" : "ReviewDto",
+      "response_body" : "ReviewDto",
+      "description" : "Submits a new review for a product.",
+      "access" : "authenticated"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{productId}/reviews",
+      "request_body" : null,
+      "response_body" : "List<ReviewDto>",
+      "description" : "Retrieves all approved reviews for a specific product.",
+      "access" : "public"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ReviewService.java", "backend/src/main/java/com/prakashstores/dto/ReviewDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "REST CONTROLLER layer — exposes public API endpoints for customers to submit reviews and view product reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1095,14 +1230,74 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for moderating (approving, deleting) customer reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllReviews",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<ReviewDto>>",
+      "description" : "Handles GET requests to retrieve all reviews for admin moderation."
+    }, {
+      "name" : "getPendingReviews",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<ReviewDto>>",
+      "description" : "Handles GET requests to retrieve all pending reviews for admin moderation."
+    }, {
+      "name" : "approveReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ResponseEntity<ReviewDto>",
+      "description" : "Handles PUT requests to approve a specific review."
+    }, {
+      "name" : "rejectReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ResponseEntity<ReviewDto>",
+      "description" : "Handles PUT requests to reject a specific review."
+    }, {
+      "name" : "deleteReview",
+      "parameters" : [ "Long reviewId" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Handles DELETE requests to delete a specific review."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/reviews",
+      "request_body" : null,
+      "response_body" : "List<ReviewDto>",
+      "description" : "Retrieves all reviews for administrative purposes.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/reviews/pending",
+      "request_body" : null,
+      "response_body" : "List<ReviewDto>",
+      "description" : "Retrieves all pending reviews for administrative purposes.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/reviews/{reviewId}/approve",
+      "request_body" : null,
+      "response_body" : "ReviewDto",
+      "description" : "Approves a specific review.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/reviews/{reviewId}/reject",
+      "request_body" : null,
+      "response_body" : "ReviewDto",
+      "description" : "Rejects a specific review.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/reviews/{reviewId}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Deletes a specific review.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ReviewService.java" ],
     "depends_on" : [ ],
     "feature_name" : "review-system",
-    "file_role" : null,
+    "file_role" : "REST CONTROLLER layer — exposes admin-only API endpoints for moderating (approving, rejecting, deleting) customer reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2358,9 +2553,9 @@
     "feature_display_name" : "Review System",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Review.java", "backend/src/main/java/com/prakashstores/repository/ReviewRepository.java", "backend/src/main/java/com/prakashstores/service/ReviewService.java", "backend/src/main/java/com/prakashstores/dto/ReviewDto.java", "backend/src/main/java/com/prakashstores/controller/ReviewController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminReviewController.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "The Review System feature enables customers to submit reviews and ratings for products, and provides administrators with tools to moderate these reviews. It consists of a `Review` JPA entity, a `ReviewRepository` for data access, a `ReviewService` for business logic, a `ReviewDto` for data transfer, and two controllers: `ReviewController` for public-facing review operations and `AdminReviewController` for administrative moderation.\n\n### Review Entity (`Review.java`)\nThis JPA entity represents a customer's review for a product. It includes fields for a unique ID, the associated `productId` (Long), the `userId` (Integer) of the reviewer, a `rating` (Integer from 1 to 5), `comment` (String), `reviewDate` (LocalDateTime), and a `status` (ReviewStatus enum: PENDING, APPROVED, REJECTED). The `productId` links to the `Product` entity from the `product-management` feature, and `userId` links to the authenticated user from the foundation `auth` feature.\n\n### Review DTO (`ReviewDto.java`)\nThis DTO is used for transferring review data between the service layer and the controllers. It mirrors the `Review` entity but includes validation annotations for incoming requests. It contains `id` (Long), `productId` (Long), `userId` (Integer), `rating` (Integer), `comment` (String), `reviewDate` (LocalDateTime), and `status` (ReviewStatus).\n\n### Review Repository (`ReviewRepository.java`)\nThis Spring Data JPA repository extends `JpaRepository<Review, Long>` and provides standard CRUD operations for `Review` entities. It includes custom query methods to find reviews by `productId`, by `userId`, and by `status`.\n\n### Review Service (`ReviewService.java`)\nThis service layer component encapsulates the business logic for reviews. It injects `ReviewRepository` and `ProductService` from the `product-management` feature. It provides the following public methods:\n\n1.  `submitReview(ReviewDto reviewDto, Integer userId)`: \n    -   **Signature**: `ReviewDto submitReview(ReviewDto reviewDto, Integer userId)`\n    -   **Logic**:\n        1.  Validate `reviewDto` for `productId`, `rating`, and `comment`.\n        2.  Call `productService.getProductById(reviewDto.getProductId())` to ensure the product exists. If not found, throw `ResourceNotFoundException`.\n        3.  Create a new `Review` entity from `reviewDto`, setting `userId` from the authenticated user, `reviewDate` to `LocalDateTime.now()`, and `status` to `ReviewStatus.PENDING`.\n        4.  Save the `Review` entity using `reviewRepository.save()`.\n        5.  Convert the saved `Review` entity back to `ReviewDto` and return it.\n    -   **Error Cases**: `ResourceNotFoundException` (HTTP 404) if product not found, `IllegalArgumentException` (HTTP 400) for invalid input.\n\n2.  `getReviewsByProductId(Long productId)`:\n    -   **Signature**: `List<ReviewDto> getReviewsByProductId(Long productId)`\n    -   **Logic**:\n        1.  Retrieve all `Review` entities for the given `productId` with `status` as `APPROVED` using `reviewRepository.findByProductIdAndStatus(productId, ReviewStatus.APPROVED)`.\n        2.  Convert the list of `Review` entities to a list of `ReviewDto` and return it.\n    -   **Error Cases**: None.\n\n3.  `getReviewById(Long reviewId)`:\n    -   **Signature**: `ReviewDto getReviewById(Long reviewId)`\n    -   **Logic**:\n        1.  Retrieve the `Review` entity by `reviewId` using `reviewRepository.findById()`.\n        2.  If not found, throw `ResourceNotFoundException`.\n        3.  Convert the `Review` entity to `ReviewDto` and return it.\n    -   **Error Cases**: `ResourceNotFoundException` (HTTP 404) if review not found.\n\n4.  `getAllReviews()`:\n    -   **Signature**: `List<ReviewDto> getAllReviews()`\n    -   **Logic**:\n        1.  Retrieve all `Review` entities using `reviewRepository.findAll()`.\n        2.  Convert the list of `Review` entities to a list of `ReviewDto` and return it.\n    -   **Error Cases**: None.\n\n5.  `getPendingReviews()`:\n    -   **Signature**: `List<ReviewDto> getPendingReviews()`\n    -   **Logic**:\n        1.  Retrieve all `Review` entities with `status` as `PENDING` using `reviewRepository.findByStatus(ReviewStatus.PENDING)`.\n        2.  Convert the list of `Review` entities to a list of `ReviewDto` and return it.\n    -   **Error Cases**: None.\n\n6.  `approveReview(Long reviewId)`:\n    -   **Signature**: `ReviewDto approveReview(Long reviewId)`\n    -   **Logic**:\n        1.  Retrieve the `Review` entity by `reviewId` using `reviewRepository.findById()`.\n        2.  If not found, throw `ResourceNotFoundException`.\n        3.  Set the `status` of the `Review` to `ReviewStatus.APPROVED`.\n        4.  Save the updated `Review` entity using `reviewRepository.save()`.\n        5.  Convert the updated `Review` entity to `ReviewDto` and return it.\n    -   **Error Cases**: `ResourceNotFoundException` (HTTP 404) if review not found.\n\n7.  `rejectReview(Long reviewId)`:\n    -   **Signature**: `ReviewDto rejectReview(Long reviewId)`\n    -   **Logic**:\n        1.  Retrieve the `Review` entity by `reviewId` using `reviewRepository.findById()`.\n        2.  If not found, throw `ResourceNotFoundException`.\n        3.  Set the `status` of the `Review` to `ReviewStatus.REJECTED`.\n        4.  Save the updated `Review` entity using `reviewRepository.save()`.\n        5.  Convert the updated `Review` entity to `ReviewDto` and return it.\n    -   **Error Cases**: `ResourceNotFoundException` (HTTP 404) if review not found.\n\n8.  `deleteReview(Long reviewId)`:\n    -   **Signature**: `void deleteReview(Long reviewId)`\n    -   **Logic**:\n        1.  Check if the `Review` entity exists by `reviewId` using `reviewRepository.existsById()`.\n        2.  If not found, throw `ResourceNotFoundException`.\n        3.  Delete the `Review` entity using `reviewRepository.deleteById()`.\n    -   **Error Cases**: `ResourceNotFoundException` (HTTP 404) if review not found.\n\n### Review Controller (`ReviewController.java`)\nThis REST controller handles public-facing API endpoints for reviews. It injects `ReviewService`. It uses `@CurrentUser Integer userId` to get the authenticated user's ID.\n\n1.  `submitReview(ReviewDto reviewDto, Integer userId)`:\n    -   **Endpoint**: `POST /api/v1/reviews`\n    -   **Logic**: Calls `reviewService.submitReview(reviewDto, userId)` and returns `ResponseEntity.status(HttpStatus.CREATED).body(reviewDto)`.\n    -   **Error Cases**: `ResourceNotFoundException` (HTTP 404), `IllegalArgumentException` (HTTP 400).\n\n2.  `getReviewsByProductId(Long productId)`:\n    -   **Endpoint**: `GET /api/v1/products/{productId}/reviews`\n    -   **Logic**: Calls `reviewService.getReviewsByProductId(productId)` and returns `ResponseEntity.ok(reviewDtos)`.\n    -   **Error Cases**: None.\n\n### Admin Review Controller (`AdminReviewController.java`)\nThis REST controller handles admin-only API endpoints for review moderation. It injects `ReviewService`. All endpoints require `ADMIN` access.\n\n1.  `getAllReviews()`:\n    -   **Endpoint**: `GET /api/v1/admin/reviews`\n    -   **Logic**: Calls `reviewService.getAllReviews()` and returns `ResponseEntity.ok(reviewDtos)`.\n    -   **Error Cases**: None.\n\n2.  `getPendingReviews()`:\n    -   **Endpoint**: `GET /api/v1/admin/reviews/pending`\n    -   **Logic**: Calls `reviewService.getPendingReviews()` and returns `ResponseEntity.ok(reviewDtos)`.\n    -   **Error Cases**: None.\n\n3.  `approveReview(Long reviewId)`:\n    -   **Endpoint**: `PUT /api/v1/admin/reviews/{reviewId}/approve`\n    -   **Logic**: Calls `reviewService.approveReview(reviewId)` and returns `ResponseEntity.ok(reviewDto)`.\n    -   **Error Cases**: `ResourceNotFoundException` (HTTP 404).\n\n4.  `rejectReview(Long reviewId)`:\n    -   **Endpoint**: `PUT /api/v1/admin/reviews/{reviewId}/reject`\n    -   **Logic**: Calls `reviewService.rejectReview(reviewId)` and returns `ResponseEntity.ok(reviewDto)`.\n    -   **Error Cases**: `ResourceNotFoundException` (HTTP 404).\n\n5.  `deleteReview(Long reviewId)`:\n    -   **Endpoint**: `DELETE /api/v1/admin/reviews/{reviewId}`\n    -   **Logic**: Calls `reviewService.deleteReview(reviewId)` and returns `ResponseEntity.noContent().build()`.\n    -   **Error Cases**: `ResourceNotFoundException` (HTTP 404).",
+    "depends_on_features" : [ "product-management", "shared-backend" ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
