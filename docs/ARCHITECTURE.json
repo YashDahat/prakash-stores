@@ -2016,14 +2016,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Layout for the customer account section, with navigation for profile, order history, etc.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AccountLayout",
+      "parameters" : [ "React.PropsWithChildren<{}> children" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the account layout with a sidebar navigation and the provided children as the main content."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — provides a consistent layout for customer account pages, including navigation.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2546,14 +2551,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Allows authenticated users to view and update their profile information.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProfilePage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays the user's profile and allows for updates."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ ],
     "imports_from" : [ ],
     "depends_on" : [ "useAuth()" ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "PAGE layer — allows authenticated users to view and update their profile information.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2565,14 +2575,26 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a list of the current user's past orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderHistoryPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and displays the authenticated user's order history."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/orders",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a list of orders for the current authenticated user.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/services/orderService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account",
-    "file_role" : null,
+    "file_role" : "PAGE layer — displays a list of the current user's past orders, formatted in INR.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3067,9 +3089,9 @@
     "feature_display_name" : "Customer Account",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/components/layout/AccountLayout.tsx", "frontend/src/pages/account/ProfilePage.tsx", "frontend/src/pages/account/OrderHistoryPage.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature provides the customer account section, allowing authenticated users to manage their profile and view their order history. It consists of a layout component (`AccountLayout.tsx`) that provides navigation for the account pages, and two main pages: `ProfilePage.tsx` for viewing and updating user profile information, and `OrderHistoryPage.tsx` for displaying a list of the user's past orders.\n\n## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\n`AccountLayout.tsx` serves as the wrapper for all customer account pages. It will render a sidebar navigation with links to \"My Profile\" and \"Order History\". The layout will receive `children` as props and render them within the main content area.\n\n`ProfilePage.tsx` will display the authenticated user's profile information. It will use the `useAuth()` hook to retrieve the current user's details (name, email). The page will present this information in a user-friendly form, allowing the user to update their name. Upon successful update, a toast notification will confirm the change. The page will consume the generated service function for updating user profile information.\n\n`OrderHistoryPage.tsx` will display a list of the current user's past orders. It will fetch the orders using the generated service function `getOrdersByUserId()` from the `order-management` feature. The orders will be displayed in a table or card format, showing relevant details such as order ID, date, total amount (formatted in INR), and status. Each order will have a link to view its details. The page will consume the generated service function for fetching order history.\n\nAll monetary values (e.g., order totals) will be displayed in Indian Rupees (₹) using the `en-IN` locale.",
+    "depends_on_features" : [ "order-management" ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
