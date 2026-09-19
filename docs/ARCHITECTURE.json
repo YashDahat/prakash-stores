@@ -3652,14 +3652,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "The shell for the admin section, including a sidebar for navigation.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminLayout",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin layout with sidebar navigation and content area, enforcing ADMIN role authentication."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "useAuth()" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — provides the structural layout for all admin pages, including a sidebar navigation and authentication protection.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3671,14 +3676,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "The main landing page for the admin portal, showing key stats and summaries.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminDashboardPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays a welcome message and serves as the entry point for the admin portal."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE layer — the main landing page for the admin portal.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3690,14 +3700,68 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Admin page for managing products, composing a product table and creation/edit forms.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminProductsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a product table and provides functionality to create, edit, and delete products."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all products for display in the table.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products/{productId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single product for editing.",
+      "access" : null
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/products",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new product.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/products/{productId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing product.",
+      "access" : null
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/products/{productId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes a product.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all categories for product form dropdowns.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/brands",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all brands for product form dropdowns.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/components/admin/product/ProductTable.tsx", "frontend/src/components/admin/product/ProductForm.tsx", "frontend/src/services/productService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE layer — manages products by composing ProductTable and ProductForm components, interacting with generated product service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3709,14 +3773,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A data table displaying all products with options to edit or delete.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductTable",
+      "parameters" : [ "{ products: ProductDto[], onEdit: (product: ProductDto) => void, onDelete: (productId: Long) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of products, allowing editing and deletion."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts", "frontend/src/components/admin/product/DeleteProductDialog.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a data table of products with edit and delete actions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3728,14 +3797,33 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A form (used in a dialog) for creating or editing a product.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductForm",
+      "parameters" : [ "{ product?: ProductDto, onSubmit: (product: CreateProductRequest | UpdateProductRequest) => void, onCancel: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form to create or update product information."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all categories for product form dropdowns.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/brands",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all brands for product form dropdowns.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a form for creating or editing product details, interacting with generated product service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3747,14 +3835,26 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A confirmation dialog for deleting a product.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "DeleteProductDialog",
+      "parameters" : [ "{ productId: Long, onConfirm: (productId: Long) => void, onCancel: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a confirmation dialog for product deletion."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/products/{productId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes the specified product.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/services/productService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a confirmation dialog for deleting a product, interacting with generated product service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3766,14 +3866,47 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Admin page for managing product categories.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminCategoriesPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a category table and provides functionality to create, edit, and delete categories."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all categories for display in the table.",
+      "access" : null
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new category.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/categories/{categoryId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing category.",
+      "access" : null
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/categories/{categoryId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes a category.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/components/admin/category/CategoryTable.tsx", "frontend/src/components/admin/category/CategoryForm.tsx", "frontend/src/services/productService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE layer — manages product categories by composing CategoryTable and CategoryForm components, interacting with generated product service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3785,14 +3918,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A data table for displaying and managing product categories.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CategoryTable",
+      "parameters" : [ "{ categories: CategoryDto[], onEdit: (category: CategoryDto) => void, onDelete: (categoryId: Long) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of categories, allowing editing and deletion."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a data table of product categories with edit and delete actions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3804,14 +3942,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A form for creating or editing a product category.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CategoryForm",
+      "parameters" : [ "{ category?: CategoryDto, onSubmit: (category: CategoryDto) => void, onCancel: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form to create or update category information."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ ],
     "imports_from" : [ "frontend/src/services/productService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a form for creating or editing category details, interacting with generated product service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3823,14 +3966,47 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Admin page for managing product brands.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminBrandsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a brand table and provides functionality to create, edit, and delete brands."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/brands",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all brands for display in the table.",
+      "access" : null
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/brands",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new brand.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/brands/{brandId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing brand.",
+      "access" : null
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/brands/{brandId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes a brand.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/components/admin/brand/BrandTable.tsx", "frontend/src/components/admin/brand/BrandForm.tsx", "frontend/src/services/productService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE layer — manages product brands by composing BrandTable and BrandForm components, interacting with generated product service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3842,14 +4018,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A data table for displaying and managing product brands.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "BrandTable",
+      "parameters" : [ "{ brands: BrandDto[], onEdit: (brand: BrandDto) => void, onDelete: (brandId: Long) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of brands, allowing editing and deletion."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a data table of product brands with edit and delete actions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3861,14 +4042,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A form for creating or editing a product brand.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "BrandForm",
+      "parameters" : [ "{ brand?: BrandDto, onSubmit: (brand: BrandDto) => void, onCancel: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form to create or update brand information."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ ],
     "imports_from" : [ "frontend/src/services/productService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a form for creating or editing brand details, interacting with generated product service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3880,14 +4066,33 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Admin page for viewing and managing customer orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminOrdersPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders an order table and provides functionality to view order details and update order status."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all orders for display in the table.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/orders/{orderId}/status",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates the status of an order.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/components/admin/order/OrderTable.tsx", "frontend/src/services/orderService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE layer — manages customer orders by composing OrderTable and OrderDetailView components, interacting with generated order service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3899,14 +4104,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A data table listing all customer orders with filtering and status updates.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderTable",
+      "parameters" : [ "{ orders: OrderHistoryItemDto[], onViewDetails: (orderId: Long) => void, onUpdateStatus: (orderId: Long, newStatus: string) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of orders, allowing detail viewing and status updates."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ ],
     "imports_from" : [ "frontend/src/types/order.ts", "frontend/src/components/admin/order/OrderDetailView.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a data table of customer orders with detail view and status update actions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3918,14 +4128,26 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A detailed view of a single order, shown in a dialog or drawer.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderDetailView",
+      "parameters" : [ "{ orderId: Long, onClose: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays detailed information for a specific order."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches detailed information for a specific order.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/order.ts", "frontend/src/services/orderService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a detailed view of a single order, interacting with generated order service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3937,14 +4159,47 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Admin page for managing in-store events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminEventsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders an event table and provides functionality to create, edit, and delete events."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/events",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all events for display in the table.",
+      "access" : null
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/events",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new event.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing event.",
+      "access" : null
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes an event.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/components/admin/event/EventTable.tsx", "frontend/src/components/admin/event/EventForm.tsx", "frontend/src/services/eventService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE layer — manages in-store events by composing EventTable and EventForm components, interacting with generated event service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3956,14 +4211,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A data table for displaying and managing events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventTable",
+      "parameters" : [ "{ events: EventDto[], onEdit: (event: EventDto) => void, onDelete: (eventId: Long) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of events, allowing editing and deletion."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a data table of events with edit and delete actions.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3975,14 +4235,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A form for creating or editing an event.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventForm",
+      "parameters" : [ "{ event?: EventDto, onSubmit: (event: CreateEventRequest) => void, onCancel: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form to create or update event information."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ ],
     "imports_from" : [ "frontend/src/services/eventService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a form for creating or editing event details, interacting with generated event service functions.",
     "change_required" : null,
     "contract_reconciled" : null
   } ],
@@ -4101,9 +4366,9 @@
     "feature_display_name" : "Admin Portal (Frontend)",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/components/admin/AdminLayout.tsx", "frontend/src/pages/admin/AdminDashboardPage.tsx", "frontend/src/pages/admin/AdminProductsPage.tsx", "frontend/src/components/admin/product/ProductTable.tsx", "frontend/src/components/admin/product/ProductForm.tsx", "frontend/src/components/admin/product/DeleteProductDialog.tsx", "frontend/src/pages/admin/AdminCategoriesPage.tsx", "frontend/src/components/admin/category/CategoryTable.tsx", "frontend/src/components/admin/category/CategoryForm.tsx", "frontend/src/pages/admin/AdminBrandsPage.tsx", "frontend/src/components/admin/brand/BrandTable.tsx", "frontend/src/components/admin/brand/BrandForm.tsx", "frontend/src/pages/admin/AdminOrdersPage.tsx", "frontend/src/components/admin/order/OrderTable.tsx", "frontend/src/components/admin/order/OrderDetailView.tsx", "frontend/src/pages/admin/AdminEventsPage.tsx", "frontend/src/components/admin/event/EventTable.tsx", "frontend/src/components/admin/event/EventForm.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Sidebar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-md px-6 py-2 transition-all duration-200\n- Secondary CTA: bg-gray-200 hover:bg-gray-300 text-[#212121] font-semibold rounded-md px-6 py-2 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-[#F5F5F5]\n- Card: bg-white rounded-lg shadow-sm border border-gray-100 p-4\n- Section container: <section className=\"py-8 px-4\"><div className=\"max-w-7xl mx-auto\"> (for admin pages)\n- Body: text-[#212121] leading-relaxed\n- Table Header: bg-gray-100 text-gray-600\n- Input/Select: border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent\n\nThe Admin Portal Frontend provides a comprehensive interface for managing Prakash Stores' products, categories, brands, orders, and events. It is structured around a shared `AdminLayout` component which provides a sidebar navigation and ensures all admin pages are protected by authentication, requiring an 'ADMIN' role. Each administrative section (Products, Categories, Brands, Orders, Events) has its own dedicated page, which composes a table component for listing items and a form component (often in a dialog) for creating or editing items. All data interactions are handled by generated service functions that call the respective backend `/api/v1/admin` endpoints.\n\n### AdminLayout.tsx\nThis component serves as the main shell for all admin pages. It utilizes `useAuth()` to check if the current user is authenticated and has the 'ADMIN' role. If not, it redirects to the login page. It renders a sidebar with navigation links to `AdminDashboardPage`, `AdminProductsPage`, `AdminCategoriesPage`, `AdminBrandsPage`, `AdminOrdersPage`, and `AdminEventsPage`. The main content area renders the child routes. The sidebar links should use the brand's deep blue for background and white for text, with saffron orange for active link indicators.\n\n### AdminDashboardPage.tsx\nThis is the landing page for the admin portal. It should display a welcoming message like \"Welcome, Admin!\" and potentially summary statistics or quick links to other admin sections. For now, it will be a simple page with a heading and a brief description.\n\n### AdminProductsPage.tsx\nThis page is responsible for managing products. It orchestrates the `ProductTable` component to display a list of products and provides functionality to add new products or edit existing ones using the `ProductForm` component. It will fetch all products using the generated `productService.getAllProducts()` function. When a product is selected for editing, the `ProductForm` will be pre-filled with the product's data fetched via `productService.getProductById(productId)`. New products are created via `productService.createProduct(CreateProductRequest)`, and updates via `productService.updateProduct(productId, UpdateProductRequest)`. Deletion is handled by `productService.deleteProduct(productId)` via `DeleteProductDialog`.\n\n### ProductTable.tsx\nThis component displays a paginated table of products. Each row should include product details such as `name`, `price` (formatted in ₹), `category.name`, `brand.name`, and `active` status. It provides action buttons for 'Edit' and 'Delete'. The 'Edit' button should trigger the `ProductForm` with the selected product's data. The 'Delete' button should open the `DeleteProductDialog`.\n\n### ProductForm.tsx\nThis component is a form for creating or editing a product. It includes fields for `name`, `description`, `price`, `imageUrl`, `categoryId`, `brandId`, and `active` status. It should fetch available categories and brands using `productService.getAllCategories()` and `productService.getAllBrands()` to populate dropdowns. Upon submission, it calls either `productService.createProduct` or `productService.updateProduct` based on whether a product ID is provided. The `imageUrl` field should allow for direct URL input or integrate with a future media gallery foundation feature if available.\n\n### DeleteProductDialog.tsx\nThis component is a confirmation dialog for deleting a product. It takes a product ID and a callback function for deletion. Upon confirmation, it calls `productService.deleteProduct(productId)` and then triggers the callback to refresh the product list.\n\n### AdminCategoriesPage.tsx\nThis page manages product categories. It uses `CategoryTable` to list categories and `CategoryForm` for creation and editing. It fetches categories using `productService.getAllCategories()`. Creation is handled by `productService.createCategory(CategoryDto)`, updates by `productService.updateCategory(categoryId, CategoryDto)`, and deletion by `productService.deleteCategory(categoryId)`.\n\n### CategoryTable.tsx\nThis component displays a table of product categories, showing `id`, `name`, and `description`. It includes 'Edit' and 'Delete' actions, similar to `ProductTable`.\n\n### CategoryForm.tsx\nThis form is for creating or editing a product category. It has fields for `name` and `description`. It calls `productService.createCategory` or `productService.updateCategory` on submission.\n\n### AdminBrandsPage.tsx\nThis page manages product brands. It uses `BrandTable` to list brands and `BrandForm` for creation and editing. It fetches brands using `productService.getAllBrands()`. Creation is handled by `productService.createBrand(BrandDto)`, updates by `productService.updateBrand(brandId, BrandDto)`, and deletion by `productService.deleteBrand(brandId)`.\n\n### BrandTable.tsx\nThis component displays a table of product brands, showing `id`, `name`, and `description`. It includes 'Edit' and 'Delete' actions.\n\n### BrandForm.tsx\nThis form is for creating or editing a product brand. It has fields for `name` and `description`. It calls `productService.createBrand` or `productService.updateBrand` on submission.\n\n### AdminOrdersPage.tsx\nThis page manages customer orders. It uses `OrderTable` to display a list of orders and `OrderDetailView` to show detailed information about a selected order. It fetches all orders using the generated `orderService.getAllOrders()` function. It also allows updating the order status via `orderService.updateOrderStatus(orderId, newStatus)`.\n\n### OrderTable.tsx\nThis component displays a table of customer orders. Each row should include `orderId`, `orderDate`, `totalAmount` (formatted in ₹), and `orderStatus`. It should provide an action to 'View Details' which opens the `OrderDetailView` for the selected order. It also includes a dropdown or button to update the `orderStatus`.\n\n### OrderDetailView.tsx\nThis component displays a detailed view of a single order, typically in a dialog or drawer. It fetches order details using `orderService.getOrderById(orderId)`. It shows `orderId`, `orderDate`, `totalAmount` (formatted in ₹), `orderStatus`, `shippingAddress`, `city`, `state`, `pincode`, `shippingMethod`, `paymentId`, `paymentStatus`, and a list of `orderItems` including `productName`, `quantity`, and `unitPrice` (formatted in ₹).\n\n### AdminEventsPage.tsx\nThis page manages in-store events. It uses `EventTable` to list events and `EventForm` for creation and editing. It fetches events using the generated `eventService.getAllEvents()` function. Creation is handled by `eventService.createEvent(CreateEventRequest)`, updates by `eventService.updateEvent(id, CreateEventRequest)`, and deletion by `eventService.deleteEvent(id)`.\n\n### EventTable.tsx\nThis component displays a table of events, showing `id`, `name`, `eventDate`, `location`, and `imageUrl`. It includes 'Edit' and 'Delete' actions.\n\n### EventForm.tsx\nThis form is for creating or editing an event. It has fields for `name`, `description`, `eventDate`, `location`, and `imageUrl`. It calls `eventService.createEvent` or `eventService.updateEvent` on submission. The `eventDate` should use a date/time picker.\n",
+    "depends_on_features" : [ "product-management-api", "order-management", "event-management" ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
