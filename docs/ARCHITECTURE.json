@@ -412,14 +412,86 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Public REST controller for browsing and searching products, categories, and brands.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllProducts",
+      "parameters" : [ "ProductFilterParams filterParams", "Pageable pageable" ],
+      "return_type" : "ResponseEntity<Page<ProductDto>>",
+      "description" : "Retrieves a paginated list of products based on provided filter parameters."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Retrieves details for a specific product by its ID."
+    }, {
+      "name" : "getAllCategories",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<CategoryDto>>",
+      "description" : "Retrieves a list of all product categories."
+    }, {
+      "name" : "getCategoryById",
+      "parameters" : [ "Long categoryId" ],
+      "return_type" : "ResponseEntity<CategoryDto>",
+      "description" : "Retrieves details for a specific category by its ID."
+    }, {
+      "name" : "getAllBrands",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<BrandDto>>",
+      "description" : "Retrieves a list of all product brands."
+    }, {
+      "name" : "getBrandById",
+      "parameters" : [ "Long brandId" ],
+      "return_type" : "ResponseEntity<BrandDto>",
+      "description" : "Retrieves details for a specific brand by its ID."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/products",
+      "request_body" : null,
+      "response_body" : "Page<ProductDto>",
+      "description" : "Get a paginated list of products, optionally filtered by category, brand, or search term.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{productId}",
+      "request_body" : null,
+      "response_body" : "ProductDto",
+      "description" : "Get details of a specific product. Throws ResourceNotFoundException if product not found.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/categories",
+      "request_body" : null,
+      "response_body" : "List<CategoryDto>",
+      "description" : "Get a list of all product categories.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/categories/{categoryId}",
+      "request_body" : null,
+      "response_body" : "CategoryDto",
+      "description" : "Get details of a specific category. Throws ResourceNotFoundException if category not found.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/brands",
+      "request_body" : null,
+      "response_body" : "List<BrandDto>",
+      "description" : "Get a list of all product brands.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/brands/{brandId}",
+      "request_body" : null,
+      "response_body" : "BrandDto",
+      "description" : "Get details of a specific brand. Throws ResourceNotFoundException if brand not found.",
+      "access" : "public"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ProductService.java", "backend/src/main/java/com/prakashstores/dto/ProductDto.java", "backend/src/main/java/com/prakashstores/dto/ProductFilterParams.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-api",
-    "file_role" : null,
+    "file_role" : "Public REST controller for browsing and searching products, categories, and brands. It exposes endpoints for retrieving product listings, individual product details, and lists of categories and brands, delegating all business logic to `ProductService.getAllProducts(ProductFilterParams, Pageable): Page<ProductDto>`, `ProductService.getProductById(Long): ProductDto`, `ProductService.getAllCategories(): List<CategoryDto>`, and `ProductService.getAllBrands(): List<BrandDto>`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -431,14 +503,122 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for CRUD operations on products, categories, and brands.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createProduct",
+      "parameters" : [ "CreateProductRequest request" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Creates a new product."
+    }, {
+      "name" : "updateProduct",
+      "parameters" : [ "Long productId", "UpdateProductRequest request" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Updates an existing product by ID. Throws ResourceNotFoundException if product not found."
+    }, {
+      "name" : "deleteProduct",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Deletes a product by ID. Throws ResourceNotFoundException if product not found."
+    }, {
+      "name" : "createCategory",
+      "parameters" : [ "CategoryDto categoryDto" ],
+      "return_type" : "ResponseEntity<CategoryDto>",
+      "description" : "Creates a new product category."
+    }, {
+      "name" : "updateCategory",
+      "parameters" : [ "Long categoryId", "CategoryDto categoryDto" ],
+      "return_type" : "ResponseEntity<CategoryDto>",
+      "description" : "Updates an existing category by ID. Throws ResourceNotFoundException if category not found."
+    }, {
+      "name" : "deleteCategory",
+      "parameters" : [ "Long categoryId" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Deletes a category by ID. Throws ResourceNotFoundException if category not found."
+    }, {
+      "name" : "createBrand",
+      "parameters" : [ "BrandDto brandDto" ],
+      "return_type" : "ResponseEntity<BrandDto>",
+      "description" : "Creates a new product brand."
+    }, {
+      "name" : "updateBrand",
+      "parameters" : [ "Long brandId", "BrandDto brandDto" ],
+      "return_type" : "ResponseEntity<BrandDto>",
+      "description" : "Updates an existing brand by ID. Throws ResourceNotFoundException if brand not found."
+    }, {
+      "name" : "deleteBrand",
+      "parameters" : [ "Long brandId" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Deletes a brand by ID. Throws ResourceNotFoundException if brand not found."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/admin/products",
+      "request_body" : "CreateProductRequest",
+      "response_body" : "ProductDto",
+      "description" : "Create a new product.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/products/{productId}",
+      "request_body" : "UpdateProductRequest",
+      "response_body" : "ProductDto",
+      "description" : "Update an existing product. Throws ResourceNotFoundException if product not found.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/products/{productId}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Delete a product. Throws ResourceNotFoundException if product not found.",
+      "access" : "admin"
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/categories",
+      "request_body" : "CategoryDto",
+      "response_body" : "CategoryDto",
+      "description" : "Create a new product category.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/categories/{categoryId}",
+      "request_body" : "CategoryDto",
+      "response_body" : "CategoryDto",
+      "description" : "Update an existing category. Throws ResourceNotFoundException if category not found.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/categories/{categoryId}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Delete a category. Throws ResourceNotFoundException if category not found.",
+      "access" : "admin"
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/brands",
+      "request_body" : "BrandDto",
+      "response_body" : "BrandDto",
+      "description" : "Create a new product brand.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/brands/{brandId}",
+      "request_body" : "BrandDto",
+      "response_body" : "BrandDto",
+      "description" : "Update an existing brand. Throws ResourceNotFoundException if brand not found.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/brands/{brandId}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Delete a brand. Throws ResourceNotFoundException if brand not found.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ProductService.java", "backend/src/main/java/com/prakashstores/dto/admin/CreateProductRequest.java", "backend/src/main/java/com/prakashstores/dto/admin/UpdateProductRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-api",
-    "file_role" : null,
+    "file_role" : "Admin-only REST controller for CRUD operations on products, categories, and brands. It exposes endpoints for creating, updating, and deleting products, categories, and brands, delegating all business logic to `ProductService.createProduct(CreateProductRequest): ProductDto`, `ProductService.updateProduct(Long, UpdateProductRequest): ProductDto`, `ProductService.deleteProduct(Long): void`, `ProductService.createCategory(CategoryDto): CategoryDto`, `ProductService.updateCategory(Long, CategoryDto): CategoryDto`, `ProductService.deleteCategory(Long): void`, `ProductService.createBrand(BrandDto): BrandDto`, `ProductService.updateBrand(Long, BrandDto): BrandDto`, and `ProductService.deleteBrand(Long): void`.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -451,13 +631,49 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for publicly exposing product details.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the product."
+    }, {
+      "name" : "price",
+      "type" : "BigDecimal",
+      "description" : "Base price of the product."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the main product image."
+    }, {
+      "name" : "category",
+      "type" : "CategoryDto",
+      "description" : "Category of the product."
+    }, {
+      "name" : "brand",
+      "type" : "BrandDto",
+      "description" : "Brand of the product."
+    }, {
+      "name" : "variants",
+      "type" : "List<ProductVariantDto>",
+      "description" : "List of available product variants (size, color, etc.)."
+    }, {
+      "name" : "active",
+      "type" : "boolean",
+      "description" : "Indicates if the product is active and visible in the catalog."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/dto/ProductVariantDto.java", "backend/src/main/java/com/prakashstores/dto/CategoryDto.java", "backend/src/main/java/com/prakashstores/dto/BrandDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-api",
-    "file_role" : null,
+    "file_role" : "Data Transfer Object for publicly exposing product details.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -470,13 +686,25 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for product categories.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the category."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the category. Not null, max 100 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Description of the category. Max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management-api",
-    "file_role" : null,
+    "file_role" : "Data Transfer Object for product categories.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -489,13 +717,25 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for product brands.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the brand."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the brand. Not null, max 100 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Description of the brand. Max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management-api",
-    "file_role" : null,
+    "file_role" : "Data Transfer Object for product brands.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -508,13 +748,41 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for product variants (size, color).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product variant."
+    }, {
+      "name" : "size",
+      "type" : "String",
+      "description" : "Size of the variant (e.g., S, M, L, XL)."
+    }, {
+      "name" : "color",
+      "type" : "String",
+      "description" : "Color of the variant (e.g., Red, Blue, Black)."
+    }, {
+      "name" : "sku",
+      "type" : "String",
+      "description" : "Stock Keeping Unit for the variant. Unique."
+    }, {
+      "name" : "stock",
+      "type" : "Integer",
+      "description" : "Current stock level for this variant."
+    }, {
+      "name" : "additionalPrice",
+      "type" : "BigDecimal",
+      "description" : "Additional price for this variant, if any."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the image specific to this variant."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management-api",
-    "file_role" : null,
+    "file_role" : "Data Transfer Object for product variants (size, color).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -527,13 +795,33 @@
     "status" : "PLANNED",
     "description" : "Record to hold query parameters for filtering products in the catalog.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "categoryId",
+      "type" : "Long",
+      "description" : "Optional category ID to filter products."
+    }, {
+      "name" : "brandId",
+      "type" : "Long",
+      "description" : "Optional brand ID to filter products."
+    }, {
+      "name" : "search",
+      "type" : "String",
+      "description" : "Optional search term to filter products by name."
+    }, {
+      "name" : "minPrice",
+      "type" : "BigDecimal",
+      "description" : "Optional minimum price to filter products."
+    }, {
+      "name" : "maxPrice",
+      "type" : "BigDecimal",
+      "description" : "Optional maximum price to filter products."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management-api",
-    "file_role" : null,
+    "file_role" : "Record to hold query parameters for filtering products in the catalog.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -546,13 +834,45 @@
     "status" : "PLANNED",
     "description" : "DTO for creating a new product via the admin panel.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product. Not null, min 3, max 255 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the product. Not null, min 10, max 2000 characters."
+    }, {
+      "name" : "price",
+      "type" : "BigDecimal",
+      "description" : "Base price of the product. Not null, must be positive."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the main product image. Not null, valid URL format."
+    }, {
+      "name" : "categoryId",
+      "type" : "Long",
+      "description" : "ID of the product's category. Not null."
+    }, {
+      "name" : "brandId",
+      "type" : "Long",
+      "description" : "ID of the product's brand. Not null."
+    }, {
+      "name" : "active",
+      "type" : "boolean",
+      "description" : "Whether the product is active and visible. Default to true."
+    }, {
+      "name" : "variants",
+      "type" : "List<ProductVariantDto>",
+      "description" : "List of product variants to create with the product. Can be empty."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management-api",
-    "file_role" : null,
+    "file_role" : "DTO for creating a new product via the admin panel.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -565,13 +885,45 @@
     "status" : "PLANNED",
     "description" : "DTO for updating an existing product via the admin panel.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product. Not null, min 3, max 255 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the product. Not null, min 10, max 2000 characters."
+    }, {
+      "name" : "price",
+      "type" : "BigDecimal",
+      "description" : "Base price of the product. Not null, must be positive."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the main product image. Not null, valid URL format."
+    }, {
+      "name" : "categoryId",
+      "type" : "Long",
+      "description" : "ID of the product's category. Not null."
+    }, {
+      "name" : "brandId",
+      "type" : "Long",
+      "description" : "ID of the product's brand. Not null."
+    }, {
+      "name" : "active",
+      "type" : "boolean",
+      "description" : "Whether the product is active and visible. Default to true."
+    }, {
+      "name" : "variants",
+      "type" : "List<ProductVariantDto>",
+      "description" : "List of product variants to update or create with the product. Can be empty."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/dto/admin/CreateProductRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-api",
-    "file_role" : null,
+    "file_role" : "DTO for updating an existing product via the admin panel.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2582,9 +2934,9 @@
     "feature_display_name" : "Product Management (API)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/controller/ProductController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminProductController.java", "backend/src/main/java/com/prakashstores/dto/ProductDto.java", "backend/src/main/java/com/prakashstores/dto/CategoryDto.java", "backend/src/main/java/com/prakashstores/dto/BrandDto.java", "backend/src/main/java/com/prakashstores/dto/ProductVariantDto.java", "backend/src/main/java/com/prakashstores/dto/ProductFilterParams.java", "backend/src/main/java/com/prakashstores/dto/admin/CreateProductRequest.java", "backend/src/main/java/com/prakashstores/dto/admin/UpdateProductRequest.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature provides the backend API for managing products, categories, and brands for Prakash Stores. It exposes public endpoints for browsing the product catalog and admin-only endpoints for CRUD operations. The `ProductController` handles public requests for product listings, details, categories, and brands, delegating all business logic to the `ProductService` (from `product-management-core`). The `AdminProductController` handles authenticated admin requests for creating, updating, and deleting products, categories, and brands, also delegating to `ProductService`. All data transfer between the controllers and the service layer, and between the API and frontend, is handled by DTOs such as `ProductDto`, `CategoryDto`, `BrandDto`, `ProductVariantDto`, `ProductFilterParams`, `CreateProductRequest`, and `UpdateProductRequest`. The controllers will catch `ResourceNotFoundException` (from `shared-backend`) and return an HTTP 404 status.",
+    "depends_on_features" : [ "product-management-core" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
