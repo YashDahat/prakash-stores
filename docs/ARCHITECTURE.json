@@ -3532,14 +3532,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Page containing the login form for users to authenticate.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "LoginPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the login form and links to the signup page."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/auth/LoginForm.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui-frontend",
-    "file_role" : null,
+    "file_role" : "Page containing the login form for users to authenticate.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3551,14 +3556,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A form for users to enter their credentials, which calls useAuth().login.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "LoginForm",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the login form, handles input, and calls useAuth().login on submission."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "useAuth()" ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui-frontend",
-    "file_role" : null,
+    "file_role" : "A form for users to enter their credentials, which calls useAuth().login.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3570,14 +3580,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Page containing the registration form for new users.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "SignupPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the signup form and links to the login page."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/auth/SignupForm.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui-frontend",
-    "file_role" : null,
+    "file_role" : "Page containing the registration form for new users.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3589,14 +3604,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A form for new users to create an account, which calls useAuth().register.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "SignupForm",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the signup form, handles input, and calls useAuth().register on submission."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "useAuth()" ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui-frontend",
-    "file_role" : null,
+    "file_role" : "A form for new users to create an account, which calls useAuth().register.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3608,14 +3628,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A wrapper component that restricts access to routes based on authentication status and role from useAuth().",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProtectedRoute",
+      "parameters" : [ "{ children: React.ReactNode, requiredRole?: 'ADMIN' | 'USER' }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Wraps child components, redirecting unauthenticated users or users without the required role."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "useAuth()" ],
     "depends_on" : [ ],
     "feature_name" : "auth-ui-frontend",
-    "file_role" : null,
+    "file_role" : "A wrapper component that restricts access to routes based on authentication status and role from useAuth().",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -4066,9 +4091,9 @@
     "feature_display_name" : "Authentication UI (Frontend)",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/pages/LoginPage.tsx", "frontend/src/pages/SignupPage.tsx", "frontend/src/components/auth/LoginForm.tsx", "frontend/src/components/auth/SignupForm.tsx", "frontend/src/components/common/ProtectedRoute.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46A00] text-white font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Secondary CTA: border border-[#1A3A6D] text-[#1A3A6D] hover:bg-[#1A3A6D] hover:text-white font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-lg shadow-sm border border-gray-100 p-5\n- Section container: <section className=\"py-12 px-4\"><div className=\"max-w-4xl mx-auto\">\n- Hero h1: text-4xl md:text-5xl font-bold text-[#1A3A6D]\n- Body: text-[#212121] leading-relaxed\n- Input field: border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-[#E87A00] focus:border-transparent\n\nThis feature provides the user interface for authentication, including login and signup forms, and a protected route component. The `LoginPage.tsx` and `SignupPage.tsx` are full-page components that render the `LoginForm.tsx` and `SignupForm.tsx` respectively. Both forms utilize the `useAuth()` hook from the foundation to handle user authentication. The `ProtectedRoute.tsx` component wraps routes that require authentication, redirecting unauthenticated users to the login page and handling role-based access control. All components adhere to the defined design tokens for a consistent look and feel.\n\n### LoginPage.tsx\nThis page renders the `LoginForm` component within a centered layout. It should have a friendly heading like \"Welcome Back to Prakash Stores!\" and a sub-heading encouraging users to log in. It will also include a link to the signup page for new users.\n\n### SignupPage.tsx\nThis page renders the `SignupForm` component within a centered layout. It should have a welcoming heading like \"Join the Prakash Stores Family!\" and a sub-heading inviting new users to create an account. It will also include a link to the login page for existing users.\n\n### LoginForm.tsx\nThis component provides the UI for users to input their email and password. Upon submission, it calls `useAuth().login(email, password)`. It should display a loading state during the API call and show error messages if authentication fails. The form fields should use the defined input field design tokens. It will include a primary CTA button with text like \"Log In\".\n\n### SignupForm.tsx\nThis component provides the UI for new users to input their name, email, and password. Upon submission, it calls `useAuth().register(name, email, password)`. It should display a loading state during the API call and show error messages if registration fails. The form fields should use the defined input field design tokens. It will include a primary CTA button with text like \"Create Account\".\n\n### ProtectedRoute.tsx\nThis component acts as a wrapper for routes that require authentication. It uses `useAuth().isAuthenticated` and `useAuth().user.role` to determine access. If the user is not authenticated, it redirects them to the `/login` page. If a `requiredRole` prop is provided and the authenticated user's role does not match, it redirects to a `/` or `/unauthorized` page (the latter is not part of this feature, so redirect to `/`). It renders its `children` prop if the user is authorized.",
+    "depends_on_features" : [ ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
