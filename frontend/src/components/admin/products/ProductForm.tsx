@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -20,7 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import type { Brand, ProductCategory, ProductDto } from '@/types/product';
+import type { ProductCategory, ProductDto } from '@/types/product';
+import type { Brand } from '@/types/brand';
 
 const productFormSchema = z.object({
   name: z.string().min(1, 'Product name is required'),

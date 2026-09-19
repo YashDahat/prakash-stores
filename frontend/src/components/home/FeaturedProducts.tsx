@@ -1,6 +1,8 @@
+import type { JSX } from 'react';
 import { useProducts } from '@/hooks/productHooks';
-import { ProductCard } from '@/components/products/ProductCard';
+import ProductCard from '@/components/products/ProductCard';
 import { Skeleton } from '@/components/ui/skeleton';
+import type { ProductDto } from '@/types/product';
 
 export default function FeaturedProducts(): React.JSX.Element {
   const { data: products, isLoading, isError } = useProducts();
@@ -30,7 +32,7 @@ export default function FeaturedProducts(): React.JSX.Element {
     );
   }
 
-  const featuredProducts = products.slice(0, 8); // Display first 8 products as featured
+  const featuredProducts = (products as unknown as ProductDto[]).slice(0, 8); // Display first 8 products as featured
 
   return (
     <section className="py-16 px-4 bg-[#F5F5F5]">

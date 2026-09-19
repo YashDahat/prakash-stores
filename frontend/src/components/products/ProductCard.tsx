@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { Link } from 'react-router-dom';
 import { ProductDto } from '@/types/product';
 import { Button } from '@/components/ui/button';

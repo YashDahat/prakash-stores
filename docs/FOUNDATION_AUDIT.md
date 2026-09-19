@@ -7,3 +7,9 @@ Advisory — residual foundation impedance in generated code (Phase 4 detection 
 
 Clean — no residual foundation impedance.
 <!-- AUDIT:BACKEND:END -->
+
+<!-- AUDIT:FRONTEND:START -->
+## FRONTEND
+
+Clean — no residual foundation impedance.
+<!-- AUDIT:FRONTEND:END -->

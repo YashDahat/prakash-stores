@@ -1,7 +1,11 @@
+import type { JSX } from 'react';
 import { useCart } from '@/cart/CartContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { formatCurrency } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+
+const formatCurrency = (amount: number): string =>
+  new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
 
 export default function OrderSummary(): React.JSX.Element {
   const { cartItems, totals } = useCart();
@@ -48,10 +52,3 @@ export default function OrderSummary(): React.JSX.Element {
   );
 }
 
-// Helper function for currency formatting
-const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-  }).format(amount);
-};

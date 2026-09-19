@@ -17,13 +17,13 @@ import { Label } from '@/components/ui/label';
 import { ShippingMethod, ShippingMethodValues } from '@/types/shipping';
 
 interface ShippingDetails {
-  name: string;
+  fullName: string;
   addressLine1: string;
   addressLine2: string;
   city: string;
   state: string;
   pincode: string;
-  phone: string;
+  phoneNumber: string;
   shippingMethod: ShippingMethod;
 }
 
@@ -32,13 +32,13 @@ interface ShippingStepProps {
 }
 
 const formSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
+  fullName: z.string().min(1, 'Name is required'),
   addressLine1: z.string().min(1, 'Address Line 1 is required'),
   addressLine2: z.string().optional(),
   city: z.string().min(1, 'City is required'),
   state: z.string().min(1, 'State is required'),
   pincode: z.string().min(6, 'Pincode must be 6 digits').max(6, 'Pincode must be 6 digits'),
-  phone: z.string().min(10, 'Phone number must be 10 digits').max(10, 'Phone number must be 10 digits'),
+  phoneNumber: z.string().min(10, 'Phone number must be 10 digits').max(10, 'Phone number must be 10 digits'),
   shippingMethod: z.enum(ShippingMethodValues, {
     required_error: 'Shipping method is required',
   }),
@@ -48,19 +48,28 @@ export default function ShippingStep({ onNext }: ShippingStepProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      fullName: '',
       addressLine1: '',
       addressLine2: '',
       city: '',
       state: '',
       pincode: '',
-      phone: '',
+      phoneNumber: '',
       shippingMethod: ShippingMethod.HOME_DELIVERY,
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>): void => {
-    onNext(values);
+    onNext({
+      fullName: values.fullName,
+      addressLine1: values.addressLine1,
+      addressLine2: values.addressLine2 ?? '',
+      city: values.city,
+      state: values.state,
+      pincode: values.pincode,
+      phoneNumber: values.phoneNumber,
+      shippingMethod: values.shippingMethod,
+    });
   };
 
   return (
@@ -70,7 +79,7 @@ export default function ShippingStep({ onNext }: ShippingStepProps) {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="name"
+            name="fullName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
@@ -151,7 +160,7 @@ export default function ShippingStep({ onNext }: ShippingStepProps) {
             />
             <FormField
               control={form.control}
-              name="phone"
+              name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>

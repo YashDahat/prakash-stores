@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 <section className="py-16 px-4 bg-white">
   <div className="max-w-7xl mx-auto">
     <h1 className="text-4xl md:text-5xl font-bold text-[#1A3A6D] mb-8 text-center">About Prakash Stores</h1>

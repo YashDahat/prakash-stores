@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { useState } from 'react';
 import { ProductDto } from '@/types/product';
 import { Button } from '@/components/ui/button';

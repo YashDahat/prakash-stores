@@ -2029,7 +2029,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A route guard component that checks authentication status and user roles using the pre-scaffolded useAuth() hook.",
     "public_functions" : [ {
       "name" : "ProtectedRoute",
@@ -2052,8 +2052,8 @@
     "file_type" : "FRONTEND",
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
-    "updated_date" : "2024-07-26",
-    "status" : "PLANNED",
+    "updated_date" : "2026-09-19",
+    "status" : "VALIDATED",
     "description" : "The main layout for the admin section, including a sidebar for navigation between management pages.",
     "public_functions" : [ {
       "name" : "AdminLayout",
@@ -2077,7 +2077,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Layout for the customer account section, with navigation for profile, order history, etc.",
     "public_functions" : [ {
       "name" : "AccountLayout",
@@ -2101,7 +2101,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A floating action button to initiate a WhatsApp chat for customer service.",
     "public_functions" : [ {
       "name" : "WhatsAppButton",
@@ -2125,7 +2125,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "The landing page featuring a full-bleed hero image, a grid of featured products, category links, and an embedded Instagram feed.",
     "public_functions" : [ {
       "name" : "HomePage",
@@ -2149,7 +2149,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Displays the main hero section on the homepage with a prominent call-to-action button.",
     "public_functions" : [ {
       "name" : "HeroSection",
@@ -2173,7 +2173,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A carousel or grid showcasing a curated list of featured products on the homepage.",
     "public_functions" : [ {
       "name" : "FeaturedProducts",
@@ -2204,7 +2204,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Displays main product categories (Men, Women, Kids) as large clickable cards.",
     "public_functions" : [ {
       "name" : "CategoryGrid",
@@ -2228,7 +2228,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A static component section to showcase styles, potentially linking to the store's Instagram page.",
     "public_functions" : [ {
       "name" : "InstagramFeed",
@@ -2252,7 +2252,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Displays the main product catalog with a filterable grid layout.",
     "public_functions" : [ {
       "name" : "ProductsPage",
@@ -2276,7 +2276,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A sidebar component with controls to filter products by category, brand, price, size, and color.",
     "public_functions" : [ {
       "name" : "ProductFilterSidebar",
@@ -2300,7 +2300,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A responsive grid that displays a list of products.",
     "public_functions" : [ {
       "name" : "ProductGrid",
@@ -2324,7 +2324,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A reusable card component to display a single product's image, name, price, and an 'Add to Cart' button.",
     "public_functions" : [ {
       "name" : "ProductCard",
@@ -2348,7 +2348,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Displays detailed information for a single product, including an image gallery, description, reviews, and purchase options.",
     "public_functions" : [ {
       "name" : "ProductDetailPage",
@@ -2372,7 +2372,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Component to display multiple images of a product with a main view and thumbnails.",
     "public_functions" : [ {
       "name" : "ProductImageGallery",
@@ -2396,7 +2396,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Displays product details like name, price, description, and controls for selecting size/color and adding to cart.",
     "public_functions" : [ {
       "name" : "ProductInfo",
@@ -2420,7 +2420,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Displays a list of customer reviews for a product and includes a form for submitting a new review.",
     "public_functions" : [ {
       "name" : "ProductReviews",
@@ -2444,7 +2444,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A form for authenticated users to submit a rating and a written review for a product.",
     "public_functions" : [ {
       "name" : "ReviewForm",
@@ -2468,7 +2468,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A slide-out panel that displays the contents of the shopping cart, using the pre-scaffolded useCart() hook.",
     "public_functions" : [ {
       "name" : "CartDrawer",
@@ -2492,7 +2492,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A multi-step checkout page that orchestrates the checkout process using the pre-scaffolded useCheckout() hook.",
     "public_functions" : [ {
       "name" : "CheckoutPage",
@@ -2516,7 +2516,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "The first step of the checkout process, for entering shipping address and selecting shipping method (Delivery or Click & Collect).",
     "public_functions" : [ {
       "name" : "ShippingStep",
@@ -2540,7 +2540,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "The payment step of checkout, which integrates with the payment gateway to process the transaction.",
     "public_functions" : [ {
       "name" : "PaymentStep",
@@ -2564,7 +2564,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A component displayed during checkout that shows the items in the cart and the total cost.",
     "public_functions" : [ {
       "name" : "OrderSummary",
@@ -2588,7 +2588,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A page displayed after a successful order, showing a summary of the order and a confirmation message.",
     "public_functions" : [ {
       "name" : "OrderConfirmationPage",
@@ -2612,7 +2612,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Allows authenticated users to view and update their profile information.",
     "public_functions" : [ {
       "name" : "ProfilePage",
@@ -2636,7 +2636,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Displays a list of the current user's past orders.",
     "public_functions" : [ {
       "name" : "OrderHistoryPage",
@@ -2667,7 +2667,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A page listing upcoming in-store events and workshops in a card-based layout.",
     "public_functions" : null,
     "public_variables" : null,
@@ -2686,7 +2686,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A static page describing the history and values of Prakash Stores.",
     "public_functions" : [ {
       "name" : "AboutPage",
@@ -2710,7 +2710,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A static page with contact information, an embedded Google Map, and business hours.",
     "public_functions" : [ {
       "name" : "ContactPage",
@@ -2734,7 +2734,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A page with a form for users to log in, using the pre-scaffolded useAuth() hook.",
     "public_functions" : [ {
       "name" : "LoginPage",
@@ -2758,7 +2758,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A page with a form for new users to create an account, using the pre-scaffolded useAuth() hook.",
     "public_functions" : [ {
       "name" : "SignupPage",
@@ -2782,7 +2782,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A user-friendly 404 page that is displayed when a route is not found.",
     "public_functions" : [ {
       "name" : "NotFoundPage",
@@ -2806,7 +2806,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "The main landing page for the admin panel, showing key metrics and summary information.",
     "public_functions" : [ {
       "name" : "AdminDashboardPage",
@@ -2851,7 +2851,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Admin page for managing products, composed of a product table and a form for creation/editing.",
     "public_functions" : [ {
       "name" : "AdminProductsPage",
@@ -2924,7 +2924,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A data table for displaying and managing all products in the admin panel.",
     "public_functions" : [ {
       "name" : "ProductTable",
@@ -2948,7 +2948,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A form used within a dialog or on a separate page for creating and editing products.",
     "public_functions" : [ {
       "name" : "ProductForm",
@@ -2986,7 +2986,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A confirmation dialog for deleting a product.",
     "public_functions" : [ {
       "name" : "DeleteProductDialog",
@@ -3010,7 +3010,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Admin page for viewing and managing customer orders.",
     "public_functions" : [ {
       "name" : "AdminOrdersPage",
@@ -3055,7 +3055,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A data table for displaying all customer orders in the admin panel.",
     "public_functions" : [ {
       "name" : "OrderTable",
@@ -3079,7 +3079,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A component to view the details of a specific order and update its status.",
     "public_functions" : [ {
       "name" : "OrderDetailView",
@@ -3103,7 +3103,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Admin page for moderating customer reviews.",
     "public_functions" : [ {
       "name" : "AdminReviewsPage",
@@ -3155,7 +3155,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A data table for displaying and moderating customer reviews (approve/delete).",
     "public_functions" : [ {
       "name" : "ReviewTable",
@@ -3179,7 +3179,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Admin page for creating and managing in-store events.",
     "public_functions" : [ {
       "name" : "AdminEventsPage",
@@ -3231,7 +3231,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A data table for displaying and managing all events.",
     "public_functions" : [ {
       "name" : "EventTable",
@@ -3255,7 +3255,7 @@
     "layer" : "COMPONENT",
     "created_date" : "2024-07-26",
     "updated_date" : "2026-09-19",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A form for creating and editing in-store events.",
     "public_functions" : [ {
       "name" : "EventForm",
@@ -3278,7 +3278,7 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : null,
-    "updated_date" : null,
+    "updated_date" : "2026-09-19",
     "status" : "VALIDATED",
     "description" : "Derived route registry — regenerated every attempt, never LLM-written",
     "public_functions" : null,
@@ -3297,7 +3297,7 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : null,
-    "updated_date" : null,
+    "updated_date" : "2026-09-19",
     "status" : "VALIDATED",
     "description" : "Derived route registry — regenerated every attempt, never LLM-written",
     "public_functions" : null,
@@ -3316,7 +3316,7 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : null,
-    "updated_date" : null,
+    "updated_date" : "2026-09-19",
     "status" : "VALIDATED",
     "description" : "Derived route registry — regenerated every attempt, never LLM-written",
     "public_functions" : null,
@@ -3335,7 +3335,7 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : null,
-    "updated_date" : null,
+    "updated_date" : "2026-09-19",
     "status" : "VALIDATED",
     "description" : "Derived route registry — regenerated every attempt, never LLM-written",
     "public_functions" : null,

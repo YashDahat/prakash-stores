@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useOrders } from '@/hooks/orderHooks';
 import { useAdminGetAllProducts } from '@/hooks/productHooks';
@@ -9,7 +10,7 @@ export default function AdminDashboardPage(): React.JSX.Element {
   const { data: orders, isLoading: isLoadingOrders } = useOrders();
   const { data: pendingReviews, isLoading: isLoadingReviews } = usePendingReviews();
 
-  const totalProducts = products?.length ?? 0;
+  const totalProducts = (products as unknown as unknown[])?.length ?? 0;
   const totalOrders = orders?.length ?? 0;
   const totalPendingReviews = pendingReviews?.length ?? 0;
 

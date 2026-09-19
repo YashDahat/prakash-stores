@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/cart/CartContext';
@@ -8,20 +9,19 @@ import PaymentStep from '@/components/checkout/PaymentStep';
 import OrderSummary from '@/components/checkout/OrderSummary';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { ROUTES } from '@/routes';
 import type { ShippingMethod } from '@/types/shipping';
 import { toast } from 'sonner';
 import type { OrderDto } from '@/types/order';
 
 interface ShippingDetails {
-  name: string;
+  fullName: string;
   addressLine1: string;
   addressLine2: string;
   city: string;
   state: string;
   pincode: string;
-  phone: string;
+  phoneNumber: string;
   shippingMethod: ShippingMethod;
 }
 

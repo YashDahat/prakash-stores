@@ -1,0 +1,105 @@
+# API Contract Report
+
+Effective client baseURL: `(empty)`
+
+## Mismatches (1)
+- POST /api/v1/admin/media  (path exists but not for POST — method or path mismatch)
+
+## Backend routes (48)
+- DELETE /api/v1/admin/events/*
+- DELETE /api/v1/admin/media/*
+- DELETE /api/v1/admin/products/*
+- DELETE /api/v1/admin/products/brands/*
+- DELETE /api/v1/admin/products/categories/*
+- DELETE /api/v1/admin/reviews/*
+- GET /api/v1/admin/events
+- GET /api/v1/admin/events/*
+- GET /api/v1/admin/media
+- GET /api/v1/admin/orders
+- GET /api/v1/admin/orders/*
+- GET /api/v1/admin/products
+- GET /api/v1/admin/products/*
+- GET /api/v1/admin/products/brands
+- GET /api/v1/admin/products/categories
+- GET /api/v1/admin/reviews
+- GET /api/v1/admin/reviews/pending
+- GET /api/v1/events/*
+- GET /api/v1/events/upcoming
+- GET /api/v1/gallery
+- GET /api/v1/media/*
+- GET /api/v1/orders
+- GET /api/v1/orders/*
+- GET /api/v1/products
+- GET /api/v1/products/*
+- GET /api/v1/products/*/reviews
+- GET /api/v1/products/brands
+- GET /api/v1/products/categories
+- POST /api/v1/admin/events
+- POST /api/v1/admin/products
+- POST /api/v1/admin/products/brands
+- POST /api/v1/admin/products/categories
+- POST /api/v1/auth/login
+- POST /api/v1/auth/register
+- POST /api/v1/orders
+- POST /api/v1/payments/create-order
+- POST /api/v1/payments/verify
+- POST /api/v1/payments/webhook
+- POST /api/v1/reviews
+- PUT /api/v1/admin/events/*
+- PUT /api/v1/admin/media/*
+- PUT /api/v1/admin/orders/*/status
+- PUT /api/v1/admin/products/*
+- PUT /api/v1/admin/products/*/stock
+- PUT /api/v1/admin/products/brands/*
+- PUT /api/v1/admin/products/categories/*
+- PUT /api/v1/admin/reviews/*/approve
+- PUT /api/v1/admin/reviews/*/reject
+
+## Frontend calls (47)
+- POST /api/v1/payments/create-order
+- POST /api/v1/payments/verify
+- POST /api/v1/auth/login
+- POST /api/v1/auth/register
+- GET /api/v1/admin/media
+- POST /api/v1/admin/media
+- PUT /api/v1/admin/media/${id}
+- DELETE /api/v1/admin/media/${id}
+- GET /api/v1/events/upcoming
+- GET /api/v1/events/${id}
+- POST /api/v1/admin/events
+- GET /api/v1/admin/events
+- GET /api/v1/admin/events/${id}
+- PUT /api/v1/admin/events/${id}
+- DELETE /api/v1/admin/events/${id}
+- GET /api/v1/gallery
+- GET /api/v1/products
+- GET /api/v1/products/${id}
+- GET /api/v1/products/categories
+- GET /api/v1/products/brands
+- POST /api/v1/admin/products
+- PUT /api/v1/admin/products/${id}
+- DELETE /api/v1/admin/products/${id}
+- PUT /api/v1/admin/products/${id}/stock
+- GET /api/v1/admin/products
+- GET /api/v1/admin/products/${id}
+- GET /api/v1/admin/products/categories
+- POST /api/v1/admin/products/categories
+- PUT /api/v1/admin/products/categories/${id}
+- DELETE /api/v1/admin/products/categories/${id}
+- GET /api/v1/admin/products/brands
+- POST /api/v1/admin/products/brands
+- PUT /api/v1/admin/products/brands/${id}
+- DELETE /api/v1/admin/products/brands/${id}
+- POST /api/v1/reviews
+- GET /api/v1/products/${productId}/reviews
+- GET /api/v1/admin/reviews
+- GET /api/v1/admin/reviews/pending
+- PUT /api/v1/admin/reviews/${reviewId}/approve
+- PUT /api/v1/admin/reviews/${reviewId}/reject
+- DELETE /api/v1/admin/reviews/${reviewId}
+- POST /api/v1/orders
+- GET /api/v1/orders
+- GET /api/v1/orders/${orderId}
+- GET /api/v1/admin/orders
+- GET /api/v1/admin/orders/${orderId}
+- PUT /api/v1/admin/orders/${orderId}/status

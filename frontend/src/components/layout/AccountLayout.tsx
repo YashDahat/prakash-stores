@@ -1,5 +1,5 @@
+import type { JSX } from 'react';
 import { Link } from 'react-router-dom';
-import { Separator } from '@/components/ui/separator';
 import { ROUTES } from '@/routes';
 
 interface AccountLayoutProps {

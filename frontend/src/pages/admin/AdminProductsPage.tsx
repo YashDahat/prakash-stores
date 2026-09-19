@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ProductTable } from '@/components/admin/products/ProductTable';
@@ -12,7 +13,7 @@ import {
   useAdminGetAllBrands,
   useAdminGetAllCategories,
 } from '@/hooks/productHooks';
-import { ProductDto, Brand, ProductCategory } from '@/types/product';
+import { ProductDto } from '@/types/product';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
 

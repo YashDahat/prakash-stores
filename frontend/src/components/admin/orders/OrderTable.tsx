@@ -1,4 +1,5 @@
-import { OrderDto, OrderStatus } from '@/types/order';
+import type { JSX } from 'react';
+import { OrderDto } from '@/types/order';
 import { Button } from '@/components/ui/button';
 import {
   Table,

@@ -1,6 +1,8 @@
+import type { JSX } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useOrderById } from '@/hooks/orderHooks';
-import { OrderStatus, ShippingMethod } from '@/types/order';
+import { OrderStatus } from '@/types/order';
+import { ShippingMethod } from '@/types/shipping';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';

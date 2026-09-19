@@ -1,7 +1,8 @@
+import type { JSX } from 'react';
 import React from 'react';
 import { useReviewsByProductId } from '@/hooks/reviewHooks';
 import { useAuth } from '@/context/AuthContext';
-import ReviewForm from '@/components/reviews/ReviewForm';
+import { ReviewForm } from '@/components/reviews/ReviewForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -11,11 +12,11 @@ interface ProductReviewsProps {
 }
 
 const ProductReviews = ({ productId }: ProductReviewsProps): React.JSX.Element => {
-  const { data: reviews, isLoading, refetch } = useReviewsByProductId(productId);
+  const { data: reviews, isLoading } = useReviewsByProductId(productId);
   const { isAuthenticated, user } = useAuth();
 
   const handleReviewSubmitSuccess = (): void => {
-    void refetch();
+    // review submitted — parent can handle cache invalidation if needed
   };
 
   if (isLoading) {

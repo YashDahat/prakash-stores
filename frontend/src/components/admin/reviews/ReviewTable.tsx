@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { ReviewDto, ReviewStatus } from '@/types/review';
 import {
   Table,

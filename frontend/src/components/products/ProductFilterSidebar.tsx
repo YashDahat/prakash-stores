@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { useCategories, useBrands } from '@/hooks/productHooks';
-import { ProductCategory, Brand } from '@/types/product';
+import { ProductCategory } from '@/types/product';
+import type { Brand } from '@/types/brand';
 
 interface ProductFilterSidebarProps {
   onFilterChange: (filters: {

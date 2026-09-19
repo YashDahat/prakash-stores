@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { RegisterRequest } from '@/types/auth';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';

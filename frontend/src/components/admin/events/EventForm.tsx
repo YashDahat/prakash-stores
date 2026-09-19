@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -113,7 +114,7 @@ export function EventForm({ initialData, onSubmit, onCancel }: EventFormProps): 
                     mode="single"
                     selected={field.value ? new Date(field.value) : undefined}
                     onSelect={(date) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
-                    initialFocus
+                    autoFocus
                   />
                 </PopoverContent>
               </Popover>

@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import AccountLayout from '@/components/layout/AccountLayout';
 import { useOrdersByUserId } from '@/hooks/orderHooks';
 import {

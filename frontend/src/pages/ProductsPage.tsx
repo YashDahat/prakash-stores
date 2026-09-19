@@ -1,5 +1,7 @@
+import type { JSX } from 'react';
 import React, { useState } from 'react';
 import { useProducts, useCategories, useBrands } from '@/hooks/productHooks';
+import type { ProductDto } from '@/types/product';
 import ProductFilterSidebar from '@/components/products/ProductFilterSidebar';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -22,7 +24,7 @@ const ProductsPage = (): React.JSX.Element => {
     setFilters(newFilters);
   };
 
-  const filteredProducts = products?.filter(product => {
+  const filteredProducts = (products as unknown as ProductDto[] | undefined)?.filter((product: ProductDto) => {
     const matchesCategory = filters.categoryId ? product.categoryId === filters.categoryId : true;
     const matchesBrand = filters.brandId ? product.brandId === filters.brandId : true;
     const matchesMinPrice = filters.minPrice ? product.price >= filters.minPrice : true;

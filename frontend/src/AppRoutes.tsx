@@ -27,6 +27,9 @@ import AdminOrdersPage from './pages/admin/AdminOrdersPage';
 import AdminProductsPage from './pages/admin/AdminProductsPage';
 import AdminReviewsPage from './pages/admin/AdminReviewsPage';
 import NotFoundPage from './pages/NotFoundPage';
+import CartPage from './pages/CartPage';
+import GalleryPage from './pages/GalleryPage';
+import AdminMediaPage from './pages/admin/AdminMediaPage';
 
 export default function AppRoutes() {
   return (
@@ -37,6 +40,7 @@ export default function AppRoutes() {
         <Route path="/admin/orders" element={<AdminOrdersPage />} />
         <Route path="/admin/products" element={<AdminProductsPage />} />
         <Route path="/admin/reviews" element={<AdminReviewsPage />} />
+        <Route path="/admin/media" element={<AdminMediaPage />} />
       </Route>
       <Route element={<SiteLayout config={siteConfig}><Outlet /></SiteLayout>}>
         {/* Outlet receives the matched child route */}
@@ -51,6 +55,8 @@ export default function AppRoutes() {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route element={<RequireAuth><Outlet /></RequireAuth>}>
           <Route path="/checkout" element={<CheckoutPage />} />
         </Route>

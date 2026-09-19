@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProductById } from '@/hooks/productHooks';
 import { useReviewsByProductId } from '@/hooks/reviewHooks';

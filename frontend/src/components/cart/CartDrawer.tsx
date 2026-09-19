@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { useCart } from '@/cart/CartContext';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter, SheetClose } from '@/components/ui/sheet';
