@@ -1,0 +1,99 @@
+# Project History
+
+This file tracks each generation attempt.
+
+## Attempt 1 — 2026-09-19 [IN PROGRESS]
+
+**Business:** Prakash Stores
+**Planned Files (89):**
+- backend/src/main/java/com/prakashstores/model/Product.java
+- backend/src/main/java/com/prakashstores/model/ProductCategory.java
+- backend/src/main/java/com/prakashstores/model/Brand.java
+- backend/src/main/java/com/prakashstores/repository/ProductRepository.java
+- backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java
+- backend/src/main/java/com/prakashstores/repository/BrandRepository.java
+- backend/src/main/java/com/prakashstores/service/ProductService.java
+- backend/src/main/java/com/prakashstores/dto/ProductDto.java
+- backend/src/main/java/com/prakashstores/controller/ProductController.java
+- backend/src/main/java/com/prakashstores/controller/admin/AdminProductController.java
+- backend/src/main/java/com/prakashstores/model/Order.java
+- backend/src/main/java/com/prakashstores/model/OrderItem.java
+- backend/src/main/java/com/prakashstores/model/OrderStatus.java
+- backend/src/main/java/com/prakashstores/model/ShippingMethod.java
+- backend/src/main/java/com/prakashstores/repository/OrderRepository.java
+- backend/src/main/java/com/prakashstores/service/OrderService.java
+- backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java
+- backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java
+- backend/src/main/java/com/prakashstores/dto/OrderDto.java
+- backend/src/main/java/com/prakashstores/controller/OrderController.java
+- backend/src/main/java/com/prakashstores/controller/admin/AdminOrderController.java
+- backend/src/main/java/com/prakashstores/model/Review.java
+- backend/src/main/java/com/prakashstores/repository/ReviewRepository.java
+- backend/src/main/java/com/prakashstores/service/ReviewService.java
+- backend/src/main/java/com/prakashstores/dto/ReviewDto.java
+- backend/src/main/java/com/prakashstores/controller/ReviewController.java
+- backend/src/main/java/com/prakashstores/controller/admin/AdminReviewController.java
+- backend/src/main/java/com/prakashstores/model/Event.java
+- backend/src/main/java/com/prakashstores/repository/EventRepository.java
+- backend/src/main/java/com/prakashstores/service/EventService.java
+- backend/src/main/java/com/prakashstores/dto/EventDto.java
+- backend/src/main/java/com/prakashstores/controller/EventController.java
+- backend/src/main/java/com/prakashstores/controller/admin/AdminEventController.java
+- backend/src/main/java/com/prakashstores/exception/GlobalExceptionHandler.java
+- backend/src/main/java/com/prakashstores/dto/ErrorResponse.java
+- frontend/src/App.tsx
+- frontend/src/types/product.ts
+- frontend/src/services/productService.ts
+- frontend/src/types/order.ts
+- frontend/src/services/orderService.ts
+- frontend/src/types/review.ts
+- frontend/src/services/reviewService.ts
+- frontend/src/types/event.ts
+- frontend/src/services/eventService.ts
+- frontend/src/components/ProtectedRoute.tsx
+- frontend/src/components/AdminLayout.tsx
+- frontend/src/components/layout/AccountLayout.tsx
+- frontend/src/components/shared/WhatsAppButton.tsx
+- frontend/src/pages/HomePage.tsx
+- frontend/src/components/home/HeroSection.tsx
+- frontend/src/components/home/FeaturedProducts.tsx
+- frontend/src/components/home/CategoryGrid.tsx
+- frontend/src/components/home/InstagramFeed.tsx
+- frontend/src/pages/ProductsPage.tsx
+- frontend/src/components/products/ProductFilterSidebar.tsx
+- frontend/src/components/products/ProductGrid.tsx
+- frontend/src/components/products/ProductCard.tsx
+- frontend/src/pages/ProductDetailPage.tsx
+- frontend/src/components/products/ProductImageGallery.tsx
+- frontend/src/components/products/ProductInfo.tsx
+- frontend/src/components/reviews/ProductReviews.tsx
+- frontend/src/components/reviews/ReviewForm.tsx
+- frontend/src/components/cart/CartDrawer.tsx
+- frontend/src/pages/CheckoutPage.tsx
+- frontend/src/components/checkout/ShippingStep.tsx
+- frontend/src/components/checkout/PaymentStep.tsx
+- frontend/src/components/checkout/OrderSummary.tsx
+- frontend/src/pages/OrderConfirmationPage.tsx
+- frontend/src/pages/account/ProfilePage.tsx
+- frontend/src/pages/account/OrderHistoryPage.tsx
+- frontend/src/pages/EventsPage.tsx
+- frontend/src/pages/AboutPage.tsx
+- frontend/src/pages/ContactPage.tsx
+- frontend/src/pages/LoginPage.tsx
+- frontend/src/pages/SignupPage.tsx
+- frontend/src/pages/NotFoundPage.tsx
+- frontend/src/pages/admin/AdminDashboardPage.tsx
+- frontend/src/pages/admin/AdminProductsPage.tsx
+- frontend/src/components/admin/products/ProductTable.tsx
+- frontend/src/components/admin/products/ProductForm.tsx
+- frontend/src/components/admin/products/DeleteProductDialog.tsx
+- frontend/src/pages/admin/AdminOrdersPage.tsx
+- frontend/src/components/admin/orders/OrderTable.tsx
+- frontend/src/components/admin/orders/OrderDetailView.tsx
+- frontend/src/pages/admin/AdminReviewsPage.tsx
+- frontend/src/components/admin/reviews/ReviewTable.tsx
+- frontend/src/pages/admin/AdminEventsPage.tsx
+- frontend/src/components/admin/events/EventTable.tsx
+- frontend/src/components/admin/events/EventForm.tsx
+
+---
