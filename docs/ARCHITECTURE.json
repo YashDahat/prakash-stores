@@ -2037,14 +2037,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "The main layout for the admin section, including a sidebar for navigation between management pages.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminLayout",
+      "parameters" : [ "React.PropsWithChildren<{}> children" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin layout with a sidebar and content area."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — provides the main layout for the admin section, including a sidebar for navigation.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2785,14 +2790,40 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "The main landing page for the admin panel, showing key metrics and summary information.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminDashboardPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays a summary of key business metrics for the admin."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all products for summary metrics.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all orders for summary metrics.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/reviews",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all reviews for summary metrics.",
+      "access" : null
+    } ],
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "PAGE layer — the main landing page for the admin panel, displaying key metrics.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2804,14 +2835,68 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for managing products, composed of a product table and a form for creation/editing.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminProductsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides an interface for administrators to manage products."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all products for display in the table.",
+      "access" : null
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/products",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new product.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/products/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing product.",
+      "access" : null
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/products/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes a product.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single product by ID for editing.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all product categories for the product form.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products/brands",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all product brands for the product form.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/components/admin/products/ProductTable.tsx", "frontend/src/components/admin/products/ProductForm.tsx", "frontend/src/components/admin/products/DeleteProductDialog.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "PAGE layer — manages products, integrating a product table, form, and delete dialog.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2823,14 +2908,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A data table for displaying and managing all products in the admin panel.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductTable",
+      "parameters" : [ "{ products: ProductDto[]; onEdit: (product: ProductDto) => void; onDelete: (productId: Long) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of products with edit and delete actions. Monetary values are displayed in Indian Rupees (₹)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a data table for managing products.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2842,14 +2932,33 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A form used within a dialog or on a separate page for creating and editing products.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductForm",
+      "parameters" : [ "{ initialData?: ProductDto; onSubmit: (product: ProductDto) => void; onCancel: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a form to create or edit product details. Monetary values are handled as BigDecimal and displayed in Indian Rupees (₹)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all product categories to populate the category dropdown.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products/brands",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all product brands to populate the brand dropdown.",
+      "access" : null
+    } ],
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — provides a form for creating and editing products.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2861,14 +2970,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A confirmation dialog for deleting a product.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "DeleteProductDialog",
+      "parameters" : [ "{ isOpen: boolean; onClose: () => void; onConfirm: () => void; productName: string }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a confirmation dialog for deleting a product."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — provides a confirmation dialog for deleting a product.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2880,14 +2994,40 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for viewing and managing customer orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminOrdersPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides an interface for administrators to view and manage customer orders."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all orders for display in the table.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single order by ID for detail view.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/orders/{orderId}/status",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates the status of an order.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/services/orderService.ts", "frontend/src/components/admin/orders/OrderTable.tsx", "frontend/src/components/admin/orders/OrderDetailView.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "PAGE layer — manages customer orders, integrating an order table and detail view.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2899,14 +3039,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A data table for displaying all customer orders in the admin panel.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderTable",
+      "parameters" : [ "{ orders: OrderDto[]; onViewDetails: (orderId: Long) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of customer orders with a view details action. Monetary values are displayed in Indian Rupees (₹)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a data table for customer orders.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2918,14 +3063,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A component to view the details of a specific order and update its status.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderDetailView",
+      "parameters" : [ "{ order: OrderDto; onUpdateStatus: (orderId: Long, newStatus: OrderStatus) => void; onClose: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the detailed view of an order and provides an option to update its status. Monetary values are displayed in Indian Rupees (₹)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays details of a specific order and allows status updates.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2937,14 +3087,47 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for moderating customer reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminReviewsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides an interface for administrators to moderate customer reviews."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/reviews",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all reviews for display in the table.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/reviews/{reviewId}/approve",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Approves a customer review.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/reviews/{reviewId}/reject",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Rejects a customer review.",
+      "access" : null
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/reviews/{reviewId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes a customer review.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/services/reviewService.ts", "frontend/src/components/admin/reviews/ReviewTable.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "PAGE layer — moderates customer reviews, integrating a review table.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2956,14 +3139,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A data table for displaying and moderating customer reviews (approve/delete).",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ReviewTable",
+      "parameters" : [ "{ reviews: ReviewDto[]; onApprove: (reviewId: Long) => void; onReject: (reviewId: Long) => void; onDelete: (reviewId: Long) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of customer reviews with approve, reject, and delete actions."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a data table for moderating customer reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2975,14 +3163,47 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin page for creating and managing in-store events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminEventsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides an interface for administrators to create and manage in-store events."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/events",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all events for display in the table.",
+      "access" : null
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/events",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new event.",
+      "access" : null
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing event.",
+      "access" : null
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/events/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes an event.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/services/eventService.ts", "frontend/src/components/admin/events/EventTable.tsx", "frontend/src/components/admin/events/EventForm.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "PAGE layer — manages in-store events, integrating an event table and form.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2994,14 +3215,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A data table for displaying and managing all events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventTable",
+      "parameters" : [ "{ events: EventDto[]; onEdit: (event: EventDto) => void; onDelete: (eventId: Long) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a table of events with edit and delete actions."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a data table for managing events.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3013,14 +3239,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A form for creating and editing in-store events.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventForm",
+      "parameters" : [ "{ initialData?: EventDto; onSubmit: (event: EventDto) => void; onCancel: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a form to create or edit event details."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — provides a form for creating and editing events.",
     "change_required" : null,
     "contract_reconciled" : null
   } ],
@@ -3149,9 +3380,9 @@
     "feature_display_name" : "Admin Portal",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/components/AdminLayout.tsx", "frontend/src/pages/admin/AdminDashboardPage.tsx", "frontend/src/pages/admin/AdminProductsPage.tsx", "frontend/src/components/admin/products/ProductTable.tsx", "frontend/src/components/admin/products/ProductForm.tsx", "frontend/src/components/admin/products/DeleteProductDialog.tsx", "frontend/src/pages/admin/AdminOrdersPage.tsx", "frontend/src/components/admin/orders/OrderTable.tsx", "frontend/src/components/admin/orders/OrderDetailView.tsx", "frontend/src/pages/admin/AdminReviewsPage.tsx", "frontend/src/components/admin/reviews/ReviewTable.tsx", "frontend/src/pages/admin/AdminEventsPage.tsx", "frontend/src/components/admin/events/EventTable.tsx", "frontend/src/components/admin/events/EventForm.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Sidebar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-md px-6 py-2 transition-all duration-200\n- Secondary CTA: bg-gray-200 hover:bg-gray-300 text-[#212121] font-semibold rounded-md px-6 py-2 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-[#F5F5F5]\n- Card: bg-white rounded-lg shadow-sm border border-gray-100 p-4\n- Section container: <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8\">\n- Hero h1: text-4xl md:text-5xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\n## Admin Portal Feature Instruction\n\nThis feature provides the administrative interface for Prakash Stores, allowing staff to manage products, orders, reviews, and events. It consists of a main layout (`AdminLayout.tsx`) with a sidebar for navigation, and several pages for specific management tasks: `AdminDashboardPage.tsx`, `AdminProductsPage.tsx`, `AdminOrdersPage.tsx`, `AdminReviewsPage.tsx`, and `AdminEventsPage.tsx`. Each management page integrates with backend services to fetch, create, update, and delete data, and utilizes reusable components for displaying data in tables and forms.\n\n### AdminLayout.tsx\nThis component serves as the overarching layout for all admin pages. It renders a persistent sidebar with navigation links to the various admin sections (Dashboard, Products, Orders, Reviews, Events) and an `Outlet` for rendering the specific admin page content. The sidebar links should be styled to reflect the active route. The layout ensures a consistent look and feel across the admin portal.\n\n### AdminDashboardPage.tsx\nThis page is the landing view for the admin portal. It should display a summary of key business metrics, such as total products, pending orders, and pending reviews. These metrics will be fetched by calling the appropriate `getAll` methods from the generated backend services (e.g., `productService.getAllProducts`, `orderService.getAllOrders`, `reviewService.getAllReviews`). The page should present this information in a clear, concise manner using cards or summary panels, adhering to the design tokens.\n\n### AdminProductsPage.tsx\nThis page is responsible for managing products. It integrates `ProductTable.tsx` to display a list of all products, `ProductForm.tsx` for creating and editing products, and `DeleteProductDialog.tsx` for confirming product deletions. The page will use the generated `productService` to:\n1. Fetch all products using `productService.getAllProducts(page, size, sort)`.\n2. Create a new product using `productService.createProduct(productDto: ProductDto)`.\n3. Update an existing product using `productService.updateProduct(id: Long, productDto: ProductDto)`.\n4. Delete a product using `productService.deleteProduct(id: Long)`.\n\nWhen a user clicks to edit a product, `ProductForm` should be pre-filled with the product's data fetched by `productService.getProductById(id: Long)`. All monetary values (prices) must be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### ProductTable.tsx\nThis component displays a paginated and sortable table of products. It receives a list of `ProductDto` objects as props and provides actions for viewing, editing, and deleting products. Each row should include product details like name, category, brand, price, stock, and an image thumbnail. The 'Edit' action should trigger opening the `ProductForm` with the selected product's data, and the 'Delete' action should trigger the `DeleteProductDialog`.\n\n### ProductForm.tsx\nThis component is a reusable form for creating or editing a `ProductDto`. It should include fields for `name`, `description`, `price`, `imageUrl`, `stock`, `brandId`, and `categoryId`. The `brandId` and `categoryId` fields should be dropdowns populated by calling `productService.getAllBrands()` and `productService.getAllCategories()`, respectively. The form should handle submission, calling either `productService.createProduct` or `productService.updateProduct` based on whether an `id` is present in the initial data. It should include client-side validation for required fields and numeric inputs. Monetary values should be handled as `BigDecimal` for input and displayed in Indian Rupees (₹).\n\n### DeleteProductDialog.tsx\nThis component is a modal dialog that confirms the deletion of a product. It takes a `ProductDto` as a prop to display the product's name in the confirmation message. Upon confirmation, it calls `productService.deleteProduct(id: Long)` and provides visual feedback (e.g., a toast notification) on success or failure.\n\n### AdminOrdersPage.tsx\nThis page manages customer orders. It uses `OrderTable.tsx` to list all orders and `OrderDetailView.tsx` to display and update individual order details. The page will interact with the generated `orderService` to:\n1. Fetch all orders using `orderService.getAllOrders()`.\n2. Fetch a specific order by ID using `orderService.getOrderById(orderId: Long)`.\n3. Update an order's status using `orderService.updateOrderStatus(orderId: Long, newStatus: OrderStatus)`.\n\nAll monetary values (totalAmount, priceAtPurchase) must be displayed in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### OrderTable.tsx\nThis component displays a table of customer orders. It receives a list of `OrderDto` objects and provides actions to view details of an order. Each row should show `order.id`, `order.orderDate`, `order.totalAmount`, and `order.orderStatus`. The 'View Details' action should open the `OrderDetailView` for the selected order.\n\n### OrderDetailView.tsx\nThis component displays the detailed information of a single order. It receives an `OrderDto` as a prop. It should show `order.id`, `order.orderDate`, `order.totalAmount`, `order.orderStatus`, `order.shippingAddress`, `order.shippingMethod`, and a list of `order.orderItems`. It should also include a mechanism (e.g., a dropdown) to update the `order.orderStatus` by calling `orderService.updateOrderStatus(orderId: Long, newStatus: OrderStatus)`. All monetary values must be displayed in Indian Rupees (₹).\n\n### AdminReviewsPage.tsx\nThis page is for moderating customer reviews. It uses `ReviewTable.tsx` to display all reviews. The page will use the generated `reviewService` to:\n1. Fetch all reviews using `reviewService.getAllReviews()`.\n2. Approve a review using `reviewService.approveReview(reviewId: Long)`.\n3. Reject a review using `reviewService.rejectReview(reviewId: Long)`.\n4. Delete a review using `reviewService.deleteReview(reviewId: Long)`.\n\n### ReviewTable.tsx\nThis component displays a table of customer reviews. It receives a list of `ReviewDto` objects and provides actions to approve, reject, or delete reviews. Each row should show `review.id`, `review.productId`, `review.userId`, `review.rating`, `review.comment`, `review.reviewDate`, and `review.status`. Actions should trigger calls to the appropriate `reviewService` methods.\n\n### AdminEventsPage.tsx\nThis page manages in-store events. It integrates `EventTable.tsx` to display a list of all events and `EventForm.tsx` for creating and editing events. The page will use the generated `eventService` to:\n1. Fetch all events using `eventService.getAllEvents()`.\n2. Create a new event using `eventService.createEvent(eventDto: EventDto)`.\n3. Update an existing event using `eventService.updateEvent(id: Long, eventDto: EventDto)`.\n4. Delete an event using `eventService.deleteEvent(id: Long)`.\n\n### EventTable.tsx\nThis component displays a table of events. It receives a list of `EventDto` objects and provides actions for viewing, editing, and deleting events. Each row should include event details like `name`, `date`, `time`, `location`, and `imageUrl`. The 'Edit' action should trigger opening the `EventForm` with the selected event's data.\n\n### EventForm.tsx\nThis component is a reusable form for creating or editing an `EventDto`. It should include fields for `name`, `description`, `date`, `time`, `location`, and `imageUrl`. The form should handle submission, calling either `eventService.createEvent` or `eventService.updateEvent` based on whether an `id` is present in the initial data. It should include client-side validation for required fields.\n",
+    "depends_on_features" : [ "product-management", "order-management", "review-system", "event-management" ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
