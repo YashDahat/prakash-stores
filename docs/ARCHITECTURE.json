@@ -936,13 +936,73 @@
     "status" : "PLANNED",
     "description" : "Represents a customer's order, containing order items, shipping details, and status.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the order, auto-generated."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the user who placed the order."
+    }, {
+      "name" : "orderItems",
+      "type" : "List<OrderItem>",
+      "description" : "List of items included in the order."
+    }, {
+      "name" : "orderDate",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the order was placed."
+    }, {
+      "name" : "totalAmount",
+      "type" : "BigDecimal",
+      "description" : "Total monetary value of the order."
+    }, {
+      "name" : "orderStatus",
+      "type" : "OrderStatus",
+      "description" : "Current status of the order (e.g., PENDING, SHIPPED)."
+    }, {
+      "name" : "shippingAddress",
+      "type" : "String",
+      "description" : "Shipping address for the order, not null, max 255 characters."
+    }, {
+      "name" : "city",
+      "type" : "String",
+      "description" : "City for shipping, not null, max 100 characters."
+    }, {
+      "name" : "state",
+      "type" : "String",
+      "description" : "State for shipping, not null, max 100 characters."
+    }, {
+      "name" : "pincode",
+      "type" : "String",
+      "description" : "Pincode for shipping, not null, max 10 characters."
+    }, {
+      "name" : "shippingMethod",
+      "type" : "ShippingMethod",
+      "description" : "Method chosen for shipping."
+    }, {
+      "name" : "paymentId",
+      "type" : "String",
+      "description" : "ID of the payment transaction from the payment gateway."
+    }, {
+      "name" : "paymentStatus",
+      "type" : "String",
+      "description" : "Status of the payment (e.g., PAID, FAILED)."
+    }, {
+      "name" : "createdAt",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the order entity was created."
+    }, {
+      "name" : "updatedAt",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the order entity was last updated."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/OrderStatus.java", "backend/src/main/java/com/prakashstores/model/ShippingMethod.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "MODEL layer — represents a customer's order, containing order items, shipping details, and status.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -955,13 +1015,45 @@
     "status" : "PLANNED",
     "description" : "Represents a single item within an order.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the order item, auto-generated."
+    }, {
+      "name" : "order",
+      "type" : "Order",
+      "description" : "The order this item belongs to."
+    }, {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product ordered."
+    }, {
+      "name" : "productVariantId",
+      "type" : "Long",
+      "description" : "ID of the product variant ordered (can be null if no variant)."
+    }, {
+      "name" : "productName",
+      "type" : "String",
+      "description" : "Name of the product at the time of order, not null, max 255 characters."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "Image URL of the product at the time of order, max 255 characters."
+    }, {
+      "name" : "quantity",
+      "type" : "Integer",
+      "description" : "Quantity of the product ordered, greater than 0."
+    }, {
+      "name" : "unitPrice",
+      "type" : "BigDecimal",
+      "description" : "Price of a single unit of the product at the time of order, greater than 0."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Order.java", "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "MODEL layer — represents a single item within an order.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -980,7 +1072,7 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "MODEL layer — enum for the status of an order (e.g., PENDING, PROCESSING, SHIPPED, DELIVERED).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -999,7 +1091,7 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "MODEL layer — enum for the shipping method (e.g., HOME_DELIVERY, CLICK_AND_COLLECT).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1011,14 +1103,24 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Order entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByUserIdOrderByCreatedAtDesc",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "List<Order>",
+      "description" : "Finds all orders for a given user, ordered by creation date descending."
+    }, {
+      "name" : "findByIdAndUserId",
+      "parameters" : [ "Long id", "Integer userId" ],
+      "return_type" : "Optional<Order>",
+      "description" : "Finds an order by its ID and the user ID."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Order.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Spring Data JPA repository for Order entities, providing methods to find orders by user and status.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1030,14 +1132,14 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for OrderItem entities.",
-    "public_functions" : null,
+    "public_functions" : [ ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/OrderItem.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Spring Data JPA repository for OrderItem entities.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1049,14 +1151,44 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Handles business logic for creating and managing orders, and injects the pre-scaffolded PaymentService.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "CreateOrderRequest request", "Integer userId" ],
+      "return_type" : "OrderResponse",
+      "description" : "Creates a new order for the specified user, processes payment, and updates product stock. Throws IllegalStateException if product is out of stock or PaymentGatewayException if payment fails."
+    }, {
+      "name" : "getOrdersByUserId",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "List<OrderHistoryItemDto>",
+      "description" : "Retrieves a list of order history items for a given user."
+    }, {
+      "name" : "getOrderByIdAndUserId",
+      "parameters" : [ "Long orderId", "Integer userId" ],
+      "return_type" : "OrderResponse",
+      "description" : "Retrieves a specific order by ID for a given user. Throws ResourceNotFoundException if not found."
+    }, {
+      "name" : "getAllOrders",
+      "parameters" : [ ],
+      "return_type" : "List<OrderHistoryItemDto>",
+      "description" : "Retrieves a list of all orders in the system (admin access)."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "Long orderId" ],
+      "return_type" : "OrderResponse",
+      "description" : "Retrieves a specific order by ID (admin access). Throws ResourceNotFoundException if not found."
+    }, {
+      "name" : "updateOrderStatus",
+      "parameters" : [ "Long orderId", "OrderStatus newStatus" ],
+      "return_type" : "OrderResponse",
+      "description" : "Updates the status of an order. Throws ResourceNotFoundException if the order is not found."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/OrderRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java", "PaymentService.createOrder" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements createOrder(CreateOrderRequest, Integer): OrderResponse, getOrdersByUserId(Integer): List<OrderHistoryItemDto>, getOrderByIdAndUserId(Long, Integer): OrderResponse, getAllOrders(): List<OrderHistoryItemDto>, getOrderById(Long): OrderResponse, and updateOrderStatus(Long, OrderStatus): OrderResponse; delegates payment to PaymentService and persistence to OrderRepository.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1068,14 +1200,50 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "REST controller for customers to create orders and view their order history.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "CreateOrderRequest request", "Integer userId" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Handles the creation of a new order for the authenticated user."
+    }, {
+      "name" : "getMyOrders",
+      "parameters" : [ "Integer userId" ],
+      "return_type" : "ResponseEntity<List<OrderHistoryItemDto>>",
+      "description" : "Retrieves the order history for the authenticated user."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "Long orderId", "Integer userId" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Retrieves details of a specific order for the authenticated user."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/orders",
+      "request_body" : "CreateOrderRequest",
+      "response_body" : "OrderResponse",
+      "description" : "Creates a new order for the authenticated user.",
+      "access" : "authenticated"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders",
+      "request_body" : null,
+      "response_body" : "List<OrderHistoryItemDto>",
+      "description" : "Retrieves the order history for the authenticated user.",
+      "access" : "authenticated"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : "OrderResponse",
+      "description" : "Retrieves details of a specific order for the authenticated user.",
+      "access" : "authenticated"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/OrderService.java", "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java", "@CurrentUser Integer userId" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — REST controller for customers to create orders and view their order history.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1087,14 +1255,50 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for viewing and managing all customer orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllOrders",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<OrderHistoryItemDto>>",
+      "description" : "Retrieves a list of all orders in the system."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "Long orderId" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Retrieves details of a specific order by ID."
+    }, {
+      "name" : "updateOrderStatus",
+      "parameters" : [ "Long orderId", "OrderStatus newStatus" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Updates the status of a specific order."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders",
+      "request_body" : null,
+      "response_body" : "List<OrderHistoryItemDto>",
+      "description" : "Retrieves a list of all orders in the system.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : "OrderResponse",
+      "description" : "Retrieves details of a specific order by ID.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/orders/{orderId}/status",
+      "request_body" : "OrderStatus",
+      "response_body" : "OrderResponse",
+      "description" : "Updates the status of a specific order.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/OrderService.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — Admin-only REST controller for viewing and managing all customer orders.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1107,13 +1311,37 @@
     "status" : "PLANNED",
     "description" : "DTO for creating a new order, containing items and shipping information.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "items",
+      "type" : "List<OrderItemRequest>",
+      "description" : "List of items to be included in the order, not empty."
+    }, {
+      "name" : "shippingAddress",
+      "type" : "String",
+      "description" : "Shipping address for the order, not null, max 255 characters."
+    }, {
+      "name" : "city",
+      "type" : "String",
+      "description" : "City for shipping, not null, max 100 characters."
+    }, {
+      "name" : "state",
+      "type" : "String",
+      "description" : "State for shipping, not null, max 100 characters."
+    }, {
+      "name" : "pincode",
+      "type" : "String",
+      "description" : "Pincode for shipping, not null, max 10 characters."
+    }, {
+      "name" : "shippingMethod",
+      "type" : "ShippingMethod",
+      "description" : "Method chosen for shipping, not null."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java", "backend/src/main/java/com/prakashstores/model/ShippingMethod.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "DTO layer — DTO for creating a new order, containing items and shipping information.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1126,13 +1354,25 @@
     "status" : "PLANNED",
     "description" : "Record representing a single item in a create order request.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "productId",
+      "type" : "Long",
+      "description" : "ID of the product to be ordered, not null."
+    }, {
+      "name" : "productVariantId",
+      "type" : "Long",
+      "description" : "ID of the product variant to be ordered (optional)."
+    }, {
+      "name" : "quantity",
+      "type" : "Integer",
+      "description" : "Quantity of the product, greater than 0."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "DTO layer — record representing a single item in a create order request.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1145,13 +1385,65 @@
     "status" : "PLANNED",
     "description" : "DTO for returning details of a created or retrieved order.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the order."
+    }, {
+      "name" : "userId",
+      "type" : "Integer",
+      "description" : "ID of the user who placed the order."
+    }, {
+      "name" : "orderItems",
+      "type" : "List<OrderItem>",
+      "description" : "List of items included in the order."
+    }, {
+      "name" : "orderDate",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the order was placed."
+    }, {
+      "name" : "totalAmount",
+      "type" : "BigDecimal",
+      "description" : "Total monetary value of the order."
+    }, {
+      "name" : "orderStatus",
+      "type" : "OrderStatus",
+      "description" : "Current status of the order."
+    }, {
+      "name" : "shippingAddress",
+      "type" : "String",
+      "description" : "Shipping address for the order."
+    }, {
+      "name" : "city",
+      "type" : "String",
+      "description" : "City for shipping."
+    }, {
+      "name" : "state",
+      "type" : "String",
+      "description" : "State for shipping."
+    }, {
+      "name" : "pincode",
+      "type" : "String",
+      "description" : "Pincode for shipping."
+    }, {
+      "name" : "shippingMethod",
+      "type" : "ShippingMethod",
+      "description" : "Method chosen for shipping."
+    }, {
+      "name" : "paymentId",
+      "type" : "String",
+      "description" : "ID of the payment transaction from the payment gateway."
+    }, {
+      "name" : "paymentStatus",
+      "type" : "String",
+      "description" : "Status of the payment."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "DTO layer — DTO for returning details of a created or retrieved order.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1164,13 +1456,29 @@
     "status" : "PLANNED",
     "description" : "A summary DTO for displaying a list of orders in the customer's account.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "orderId",
+      "type" : "Long",
+      "description" : "Unique identifier for the order."
+    }, {
+      "name" : "orderDate",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the order was placed."
+    }, {
+      "name" : "totalAmount",
+      "type" : "BigDecimal",
+      "description" : "Total monetary value of the order."
+    }, {
+      "name" : "orderStatus",
+      "type" : "OrderStatus",
+      "description" : "Current status of the order."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/OrderStatus.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-management",
-    "file_role" : null,
+    "file_role" : "DTO layer — a summary DTO for displaying a list of orders in the customer's account.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2944,9 +3252,9 @@
     "feature_display_name" : "Order Management",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Order.java", "backend/src/main/java/com/prakashstores/model/OrderItem.java", "backend/src/main/java/com/prakashstores/model/OrderStatus.java", "backend/src/main/java/com/prakashstores/model/ShippingMethod.java", "backend/src/main/java/com/prakashstores/repository/OrderRepository.java", "backend/src/main/java/com/prakashstores/repository/OrderItemRepository.java", "backend/src/main/java/com/prakashstores/service/OrderService.java", "backend/src/main/java/com/prakashstores/controller/OrderController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminOrderController.java", "backend/src/main/java/com/prakashstores/dto/CreateOrderRequest.java", "backend/src/main/java/com/prakashstores/dto/OrderItemRequest.java", "backend/src/main/java/com/prakashstores/dto/OrderResponse.java", "backend/src/main/java/com/prakashstores/dto/OrderHistoryItemDto.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "The Order Management feature handles the complete lifecycle of a customer order, from creation and payment processing to status updates and history viewing. It integrates with the `product-management-core` feature to retrieve product details and update stock, and with the pre-scaffolded `payment` foundation feature to process payments.\n\n## Order Creation Flow\n1.  **`OrderController.createOrder(CreateOrderRequest request, @CurrentUser Integer userId)`**: This endpoint receives a `CreateOrderRequest` from the authenticated user. It extracts the `userId` from the security context.\n2.  **`OrderService.createOrder(CreateOrderRequest request, Integer userId)`**: The service layer orchestrates the order creation:\n    a.  It validates the `CreateOrderRequest`, ensuring all `OrderItemRequest` objects have valid `productId` and `quantity`.\n    b.  For each `OrderItemRequest`, it retrieves the `Product` and `ProductVariant` (if applicable) from the `product-management-core` feature using `ProductService.getProductById(Long productId)` and `ProductService.getProductVariantById(Long variantId)` (assuming a variant ID is provided in `OrderItemRequest`). It verifies stock availability.\n    c.  It calculates the total amount of the order.\n    d.  It creates a new `Order` entity with `PENDING` status, associating it with the `userId` and the provided shipping details.\n    e.  It creates `OrderItem` entities for each item in the request, linking them to the `Order`.\n    f.  It calls the pre-scaffolded `PaymentService.createOrder(new CreatePaymentRequest(amount, \"INR\", \"order_\" + order.getId()))` to initiate a payment. The `PaymentService` returns a `PaymentOrderResponse`.\n    g.  If the payment initiation is successful, it saves the `Order` and `OrderItem` entities to the database via `OrderRepository.save()` and `OrderItemRepository.saveAll()`.\n    h.  It updates the stock for each `ProductVariant` by calling `ProductService.updateProductVariantStock(Long variantId, Integer quantityChange)` with a negative `quantityChange`.\n    i.  It returns an `OrderResponse` containing the created order details and payment information.\n    j.  If any product is out of stock or the payment fails, it throws an `IllegalStateException` or `PaymentGatewayException` respectively.\n\n## Order History and Details\n1.  **`OrderController.getMyOrders(@CurrentUser Integer userId)`**: Retrieves a list of orders for the authenticated user.\n2.  **`OrderController.getOrderById(Long orderId, @CurrentUser Integer userId)`**: Retrieves details for a specific order belonging to the authenticated user.\n3.  **`OrderService.getOrdersByUserId(Integer userId)`**: Fetches all orders for a given `userId` from `OrderRepository.findByUserIdOrderByCreatedAtDesc()` and maps them to `OrderHistoryItemDto`.\n4.  **`OrderService.getOrderByIdAndUserId(Long orderId, Integer userId)`**: Fetches a specific order by `orderId` and `userId` from `OrderRepository.findByIdAndUserId()` and maps it to `OrderResponse`. Throws `ResourceNotFoundException` if the order is not found or does not belong to the user.\n\n## Admin Order Management\n1.  **`AdminOrderController.getAllOrders()`**: Retrieves all orders in the system.\n2.  **`AdminOrderController.getOrderById(Long orderId)`**: Retrieves details for any specific order.\n3.  **`AdminOrderController.updateOrderStatus(Long orderId, OrderStatus newStatus)`**: Updates the status of an order.\n4.  **`OrderService.getAllOrders()`**: Fetches all orders from `OrderRepository.findAll()` and maps them to `OrderHistoryItemDto`.\n5.  **`OrderService.getOrderById(Long orderId)`**: Fetches a specific order by `orderId` from `OrderRepository.findById()` and maps it to `OrderResponse`. Throws `ResourceNotFoundException` if the order is not found.\n6.  **`OrderService.updateOrderStatus(Long orderId, OrderStatus newStatus)`**: Updates the status of an order. It retrieves the order using `OrderRepository.findById()`, updates its `orderStatus`, and saves it. Throws `ResourceNotFoundException` if the order is not found.\n\n## Data Models and DTOs\n-   **`Order`**: The JPA entity representing an order, including `userId`, `shippingAddress`, `shippingMethod`, `orderStatus`, `totalAmount`, and a list of `OrderItem`s.\n-   **`OrderItem`**: The JPA entity for a single item within an order, referencing a `Product` and storing `quantity`, `unitPrice`, and `productVariantId`.\n-   **`OrderStatus`**: An enum defining possible states of an order (e.g., `PENDING`, `PROCESSING`, `SHIPPED`, `DELIVERED`, `CANCELLED`).\n-   **`ShippingMethod`**: An enum defining available shipping options (e.g., `HOME_DELIVERY`, `CLICK_AND_COLLECT`).\n-   **`CreateOrderRequest`**: DTO for incoming order creation requests, containing `List<OrderItemRequest>`, `shippingAddress`, `city`, `state`, `pincode`, and `shippingMethod`.\n-   **`OrderItemRequest`**: DTO for a single item within `CreateOrderRequest`, containing `productId`, `quantity`, and optional `productVariantId`.\n-   **`OrderResponse`**: DTO for outgoing order details, including all fields of `Order` and `OrderItem`s, along with payment details.\n-   **`OrderHistoryItemDto`**: A simplified DTO for displaying order summaries in a list, containing `orderId`, `orderDate`, `totalAmount`, and `orderStatus`.",
+    "depends_on_features" : [ "product-management-core" ],
+    "consumes_foundation" : [ "auth", "payment" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
