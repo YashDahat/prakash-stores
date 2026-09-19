@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import java.util.List;
 import java.util.UUID;
 import java.time.LocalDateTime;
+import com.prakashstores.model.ReviewStatus;
 import lombok.Data;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
