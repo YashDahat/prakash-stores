@@ -2630,13 +2630,17 @@
     "status" : "PLANNED",
     "description" : "TypeScript types for in-store events.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "EventDto",
+      "type" : "{ id: Long, name: string, description: string, eventDate: string, location: string, imageUrl: string }",
+      "description" : "Data transfer object for event information."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — TypeScript types for in-store events.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2648,14 +2652,50 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Provides functions for fetching event data from the API.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllEvents",
+      "parameters" : [ ],
+      "return_type" : "Promise<EventDto[]>",
+      "description" : "Fetches all events from the backend."
+    }, {
+      "name" : "getUpcomingEvents",
+      "parameters" : [ ],
+      "return_type" : "Promise<EventDto[]>",
+      "description" : "Fetches upcoming events from the backend."
+    }, {
+      "name" : "getPastEvents",
+      "parameters" : [ ],
+      "return_type" : "Promise<EventDto[]>",
+      "description" : "Fetches past events from the backend."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/events",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all events.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/events/upcoming",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches upcoming events.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/events/past",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches past events.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/event.ts", "@/api/client" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Frontend service — provides functions for fetching event data from the event-management API.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2686,14 +2726,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "The landing page featuring a hero section, featured categories, and an Instagram feed.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "HomePage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the main landing page of the application."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/home/HeroSection.tsx", "frontend/src/components/home/FeaturedCategories.tsx", "frontend/src/components/home/InstagramFeed.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Page component — composes HeroSection, FeaturedCategories, and InstagramFeed to form the landing page.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2705,14 +2750,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A full-width hero component with a prominent call-to-action button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "HeroSection",
+      "parameters" : [ "{ headline: string, subheadline: string, ctaText: string, ctaLink: string }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a hero section with customizable text and a call-to-action."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Reusable component — displays a full-width hero section with a headline, subheadline, and CTA.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2724,14 +2774,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A grid or carousel displaying key product categories to guide users.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "FeaturedCategories",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a section displaying featured product categories."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/productService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Reusable component — displays a grid of featured product categories, fetching data from product-management-api.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2743,14 +2798,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Displays a curated selection of images linking to the store's Instagram profile.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "InstagramFeed",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a simulated Instagram feed with a link to the store's profile."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Reusable component — displays a curated selection of images linking to the store's Instagram profile.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2762,14 +2822,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A floating action button that opens a WhatsApp chat for customer service.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "WhatsAppCta",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a floating WhatsApp chat button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Reusable component — a floating action button that opens a WhatsApp chat.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2781,14 +2846,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A static page describing the history and values of Prakash Stores.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AboutPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the About Us page with business history and values."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Page component — displays static content about the business's history and values.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2800,14 +2870,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Displays contact information, an embedded map, and a contact form.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ContactPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the Contact Us page with address, map, and a contact form."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Page component — displays contact information, an embedded map, and a contact form.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2819,14 +2894,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Lists upcoming and past in-store events in a card-based layout.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the Events page, displaying upcoming and past events."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/event/EventCard.tsx", "frontend/src/services/eventService.ts", "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Page component — fetches and displays a list of in-store events using EventCard components.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2838,14 +2918,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A component to display summary information about a single event.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "EventCard",
+      "parameters" : [ "{ event: EventDto }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a card displaying event details."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/event.ts" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Reusable component — displays summary information about a single event.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2857,14 +2942,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A 404 page shown for routes that do not exist.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "NotFoundPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the 404 Not Found page."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages-frontend",
-    "file_role" : null,
+    "file_role" : "Page component — displays a 404 error message for non-existent routes.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3966,9 +4056,9 @@
     "feature_display_name" : "Static Pages (Frontend)",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/pages/HomePage.tsx", "frontend/src/pages/AboutPage.tsx", "frontend/src/pages/ContactPage.tsx", "frontend/src/pages/EventsPage.tsx", "frontend/src/pages/NotFoundPage.tsx", "frontend/src/components/home/HeroSection.tsx", "frontend/src/components/home/FeaturedCategories.tsx", "frontend/src/components/home/InstagramFeed.tsx", "frontend/src/components/common/WhatsAppCta.tsx", "frontend/src/components/event/EventCard.tsx", "frontend/src/types/event.ts", "frontend/src/services/eventService.ts" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature provides the static and informational pages for the Prakash Stores frontend, including the Home, About, Contact, Events, and 404 Not Found pages. It also includes reusable components like the HeroSection, FeaturedCategories, InstagramFeed, WhatsAppCta, and EventCard, along with the necessary types and service for events.\n\n## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\n### HomePage.tsx\nThis page serves as the landing page for Prakash Stores. It will compose the `HeroSection`, `FeaturedCategories`, and `InstagramFeed` components. The `HeroSection` will display a large background image, a prominent headline \"Prakash Stores: Your Family's Fashion Destination\", a subheadline \"Quality apparel for every occasion, trusted by Pune families for generations.\", and a call-to-action button \"Shop Now\" that navigates to the products page. The `FeaturedCategories` component will fetch a list of categories from the `product-management-api` via the generated service function `getAllCategories()` and display them as clickable cards, each linking to a product listing page filtered by that category. The `InstagramFeed` component will display a static grid of placeholder images that visually represent an Instagram feed, with a link to the store's Instagram profile. All monetary values, if any, will be formatted using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### AboutPage.tsx\nThis page will provide information about Prakash Stores' history, values, and commitment to the community. It will include sections with headings like \"Our Story\", \"Our Values\", and \"Community Focus\", with friendly and reliable placeholder copy. The layout will alternate between `bg-white` and `bg-[#F5F5F5]` sections, using the `Section container` design token.\n\n### ContactPage.tsx\nThis page will display the store's contact information, including the address \"Showroom No 1, 90 Madhukunj, Aundh Rd, Pune, Maharashtra 411020\" and phone number \"093710 25731\". It will feature an embedded Google Map centered at coordinates 18.562196, 73.799719 with a marker for the store's location. A contact form will be included, allowing users to send messages. This form will have fields for `name`, `email`, and `message`. Upon submission, it will display a success or error toast notification. The form submission will not call a backend endpoint in this feature; it will be a client-side form for demonstration purposes.\n\n### EventsPage.tsx\nThis page will list upcoming and past in-store events. It will fetch event data using the `eventService.getAllEvents()` function, which in turn calls the `GET /api/v1/events` endpoint from the `event-management` feature. The events will be displayed in a card-based layout, utilizing the `EventCard` component. Each `EventCard` will display the event's `name`, `eventDate` (formatted as 'DD MMMM YYYY'), `location`, and `imageUrl`. Events will be grouped into \"Upcoming Events\" and \"Past Events\" sections based on `eventDate` relative to the current date. Dates will be formatted using `toLocaleString('en-IN')`.\n\n### NotFoundPage.tsx\nThis page will be displayed for any routes that do not exist. It will feature a prominent \"404 - Page Not Found\" message, a friendly subtext like \"Oops! The page you're looking for doesn't exist.\", and a button to navigate back to the `HomePage` with the text \"Go to Home\".\n\n### HeroSection.tsx\nThis component will render a full-width hero section. It will accept `headline`, `subheadline`, `ctaText`, and `ctaLink` as props. The background image will be `https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80` with a `bg-black bg-opacity-50` overlay. The headline will use the `Hero h1` design token, and the CTA button will use the `Primary CTA` design token.\n\n### FeaturedCategories.tsx\nThis component will display a grid of product categories. It will fetch categories using the generated service function `getAllCategories()` from `product-management-api`. Each category will be rendered as a clickable card, displaying the `CategoryDto.name` and a placeholder image. Clicking a category card will navigate to `/products?categoryId={categoryId}`. The cards will use the `Card` design token.\n\n### InstagramFeed.tsx\nThis component will display a static grid of placeholder images, simulating an Instagram feed. Each image will link to the Prakash Stores Instagram profile (e.g., `https://www.instagram.com/prakashstores/`). It will include a heading \"Follow Us on Instagram\" and a button \"@prakashstores\" using the `Primary CTA` design token.\n\n### WhatsAppCta.tsx\nThis component will render a floating action button (FAB) that, when clicked, opens a WhatsApp chat with the business phone number \"093710 25731\". The button will be positioned at the bottom right of the screen and will use the `bg-[#E87A00]` color for its background.\n\n### EventCard.tsx\nThis component will display summary information for a single event. It will accept an `event` prop of type `EventDto`. It will display the `event.imageUrl` as a card image, `event.name` as the title, `event.eventDate` (formatted as 'DD MMMM YYYY') and `event.location`. The card will use the `Card` design token.\n\n### event.ts\nThis file defines the TypeScript interface for `EventDto`, matching the `EventDto` data shape from the `event-management` backend feature.\n\n### eventService.ts\nThis service provides functions to interact with the `event-management` backend API. It will export an `getAllEvents()` function that fetches all events and `getUpcomingEvents()` and `getPastEvents()` functions that filter events based on their `eventDate`.",
+    "depends_on_features" : [ "product-management-api", "event-management" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
