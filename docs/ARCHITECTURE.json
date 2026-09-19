@@ -2490,13 +2490,37 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for Orders and OrderItems.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "Order",
+      "type" : "{ id: Long; userId: Integer; orderItems: OrderItem[]; orderDate: string; totalAmount: number; orderStatus: string; shippingAddress: string; city: string; state: string; pincode: string; shippingMethod: string; paymentId: string; paymentStatus: string; createdAt: string; updatedAt: string; }",
+      "description" : "Represents a customer order."
+    }, {
+      "name" : "OrderItem",
+      "type" : "{ id: Long; productId: Long; productVariantId: Long; productName: string; imageUrl: string; quantity: Integer; unitPrice: number; }",
+      "description" : "Represents an item within an order."
+    }, {
+      "name" : "CreateOrderRequest",
+      "type" : "{ items: OrderItemRequest[]; shippingAddress: string; city: string; state: string; pincode: string; shippingMethod: string; }",
+      "description" : "Request DTO for creating a new order."
+    }, {
+      "name" : "OrderItemRequest",
+      "type" : "{ productId: Long; productVariantId: Long; quantity: Integer; }",
+      "description" : "Request DTO for an item within a new order."
+    }, {
+      "name" : "OrderResponse",
+      "type" : "{ id: Long; userId: Integer; orderItems: OrderItem[]; orderDate: string; totalAmount: number; orderStatus: string; shippingAddress: string; city: string; state: string; pincode: string; shippingMethod: string; paymentId: string; paymentStatus: string; }",
+      "description" : "Response DTO for an order."
+    }, {
+      "name" : "OrderHistoryItemDto",
+      "type" : "{ orderId: Long; orderDate: string; totalAmount: number; orderStatus: string; }",
+      "description" : "DTO for displaying order history items."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — TypeScript types and interfaces for Orders and OrderItems.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2508,14 +2532,38 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Provides functions for creating orders and fetching order history.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "CreateOrderRequest request" ],
+      "return_type" : "Promise<OrderResponse>",
+      "description" : "Sends a request to the backend to create a new order."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "Long orderId" ],
+      "return_type" : "Promise<OrderResponse>",
+      "description" : "Fetches the details of a specific order by its ID."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/orders",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new order in the backend.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Retrieves details for a specific order.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/order.ts", "@/api/client" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — provides functions for creating orders via createOrder(request: CreateOrderRequest): Promise<OrderResponse> and fetching order history via getOrderById(orderId: Long): Promise<OrderResponse>.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3042,14 +3090,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Displays the contents of the shopping cart, allowing users to modify quantities and proceed to checkout.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CartPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the shopping cart view with items and summary."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/cart/CartView.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE component — displays the contents of the shopping cart, allowing users to modify quantities and proceed to checkout.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3061,14 +3114,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "The main component for the cart page, composing item cards and the summary, using data from useCart().",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CartView",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays the overall cart structure including item cards and the summary."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/cart/CartItemCard.tsx", "frontend/src/components/cart/CartSummary.tsx", "useCart()" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT — the main component for the cart page, composing item cards and the summary, using data from useCart().",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3080,14 +3138,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Displays a single item in the cart with controls to change quantity or remove it.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CartItemCard",
+      "parameters" : [ "{ item: CartItem }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a single cart item with quantity controls and removal option, displaying price in Indian Rupees."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "useCart()" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT — displays a single item in the cart with controls to change quantity or remove it.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3099,14 +3162,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Displays the cart subtotal, taxes, and total, with a button to proceed to checkout.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CartSummary",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays the cart's financial summary and a button to proceed to checkout, with amounts in Indian Rupees."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "useCart()" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT — displays the cart subtotal, taxes, and total, with a button to proceed to checkout.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3118,14 +3186,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A multi-step checkout page that orchestrates the checkout flow using useCheckout().",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CheckoutPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the multi-step checkout process."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/checkout/CheckoutSteps.tsx", "useCheckout()" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE component — a multi-step checkout page that orchestrates the checkout flow using useCheckout().",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3137,14 +3210,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Renders the current step of the checkout process (e.g., shipping, payment).",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CheckoutSteps",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Manages and renders the different steps of the checkout flow."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/checkout/ShippingAddressForm.tsx", "frontend/src/components/checkout/PaymentStep.tsx", "useCheckout()" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT — renders the current step of the checkout process (e.g., shipping, payment).",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3156,14 +3234,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A form for users to enter their shipping address and select shipping method.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ShippingAddressForm",
+      "parameters" : [ "{ onNext: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides a form for users to input shipping address and method."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT — a form for users to enter their shipping address and select shipping method.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3175,14 +3258,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Handles the payment process by integrating with the payment gateway API.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "PaymentStep",
+      "parameters" : [ "{ onPaymentSuccess: (orderId: Long) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Manages the payment submission and order creation, clearing the cart on success."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/orderService.ts", "useCart()" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT — handles the payment process by integrating with the payment gateway API.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3194,14 +3282,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Displays a summary of the successfully placed order.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderConfirmationPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the order confirmation details after a successful checkout."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/orderService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "checkout-flow-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE component — displays a summary of the successfully placed order.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3812,9 +3905,9 @@
     "feature_display_name" : "Checkout Flow (Frontend)",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/types/order.ts", "frontend/src/services/orderService.ts", "frontend/src/pages/CartPage.tsx", "frontend/src/pages/CheckoutPage.tsx", "frontend/src/pages/OrderConfirmationPage.tsx", "frontend/src/components/cart/CartView.tsx", "frontend/src/components/cart/CartItemCard.tsx", "frontend/src/components/cart/CartSummary.tsx", "frontend/src/components/checkout/CheckoutSteps.tsx", "frontend/src/components/checkout/ShippingAddressForm.tsx", "frontend/src/components/checkout/PaymentStep.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\nThis feature implements the complete checkout flow for Prakash Stores, from displaying the cart contents to confirming an order. It leverages the pre-scaffolded cart framework (`useCart()`, `useCheckout()`) for managing cart state and orchestrating checkout steps, and interacts with the `order-management` backend feature for creating orders and fetching order details. All monetary values are displayed in Indian Rupees (₹) using the `en-IN` locale.\n\n### `frontend/src/types/order.ts`\nThis file defines the TypeScript interfaces for `Order`, `OrderItem`, `CreateOrderRequest`, and `OrderItemRequest`, mirroring the backend `order-management` feature's DTOs. These types ensure strong typing throughout the frontend checkout process.\n\n### `frontend/src/services/orderService.ts`\nThis service provides functions to interact with the `order-management` backend API. It exports `createOrder(request: CreateOrderRequest): Promise<OrderResponse>` to place a new order and `getOrderById(orderId: Long): Promise<OrderResponse>` to retrieve details of a specific order. It uses the `@/api/client` for making authenticated API calls.\n\n### `frontend/src/pages/CartPage.tsx`\nThis page renders the user's shopping cart. It uses the `CartView` component to display the cart items and summary. The page's primary responsibility is to fetch cart data using `useCart()` and pass it down to `CartView`. It provides a clear call to action to proceed to checkout.\n\n### `frontend/src/pages/CheckoutPage.tsx`\nThis page orchestrates the multi-step checkout process. It utilizes the `useCheckout()` hook from the cart framework to manage the checkout steps (e.g., Shipping, Payment, Review). The `CheckoutSteps` component is used to render the current step. Upon successful payment and order creation, it navigates the user to the `OrderConfirmationPage`.\n\n### `frontend/src/pages/OrderConfirmationPage.tsx`\nThis page displays a summary of a successfully placed order. It retrieves the `orderId` from the URL parameters and uses `orderService.getOrderById(orderId)` to fetch the order details. The page presents the order number, total amount, shipping address, and a list of purchased items, all formatted for the Indian locale.\n\n### `frontend/src/components/cart/CartView.tsx`\nThis component is the main container for displaying the cart. It consumes `cartItems` and `totals` from `useCart()` and renders `CartItemCard` for each item and `CartSummary` for the financial breakdown. It includes a section for a clear call to action to proceed to checkout.\n\n### `frontend/src/components/cart/CartItemCard.tsx`\nThis component displays a single item in the shopping cart. It receives a `CartItem` as a prop and provides controls to increment/decrement the quantity using `useCart().setItemQuantity(id, newQty, variantKey)` and to remove the item using `useCart().removeItem(id, variantKey)`. Item prices are displayed in Indian Rupees.\n\n### `frontend/src/components/cart/CartSummary.tsx`\nThis component displays the financial summary of the cart, including subtotal, adjustments (if any), and the total amount. It retrieves `totals` from `useCart()`. It also includes a prominent button to navigate to the checkout page. All amounts are formatted in Indian Rupees.\n\n### `frontend/src/components/checkout/CheckoutSteps.tsx`\nThis component is responsible for rendering the appropriate checkout step based on the `currentStep` provided by `useCheckout()`. It conditionally renders `ShippingAddressForm` and `PaymentStep` components. It also manages navigation between steps using `useCheckout().nextStep()` and `useCheckout().prevStep()`.\n\n### `frontend/src/components/checkout/ShippingAddressForm.tsx`\nThis form allows the user to enter their shipping address details (shippingAddress, city, state, pincode) and select a shipping method. It integrates with `useCheckout()` to update the checkout state with the entered shipping information. Validation is performed before allowing the user to proceed to the next step.\n\n### `frontend/src/components/checkout/PaymentStep.tsx`\nThis component handles the payment process. It gathers the necessary order details from `useCart().cartItems` and `useCart().totals.total`, along with the shipping information from `useCheckout().checkoutState`. It then constructs a `CreateOrderRequest` and calls `orderService.createOrder(request)` to place the order. Upon successful order creation, it calls `useCart().clearCart()` and navigates to the `OrderConfirmationPage`. It also integrates with the pre-scaffolded `PaymentService` (via the backend's `order-management` feature) to process payments. Error handling for payment failures is included, displaying appropriate messages to the user.",
+    "depends_on_features" : [ "order-management" ],
+    "consumes_foundation" : [ "cart", "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
