@@ -17,13 +17,57 @@
     "status" : "PLANNED",
     "description" : "Represents a clothing item for sale, including details, pricing, and inventory.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product. Generated automatically."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product. Not null, max 255 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the product. Not null."
+    }, {
+      "name" : "price",
+      "type" : "BigDecimal",
+      "description" : "Base price of the product. Not null, positive value."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the main product image. Nullable, max 255 characters."
+    }, {
+      "name" : "category",
+      "type" : "Category",
+      "description" : "The category this product belongs to. Not null."
+    }, {
+      "name" : "brand",
+      "type" : "Brand",
+      "description" : "The brand of this product. Not null."
+    }, {
+      "name" : "variants",
+      "type" : "List<ProductVariant>",
+      "description" : "List of available variants for this product (e.g., size, color)."
+    }, {
+      "name" : "active",
+      "type" : "boolean",
+      "description" : "Indicates if the product is active and visible in the catalog. Default true."
+    }, {
+      "name" : "createdAt",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the product was created. Generated automatically."
+    }, {
+      "name" : "updatedAt",
+      "type" : "LocalDateTime",
+      "description" : "Timestamp when the product was last updated. Generated automatically."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Category.java", "backend/src/main/java/com/prakashstores/model/Brand.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — defines the Product entity with its attributes and relationships to Category, Brand, and ProductVariant.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -36,13 +80,25 @@
     "status" : "PLANNED",
     "description" : "Represents a product category (e.g., Men's, Women's, Kurtis).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the category. Generated automatically."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the category. Not null, unique, max 100 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Description of the category. Nullable, max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — defines the Category entity with its attributes.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -55,13 +111,25 @@
     "status" : "PLANNED",
     "description" : "Represents a product brand (e.g., Wrangler).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the brand. Generated automatically."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the brand. Not null, unique, max 100 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Description of the brand. Nullable, max 500 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — defines the Brand entity with its attributes.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -74,13 +142,45 @@
     "status" : "PLANNED",
     "description" : "Represents a specific variant of a product, such as size and color.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product variant. Generated automatically."
+    }, {
+      "name" : "product",
+      "type" : "Product",
+      "description" : "The product this variant belongs to. Not null."
+    }, {
+      "name" : "size",
+      "type" : "String",
+      "description" : "Size of the variant (e.g., S, M, L, XL). Not null, max 50 characters."
+    }, {
+      "name" : "color",
+      "type" : "String",
+      "description" : "Color of the variant (e.g., Red, Blue, Black). Not null, max 50 characters."
+    }, {
+      "name" : "sku",
+      "type" : "String",
+      "description" : "Stock Keeping Unit for the variant. Not null, unique, max 100 characters."
+    }, {
+      "name" : "stock",
+      "type" : "Integer",
+      "description" : "Current stock quantity for this variant. Not null, non-negative."
+    }, {
+      "name" : "additionalPrice",
+      "type" : "BigDecimal",
+      "description" : "Additional price for this variant, if any. Nullable, non-negative. Defaults to 0."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the image specific to this variant. Nullable, max 255 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-core",
-    "file_role" : null,
+    "file_role" : "MODEL layer — defines the ProductVariant entity with its attributes and relationship to Product.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -92,14 +192,34 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Product entities, with filtering capabilities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByActiveTrueAndCategoryId",
+      "parameters" : [ "Long categoryId", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Retrieves a paginated list of active products by category ID."
+    }, {
+      "name" : "findByActiveTrueAndBrandId",
+      "parameters" : [ "Long brandId", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Retrieves a paginated list of active products by brand ID."
+    }, {
+      "name" : "findByActiveTrueAndNameContainingIgnoreCase",
+      "parameters" : [ "String name", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Retrieves a paginated list of active products by name, case-insensitive."
+    }, {
+      "name" : "findByActiveTrue",
+      "parameters" : [ "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Retrieves a paginated list of all active products."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access for Product entities, including methods for filtering and searching.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -111,14 +231,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Category entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByName",
+      "parameters" : [ "String name" ],
+      "return_type" : "Optional<Category>",
+      "description" : "Retrieves a category by its name."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Category.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access for Category entities.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -130,14 +255,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Brand entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByName",
+      "parameters" : [ "String name" ],
+      "return_type" : "Optional<Brand>",
+      "description" : "Retrieves a brand by its name."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Brand.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access for Brand entities.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -149,14 +279,29 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for ProductVariant entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "List<ProductVariant>",
+      "description" : "Retrieves all variants for a given product ID."
+    }, {
+      "name" : "findByProductIdAndSizeAndColor",
+      "parameters" : [ "Long productId", "String size", "String color" ],
+      "return_type" : "Optional<ProductVariant>",
+      "description" : "Retrieves a specific variant by product ID, size, and color."
+    }, {
+      "name" : "findBySku",
+      "parameters" : [ "String sku" ],
+      "return_type" : "Optional<ProductVariant>",
+      "description" : "Retrieves a product variant by its SKU."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/ProductVariant.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-core",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — provides data access for ProductVariant entities.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -168,14 +313,94 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Handles business logic for products, categories, brands, and inventory.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createProduct",
+      "parameters" : [ "CreateProductRequest request" ],
+      "return_type" : "ProductDto",
+      "description" : "Creates a new product and its variants. Steps: 1. Validate category and brand exist. 2. Create Product entity. 3. Create ProductVariant entities for each variant in the request. 4. Save all entities. 5. Return ProductDto. Throws ResourceNotFoundException if category or brand not found, IllegalArgumentException if SKU is duplicated."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "ProductDto",
+      "description" : "Retrieves a product by its ID. Steps: 1. Find product by ID. 2. Map to ProductDto. Throws ResourceNotFoundException if product not found."
+    }, {
+      "name" : "updateProduct",
+      "parameters" : [ "Long productId", "UpdateProductRequest request" ],
+      "return_type" : "ProductDto",
+      "description" : "Updates an existing product and its variants. Steps: 1. Find product by ID. 2. Update product fields. 3. Update or create product variants. 4. Save product and variants. 5. Return ProductDto. Throws ResourceNotFoundException if product not found, IllegalArgumentException if SKU is duplicated."
+    }, {
+      "name" : "deleteProduct",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "void",
+      "description" : "Deletes a product by its ID. Throws ResourceNotFoundException if product not found."
+    }, {
+      "name" : "getAllProducts",
+      "parameters" : [ "ProductFilterParams filterParams", "Pageable pageable" ],
+      "return_type" : "Page<ProductDto>",
+      "description" : "Retrieves a paginated list of products based on filter parameters (category, brand, search term). Steps: 1. Apply filters using ProductRepository. 2. Map results to ProductDto."
+    }, {
+      "name" : "createCategory",
+      "parameters" : [ "CategoryDto categoryDto" ],
+      "return_type" : "CategoryDto",
+      "description" : "Creates a new product category. Throws IllegalArgumentException if category name already exists."
+    }, {
+      "name" : "getAllCategories",
+      "parameters" : [ ],
+      "return_type" : "List<CategoryDto>",
+      "description" : "Retrieves all product categories."
+    }, {
+      "name" : "getCategoryById",
+      "parameters" : [ "Long categoryId" ],
+      "return_type" : "CategoryDto",
+      "description" : "Retrieves a category by its ID. Throws ResourceNotFoundException if category not found."
+    }, {
+      "name" : "updateCategory",
+      "parameters" : [ "Long categoryId", "CategoryDto categoryDto" ],
+      "return_type" : "CategoryDto",
+      "description" : "Updates an existing category. Throws ResourceNotFoundException if category not found, IllegalArgumentException if category name already exists."
+    }, {
+      "name" : "deleteCategory",
+      "parameters" : [ "Long categoryId" ],
+      "return_type" : "void",
+      "description" : "Deletes a category by its ID. Throws ResourceNotFoundException if category not found."
+    }, {
+      "name" : "createBrand",
+      "parameters" : [ "BrandDto brandDto" ],
+      "return_type" : "BrandDto",
+      "description" : "Creates a new product brand. Throws IllegalArgumentException if brand name already exists."
+    }, {
+      "name" : "getAllBrands",
+      "parameters" : [ ],
+      "return_type" : "List<BrandDto>",
+      "description" : "Retrieves all product brands."
+    }, {
+      "name" : "getBrandById",
+      "parameters" : [ "Long brandId" ],
+      "return_type" : "BrandDto",
+      "description" : "Retrieves a brand by its ID. Throws ResourceNotFoundException if brand not found."
+    }, {
+      "name" : "updateBrand",
+      "parameters" : [ "Long brandId", "BrandDto brandDto" ],
+      "return_type" : "BrandDto",
+      "description" : "Updates an existing brand. Throws ResourceNotFoundException if brand not found, IllegalArgumentException if brand name already exists."
+    }, {
+      "name" : "deleteBrand",
+      "parameters" : [ "Long brandId" ],
+      "return_type" : "void",
+      "description" : "Deletes a brand by its ID. Throws ResourceNotFoundException if brand not found."
+    }, {
+      "name" : "updateProductVariantStock",
+      "parameters" : [ "Long variantId", "Integer quantityChange" ],
+      "return_type" : "ProductVariantDto",
+      "description" : "Updates the stock of a specific product variant. quantityChange can be positive (add) or negative (subtract). Throws ResourceNotFoundException if variant not found, IllegalArgumentException if stock becomes negative."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/repository/CategoryRepository.java", "backend/src/main/java/com/prakashstores/repository/BrandRepository.java", "backend/src/main/java/com/prakashstores/dto/ProductDto.java", "backend/src/main/java/com/prakashstores/dto/admin/CreateProductRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management-core",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements business logic for products, categories, brands, and inventory, exposing methods for CRUD and search operations.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2347,9 +2572,9 @@
     "feature_display_name" : "Product Management (Core)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Product.java", "backend/src/main/java/com/prakashstores/model/Category.java", "backend/src/main/java/com/prakashstores/model/Brand.java", "backend/src/main/java/com/prakashstores/model/ProductVariant.java", "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/repository/CategoryRepository.java", "backend/src/main/java/com/prakashstores/repository/BrandRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductVariantRepository.java", "backend/src/main/java/com/prakashstores/service/ProductService.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature, Product Management (Core), provides the foundational backend models, repositories, and service logic for managing products, categories, brands, and product variants for Prakash Stores. It defines the core data structures for clothing items, their classifications, and specific attributes like size and color. The `Product` model represents a clothing item with details such as name, description, price, and inventory. `Category` and `Brand` models provide classification, while `ProductVariant` handles specific attributes like size and color for a given product. The repositories (`ProductRepository`, `CategoryRepository`, `BrandRepository`, `ProductVariantRepository`) provide data access methods for these entities, leveraging Spring Data JPA. The `ProductService` orchestrates the business logic, interacting with these repositories to perform CRUD operations and manage product-related data. It exposes methods for creating, retrieving, updating, and deleting products, categories, and brands, as well as managing product variants. The service layer uses DTOs for input and output, such as `ProductDto` for public product details and `CreateProductRequest` for admin product creation, which are defined in the `product-management-api` feature. This feature does not directly expose any API endpoints; instead, its services are consumed by the `product-management-api` feature's controllers (e.g., `ProductController` and `AdminProductController`) to expose the product catalog and administrative functions.",
+    "depends_on_features" : [ "product-management-api" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
