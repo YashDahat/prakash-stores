@@ -2576,13 +2576,17 @@
     "status" : "PLANNED",
     "description" : "TypeScript types for the customer loyalty program.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "LoyaltyPointsDto",
+      "type" : "{ userId: Integer; points: Integer; lastUpdatedAt: string; }",
+      "description" : "DTO for loyalty points information, mirroring the backend contract."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "customer-account-frontend",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — defines TypeScript types for the customer loyalty program.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2594,14 +2598,26 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Provides functions for fetching a user's loyalty points balance.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getMyLoyaltyPoints",
+      "parameters" : [ ],
+      "return_type" : "Promise<LoyaltyPointsDto>",
+      "description" : "Fetches the authenticated user's loyalty points from the backend."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/loyalty",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches the loyalty points for the currently authenticated user.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/loyalty.ts", "@/api/client" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account-frontend",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — provides functions for fetching a user's loyalty points balance by calling GET /api/v1/loyalty.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3306,14 +3322,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "The main customer account page, hosting tabs for profile, orders, and loyalty points.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AccountPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the AccountTabs component for customer account navigation."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/account/AccountTabs.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account-frontend",
-    "file_role" : null,
+    "file_role" : "PAGE layer — serves as the main entry point for the customer account section, rendering the AccountTabs component.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3325,14 +3346,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "A tabbed interface for navigating between different sections of the account page.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AccountTabs",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a tabbed navigation for Profile, Orders, and Loyalty Points sections."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/account/OrderHistory.tsx", "frontend/src/components/account/ProfileDetails.tsx", "frontend/src/components/account/LoyaltyPointsSummary.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — provides a tabbed interface for navigating between different sections of the account page, rendering ProfileDetails, OrderHistory, and LoyaltyPointsSummary.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3344,14 +3370,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Displays a list of the user's past orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "OrderHistory",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and displays the authenticated user's order history, formatting monetary values in INR."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/orderService.ts", "frontend/src/types/order.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a list of the user's past orders by calling the generated service function getOrdersByUserId().",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3363,14 +3394,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Displays the user's profile information and allows them to update it.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProfileDetails",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Displays the current user's name and email from the authentication context."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "useAuth()" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays the authenticated user's profile information using the useAuth() hook.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3382,14 +3418,19 @@
     "updated_date" : "2024-07-30",
     "status" : "PLANNED",
     "description" : "Displays the user's current loyalty points balance.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "LoyaltyPointsSummary",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and displays the authenticated user's loyalty points balance and last update time."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/loyaltyService.ts", "frontend/src/types/loyalty.ts" ],
     "depends_on" : [ ],
     "feature_name" : "customer-account-frontend",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays the user's current loyalty points balance by calling the generated service function getMyLoyaltyPoints().",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3915,9 +3956,9 @@
     "feature_display_name" : "Customer Account (Frontend)",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/pages/AccountPage.tsx", "frontend/src/components/account/AccountTabs.tsx", "frontend/src/components/account/OrderHistory.tsx", "frontend/src/components/account/ProfileDetails.tsx", "frontend/src/components/account/LoyaltyPointsSummary.tsx", "frontend/src/types/loyalty.ts", "frontend/src/services/loyaltyService.ts" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Secondary CTA: bg-[#1A3A6D] hover:bg-[#152E54] text-white font-semibold rounded-md px-6 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-lg shadow-sm border border-gray-100 p-4\n- Section container: <section className=\"py-12 px-4\"><div className=\"max-w-7xl mx-auto\"> \n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n- Tab active: border-b-2 border-[#E87A00] text-[#E87A00]\n- Tab inactive: border-b-2 border-transparent text-gray-500 hover:text-gray-700\n\nThis feature provides the customer-facing account management pages and components for Prakash Stores. It allows authenticated users to view and manage their profile details, review their order history, and check their loyalty points balance. The `AccountPage.tsx` serves as the main entry point, rendering the `AccountTabs.tsx` component to organize the different sections: `ProfileDetails.tsx`, `OrderHistory.tsx`, and `LoyaltyPointsSummary.tsx`.\n\n### AccountPage.tsx\nThis page is the top-level container for the customer account section. It will render the `AccountTabs` component, which in turn will manage the display of `ProfileDetails`, `OrderHistory`, and `LoyaltyPointsSummary` based on the active tab. The page ensures that only authenticated users can access it by being wrapped in a `ProtectedRoute` (handled by the `auth-ui-frontend` feature).\n\n### AccountTabs.tsx\nThis component provides a tabbed navigation interface. It will render three tabs: \"Profile\", \"Orders\", and \"Loyalty Points\". Each tab, when active, will display its corresponding content component: `ProfileDetails`, `OrderHistory`, and `LoyaltyPointsSummary`. The component will manage the active tab state and apply the appropriate styling based on the design tokens.\n\n### ProfileDetails.tsx\nThis component displays the authenticated user's profile information. It will use the `useAuth()` hook to access the current user's details (e.g., `user.name`, `user.email`). For now, it will display these details in a read-only format. Future enhancements might include an \"Edit Profile\" functionality. The component should present the information clearly, using the defined design tokens for text and layout.\n\n### OrderHistory.tsx\nThis component fetches and displays a list of the authenticated user's past orders. It will call the generated service function `getOrdersByUserId()` from `orderService.ts` (which internally calls `GET /api/v1/orders`). The component will display each order as a card or list item, showing key details like `orderId`, `orderDate`, `totalAmount`, and `orderStatus` (from `OrderHistoryItemDto`). Monetary values (`totalAmount`) must be formatted in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`. If there are no orders, a friendly message should be displayed.\n\n### LoyaltyPointsSummary.tsx\nThis component fetches and displays the authenticated user's current loyalty points balance. It will call the generated service function `getMyLoyaltyPoints()` from `loyaltyService.ts` (which internally calls `GET /api/v1/loyalty`). It will display the `points` value from the `LoyaltyPointsDto` in a prominent way, along with the `lastUpdatedAt` timestamp. If no loyalty points record is found, it should display a message indicating zero points.\n\n### loyalty.ts\nThis file defines the TypeScript types for the loyalty program, specifically `LoyaltyPointsDto`. This DTO will mirror the `LoyaltyPointsDto` from the backend `customer-features` feature, ensuring type safety for data fetched from the `/api/v1/loyalty` endpoint.\n\n### loyaltyService.ts\nThis file provides a frontend service function `getMyLoyaltyPoints(): Promise<LoyaltyPointsDto>` to interact with the backend loyalty API. It will use the `@/api/client` to make an authenticated GET request to `/api/v1/loyalty` and return the `LoyaltyPointsDto`.\n",
+    "depends_on_features" : [ "order-management", "customer-features" ],
+    "consumes_foundation" : [ "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
