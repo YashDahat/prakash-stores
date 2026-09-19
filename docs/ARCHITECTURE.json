@@ -1710,13 +1710,25 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for products, categories, and brands.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "ProductDto",
+      "type" : "{ id: Long; name: string; description: string; price: number; imageUrl: string; stock: number; brandId: Long; brandName: string; categoryId: Long; categoryName: string; }",
+      "description" : "Represents a product with its details, brand, and category."
+    }, {
+      "name" : "ProductCategory",
+      "type" : "{ id: Long; name: string; }",
+      "description" : "Represents a product category."
+    }, {
+      "name" : "Brand",
+      "type" : "{ id: Long; name: string; }",
+      "description" : "Represents a product brand."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — TypeScript types and interfaces for products, categories, and brands.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1728,14 +1740,62 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Provides functions for interacting with the product-related API endpoints.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllProducts",
+      "parameters" : [ "string category", "string brand", "number minPrice", "number maxPrice", "string searchTerm", "number page", "number size", "string sort" ],
+      "return_type" : "Promise<Page<ProductDto>>",
+      "description" : "Fetches a paginated list of products, with optional filters for category, brand, price range, and search term."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "Promise<ProductDto>",
+      "description" : "Fetches a single product by its ID."
+    }, {
+      "name" : "getAllCategories",
+      "parameters" : [ ],
+      "return_type" : "Promise<ProductCategory[]>",
+      "description" : "Fetches all available product categories."
+    }, {
+      "name" : "getAllBrands",
+      "parameters" : [ ],
+      "return_type" : "Promise<Brand[]>",
+      "description" : "Fetches all available product brands."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/products",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a paginated list of products.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single product by ID.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all product categories.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/brands",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all product brands.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/product.ts" ],
     "depends_on" : [ "@/api/client" ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — provides functions for fetching product data from the backend product-management feature.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1786,13 +1846,17 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for customer reviews.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "ReviewDto",
+      "type" : "{ id: Long; productId: Long; userId: Integer; rating: Integer; comment: string; reviewDate: string; status: 'PENDING' | 'APPROVED' | 'REJECTED'; }",
+      "description" : "Represents a customer review for a product."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — TypeScript types and interfaces for customer reviews.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1804,14 +1868,38 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Provides functions for fetching and submitting product reviews.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "submitReview",
+      "parameters" : [ "ReviewDto reviewDto" ],
+      "return_type" : "Promise<ReviewDto>",
+      "description" : "Submits a new review for a product."
+    }, {
+      "name" : "getReviewsByProductId",
+      "parameters" : [ "Long productId" ],
+      "return_type" : "Promise<ReviewDto[]>",
+      "description" : "Fetches all approved reviews for a specific product."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/reviews",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Submits a new product review.",
+      "access" : null
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{productId}/reviews",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches reviews for a specific product.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/review.ts" ],
     "depends_on" : [ "@/api/client" ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — provides functions for fetching and submitting product reviews to the backend review-system feature.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2074,14 +2162,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays the main product catalog with a filterable grid layout.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the product catalog page with filters and product grid."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/components/products/ProductGrid.tsx", "frontend/src/components/products/ProductFilterSidebar.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "PAGE layer — displays the main product catalog with a filterable grid layout, fetching data from productService.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2093,14 +2186,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A sidebar component with controls to filter products by category, brand, price, size, and color.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductFilterSidebar",
+      "parameters" : [ "{ onFilterChange: (filters: any) => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a sidebar with product filtering options."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — provides controls to filter products by category, brand, price, size, and color, using data from productService.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2112,14 +2210,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A responsive grid that displays a list of products.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductGrid",
+      "parameters" : [ "{ products: ProductDto[] }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a grid of product cards."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/products/ProductCard.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a responsive grid of ProductCard components.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2131,14 +2234,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A reusable card component to display a single product's image, name, price, and an 'Add to Cart' button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductCard",
+      "parameters" : [ "{ product: ProductDto }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a card for a single product with an 'Add to Cart' button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ "useCart()" ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a single product's image, name, price, and an 'Add to Cart' button, interacting with the cart foundation.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2150,14 +2258,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays detailed information for a single product, including an image gallery, description, reviews, and purchase options.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductDetailPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the product detail page for a specific product."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/services/reviewService.ts", "frontend/src/components/products/ProductImageGallery.tsx", "frontend/src/components/products/ProductInfo.tsx", "frontend/src/components/reviews/ProductReviews.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "PAGE layer — displays detailed information for a single product, including an image gallery, description, reviews, and purchase options, fetching data from productService and reviewService.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2169,14 +2282,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Component to display multiple images of a product with a main view and thumbnails.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductImageGallery",
+      "parameters" : [ "{ images: string[] }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders an image gallery for a product."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays multiple images of a product with a main view and thumbnails.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2188,14 +2306,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays product details like name, price, description, and controls for selecting size/color and adding to cart.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductInfo",
+      "parameters" : [ "{ product: ProductDto }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders product information and 'Add to Cart' controls."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ "useCart()" ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays product details like name, price, description, and controls for selecting size/color and adding to cart, interacting with the cart foundation.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2207,14 +2330,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays a list of customer reviews for a product and includes a form for submitting a new review.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ProductReviews",
+      "parameters" : [ "{ productId: Long }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders product reviews and a review submission form."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/reviews/ReviewForm.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — displays a list of customer reviews for a product and includes a form for submitting a new review, fetching data from reviewService.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2226,14 +2354,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A form for authenticated users to submit a rating and a written review for a product.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ReviewForm",
+      "parameters" : [ "{ productId: Long; onSubmitSuccess: () => void }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a form for submitting a product review."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/reviewService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "product-catalog",
-    "file_role" : null,
+    "file_role" : "COMPONENT layer — a form for authenticated users to submit a rating and a written review for a product, interacting with reviewService and the auth foundation.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2850,9 +2983,9 @@
     "feature_display_name" : "Product Catalog",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/types/product.ts", "frontend/src/services/productService.ts", "frontend/src/types/review.ts", "frontend/src/services/reviewService.ts", "frontend/src/pages/ProductsPage.tsx", "frontend/src/components/products/ProductFilterSidebar.tsx", "frontend/src/components/products/ProductGrid.tsx", "frontend/src/components/products/ProductCard.tsx", "frontend/src/pages/ProductDetailPage.tsx", "frontend/src/components/products/ProductImageGallery.tsx", "frontend/src/components/products/ProductInfo.tsx", "frontend/src/components/reviews/ProductReviews.tsx", "frontend/src/components/reviews/ReviewForm.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\nThis `product-catalog` feature provides the frontend interface for browsing products, viewing product details, and submitting/viewing reviews for Prakash Stores. It integrates with the `product-management` backend feature to fetch product data and with the `review-system` backend feature for review functionality. It also consumes the `cart` foundation feature to allow users to add products to their shopping cart.\n\n### Data Types (`product.ts`, `review.ts`)\n`product.ts` defines the TypeScript interfaces for `ProductDto`, `ProductCategory`, and `Brand` which mirror the backend DTOs from `product-management`. `review.ts` defines the `ReviewDto` interface, mirroring the backend DTO from `review-system`.\n\n### Service Layer (`productService.ts`, `reviewService.ts`)\n`productService.ts` provides functions to interact with the `/api/v1/products`, `/api/v1/products/categories`, and `/api/v1/products/brands` endpoints of the `product-management` feature. It will include `getAllProducts`, `getProductById`, `getAllCategories`, and `getAllBrands`. These functions will use the `@/api/client` to make HTTP requests and return `ProductDto`, `ProductCategory`, and `Brand` types respectively.\n\n`reviewService.ts` provides functions to interact with the `/api/v1/reviews` and `/api/v1/products/{productId}/reviews` endpoints of the `review-system` feature. It will include `submitReview` and `getReviewsByProductId`. `submitReview` will take a `ReviewDto` and return a `ReviewDto`, while `getReviewsByProductId` will take a `Long productId` and return a `List<ReviewDto>`.\n\n### Product Listing Page (`ProductsPage.tsx`)\n`ProductsPage.tsx` is the main entry point for displaying the product catalog. It will fetch all products using `productService.getAllProducts()` and display them in a `ProductGrid`. It will also integrate `ProductFilterSidebar` to allow users to filter products by category, brand, price range, and search term. The page will display product prices in Indian Rupees (₹) using `toLocaleString('en-IN', { style: 'currency', currency: 'INR' })`.\n\n### Product Filter Sidebar (`ProductFilterSidebar.tsx`)\n`ProductFilterSidebar.tsx` is a component that provides filtering options for products. It will fetch available categories and brands using `productService.getAllCategories()` and `productService.getAllBrands()` respectively. It will manage its own local state for selected filters and communicate changes to `ProductsPage.tsx` via props.\n\n### Product Grid (`ProductGrid.tsx`)\n`ProductGrid.tsx` is a presentational component that receives a list of `ProductDto` objects and renders them in a responsive grid layout using `ProductCard` components. It will display product prices in Indian Rupees (₹).\n\n### Product Card (`ProductCard.tsx`)\n`ProductCard.tsx` displays a single product's image, name, and price. It will include an \"Add to Cart\" button that, when clicked, calls `useCart().addItem({ id: product.id, name: product.name, unitPrice: product.price, imageUrl: product.imageUrl })` to add the product to the shopping cart. Product prices will be displayed in Indian Rupees (₹).\n\n### Product Detail Page (`ProductDetailPage.tsx`)\n`ProductDetailPage.tsx` displays comprehensive information for a single product. It will fetch product details using `productService.getProductById(productId)` and product reviews using `reviewService.getReviewsByProductId(productId)`. It will compose `ProductImageGallery` for product images, `ProductInfo` for product details and purchase options, and `ProductReviews` for displaying and submitting reviews. Product prices will be displayed in Indian Rupees (₹).\n\n### Product Image Gallery (`ProductImageGallery.tsx`)\n`ProductImageGallery.tsx` is a presentational component that takes a list of image URLs and displays them in a main view with clickable thumbnails.\n\n### Product Info (`ProductInfo.tsx`)\n`ProductInfo.tsx` displays the product's name, description, price, and includes controls for selecting quantity and an \"Add to Cart\" button. The \"Add to Cart\" button will call `useCart().addItem({ id: product.id, name: product.name, unitPrice: product.price, imageUrl: product.imageUrl, quantity: selectedQuantity })`. Product prices will be displayed in Indian Rupees (₹).\n\n### Product Reviews (`ProductReviews.tsx`)\n`ProductReviews.tsx` displays a list of reviews for a product and includes a `ReviewForm` for authenticated users to submit new reviews. It will fetch reviews using `reviewService.getReviewsByProductId(productId)`.\n\n### Review Form (`ReviewForm.tsx`)\n`ReviewForm.tsx` is a form for authenticated users to submit a rating and a written review for a product. Upon submission, it will call `reviewService.submitReview(reviewDto)` and handle success/error feedback. It will use `useAuth()` to check if the user is authenticated before allowing review submission.\n",
+    "depends_on_features" : [ "product-management", "review-system" ],
+    "consumes_foundation" : [ "cart", "auth" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
