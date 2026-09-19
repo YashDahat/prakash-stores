@@ -205,8 +205,8 @@
     "file_type" : "BACKEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-26",
-    "updated_date" : "2024-07-26",
-    "status" : "PLANNED",
+    "updated_date" : "2026-09-19",
+    "status" : "GENERATED",
     "description" : "Handles business logic for products, including search, filtering, and inventory management.",
     "public_functions" : [ {
       "name" : "getAllProducts",
@@ -761,8 +761,8 @@
     "file_type" : "BACKEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-26",
-    "updated_date" : "2024-07-26",
-    "status" : "PLANNED",
+    "updated_date" : "2026-09-19",
+    "status" : "GENERATED",
     "description" : "Handles business logic for creating and managing orders, and injects the pre-scaffolded PaymentService to process payments.",
     "public_functions" : [ {
       "name" : "createOrder",
@@ -1109,8 +1109,8 @@
     "file_type" : "BACKEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-26",
-    "updated_date" : "2024-07-26",
-    "status" : "PLANNED",
+    "updated_date" : "2026-09-19",
+    "status" : "GENERATED",
     "description" : "Handles business logic for submitting, retrieving, and moderating product reviews.",
     "public_functions" : [ {
       "name" : "submitReview",
@@ -1408,8 +1408,8 @@
     "file_type" : "BACKEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-26",
-    "updated_date" : "2024-07-26",
-    "status" : "PLANNED",
+    "updated_date" : "2026-09-19",
+    "status" : "GENERATED",
     "description" : "Handles business logic for creating and managing in-store events.",
     "public_functions" : [ {
       "name" : "createEvent",
