@@ -1685,14 +1685,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "The main application component that sets up the router and global providers.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "App",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the main application, including routing and global components like the WhatsApp button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "The main application component that sets up the router and global providers, integrating public pages and the shared WhatsApp button.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1918,14 +1923,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A floating action button to initiate a WhatsApp chat for customer service.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "WhatsAppButton",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a floating WhatsApp button linked to Prakash Stores' customer service."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "A floating action button component that initiates a WhatsApp chat with customer service.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1937,14 +1947,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "The landing page featuring a full-bleed hero image, a grid of featured products, category links, and an embedded Instagram feed.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "HomePage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the main homepage with various content sections."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/home/HeroSection.tsx", "frontend/src/components/home/FeaturedProducts.tsx", "frontend/src/components/home/CategoryGrid.tsx", "frontend/src/components/home/InstagramFeed.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "The landing page, composed of a hero section, featured products, category links, and an Instagram feed.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1956,14 +1971,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays the main hero section on the homepage with a prominent call-to-action button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "HeroSection",
+      "parameters" : [ "title: string", "subtitle: string", "ctaText: string", "ctaLink: string" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a hero section with a background image, title, subtitle, and a call-to-action button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "Displays the main hero section on the homepage with a prominent call-to-action button.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1975,14 +1995,26 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A carousel or grid showcasing a curated list of featured products on the homepage.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "FeaturedProducts",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Fetches and displays a grid of featured products, each with an 'Add to Cart' button."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/products",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a list of products to display as featured items.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/services/productService.ts", "frontend/src/components/products/ProductCard.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "A component that fetches and displays a curated list of featured products on the homepage.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1994,14 +2026,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Displays main product categories (Men, Women, Kids) as large clickable cards.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "CategoryGrid",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a grid of clickable cards representing product categories."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "Displays main product categories (Men, Women, Kids) as large clickable cards.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2013,14 +2050,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A static component section to showcase styles, potentially linking to the store's Instagram page.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "InstagramFeed",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a static section with placeholder images and a link to Instagram."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "A static component section to showcase styles, potentially linking to the store's Instagram page.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2374,14 +2416,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A static page describing the history and values of Prakash Stores.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AboutPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the About Us page with information about the business."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "A static page describing the history and values of Prakash Stores.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2393,14 +2440,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A static page with contact information, an embedded Google Map, and business hours.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ContactPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the Contact Us page with address, phone, hours, and a map."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "A static page with contact information, an embedded Google Map, and business hours.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2460,14 +2512,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "A user-friendly 404 page that is displayed when a route is not found.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "NotFoundPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a 404 Not Found page with a link back to the homepage."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "static-pages",
-    "file_role" : null,
+    "file_role" : "A user-friendly 404 page that is displayed when a route is not found.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2783,9 +2840,9 @@
     "feature_display_name" : "Static Pages & Core UI",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/App.tsx", "frontend/src/components/shared/WhatsAppButton.tsx", "frontend/src/pages/HomePage.tsx", "frontend/src/components/home/HeroSection.tsx", "frontend/src/components/home/FeaturedProducts.tsx", "frontend/src/components/home/CategoryGrid.tsx", "frontend/src/components/home/InstagramFeed.tsx", "frontend/src/pages/AboutPage.tsx", "frontend/src/pages/ContactPage.tsx", "frontend/src/pages/NotFoundPage.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "This feature defines the core UI structure and static pages for Prakash Stores, including the main application entry point, the homepage, about us, contact us, and a 404 page. It also provides a shared WhatsApp floating action button for customer service.\n\n## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-[#F5F5F5] (odd sections) / bg-white (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\n### App.tsx\nThis file is the root component of the React application. It sets up the `BrowserRouter` from `react-router-dom` to manage client-side routing. It will define the main routes for the public-facing pages (`HomePage`, `AboutPage`, `ContactPage`, `NotFoundPage`) and integrate with the global `SiteLayout` (which is applied by the build system and should not be explicitly rendered here). It will also include the `WhatsAppButton` component globally, ensuring it's present on all pages.\n\n### WhatsAppButton.tsx\nThis component renders a floating action button that, when clicked, opens a WhatsApp chat with Prakash Stores' customer service. The button should be styled to be visually prominent but non-intrusive, positioned at the bottom-right of the screen. The WhatsApp link should use the phone number `+919371025731` (Indian format) and a pre-filled message like \"Hello Prakash Stores, I have a question about...\".\n\n### HomePage.tsx\nThis page serves as the landing page for Prakash Stores. It is composed of several sections:\n1.  **HeroSection**: A full-bleed hero image with a compelling headline and a call-to-action button. The image should be relevant to a clothing store, e.g., `https://images.unsplash.com/photo-1523381294911-8d3cead1858b?w=1920&q=80`. The headline should be \"Discover Your Style at Prakash Stores\" and the subheadline \"Quality Apparel for the Whole Family\". The CTA button should say \"Shop Now\" and link to the products page (`/products`).\n2.  **FeaturedProducts**: This section will display a curated list of products fetched from the `product-management` backend feature. It will call the generated service function `getAllProducts()` from `productService.ts` to retrieve a small set of products (e.g., 8-12 items) to showcase. Each product will be rendered using a `ProductCard` component (from `product-catalog` feature) which will display the product's `name`, `price`, and `imageUrl`. The `ProductCard` will also include an \"Add to Cart\" button that calls `useCart().addItem({ id: product.id, name: product.name, unitPrice: product.price, imageUrl: product.imageUrl })`.\n3.  **CategoryGrid**: This component will display clickable cards for main product categories like \"Men\", \"Women\", and \"Kids\". Each card should have a relevant image and link to the respective category's product listing page (e.g., `/products?category=Men`).\n4.  **InstagramFeed**: A static section showcasing styles, with placeholder images and text encouraging users to follow Prakash Stores on Instagram. It should include a link to a hypothetical Instagram profile.\n\n### HeroSection.tsx\nThis component renders the hero section of the homepage. It takes `title`, `subtitle`, `ctaText`, and `ctaLink` as props. It should display a background image, the title and subtitle as `h1` and `p` tags respectively, and a `Link` component for the CTA button. The background image should be `https://images.unsplash.com/photo-1523381294911-8d3cead1858b?w=1920&q=80` with a dark overlay.\n\n### FeaturedProducts.tsx\nThis component is responsible for fetching and displaying a grid of featured products. It will use the generated service function `getAllProducts()` from `productService.ts` to retrieve products. It will then map over the returned `ProductDto` objects and render a `ProductCard` for each. The `ProductCard` component will be imported from the `product-catalog` feature and will be responsible for displaying individual product details and the \"Add to Cart\" functionality.\n\n### CategoryGrid.tsx\nThis component displays a grid of product categories. It will render three distinct cards for \"Men\", \"Women\", and \"Kids\", each with a descriptive image and a link to the corresponding product category page. The links should be `/products?category=Men`, `/products?category=Women`, and `/products?category=Kids` respectively.\n\n### InstagramFeed.tsx\nThis component is a static section designed to simulate an Instagram feed. It will contain placeholder images and text encouraging users to explore Prakash Stores' styles on Instagram. It should include a button or link that directs users to a hypothetical Instagram profile URL.\n\n### AboutPage.tsx\nThis page provides information about Prakash Stores' history, values, and commitment to the community. It should include sections with headings like \"Our Story\", \"Our Values\", and \"Community Focus\", filled with friendly and reliable placeholder copy. The content should reflect the business's identity as a trusted local family store.\n\n### ContactPage.tsx\nThis page displays contact information for Prakash Stores. It should include:\n1.  **Contact Details**: Display the address \"Showroom No 1, 90 Madhukunj, Aundh Rd, Pune, Maharashtra 411020\" and phone number \"093710 25731\".\n2.  **Business Hours**: List the opening hours.\n3.  **Google Map**: Embed a Google Map centered at the coordinates `18.562196, 73.802953` with a marker for the store's location. The map should be interactive and allow zooming/panning.\n4.  **Contact Form (Optional Placeholder)**: A placeholder section for a contact form, if one were to be implemented in the future, with a friendly message like \"Have a question? Send us a message!\"\n\n### NotFoundPage.tsx\nThis page is displayed when a user navigates to a route that does not exist. It should provide a user-friendly message such as \"Oops! Page Not Found\" and a link back to the homepage, reinforcing the friendly and helpful tone of the business.",
+    "depends_on_features" : [ "product-management" ],
+    "consumes_foundation" : [ "cart" ],
     "change_required" : true,
     "change_instruction" : null
   }, {
