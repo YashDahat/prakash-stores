@@ -17,13 +17,45 @@
     "status" : "PLANNED",
     "description" : "Represents a clothing item in the catalog, including details like name, description, price, brand, category, and inventory stock.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product. Generated automatically."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product. Not null, max 255 characters."
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the product. Max 1000 characters."
+    }, {
+      "name" : "price",
+      "type" : "BigDecimal",
+      "description" : "Selling price of the product. Not null, must be positive."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the product's main image. Max 500 characters."
+    }, {
+      "name" : "stock",
+      "type" : "Integer",
+      "description" : "Current inventory stock of the product. Not null, must be non-negative."
+    }, {
+      "name" : "brand",
+      "type" : "Brand",
+      "description" : "The brand of the product. Many-to-one relationship."
+    }, {
+      "name" : "productCategory",
+      "type" : "ProductCategory",
+      "description" : "The category of the product. Many-to-one relationship."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "MODEL layer — Represents a clothing item in the catalog, including details like name, description, price, brand, category, and inventory stock.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -36,13 +68,21 @@
     "status" : "PLANNED",
     "description" : "Represents a category for products, such as 'Men's Wear', 'Women's Kurtis', or 'Kids Wear'.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product category. Generated automatically."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product category. Not null, unique, max 100 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "MODEL layer — Represents a category for products, such as 'Men's Wear', 'Women's Kurtis', or 'Kids Wear'.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -55,13 +95,21 @@
     "status" : "PLANNED",
     "description" : "Represents a product brand, such as 'Wrangler'.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the brand. Generated automatically."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the brand. Not null, unique, max 100 characters."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "MODEL layer — Represents a product brand, such as 'Wrangler'.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -73,14 +121,34 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for CRUD and query operations on Product entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByNameContainingIgnoreCase",
+      "parameters" : [ "String name" ],
+      "return_type" : "List<Product>",
+      "description" : "Finds products by name, ignoring case."
+    }, {
+      "name" : "findByProductCategory_Name",
+      "parameters" : [ "String categoryName" ],
+      "return_type" : "List<Product>",
+      "description" : "Finds products by category name."
+    }, {
+      "name" : "findByBrand_Name",
+      "parameters" : [ "String brandName" ],
+      "return_type" : "List<Product>",
+      "description" : "Finds products by brand name."
+    }, {
+      "name" : "findAll",
+      "parameters" : [ "Specification<Product> spec", "Pageable pageable" ],
+      "return_type" : "Page<Product>",
+      "description" : "Finds all products matching a specification with pagination."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Product.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Spring Data JPA repository for CRUD and query operations on Product entities, including custom methods for filtering.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -92,14 +160,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for ProductCategory entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByName",
+      "parameters" : [ "String name" ],
+      "return_type" : "Optional<ProductCategory>",
+      "description" : "Finds a product category by its exact name."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/ProductCategory.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Spring Data JPA repository for ProductCategory entities, including a method to find by name.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -111,14 +184,19 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Brand entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByName",
+      "parameters" : [ "String name" ],
+      "return_type" : "Optional<Brand>",
+      "description" : "Finds a brand by its exact name."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/model/Brand.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "REPOSITORY layer — Spring Data JPA repository for Brand entities, including a method to find by name.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -130,14 +208,54 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Handles business logic for products, including search, filtering, and inventory management.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllProducts",
+      "parameters" : [ "String category", "String brand", "BigDecimal minPrice", "BigDecimal maxPrice", "String searchTerm", "Pageable pageable" ],
+      "return_type" : "Page<ProductDto>",
+      "description" : "Retrieves a paginated list of products, optionally filtered by category, brand, price range, and search term. Throws ResourceNotFoundException if category or brand not found."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ProductDto",
+      "description" : "Retrieves a single product by its ID. Throws ResourceNotFoundException if not found."
+    }, {
+      "name" : "createProduct",
+      "parameters" : [ "ProductDto productDto" ],
+      "return_type" : "ProductDto",
+      "description" : "Creates a new product. Validates brand and category IDs. Throws IllegalArgumentException if IDs are invalid."
+    }, {
+      "name" : "updateProduct",
+      "parameters" : [ "Long id", "ProductDto productDto" ],
+      "return_type" : "ProductDto",
+      "description" : "Updates an existing product. Throws ResourceNotFoundException if product not found, IllegalArgumentException if brand or category IDs are invalid."
+    }, {
+      "name" : "deleteProduct",
+      "parameters" : [ "Long id" ],
+      "return_type" : "void",
+      "description" : "Deletes a product by ID. Throws ResourceNotFoundException if not found."
+    }, {
+      "name" : "updateProductStock",
+      "parameters" : [ "Long productId", "Integer quantityChange" ],
+      "return_type" : "ProductDto",
+      "description" : "Updates the stock of a product. Throws ResourceNotFoundException if product not found, IllegalArgumentException if stock becomes negative."
+    }, {
+      "name" : "getAllCategories",
+      "parameters" : [ ],
+      "return_type" : "List<ProductCategory>",
+      "description" : "Retrieves all product categories."
+    }, {
+      "name" : "getAllBrands",
+      "parameters" : [ ],
+      "return_type" : "List<Brand>",
+      "description" : "Retrieves all brands."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java", "backend/src/main/java/com/prakashstores/repository/BrandRepository.java", "backend/src/main/java/com/prakashstores/dto/ProductDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — implements business logic for product management, including search, filtering, inventory updates, and CRUD operations for products, categories, and brands.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -150,13 +268,53 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for representing Product information in API responses.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the product."
+    }, {
+      "name" : "name",
+      "type" : "String",
+      "description" : "Name of the product. @NotBlank, @Size(max=255)"
+    }, {
+      "name" : "description",
+      "type" : "String",
+      "description" : "Detailed description of the product. @Size(max=1000)"
+    }, {
+      "name" : "price",
+      "type" : "BigDecimal",
+      "description" : "Selling price of the product. @NotNull, @Positive"
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the product's main image. @Size(max=500)"
+    }, {
+      "name" : "stock",
+      "type" : "Integer",
+      "description" : "Current inventory stock of the product. @NotNull, @Min(0)"
+    }, {
+      "name" : "brandId",
+      "type" : "Long",
+      "description" : "ID of the product's brand. @NotNull"
+    }, {
+      "name" : "brandName",
+      "type" : "String",
+      "description" : "Name of the product's brand."
+    }, {
+      "name" : "categoryId",
+      "type" : "Long",
+      "description" : "ID of the product's category. @NotNull"
+    }, {
+      "name" : "categoryName",
+      "type" : "String",
+      "description" : "Name of the product's category."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "DTO layer — Data Transfer Object for representing Product information in API requests and responses.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -168,14 +326,62 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Public-facing REST controller for browsing and searching products.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllProducts",
+      "parameters" : [ "String category", "String brand", "BigDecimal minPrice", "BigDecimal maxPrice", "String searchTerm", "Pageable pageable" ],
+      "return_type" : "ResponseEntity<Page<ProductDto>>",
+      "description" : "Handles GET requests for a paginated list of products with optional filters."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Handles GET requests for a single product by ID."
+    }, {
+      "name" : "getAllCategories",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<ProductCategory>>",
+      "description" : "Handles GET requests for all product categories."
+    }, {
+      "name" : "getAllBrands",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<Brand>>",
+      "description" : "Handles GET requests for all brands."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/products",
+      "request_body" : null,
+      "response_body" : "Page<ProductDto>",
+      "description" : "Get a paginated list of products, with optional filters for category, brand, price range, and search term.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/{id}",
+      "request_body" : null,
+      "response_body" : "ProductDto",
+      "description" : "Get a single product by its ID.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/categories",
+      "request_body" : null,
+      "response_body" : "List<ProductCategory>",
+      "description" : "Get a list of all product categories.",
+      "access" : "public"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/products/brands",
+      "request_body" : null,
+      "response_body" : "List<Brand>",
+      "description" : "Get a list of all product brands.",
+      "access" : "public"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ProductService.java", "backend/src/main/java/com/prakashstores/dto/ProductDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — Public-facing REST controller for browsing and searching products, categories, and brands.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -187,14 +393,182 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for managing the product catalog and inventory.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createProduct",
+      "parameters" : [ "ProductDto productDto" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Handles POST requests to create a new product."
+    }, {
+      "name" : "updateProduct",
+      "parameters" : [ "Long id", "ProductDto productDto" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Handles PUT requests to update an existing product."
+    }, {
+      "name" : "deleteProduct",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Handles DELETE requests to remove a product."
+    }, {
+      "name" : "updateProductStock",
+      "parameters" : [ "Long id", "Map<String, Integer> requestBody" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Handles PUT requests to update product stock."
+    }, {
+      "name" : "getAllProducts",
+      "parameters" : [ "String category", "String brand", "BigDecimal minPrice", "BigDecimal maxPrice", "String searchTerm", "Pageable pageable" ],
+      "return_type" : "ResponseEntity<Page<ProductDto>>",
+      "description" : "Handles GET requests for a paginated list of all products for admin view."
+    }, {
+      "name" : "getProductById",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<ProductDto>",
+      "description" : "Handles GET requests for a single product by ID for admin view."
+    }, {
+      "name" : "getAllCategories",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<ProductCategory>>",
+      "description" : "Handles GET requests for all product categories for admin view."
+    }, {
+      "name" : "createCategory",
+      "parameters" : [ "ProductCategory category" ],
+      "return_type" : "ResponseEntity<ProductCategory>",
+      "description" : "Handles POST requests to create a new product category."
+    }, {
+      "name" : "updateCategory",
+      "parameters" : [ "Long id", "ProductCategory category" ],
+      "return_type" : "ResponseEntity<ProductCategory>",
+      "description" : "Handles PUT requests to update an existing product category."
+    }, {
+      "name" : "deleteCategory",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Handles DELETE requests to remove a product category."
+    }, {
+      "name" : "getAllBrands",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<Brand>>",
+      "description" : "Handles GET requests for all brands for admin view."
+    }, {
+      "name" : "createBrand",
+      "parameters" : [ "Brand brand" ],
+      "return_type" : "ResponseEntity<Brand>",
+      "description" : "Handles POST requests to create a new brand."
+    }, {
+      "name" : "updateBrand",
+      "parameters" : [ "Long id", "Brand brand" ],
+      "return_type" : "ResponseEntity<Brand>",
+      "description" : "Handles PUT requests to update an existing brand."
+    }, {
+      "name" : "deleteBrand",
+      "parameters" : [ "Long id" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Handles DELETE requests to remove a brand."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/admin/products",
+      "request_body" : "ProductDto",
+      "response_body" : "ProductDto",
+      "description" : "Create a new product.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/products/{id}",
+      "request_body" : "ProductDto",
+      "response_body" : "ProductDto",
+      "description" : "Update an existing product by ID.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/products/{id}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Delete a product by ID.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/products/{id}/stock",
+      "request_body" : "{ \"quantityChange\": Integer }",
+      "response_body" : "ProductDto",
+      "description" : "Update the stock quantity for a product.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products",
+      "request_body" : null,
+      "response_body" : "Page<ProductDto>",
+      "description" : "Get a paginated list of all products for administration.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products/{id}",
+      "request_body" : null,
+      "response_body" : "ProductDto",
+      "description" : "Get a single product by its ID for administration.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products/categories",
+      "request_body" : null,
+      "response_body" : "List<ProductCategory>",
+      "description" : "Get a list of all product categories for administration.",
+      "access" : "admin"
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/products/categories",
+      "request_body" : "ProductCategory",
+      "response_body" : "ProductCategory",
+      "description" : "Create a new product category.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/products/categories/{id}",
+      "request_body" : "ProductCategory",
+      "response_body" : "ProductCategory",
+      "description" : "Update an existing product category by ID.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/products/categories/{id}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Delete a product category by ID.",
+      "access" : "admin"
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/products/brands",
+      "request_body" : null,
+      "response_body" : "List<Brand>",
+      "description" : "Get a list of all product brands for administration.",
+      "access" : "admin"
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/products/brands",
+      "request_body" : "Brand",
+      "response_body" : "Brand",
+      "description" : "Create a new brand.",
+      "access" : "admin"
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/products/brands/{id}",
+      "request_body" : "Brand",
+      "response_body" : "Brand",
+      "description" : "Update an existing brand by ID.",
+      "access" : "admin"
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/products/brands/{id}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Delete a brand by ID.",
+      "access" : "admin"
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/prakashstores/service/ProductService.java", "backend/src/main/java/com/prakashstores/dto/ProductDto.java" ],
     "depends_on" : [ ],
     "feature_name" : "product-management",
-    "file_role" : null,
+    "file_role" : "CONTROLLER layer — Admin-only REST controller for managing the product catalog, inventory, categories, and brands.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1753,9 +2127,9 @@
     "feature_display_name" : "Product Management",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/prakashstores/model/Product.java", "backend/src/main/java/com/prakashstores/model/ProductCategory.java", "backend/src/main/java/com/prakashstores/model/Brand.java", "backend/src/main/java/com/prakashstores/repository/ProductRepository.java", "backend/src/main/java/com/prakashstores/repository/ProductCategoryRepository.java", "backend/src/main/java/com/prakashstores/repository/BrandRepository.java", "backend/src/main/java/com/prakashstores/service/ProductService.java", "backend/src/main/java/com/prakashstores/dto/ProductDto.java", "backend/src/main/java/com/prakashstores/controller/ProductController.java", "backend/src/main/java/com/prakashstores/controller/admin/AdminProductController.java" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "The Product Management feature provides the backend infrastructure for managing Prakash Stores' clothing catalog. It includes models for products, categories, and brands, along with repositories for data persistence, a service layer for business logic, and two controllers: one public-facing for browsing products and another admin-only for managing the catalog.\n\n### Models\n- `Product.java`: Represents a single clothing item with fields like `id`, `name`, `description`, `price`, `imageUrl`, `stock`, `brandId`, and `categoryId`. It will have relationships to `Brand` and `ProductCategory`.\n- `ProductCategory.java`: Defines product categories such as 'Men's Wear' or 'Women's Kurtis' with `id` and `name`.\n- `Brand.java`: Represents clothing brands with `id` and `name`.\n\n### Repositories\n- `ProductRepository.java`: Provides standard CRUD operations for `Product` entities and custom queries for searching and filtering products.\n- `ProductCategoryRepository.java`: Provides standard CRUD operations for `ProductCategory` entities.\n- `BrandRepository.java`: Provides standard CRUD operations for `Brand` entities.\n\n### DTOs\n- `ProductDto.java`: A DTO used for transferring product data between the service layer and controllers. It will include all relevant product details, including the brand name and category name, not just their IDs.\n\n### Services\n- `ProductService.java`: Encapsulates the business logic for product management. It injects `ProductRepository`, `ProductCategoryRepository`, and `BrandRepository`.\n  - `getAllProducts(String category, String brand, BigDecimal minPrice, BigDecimal maxPrice, String searchTerm, Pageable pageable)`: Returns a paginated list of `ProductDto` objects. It filters products based on optional category, brand, price range, and search term. If `category` or `brand` are provided, it will fetch the corresponding `ProductCategory` or `Brand` by name and then filter products by their IDs. Throws `ResourceNotFoundException` if a specified category or brand is not found.\n  - `getProductById(Long id)`: Retrieves a single `ProductDto` by its ID. Throws `ResourceNotFoundException` if the product is not found.\n  - `createProduct(ProductDto productDto)`: Creates a new product. It validates that the `brandId` and `categoryId` in the DTO correspond to existing `Brand` and `ProductCategory` entities. Throws `IllegalArgumentException` if `brandId` or `categoryId` are invalid. Returns the created `ProductDto`.\n  - `updateProduct(Long id, ProductDto productDto)`: Updates an existing product. It first checks if the product exists using `getProductById`. It also validates `brandId` and `categoryId` as in `createProduct`. Returns the updated `ProductDto`. Throws `ResourceNotFoundException` if the product is not found.\n  - `deleteProduct(Long id)`: Deletes a product by ID. Throws `ResourceNotFoundException` if the product is not found.\n  - `getAllCategories()`: Returns a `List<ProductCategory>`.\n  - `getAllBrands()`: Returns a `List<Brand>`.\n  - `updateProductStock(Long productId, Integer quantityChange)`: Updates the stock of a product. `quantityChange` can be positive (add stock) or negative (reduce stock). Throws `ResourceNotFoundException` if the product is not found, and `IllegalArgumentException` if `quantityChange` would result in negative stock.\n\n### Controllers\n- `ProductController.java`: Exposes public API endpoints for browsing products.\n  - `GET /api/v1/products`: Returns a paginated list of `ProductDto`s. Supports filtering by `category`, `brand`, `minPrice`, `maxPrice`, and `searchTerm` as request parameters. Calls `productService.getAllProducts`.\n  - `GET /api/v1/products/{id}`: Returns a single `ProductDto` by ID. Calls `productService.getProductById`. Returns 404 if `ResourceNotFoundException` is thrown.\n  - `GET /api/v1/products/categories`: Returns a list of all `ProductCategory` entities. Calls `productService.getAllCategories`.\n  - `GET /api/v1/products/brands`: Returns a list of all `Brand` entities. Calls `productService.getAllBrands`.\n- `AdminProductController.java`: Exposes admin-only API endpoints for managing products.\n  - `POST /api/v1/admin/products`: Creates a new product. Takes a `ProductDto` as request body. Calls `productService.createProduct`. Returns 400 if `IllegalArgumentException` is thrown.\n  - `PUT /api/v1/admin/products/{id}`: Updates an existing product. Takes a `ProductDto` as request body. Calls `productService.updateProduct`. Returns 404 if `ResourceNotFoundException` is thrown, 400 if `IllegalArgumentException` is thrown.\n  - `DELETE /api/v1/admin/products/{id}`: Deletes a product. Calls `productService.deleteProduct`. Returns 404 if `ResourceNotFoundException` is thrown.\n  - `PUT /api/v1/admin/products/{id}/stock`: Updates the stock of a product. Takes a `Map<String, Integer>` with a `quantityChange` field in the request body. Calls `productService.updateProductStock`. Returns 404 if `ResourceNotFoundException` is thrown, 400 if `IllegalArgumentException` is thrown.\n  - `GET /api/v1/admin/products`: Returns a paginated list of all `ProductDto`s (similar to public endpoint but without public filters). Calls `productService.getAllProducts`.\n  - `GET /api/v1/admin/products/{id}`: Returns a single `ProductDto` by ID. Calls `productService.getProductById`. Returns 404 if `ResourceNotFoundException` is thrown.\n  - `GET /api/v1/admin/products/categories`: Returns a list of all `ProductCategory` entities. Calls `productService.getAllCategories`.\n  - `POST /api/v1/admin/products/categories`: Creates a new product category. Takes a `ProductCategory` as request body. Calls `productCategoryRepository.save`.\n  - `PUT /api/v1/admin/products/categories/{id}`: Updates an existing product category. Takes a `ProductCategory` as request body. Calls `productCategoryRepository.findById` and then `save`. Returns 404 if category not found.\n  - `DELETE /api/v1/admin/products/categories/{id}`: Deletes a product category. Calls `productCategoryRepository.deleteById`. Returns 404 if category not found.\n  - `GET /api/v1/admin/products/brands`: Returns a list of all `Brand` entities. Calls `productService.getAllBrands`.\n  - `POST /api/v1/admin/products/brands`: Creates a new brand. Takes a `Brand` as request body. Calls `brandRepository.save`.\n  - `PUT /api/v1/admin/products/brands/{id}`: Updates an existing brand. Takes a `Brand` as request body. Calls `brandRepository.findById` and then `save`. Returns 404 if brand not found.\n  - `DELETE /api/v1/admin/products/brands/{id}`: Deletes a brand. Calls `brandRepository.deleteById`. Returns 404 if brand not found.\n\nError Handling:\nBoth controllers will use `@ExceptionHandler` to catch `ResourceNotFoundException` and return a `404 Not Found` status, and `IllegalArgumentException` to return a `400 Bad Request` status, consistent with the `shared-backend`'s `GlobalExceptionHandler`.",
+    "depends_on_features" : [ "shared-backend" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
