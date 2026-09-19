@@ -1936,13 +1936,41 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for in-store events.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "Long",
+      "description" : "Unique identifier for the event."
+    }, {
+      "name" : "name",
+      "type" : "string",
+      "description" : "Name of the event."
+    }, {
+      "name" : "description",
+      "type" : "string",
+      "description" : "Detailed description of the event."
+    }, {
+      "name" : "date",
+      "type" : "string",
+      "description" : "Date of the event in 'YYYY-MM-DD' format."
+    }, {
+      "name" : "time",
+      "type" : "string",
+      "description" : "Time of the event in 'HH:MM:SS' format."
+    }, {
+      "name" : "location",
+      "type" : "string",
+      "description" : "Location where the event will take place."
+    }, {
+      "name" : "imageUrl",
+      "type" : "string",
+      "description" : "URL of the image associated with the event."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "event-display",
-    "file_role" : null,
+    "file_role" : "Generated from the backend API contract — defines the TypeScript interface for an in-store event.",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -1954,14 +1982,26 @@
     "updated_date" : "2024-07-26",
     "status" : "PLANNED",
     "description" : "Provides functions for interacting with the event-related API endpoints.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getUpcomingEvents",
+      "parameters" : [ ],
+      "return_type" : "Promise<Event[]>",
+      "description" : "Fetches a list of all upcoming events from the backend. Returns an array of Event objects."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/events/upcoming",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a list of upcoming events.",
+      "access" : null
+    } ],
     "imports_from" : [ "frontend/src/types/event.ts" ],
     "depends_on" : [ "@/api/client" ],
     "feature_name" : "event-display",
-    "file_role" : null,
+    "file_role" : "SERVICE layer — provides functions for interacting with the event-related API endpoints, specifically getUpcomingEvents(): Promise<Event[]>",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -2613,7 +2653,7 @@
     "imports_from" : [ "frontend/src/services/eventService.ts" ],
     "depends_on" : [ ],
     "feature_name" : "event-display",
-    "file_role" : null,
+    "file_role" : "PAGE layer — displays a list of upcoming in-store events in a card-based layout, fetching data via eventService.getUpcomingEvents().",
     "change_required" : null,
     "contract_reconciled" : null
   }, {
@@ -3099,9 +3139,9 @@
     "feature_display_name" : "Event Display",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/types/event.ts", "frontend/src/services/eventService.ts", "frontend/src/pages/EventsPage.tsx" ],
-    "feature_instruction" : null,
-    "depends_on_features" : null,
-    "consumes_foundation" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A3A6D] text-white\n- Primary CTA: bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#E87A00]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#212121] leading-relaxed\n\nThis feature provides a public-facing page to display upcoming in-store events for Prakash Stores. It consists of three files: `event.ts` for defining the TypeScript types for events, `eventService.ts` for handling API calls to fetch event data, and `EventsPage.tsx` which renders the list of events.\n\n`event.ts` defines the `Event` interface, mirroring the `EventDto` shape from the backend `event-management` feature. This ensures type safety throughout the frontend application when dealing with event data.\n\n`eventService.ts` exports an asynchronous function `getUpcomingEvents()` that makes an HTTP GET request to the `/api/v1/events/upcoming` endpoint of the `event-management` backend feature. It uses the pre-scaffolded `@/api/client` for making the API call and returns a `Promise<Event[]>`.\n\n`EventsPage.tsx` is the main component for this feature. It fetches the upcoming events using the `getUpcomingEvents()` function from `eventService.ts`. The page displays a hero section with a relevant image and a welcoming message. Below the hero, it renders a grid of event cards. Each event card displays the event's `imageUrl`, `name`, `date`, `time`, and `location`. The date and time should be formatted for the Indian locale. If no events are available, a friendly message is displayed. The page uses the defined design tokens for styling, ensuring a consistent look and feel with the rest of the Prakash Stores website.\n\n**Error Handling:**\n- If the `getUpcomingEvents()` call fails, `eventService.ts` should log the error. `EventsPage.tsx` should display a user-friendly error message on the page, indicating that events could not be loaded.\n\n**Inter-file Wiring:**\n- `EventsPage.tsx` imports and calls `getUpcomingEvents()` from `eventService.ts`.\n- `eventService.ts` imports the `Event` type from `event.ts` and uses the `@/api/client` for network requests.\n\n**Data Flow:**\n1. `EventsPage.tsx` mounts and calls `eventService.getUpcomingEvents()`.\n2. `eventService.getUpcomingEvents()` makes a GET request to `/api/v1/events/upcoming`.\n3. The backend `event-management` feature responds with a `List<EventDto>`.\n4. `eventService.getUpcomingEvents()` returns a `Promise<Event[]>`.\n5. `EventsPage.tsx` receives the `Event[]` data and renders each event as a card, formatting date and time for the 'en-IN' locale.",
+    "depends_on_features" : [ "event-management" ],
+    "consumes_foundation" : [ ],
     "change_required" : true,
     "change_instruction" : null
   }, {
