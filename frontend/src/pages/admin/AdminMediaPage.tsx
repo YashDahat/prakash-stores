@@ -13,15 +13,12 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
 import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from '@/components/ui/table';
-import {
   Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
 } from '@/components/ui/dialog';
-import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, File } from 'lucide-react';
+import type { CustomCellRendererProps } from 'ag-grid-react';
+import type { ColDef } from 'ag-grid-community';
+import { AdminDataGrid } from '@/components/admin/AdminDataGrid';
+import type { RowAction } from '@/components/admin/RowActionsCell';
 
 function formatSize(bytes: number | null): string {
   if (!bytes) return '—';
@@ -150,6 +147,35 @@ export default function AdminMediaPage() {
     </div>
   );
 
+  const mediaColumnDefs: ColDef<MediaAssetDto>[] = [
+    {
+      headerName: 'Preview',
+      field: 'url',
+      sortable: false,
+      width: 90,
+      flex: 0,
+      cellRenderer: (p: CustomCellRendererProps<MediaAssetDto>) => (
+        <img src={p.data?.url} alt={p.data?.label ?? ''} className="h-10 w-10 rounded object-cover" />
+      ),
+    },
+    { headerName: 'Name / label', valueGetter: (p) => p.data?.label || p.data?.filename || `#${p.data?.id}` },
+    { headerName: 'In gallery', valueGetter: (p) => (p.data ? galleryLabel(p.data) : '') },
+    { headerName: 'Type', field: 'contentType' },
+    { headerName: 'Size', valueGetter: (p) => formatSize(p.data?.sizeBytes ?? null), width: 110, flex: 0 },
+    {
+      headerName: 'Uploaded',
+      field: 'uploadedAt',
+      valueFormatter: (p) => (p.value ? new Date(p.value).toLocaleDateString() : ''),
+    },
+  ];
+
+  const mediaActions: RowAction<MediaAssetDto>[] = [
+    { label: 'Copy link', onClick: onCopy },
+    { label: 'Preview', onClick: (item) => setPreviewItem(item) },
+    { label: 'Update', onClick: openEdit },
+    { label: 'Delete', onClick: onDelete, danger: true },
+  ];
+
   return (
     <div className="space-y-6" data-testid="admin-media-page">
       <div className="flex items-center justify-between">
@@ -166,50 +192,14 @@ export default function AdminMediaPage() {
       ) : (assets?.length ?? 0) === 0 ? (
         <p className="text-muted-foreground" data-testid="media-empty">No images yet.</p>
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-20">Preview</TableHead>
-              <TableHead>Name / label</TableHead>
-              <TableHead>In gallery</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Size</TableHead>
-              <TableHead>Uploaded</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {assets!.map((item) => (
-              <TableRow key={item.id} data-testid="media-row">
-                <TableCell>
-                  <img src={item.url} alt={item.label ?? ''} className="h-12 w-12 rounded object-cover" />
-                </TableCell>
-                <TableCell className="max-w-[14rem] truncate">{item.label || item.filename || `#${item.id}`}</TableCell>
-                <TableCell className="text-muted-foreground" data-testid="media-gallery-status">{galleryLabel(item)}</TableCell>
-                <TableCell className="text-muted-foreground">{item.contentType}</TableCell>
-                <TableCell className="text-muted-foreground">{formatSize(item.sizeBytes)}</TableCell>
-                <TableCell className="text-muted-foreground">{new Date(item.uploadedAt).toLocaleDateString()}</TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" aria-label="Actions" data-testid={`media-actions-${item.id}`}>
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem data-testid={`media-copy-${item.id}`} onClick={() => onCopy(item)}>Copy link</DropdownMenuItem>
-                      <DropdownMenuItem data-testid={`media-preview-${item.id}`} onClick={() => setPreviewItem(item)}>Preview</DropdownMenuItem>
-                      <DropdownMenuItem data-testid={`media-edit-${item.id}`} onClick={() => openEdit(item)}>Update</DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem data-testid={`media-delete-${item.id}`} onClick={() => onDelete(item)}
-                                        className="text-destructive focus:text-destructive">Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <AdminDataGrid<MediaAssetDto>
+          testId="media-table"
+          rowData={assets!}
+          rowHeight={56}
+          columnDefs={mediaColumnDefs}
+          actions={mediaActions}
+          emptyMessage="No images yet."
+        />
       )}
 
       {/* Upload dialog */}

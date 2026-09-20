@@ -1,5 +1,6 @@
 package com.prakashstores.controller.admin;
 
+import com.prakashstores.dto.BulkUploadResult;
 import com.prakashstores.dto.ProductDto;
 import com.prakashstores.exception.ResourceNotFoundException;
 import com.prakashstores.model.Brand;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,21 @@ public class AdminProductController {
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDto createProduct(@RequestBody ProductDto productDto) {
         return productService.createProduct(productDto);
+    }
+
+    @PostMapping("/bulk-upload")
+    public BulkUploadResult bulkUploadProducts(@RequestParam("file") MultipartFile file) {
+        return productService.bulkImportProducts(file);
+    }
+
+    @PostMapping("/categories/bulk-upload")
+    public BulkUploadResult bulkUploadCategories(@RequestParam("file") MultipartFile file) {
+        return productService.bulkImportCategories(file);
+    }
+
+    @PostMapping("/brands/bulk-upload")
+    public BulkUploadResult bulkUploadBrands(@RequestParam("file") MultipartFile file) {
+        return productService.bulkImportBrands(file);
     }
 
     @PutMapping("/{id}")

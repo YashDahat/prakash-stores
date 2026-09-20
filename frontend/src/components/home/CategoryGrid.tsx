@@ -6,17 +6,17 @@ export default function CategoryGrid(): React.JSX.Element {
   const categories = [
     {
       name: 'Men',
-      imageUrl: 'https://images.unsplash.com/photo-1602810318383-e38ee3535914?w=800&q=80',
+      imageUrl: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=800&q=80',
       link: '/products?category=Men',
     },
     {
       name: 'Women',
-      imageUrl: 'https://images.unsplash.com/photo-1542728929-397157833292?w=800&q=80',
+      imageUrl: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80',
       link: '/products?category=Women',
     },
     {
       name: 'Kids',
-      imageUrl: 'https://images.unsplash.com/photo-1560769629-9f2733075c61?w=800&q=80',
+      imageUrl: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=800&q=80',
       link: '/products?category=Kids',
     },
   ];

@@ -9,7 +9,7 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
-import { createOrder, getOrdersByUserId, getOrderById, getAllOrders, adminGetOrderById, updateOrderStatus } from '@/services/orderService';
+import { createOrder, getOrdersByUserId, getOrderById, getAllOrders, adminGetOrderById, updateOrderStatus, cancelOrder } from '@/services/orderService';
 import type { CreateOrderRequest, OrderDto, OrderStatus } from '@/types/order';
 
 export function useCreateOrder(): { mutate: (vars: CreateOrderRequest, options?: MutateOptions<OrderDto, Error, CreateOrderRequest>) => void; mutateAsync: (vars: CreateOrderRequest, options?: MutateOptions<OrderDto, Error, CreateOrderRequest>) => Promise<OrderDto>; isPending: boolean; isError: boolean; error: Error | null } {
@@ -26,8 +26,17 @@ export function useOrdersByUserId(): { data: OrderDto[] | undefined; isLoading: 
   return { data, isLoading, isError, error };
 }
 
+export function useCancelOrder(): { mutate: (vars: number, options?: MutateOptions<OrderDto, Error, number>) => void; mutateAsync: (vars: number, options?: MutateOptions<OrderDto, Error, number>) => Promise<OrderDto>; isPending: boolean; isError: boolean; error: Error | null } {
+  const queryClient = useQueryClient();
+  const { mutate, mutateAsync, isPending, isError, error } = useMutation({
+    mutationFn: (orderId: number) => cancelOrder(orderId),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['order'] }); },
+  });
+  return { mutate, mutateAsync, isPending, isError, error };
+}
+
 export function useOrderById(orderId: number): { data: OrderDto | undefined; isLoading: boolean; isError: boolean; error: Error | null } {
-  const { data, isLoading, isError, error } = useQuery({ queryKey: ['order', 'getOrderById', orderId], queryFn: () => getOrderById(orderId) });
+  const { data, isLoading, isError, error } = useQuery({ queryKey: ['order', 'getOrderById', orderId], queryFn: () => getOrderById(orderId), enabled: orderId > 0 });
   return { data, isLoading, isError, error };
 }
 

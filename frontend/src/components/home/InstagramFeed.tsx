@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 export default function InstagramFeed(): React.JSX.Element {
   const instagramImages = [
-    'https://images.unsplash.com/photo-1515886657613-9f627960383d?w=800&q=80',
     'https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=800&q=80',
-    'https://images.unsplash.com/photo-1520006403855-5fce6a83fe51?w=800&q=80',
-    'https://images.unsplash.com/photo-1529139574466-a3fd9103edba?w=800&q=80',
     'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=800&q=80',
-    'https://images.unsplash.com/photo-1525507119060-efc3abfed34c?w=800&q=80',
+    'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&q=80',
+    'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80',
+    'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80',
+    'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=800&q=80',
   ];
 
   return (

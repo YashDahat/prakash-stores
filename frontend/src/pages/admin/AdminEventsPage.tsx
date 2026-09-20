@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { EventTable } from '@/components/admin/events/EventTable';
 import { EventForm } from '@/components/admin/events/EventForm';
 import { useEvents, useCreateEvent, useUpdateEvent, useDeleteEvent } from '@/hooks/eventHooks';
+import { useBulkUploadEvents } from '@/hooks/bulkUploadHooks';
+import { ExcelUploadDialog } from '@/components/admin/ExcelUploadDialog';
 import { EventDto } from '@/types/event';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -15,6 +17,7 @@ const AdminEventsPage = (): React.JSX.Element => {
   const { mutate: createEvent, isPending: isCreating } = useCreateEvent();
   const { mutate: updateEvent, isPending: isUpdating } = useUpdateEvent();
   const { mutate: deleteEvent, isPending: isDeleting } = useDeleteEvent();
+  const bulkUploadEventsMutation = useBulkUploadEvents();
 
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [editingEvent, setEditingEvent] = useState<EventDto | null>(null);
@@ -85,12 +88,21 @@ const AdminEventsPage = (): React.JSX.Element => {
   }
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Manage Events</h1>
-        <Button onClick={handleAddEvent} className="bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold">
-          Add New Event
-        </Button>
+        <div className="flex items-center gap-2">
+          <ExcelUploadDialog
+            title="Bulk upload events"
+            columns={['name', 'date', 'time', 'description', 'location', 'imageUrl']}
+            sampleRow={['Summer Sale', '2026-10-15', '10:00', 'Up to 50% off', 'Aundh, Pune', '']}
+            templateName="events-template.csv"
+            onUpload={(file) => bulkUploadEventsMutation.mutateAsync(file)}
+          />
+          <Button onClick={handleAddEvent} className="bg-[#E87A00] hover:bg-[#D46C00] text-white font-semibold">
+            Add New Event
+          </Button>
+        </div>
       </div>
 
       {isLoading ? (

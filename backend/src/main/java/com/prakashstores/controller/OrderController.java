@@ -59,4 +59,16 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Obscure existence for unauthorized access
         }
     }
+
+    @PostMapping("/{orderId}/cancel")
+    public ResponseEntity<OrderDto> cancelOrder(@PathVariable Long orderId, @CurrentUser Integer userId) {
+        try {
+            OrderDto cancelled = orderService.cancelOrder(orderId, userId);
+            return new ResponseEntity<>(cancelled, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT); // Order is past the cancellable window
+        }
+    }
 }

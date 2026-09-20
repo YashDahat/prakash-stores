@@ -1,14 +1,8 @@
-import type { JSX } from 'react';
+import type { CustomCellRendererProps } from 'ag-grid-react';
+import type { ColDef } from 'ag-grid-community';
+import { AdminDataGrid } from '@/components/admin/AdminDataGrid';
+import type { RowAction } from '@/components/admin/RowActionsCell';
 import { ReviewDto, ReviewStatus } from '@/types/review';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 interface ReviewTableProps {
@@ -18,94 +12,45 @@ interface ReviewTableProps {
   onDelete: (review: ReviewDto) => void;
 }
 
-export function ReviewTable({
-  reviews,
-  onApprove,
-  onReject,
-  onDelete,
-}: ReviewTableProps): React.JSX.Element {
+const StatusCell = (p: CustomCellRendererProps<ReviewDto>): React.JSX.Element | null => {
+  if (!p.data) return null;
+  const status = p.data.status;
+  const cls =
+    status === ReviewStatus.APPROVED ? 'bg-green-500'
+      : status === ReviewStatus.PENDING ? 'bg-yellow-500'
+        : 'bg-red-500';
+  return <Badge className={cls}>{status}</Badge>;
+};
+
+export function ReviewTable({ reviews, onApprove, onReject, onDelete }: ReviewTableProps): React.JSX.Element {
+  const columnDefs: ColDef<ReviewDto>[] = [
+    { headerName: 'ID', field: 'id', width: 80, flex: 0 },
+    { headerName: 'Product ID', field: 'productId', width: 120, flex: 0 },
+    { headerName: 'User ID', field: 'userId', width: 110, flex: 0 },
+    { headerName: 'Rating', field: 'rating', width: 100, flex: 0 },
+    { headerName: 'Comment', field: 'comment', flex: 2, tooltipField: 'comment' },
+    {
+      headerName: 'Date',
+      field: 'reviewDate',
+      valueFormatter: (p) => (p.value ? new Date(p.value).toLocaleDateString() : ''),
+    },
+    { headerName: 'Status', field: 'status', cellRenderer: StatusCell, width: 130, flex: 0 },
+  ];
+
+  const isNotPending = (r: ReviewDto) => r.status !== ReviewStatus.PENDING;
+  const actions: RowAction<ReviewDto>[] = [
+    { label: 'Approve', onClick: onApprove, hidden: isNotPending },
+    { label: 'Reject', onClick: onReject, hidden: isNotPending },
+    { label: 'Delete', onClick: onDelete, danger: true },
+  ];
+
   return (
-    <div className="overflow-x-auto">
-      <Table data-testid="review-table">
-        <TableHeader>
-          <TableRow>
-            <TableHead>ID</TableHead>
-            <TableHead>Product ID</TableHead>
-            <TableHead>User ID</TableHead>
-            <TableHead>Rating</TableHead>
-            <TableHead>Comment</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {reviews.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={8} className="h-24 text-center">
-                No reviews found.
-              </TableCell>
-            </TableRow>
-          ) : (
-            reviews.map((review) => (
-              <TableRow key={review.id} data-testid={`review-row-${review.id}`}>
-                <TableCell>{review.id}</TableCell>
-                <TableCell>{review.productId}</TableCell>
-                <TableCell>{review.userId}</TableCell>
-                <TableCell>{review.rating}</TableCell>
-                <TableCell className="max-w-xs truncate">{review.comment}</TableCell>
-                <TableCell>{new Date(review.reviewDate).toLocaleDateString()}</TableCell>
-                <TableCell>
-                  <Badge
-                    className={
-                      review.status === ReviewStatus.APPROVED
-                        ? 'bg-green-500'
-                        : review.status === ReviewStatus.PENDING
-                          ? 'bg-yellow-500'
-                          : 'bg-red-500'
-                    }
-                  >
-                    {review.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-right">
-                  {review.status === ReviewStatus.PENDING && (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => onApprove(review)}
-                        className="mr-2 hover:bg-green-100 transition-all duration-200"
-                        data-testid={`approve-review-${review.id}-button`}
-                      >
-                        Approve
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => onReject(review)}
-                        className="mr-2 hover:bg-red-100 transition-all duration-200"
-                        data-testid={`reject-review-${review.id}-button`}
-                      >
-                        Reject
-                      </Button>
-                    </>
-                  )}
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => onDelete(review)}
-                    className="hover:bg-red-600 transition-all duration-200"
-                    data-testid={`delete-review-${review.id}-button`}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-    </div>
+    <AdminDataGrid
+      testId="review-table"
+      rowData={reviews}
+      columnDefs={columnDefs}
+      actions={actions}
+      emptyMessage="No reviews found."
+    />
   );
 }

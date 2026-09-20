@@ -7,18 +7,19 @@ import type { SiteConfig } from '@/shell';
 export const siteConfig: SiteConfig = {
   header: {
     brandName: "Prakash Stores",
+    logoUrl: "/Prakash_store_logo.png",
+    bgClass: "bg-black",
     navLinks: [
       { label: "Home", href: "/" },
       { label: "About", href: "/about" },
       { label: "Events", href: "/events" },
-      { label: "Order Confirmation", href: "/order-confirmation" },
       { label: "Order History", href: "/order-history" },
       { label: "Products", href: "/products" },
       { label: "Profile", href: "/profile" },
       { label: "Contact", href: "/contact" },
     ],
     showAuth: true,
-    showCart: false,
+    showCart: true,
   },
   footer: {
     brandName: "Prakash Stores",

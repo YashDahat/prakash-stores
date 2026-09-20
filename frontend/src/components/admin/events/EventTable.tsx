@@ -1,8 +1,8 @@
-import type { JSX } from 'react';
-import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import type { CustomCellRendererProps } from 'ag-grid-react';
+import type { ColDef } from 'ag-grid-community';
+import { AdminDataGrid } from '@/components/admin/AdminDataGrid';
+import type { RowAction } from '@/components/admin/RowActionsCell';
 import type { EventDto } from '@/types/event';
-import { PencilIcon, Trash2Icon } from 'lucide-react';
 
 interface EventTableProps {
   events: EventDto[];
@@ -10,61 +10,32 @@ interface EventTableProps {
   onDelete: (event: EventDto) => void;
 }
 
+const ImageCell = (p: CustomCellRendererProps<EventDto>): React.JSX.Element => (
+  <img src={p.data?.imageUrl} alt={p.data?.name} className="h-10 w-10 rounded-md object-cover" />
+);
+
 export function EventTable({ events, onEdit, onDelete }: EventTableProps): React.JSX.Element {
+  const columnDefs: ColDef<EventDto>[] = [
+    { headerName: 'Image', field: 'imageUrl', cellRenderer: ImageCell, sortable: false, width: 90, flex: 0 },
+    { headerName: 'Name', field: 'name' },
+    { headerName: 'Date', field: 'date' },
+    { headerName: 'Time', field: 'time' },
+    { headerName: 'Location', field: 'location' },
+  ];
+
+  const actions: RowAction<EventDto>[] = [
+    { label: 'Edit', onClick: onEdit },
+    { label: 'Delete', onClick: onDelete, danger: true },
+  ];
+
   return (
-    <div className="overflow-x-auto">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Image</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Time</TableHead>
-            <TableHead>Location</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {events.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={6} className="h-24 text-center">
-                No events found.
-              </TableCell>
-            </TableRow>
-          ) : (
-            events.map((event) => (
-              <TableRow key={event.id}>
-                <TableCell>
-                  <img src={event.imageUrl} alt={event.name} className="w-16 h-16 object-cover rounded-md" />
-                </TableCell>
-                <TableCell className="font-medium">{event.name}</TableCell>
-                <TableCell>{event.date}</TableCell>
-                <TableCell>{event.time}</TableCell>
-                <TableCell>{event.location}</TableCell>
-                <TableCell className="text-right">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => onEdit(event)}
-                    className="mr-2"
-                    data-testid={`edit-event-${event.id}`}
-                  >
-                    <PencilIcon className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => onDelete(event)}
-                    data-testid={`delete-event-${event.id}`}
-                  >
-                    <Trash2Icon className="h-4 w-4" />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-    </div>
+    <AdminDataGrid
+      testId="event-table"
+      rowData={events}
+      columnDefs={columnDefs}
+      actions={actions}
+      rowHeight={56}
+      emptyMessage="No events found."
+    />
   );
 }

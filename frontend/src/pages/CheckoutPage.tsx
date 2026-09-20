@@ -30,14 +30,14 @@ const CheckoutPage = (): React.JSX.Element => {
   const navigate = useNavigate();
   const [shippingDetails, setShippingDetails] = useState<ShippingDetails | null>(null);
 
+  // No page-level validate on the shipping step: ShippingStep's own form (zod) is the source of
+  // truth for completeness and only calls onNext with valid details. Gating next() on the
+  // shippingDetails state here would race the setState in handleShippingNext (which runs next()
+  // synchronously, before the state has re-rendered) and wedge the flow on the shipping step.
   const steps: CheckoutStep[] = [
     {
       id: 'shipping',
       label: 'Shipping Information',
-      validate: () => {
-        if (!shippingDetails) return 'Please provide shipping details.';
-        return true;
-      },
     },
     {
       id: 'payment',

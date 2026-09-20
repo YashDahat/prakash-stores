@@ -21,6 +21,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { ImagePicker } from '@/components/admin/ImagePicker';
 import type { ProductCategory, ProductDto } from '@/types/product';
 import type { Brand } from '@/types/brand';
 
@@ -75,8 +82,13 @@ export function ProductForm({
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+    <Dialog open onOpenChange={(open) => { if (!open) onCancel(); }}>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{initialData ? 'Edit Product' : 'Add New Product'}</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="name"
@@ -121,9 +133,9 @@ export function ProductForm({
           name="imageUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Image URL</FormLabel>
+              <FormLabel>Product Image</FormLabel>
               <FormControl>
-                <Input placeholder="https://example.com/image.jpg" {...field} data-testid="product-image-url" />
+                <ImagePicker value={field.value} onChange={field.onChange} testId="product-image-url" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -190,15 +202,17 @@ export function ProductForm({
             </FormItem>
           )}
         />
-        <div className="flex justify-end space-x-2">
-          <Button type="button" variant="outline" onClick={onCancel} data-testid="product-form-cancel">
-            Cancel
-          </Button>
-          <Button type="submit" data-testid="product-form-submit">
-            {initialData ? 'Save Changes' : 'Create Product'}
-          </Button>
-        </div>
-      </form>
-    </Form>
+            <div className="flex justify-end space-x-2">
+              <Button type="button" variant="outline" onClick={onCancel} data-testid="product-form-cancel">
+                Cancel
+              </Button>
+              <Button type="submit" data-testid="product-form-submit">
+                {initialData ? 'Save Changes' : 'Create Product'}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }

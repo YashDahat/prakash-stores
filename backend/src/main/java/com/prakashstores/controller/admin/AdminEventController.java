@@ -1,10 +1,12 @@
 package com.prakashstores.controller.admin;
 
+import com.prakashstores.dto.BulkUploadResult;
 import com.prakashstores.dto.EventDto;
 import com.prakashstores.service.EventService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import com.prakashstores.security.CurrentUser;
 
 import java.util.List;
@@ -17,6 +19,11 @@ public class AdminEventController {
 
     public AdminEventController(EventService eventService) {
         this.eventService = eventService;
+    }
+
+    @PostMapping("/bulk-upload")
+    public BulkUploadResult bulkUploadEvents(@RequestParam("file") MultipartFile file, @CurrentUser Integer userId) {
+        return eventService.bulkImportEvents(file);
     }
 
     @PostMapping

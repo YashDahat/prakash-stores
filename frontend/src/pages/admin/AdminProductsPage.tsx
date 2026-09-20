@@ -16,6 +16,8 @@ import {
 import { ProductDto } from '@/types/product';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ExcelUploadDialog } from '@/components/admin/ExcelUploadDialog';
+import { useBulkUploadProducts } from '@/hooks/bulkUploadHooks';
 
 const AdminProductsPage = (): React.JSX.Element => {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
@@ -33,6 +35,7 @@ const AdminProductsPage = (): React.JSX.Element => {
   const createProductMutation = useCreateProduct();
   const updateProductMutation = useUpdateProduct();
   const deleteProductMutation = useDeleteProduct();
+  const bulkUploadProductsMutation = useBulkUploadProducts();
 
   const handleCreateProduct = () => {
     setSelectedProductId(null);
@@ -78,7 +81,7 @@ const AdminProductsPage = (): React.JSX.Element => {
 
   if (isLoadingProducts || isLoadingBrands || isLoadingCategories) {
     return (
-      <div className="container mx-auto py-8">
+      <div className="container mx-auto py-4">
         <Skeleton className="h-10 w-48 mb-6" />
         <Skeleton className="h-12 w-full mb-4" />
         <Skeleton className="h-[400px] w-full" />
@@ -87,7 +90,7 @@ const AdminProductsPage = (): React.JSX.Element => {
   }
 
   if (isErrorProducts) {
-    return <div className="container mx-auto py-8 text-red-500">Error loading products.</div>;
+    return <div className="container mx-auto py-4 text-red-500">Error loading products.</div>;
   }
 
   const productsData = products || [];
@@ -95,12 +98,21 @@ const AdminProductsPage = (): React.JSX.Element => {
   const categoriesData = categories || [];
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Product Management</h1>
-        <Button onClick={handleCreateProduct} data-testid="create-product-cta">
-          Add New Product
-        </Button>
+        <div className="flex items-center gap-2">
+          <ExcelUploadDialog
+            title="Bulk upload products"
+            columns={['name', 'price', 'description', 'stock', 'imageUrl', 'brand', 'category']}
+            sampleRow={['Cotton Shirt', '799', 'Slim-fit cotton shirt', '25', '', 'Peter England', 'Shirts']}
+            templateName="products-template.csv"
+            onUpload={(file) => bulkUploadProductsMutation.mutateAsync(file)}
+          />
+          <Button onClick={handleCreateProduct} data-testid="create-product-cta">
+            Add New Product
+          </Button>
+        </div>
       </div>
 
       <ProductTable

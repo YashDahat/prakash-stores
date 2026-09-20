@@ -1,5 +1,6 @@
 package com.prakashstores.service;
 
+import com.prakashstores.dto.BulkUploadResult;
 import com.prakashstores.dto.ProductDto;
 import com.prakashstores.exception.ResourceNotFoundException;
 import com.prakashstores.model.Brand;
@@ -12,11 +13,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.criteria.Predicate;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,11 +29,13 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final BrandRepository brandRepository;
+    private final SpreadsheetParser spreadsheetParser;
 
-    public ProductService(ProductRepository productRepository, ProductCategoryRepository productCategoryRepository, BrandRepository brandRepository) {
+    public ProductService(ProductRepository productRepository, ProductCategoryRepository productCategoryRepository, BrandRepository brandRepository, SpreadsheetParser spreadsheetParser) {
         this.productRepository = productRepository;
         this.productCategoryRepository = productCategoryRepository;
         this.brandRepository = brandRepository;
+        this.spreadsheetParser = spreadsheetParser;
     }
 
     public Page<ProductDto> getAllProducts(String category, String brand, BigDecimal minPrice, BigDecimal maxPrice, String searchTerm, Pageable pageable) {
@@ -114,6 +119,103 @@ public class ProductService {
 
     public List<Brand> getAllBrands() {
         return brandRepository.findAll();
+    }
+
+    // ── Bulk import (Excel/CSV) ─────────────────────────────────────────────
+
+    /** Import products. Columns: name*, price*, description, stock, imageUrl, brand, category.
+     *  Brand/category are matched by name and auto-created if missing; rows whose name already
+     *  exists are skipped. */
+    public BulkUploadResult bulkImportProducts(MultipartFile file) {
+        List<Map<String, String>> rows = spreadsheetParser.parse(file);
+        BulkUploadResult result = BulkUploadResult.builder().build();
+        int rowNum = 1; // header is row 1
+        for (Map<String, String> row : rows) {
+            rowNum++;
+            try {
+                String name = value(row, "name");
+                if (name.isEmpty()) { result.addError(rowNum, "Missing required column 'name'"); continue; }
+                if (productRepository.findFirstByNameIgnoreCase(name).isPresent()) { result.setSkipped(result.getSkipped() + 1); continue; }
+
+                String priceStr = value(row, "price");
+                if (priceStr.isEmpty()) { result.addError(rowNum, "Missing required column 'price'"); continue; }
+                BigDecimal price;
+                try { price = new BigDecimal(priceStr); } catch (NumberFormatException e) { result.addError(rowNum, "Invalid price: '" + priceStr + "'"); continue; }
+
+                int stock = 0;
+                String stockStr = value(row, "stock");
+                if (!stockStr.isEmpty()) {
+                    try { stock = Integer.parseInt(stockStr.replaceAll("\\.0+$", "")); } catch (NumberFormatException e) { result.addError(rowNum, "Invalid stock: '" + stockStr + "'"); continue; }
+                }
+
+                Product product = new Product();
+                product.setName(name);
+                product.setDescription(value(row, "description"));
+                product.setPrice(price);
+                product.setImageUrl(value(row, "imageurl"));
+                product.setStock(stock);
+
+                String brandName = value(row, "brand");
+                if (!brandName.isEmpty()) {
+                    Brand brand = brandRepository.findByNameIgnoreCase(brandName)
+                            .orElseGet(() -> { Brand b = new Brand(); b.setName(brandName); return brandRepository.save(b); });
+                    product.setBrand(brand);
+                }
+                String categoryName = value(row, "category");
+                if (!categoryName.isEmpty()) {
+                    ProductCategory category = productCategoryRepository.findByNameIgnoreCase(categoryName)
+                            .orElseGet(() -> { ProductCategory c = new ProductCategory(); c.setName(categoryName); return productCategoryRepository.save(c); });
+                    product.setProductCategory(category);
+                }
+
+                productRepository.save(product);
+                result.setCreated(result.getCreated() + 1);
+            } catch (Exception e) {
+                result.addError(rowNum, e.getMessage() == null ? "Unexpected error" : e.getMessage());
+            }
+        }
+        return result;
+    }
+
+    /** Import categories. Column: name*. Existing names are skipped. */
+    public BulkUploadResult bulkImportCategories(MultipartFile file) {
+        List<Map<String, String>> rows = spreadsheetParser.parse(file);
+        BulkUploadResult result = BulkUploadResult.builder().build();
+        int rowNum = 1;
+        for (Map<String, String> row : rows) {
+            rowNum++;
+            String name = value(row, "name");
+            if (name.isEmpty()) { result.addError(rowNum, "Missing required column 'name'"); continue; }
+            if (productCategoryRepository.findByNameIgnoreCase(name).isPresent()) { result.setSkipped(result.getSkipped() + 1); continue; }
+            ProductCategory category = new ProductCategory();
+            category.setName(name);
+            productCategoryRepository.save(category);
+            result.setCreated(result.getCreated() + 1);
+        }
+        return result;
+    }
+
+    /** Import brands. Column: name*. Existing names are skipped. */
+    public BulkUploadResult bulkImportBrands(MultipartFile file) {
+        List<Map<String, String>> rows = spreadsheetParser.parse(file);
+        BulkUploadResult result = BulkUploadResult.builder().build();
+        int rowNum = 1;
+        for (Map<String, String> row : rows) {
+            rowNum++;
+            String name = value(row, "name");
+            if (name.isEmpty()) { result.addError(rowNum, "Missing required column 'name'"); continue; }
+            if (brandRepository.findByNameIgnoreCase(name).isPresent()) { result.setSkipped(result.getSkipped() + 1); continue; }
+            Brand brand = new Brand();
+            brand.setName(name);
+            brandRepository.save(brand);
+            result.setCreated(result.getCreated() + 1);
+        }
+        return result;
+    }
+
+    private static String value(Map<String, String> row, String key) {
+        String v = row.get(key);
+        return v == null ? "" : v.trim();
     }
 
     private ProductDto convertToDto(Product product) {

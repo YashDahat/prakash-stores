@@ -25,6 +25,8 @@ import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import AdminEventsPage from './pages/admin/AdminEventsPage';
 import AdminOrdersPage from './pages/admin/AdminOrdersPage';
 import AdminProductsPage from './pages/admin/AdminProductsPage';
+import AdminCategoriesPage from './pages/admin/AdminCategoriesPage';
+import AdminBrandsPage from './pages/admin/AdminBrandsPage';
 import AdminReviewsPage from './pages/admin/AdminReviewsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import CartPage from './pages/CartPage';
@@ -39,6 +41,8 @@ export default function AppRoutes() {
         <Route path="/admin/events" element={<AdminEventsPage />} />
         <Route path="/admin/orders" element={<AdminOrdersPage />} />
         <Route path="/admin/products" element={<AdminProductsPage />} />
+        <Route path="/admin/categories" element={<AdminCategoriesPage />} />
+        <Route path="/admin/brands" element={<AdminBrandsPage />} />
         <Route path="/admin/reviews" element={<AdminReviewsPage />} />
         <Route path="/admin/media" element={<AdminMediaPage />} />
       </Route>

@@ -5,8 +5,11 @@ import apiClient from '@/api/client';
 import type { ProductCategory, ProductDto } from '@/types/product';
 import type { Brand } from '@/types/brand';
 
-export const getAllProducts = async (): Promise<void> => {
-  await apiClient.get<void>('/api/v1/products');
+export const getAllProducts = async (): Promise<ProductDto[]> => {
+  // The endpoint is paginated (Spring default size 20); the storefront filters/paginates client-side,
+  // so request a large page to return the whole catalogue in one call.
+  const response = await apiClient.get<{ content: ProductDto[] }>('/api/v1/products?size=10000');
+  return response.data.content;
 };
 
 export const getProductById = async (id: number): Promise<ProductDto> => {
@@ -43,8 +46,11 @@ export const updateProductStock = async (id: number, request: unknown): Promise<
   return response.data;
 };
 
-export const adminGetAllProducts = async (): Promise<void> => {
-  await apiClient.get<void>('/api/v1/admin/products');
+export const adminGetAllProducts = async (): Promise<ProductDto[]> => {
+  // The endpoint is paginated (Spring default size 20). The admin grid does its own client-side
+  // pagination, so request a large page to return the full catalogue in one call.
+  const response = await apiClient.get<{ content: ProductDto[] }>('/api/v1/admin/products?size=10000&sort=id,desc');
+  return response.data.content;
 };
 
 export const adminGetProductById = async (id: number): Promise<ProductDto> => {

@@ -1,22 +1,29 @@
 package com.prakashstores.service;
 
+import com.prakashstores.dto.BulkUploadResult;
 import com.prakashstores.dto.EventDto;
 import com.prakashstores.model.Event;
 import com.prakashstores.repository.EventRepository;
 import com.prakashstores.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final SpreadsheetParser spreadsheetParser;
 
-    public EventService(EventRepository eventRepository) {
+    public EventService(EventRepository eventRepository, SpreadsheetParser spreadsheetParser) {
         this.eventRepository = eventRepository;
+        this.spreadsheetParser = spreadsheetParser;
     }
 
     public EventDto createEvent(EventDto eventDto) {
@@ -38,7 +45,7 @@ public class EventService {
     }
 
     public List<EventDto> getUpcomingEvents() {
-        return eventRepository.findByDateAfterOrderByDateAsc(LocalDate.now()).stream()
+        return eventRepository.findByDateGreaterThanEqualOrderByDateAsc(LocalDate.now()).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -63,6 +70,52 @@ public class EventService {
             throw new ResourceNotFoundException("Event not found with id: " + id);
         }
         eventRepository.deleteById(id);
+    }
+
+    /** Import events. Columns: name*, date* (yyyy-MM-dd), time (HH:mm), description, location, imageUrl.
+     *  Rows with the same name + date as an existing event are skipped. */
+    public BulkUploadResult bulkImportEvents(MultipartFile file) {
+        List<Map<String, String>> rows = spreadsheetParser.parse(file);
+        BulkUploadResult result = BulkUploadResult.builder().build();
+        int rowNum = 1; // header is row 1
+        for (Map<String, String> row : rows) {
+            rowNum++;
+            try {
+                String name = value(row, "name");
+                if (name.isEmpty()) { result.addError(rowNum, "Missing required column 'name'"); continue; }
+
+                String dateStr = value(row, "date");
+                if (dateStr.isEmpty()) { result.addError(rowNum, "Missing required column 'date' (yyyy-MM-dd)"); continue; }
+                LocalDate date;
+                try { date = LocalDate.parse(dateStr); } catch (DateTimeParseException e) { result.addError(rowNum, "Invalid date '" + dateStr + "' (expected yyyy-MM-dd)"); continue; }
+
+                LocalTime time = null;
+                String timeStr = value(row, "time");
+                if (!timeStr.isEmpty()) {
+                    try { time = LocalTime.parse(timeStr); } catch (DateTimeParseException e) { result.addError(rowNum, "Invalid time '" + timeStr + "' (expected HH:mm)"); continue; }
+                }
+
+                if (eventRepository.findFirstByNameIgnoreCaseAndDate(name, date).isPresent()) { result.setSkipped(result.getSkipped() + 1); continue; }
+
+                Event event = new Event();
+                event.setName(name);
+                event.setDescription(value(row, "description"));
+                event.setDate(date);
+                event.setTime(time);
+                event.setLocation(value(row, "location"));
+                event.setImageUrl(value(row, "imageurl"));
+                eventRepository.save(event);
+                result.setCreated(result.getCreated() + 1);
+            } catch (Exception e) {
+                result.addError(rowNum, e.getMessage() == null ? "Unexpected error" : e.getMessage());
+            }
+        }
+        return result;
+    }
+
+    private static String value(Map<String, String> row, String key) {
+        String v = row.get(key);
+        return v == null ? "" : v.trim();
     }
 
     private EventDto convertToDto(Event event) {

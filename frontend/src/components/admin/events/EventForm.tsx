@@ -13,6 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { ImagePicker } from '@/components/admin/ImagePicker';
 import { EventDto } from '@/types/event';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -153,9 +154,9 @@ export function EventForm({ initialData, onSubmit, onCancel }: EventFormProps): 
           name="imageUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Image URL</FormLabel>
+              <FormLabel>Event Image</FormLabel>
               <FormControl>
-                <Input placeholder="Image URL" {...field} />
+                <ImagePicker value={field.value} onChange={field.onChange} testId="event-image-url" />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -7,13 +7,20 @@ interface HeroSectionProps {
   subtitle: string;
   ctaText: string;
   ctaLink: string;
+  backgroundImage?: string;
 }
 
-export default function HeroSection({ title, subtitle, ctaText, ctaLink }: HeroSectionProps): React.JSX.Element {
+export default function HeroSection({
+  title,
+  subtitle,
+  ctaText,
+  ctaLink,
+  backgroundImage = 'https://images.unsplash.com/photo-1523381294911-8d3cead1858b?w=1920&q=80',
+}: HeroSectionProps): React.JSX.Element {
   return (
     <section
       className="relative h-[500px] md:h-[600px] bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: `url('https://images.unsplash.com/photo-1523381294911-8d3cead1858b?w=1920&q=80')` }}
+      style={{ backgroundImage: `url('${backgroundImage}')` }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50" />
       <div className="relative z-10 text-center text-white px-4">

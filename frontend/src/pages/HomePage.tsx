@@ -13,6 +13,7 @@ const HomePage = (): React.JSX.Element => {
         subtitle="Quality Apparel for the Whole Family"
         ctaText="Shop Now"
         ctaLink={ROUTES.PRODUCTS}
+        backgroundImage="/Prakash_store_aundh.png"
       />
 
       <section className="py-16 px-4 bg-white">

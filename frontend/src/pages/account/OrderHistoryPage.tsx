@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { useState } from 'react';
 import AccountLayout from '@/components/layout/AccountLayout';
 import { useOrdersByUserId } from '@/hooks/orderHooks';
 import {
@@ -10,11 +10,13 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '@/routes';
+import { Button } from '@/components/ui/button';
+import OrderDetailDialog from '@/components/account/OrderDetailDialog';
+import type { OrderDto } from '@/types/order';
 
 export default function OrderHistoryPage(): React.JSX.Element {
   const { data: orders, isLoading, isError } = useOrdersByUserId();
+  const [selectedOrder, setSelectedOrder] = useState<OrderDto | null>(null);
 
   if (isLoading) {
     return (
@@ -66,14 +68,15 @@ export default function OrderHistoryPage(): React.JSX.Element {
                       currency: 'INR',
                     }).format(order.totalAmount)}
                   </TableCell>
-                  <TableCell>{order.orderStatus}</TableCell>
+                  <TableCell>{order.orderStatus.replace(/_/g, ' ')}</TableCell>
                   <TableCell>
-                    <Link
-                      to={`${ROUTES.ORDER_HISTORY}/${order.id}`}
-                      className="text-[#E87A00] hover:underline transition-all duration-200"
+                    <Button
+                      variant="link"
+                      className="h-auto p-0 text-[#E87A00] hover:underline"
+                      onClick={() => setSelectedOrder(order)}
                     >
                       View
-                    </Link>
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -85,6 +88,14 @@ export default function OrderHistoryPage(): React.JSX.Element {
           You haven't placed any orders yet.
         </div>
       )}
+
+      <OrderDetailDialog
+        order={selectedOrder}
+        open={selectedOrder !== null}
+        onOpenChange={(open) => {
+          if (!open) setSelectedOrder(null);
+        }}
+      />
     </AccountLayout>
   );
 }

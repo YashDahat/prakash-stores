@@ -1,5 +1,13 @@
 # webapp-foundation — Project Context for Claude Code
 
+> **⚠️ DEMO PROJECT.** This instance (Prakash Stores) is a demonstration deployment, not production.
+> No real payment gateway is configured: the Razorpay keys in `.env` are empty, so the backend uses
+> `DemoPaymentGateway`, and the checkout's **Pay Now** button auto-approves the payment and places the
+> order without taking real money (see `frontend/src/components/checkout/PaymentStep.tsx`, which
+> bypasses the Razorpay SDK when the gateway reports `demo_key`). To make it a live store, set
+> `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET` in `.env` and the real gateway + SDK path take over
+> automatically.
+
 ## What this repo is
 
 `webapp-foundation` is the **fenced base project** every generated client site is built on top of.

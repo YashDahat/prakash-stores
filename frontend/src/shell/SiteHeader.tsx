@@ -55,10 +55,13 @@ export default function SiteHeader({
     <header className={`${bgClass} ${textClass} py-4 px-4 sticky top-0 z-50 shadow-md`}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
 
-        {/* Brand */}
-        <Link to="/" onClick={close} className="flex items-center gap-2 font-bold text-xl">
-          {logoUrl && <img src={logoUrl} alt={brandName} className="h-8 w-auto object-contain" />}
-          <span>{brandName}</span>
+        {/* Brand — logo links home. When a logo is set we show it alone; otherwise fall back to the name. */}
+        <Link to="/" onClick={close} className="flex items-center gap-2 font-bold text-xl" aria-label={brandName}>
+          {logoUrl ? (
+            <img src={logoUrl} alt={brandName} className="h-12 w-auto object-contain" />
+          ) : (
+            <span>{brandName}</span>
+          )}
         </Link>
 
         {/* Desktop nav */}

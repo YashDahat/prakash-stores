@@ -11,21 +11,33 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { OrderDto, OrderStatus, OrderStatusValues } from '@/types/order';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface OrderDetailViewProps {
   order: OrderDto | null;
   onUpdateStatus: (orderId: number, newStatus: OrderStatus) => void;
   onClose: () => void;
+  isSaving?: boolean;
 }
 
-export function OrderDetailView({ order, onUpdateStatus, onClose }: OrderDetailViewProps): React.JSX.Element {
+export function OrderDetailView({ order, onUpdateStatus, onClose, isSaving = false }: OrderDetailViewProps): React.JSX.Element {
+  // Hold the dropdown selection locally so the admin can pick a status and then explicitly Save,
+  // rather than firing an update on every change. Re-sync whenever the order (or its saved
+  // status) changes so the Save button correctly disables once persisted.
+  const [selectedStatus, setSelectedStatus] = useState<OrderStatus | undefined>(order?.orderStatus);
+
+  useEffect(() => {
+    setSelectedStatus(order?.orderStatus);
+  }, [order?.id, order?.orderStatus]);
+
   if (!order) {
     return <Dialog open={false} onOpenChange={onClose} />;
   }
 
-  const handleStatusChange = (newStatus: OrderStatus): void => {
-    onUpdateStatus(order.id, newStatus);
+  const handleSave = (): void => {
+    if (selectedStatus && selectedStatus !== order.orderStatus) {
+      onUpdateStatus(order.id, selectedStatus);
+    }
   };
 
   const formatCurrency = (amount: number): string => {
@@ -62,8 +74,8 @@ export function OrderDetailView({ order, onUpdateStatus, onClose }: OrderDetailV
           </div>
           <div className="grid grid-cols-2 items-center gap-4">
             <span className="font-semibold">Status:</span>
-            <Select onValueChange={(value) => handleStatusChange(value as OrderStatus)} defaultValue={order.orderStatus}>
-              <SelectTrigger className="w-[180px]">
+            <Select value={selectedStatus} onValueChange={(value) => setSelectedStatus(value as OrderStatus)}>
+              <SelectTrigger className="w-[180px]" data-testid="order-status-select">
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent>
@@ -95,7 +107,14 @@ export function OrderDetailView({ order, onUpdateStatus, onClose }: OrderDetailV
           )}
         </div>
         <DialogFooter>
-          <Button onClick={onClose}>Close</Button>
+          <Button variant="outline" onClick={onClose}>Close</Button>
+          <Button
+            onClick={handleSave}
+            disabled={isSaving || !selectedStatus || selectedStatus === order.orderStatus}
+            data-testid="order-status-save"
+          >
+            {isSaving ? 'Saving...' : 'Save Status'}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -121,6 +121,36 @@ public class OrderService {
         return mapToOrderDto(order);
     }
 
+    /**
+     * Cancel an order on behalf of its owner. Only the user who placed the order may cancel it, and
+     * only while it is still cancellable (PENDING_PAYMENT or PROCESSING) — once SHIPPED/DELIVERED, or
+     * already CANCELLED, it cannot be cancelled. Cancelling restores the reserved stock.
+     */
+    @Transactional
+    public OrderDto cancelOrder(Long orderId, Integer userId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with ID: " + orderId));
+
+        // Ownership check — obscure existence for anyone but the owner (same convention as getOrderById).
+        if (order.getUserId() == null || !order.getUserId().equals(userId)) {
+            throw new ResourceNotFoundException("Order not found with ID: " + orderId + " for the current user.");
+        }
+
+        OrderStatus status = order.getOrderStatus();
+        if (status != OrderStatus.PENDING_PAYMENT && status != OrderStatus.PROCESSING) {
+            throw new IllegalStateException("Order cannot be cancelled once it is " + status + ".");
+        }
+
+        // Return the reserved stock (reverses the decrement done at order creation).
+        for (OrderItem item : order.getOrderItems()) {
+            productService.updateProductStock(item.getProduct().getId(), item.getQuantity());
+        }
+
+        order.setOrderStatus(OrderStatus.CANCELLED);
+        Order updatedOrder = orderRepository.save(order);
+        return mapToOrderDto(updatedOrder);
+    }
+
     @Transactional
     public OrderDto updateOrderStatus(Long orderId, OrderStatus newStatus) {
         Order order = orderRepository.findById(orderId)

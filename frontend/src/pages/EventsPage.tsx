@@ -26,15 +26,9 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="relative h-[500px] md:h-[600px] bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: 'url(/images/events-hero.jpg)' }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
-        <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">Upcoming Events & Workshops</h1>
-          <p className="text-lg md:text-xl max-w-2xl mx-auto">
-            Join us for exciting in-store events, workshops, and community gatherings.
-          </p>
-        </div>
+      {/* Hero Section — offer badge on black; the image's own black backdrop blends with bg-black */}
+      <section className="relative h-[500px] md:h-[600px] bg-contain bg-no-repeat bg-center bg-black flex items-end justify-center" style={{ backgroundImage: 'url(/Prakash_Store_offer_logo.png)' }}>
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
       </section>
 
       {/* Events Grid Section */}
