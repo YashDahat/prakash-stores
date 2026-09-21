@@ -1,0 +1,71 @@
+// GENERATED from the architecture plan — do not edit by hand.
+// The complete route table, derived from the plan. Rendered by the App.tsx shell
+// inside the provider tree. Re-derived every attempt — never edit by hand.
+
+import { Routes, Route, Outlet } from 'react-router-dom'
+import RequireAdmin from '@/components/RequireAdmin'
+import RequireAuth from '@/components/RequireAuth'
+import { SiteLayout } from '@/shell'
+import AdminLayout from '@/components/AdminLayout'
+import { siteConfig } from '@/config/siteConfig'
+
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import CheckoutPage from './pages/CheckoutPage';
+import ContactPage from './pages/ContactPage';
+import EventsPage from './pages/EventsPage';
+import LoginPage from './pages/LoginPage';
+import OrderConfirmationPage from './pages/OrderConfirmationPage';
+import OrderHistoryPage from './pages/account/OrderHistoryPage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import ProductsPage from './pages/ProductsPage';
+import ProfilePage from './pages/account/ProfilePage';
+import SignupPage from './pages/SignupPage';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminEventsPage from './pages/admin/AdminEventsPage';
+import AdminOrdersPage from './pages/admin/AdminOrdersPage';
+import AdminProductsPage from './pages/admin/AdminProductsPage';
+import AdminCategoriesPage from './pages/admin/AdminCategoriesPage';
+import AdminBrandsPage from './pages/admin/AdminBrandsPage';
+import AdminReviewsPage from './pages/admin/AdminReviewsPage';
+import NotFoundPage from './pages/NotFoundPage';
+import CartPage from './pages/CartPage';
+import GalleryPage from './pages/GalleryPage';
+import AdminMediaPage from './pages/admin/AdminMediaPage';
+
+export default function AppRoutes() {
+  return (
+    <Routes>
+      <Route element={<RequireAdmin><AdminLayout /></RequireAdmin>}>
+        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/admin/events" element={<AdminEventsPage />} />
+        <Route path="/admin/orders" element={<AdminOrdersPage />} />
+        <Route path="/admin/products" element={<AdminProductsPage />} />
+        <Route path="/admin/categories" element={<AdminCategoriesPage />} />
+        <Route path="/admin/brands" element={<AdminBrandsPage />} />
+        <Route path="/admin/reviews" element={<AdminReviewsPage />} />
+        <Route path="/admin/media" element={<AdminMediaPage />} />
+      </Route>
+      <Route element={<SiteLayout config={siteConfig}><Outlet /></SiteLayout>}>
+        {/* Outlet receives the matched child route */}
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/events" element={<EventsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
+        <Route path="/order-history" element={<OrderHistoryPage />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route element={<RequireAuth><Outlet /></RequireAuth>}>
+          <Route path="/checkout" element={<CheckoutPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
+  )
+}

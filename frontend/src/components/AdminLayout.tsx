@@ -1,0 +1,47 @@
+// GENERATED foundation scaffold — minimal admin shell. Admin pages render inside this layout (NOT the
+// public SiteLayout). Generated sites add their own admin links here; the gallery link ships by default.
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
+import { Button } from '@/components/ui/button';
+
+export default function AdminLayout() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const onLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const linkClass = ({ isActive }: { isActive: boolean }) =>
+    `block rounded-md px-3 py-2 text-sm font-medium ${isActive ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'}`;
+
+  return (
+    <div className="dark min-h-screen bg-background text-foreground">
+      <header className="flex items-center justify-between border-b px-4 py-2">
+        <Link to="/admin" aria-label="Admin dashboard" className="flex items-center gap-2">
+          <img src="/Prakash_store_logo.png" alt="Prakash Stores" className="h-10 w-auto object-contain" />
+        </Link>
+        <div className="flex items-center gap-3">
+          <Link to="/" className="text-sm text-muted-foreground hover:underline">View site</Link>
+          <Button variant="outline" size="sm" onClick={onLogout} data-testid="admin-logout">Log out</Button>
+        </div>
+      </header>
+      <div className="mx-auto flex w-full max-w-none gap-4 px-6 py-4">
+        <aside className="w-48 shrink-0 space-y-1">
+          <NavLink to="/admin" end className={linkClass} data-testid="admin-nav-dashboard">Dashboard</NavLink>
+          <NavLink to="/admin/products" className={linkClass} data-testid="admin-nav-products">Products</NavLink>
+          <NavLink to="/admin/categories" className={linkClass} data-testid="admin-nav-categories">Categories</NavLink>
+          <NavLink to="/admin/brands" className={linkClass} data-testid="admin-nav-brands">Brands</NavLink>
+          <NavLink to="/admin/orders" className={linkClass} data-testid="admin-nav-orders">Orders</NavLink>
+          <NavLink to="/admin/events" className={linkClass} data-testid="admin-nav-events">Events</NavLink>
+          <NavLink to="/admin/reviews" className={linkClass} data-testid="admin-nav-reviews">Reviews</NavLink>
+          <NavLink to="/admin/media" className={linkClass} data-testid="admin-nav-media">Media library</NavLink>
+        </aside>
+        <main className="min-w-0 flex-1">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+}
