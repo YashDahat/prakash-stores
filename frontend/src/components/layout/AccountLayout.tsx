@@ -14,7 +14,7 @@ export default function AccountLayout({ children }: AccountLayoutProps): React.J
 
   return (
     <section className="py-16 px-4 bg-[#F5F5F5]">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         <aside className="md:col-span-1 bg-white rounded-xl shadow-md p-6">
           <h2 className="text-xl font-semibold mb-4">Account Navigation</h2>
           <nav>

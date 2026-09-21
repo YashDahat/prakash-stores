@@ -28,18 +28,11 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(@Valid @RequestBody CreateOrderRequest request, @CurrentUser Integer userId) {
-        try {
-            OrderDto createdOrder = orderService.createOrder(request, userId);
-            return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (PaymentGatewayException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (IllegalStateException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        // ResourceNotFoundException / IllegalArgumentException (e.g. "Insufficient stock…") and the
+        // payment/state errors are mapped to bodied responses by GlobalExceptionHandler, so the
+        // client sees the real reason instead of a blank 400. Don't swallow them here.
+        OrderDto createdOrder = orderService.createOrder(request, userId);
+        return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 
     @GetMapping

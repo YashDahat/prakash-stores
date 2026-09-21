@@ -25,7 +25,7 @@ const OrderConfirmationPage = (): React.JSX.Element => {
   if (isLoading) {
     return (
       <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-screen-2xl mx-auto">
           <div className="text-center">
             <Skeleton className="h-10 w-3/4 mx-auto mb-4" />
             <Skeleton className="h-6 w-1/2 mx-auto mb-8" />
@@ -57,7 +57,7 @@ const OrderConfirmationPage = (): React.JSX.Element => {
   if (isError) {
     return (
       <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="max-w-screen-2xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-red-600 mb-4">Error</h1>
           <p className="text-xl text-gray-700">Failed to load order details: {error?.message}</p>
           <Button asChild className="mt-8 bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200">
@@ -71,7 +71,7 @@ const OrderConfirmationPage = (): React.JSX.Element => {
   if (!order) {
     return (
       <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="max-w-screen-2xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">Order Not Found</h1>
           <p className="text-xl text-gray-700">The order you are looking for does not exist or the ID is invalid.</p>
           <Button asChild className="mt-8 bg-[#E87A00] hover:bg-[#D46B00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200">
@@ -84,7 +84,7 @@ const OrderConfirmationPage = (): React.JSX.Element => {
 
   return (
     <section className="py-16 px-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-[#1A3A6D] mb-4">Order Confirmed!</h1>
           <p className="text-xl text-gray-700">Thank you for your purchase. Your order has been successfully placed.</p>

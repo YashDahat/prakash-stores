@@ -10,7 +10,7 @@ export default function FeaturedProducts(): React.JSX.Element {
   if (isLoading) {
     return (
       <section className="py-16 px-4 bg-[#F5F5F5]">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-screen-2xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8">Featured Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[...Array(8)].map((_, index) => (
@@ -25,7 +25,7 @@ export default function FeaturedProducts(): React.JSX.Element {
   if (isError || !products) {
     return (
       <section className="py-16 px-4 bg-[#F5F5F5]">
-        <div className="max-w-7xl mx-auto text-center text-red-600">
+        <div className="max-w-screen-2xl mx-auto text-center text-red-600">
           Failed to load featured products. Please try again later.
         </div>
       </section>
@@ -36,7 +36,7 @@ export default function FeaturedProducts(): React.JSX.Element {
 
   return (
     <section className="py-16 px-4 bg-[#F5F5F5]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8">Featured Products</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {featuredProducts.map((product) => (

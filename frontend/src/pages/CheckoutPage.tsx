@@ -61,7 +61,7 @@ const CheckoutPage = (): React.JSX.Element => {
   if (cartItems.length === 0) {
     return (
       <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="max-w-screen-2xl mx-auto text-center">
           <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
           <p className="text-lg text-gray-600 mb-8">
             Looks like you haven&apos;t added anything to your cart yet.
@@ -76,7 +76,7 @@ const CheckoutPage = (): React.JSX.Element => {
 
   return (
     <section className="py-16 px-4 bg-[#F5F5F5]">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <Card className="shadow-md border border-gray-100">
             <CardHeader>

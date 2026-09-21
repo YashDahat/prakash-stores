@@ -15,8 +15,8 @@ export default function AdminDashboardPage(): React.JSX.Element {
   const totalPendingReviews = pendingReviews?.length ?? 0;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-      <h1 className="text-3xl font-bold mb-6 text-[#212121]">Admin Dashboard</h1>
+    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card data-testid="dashboard-products-card">

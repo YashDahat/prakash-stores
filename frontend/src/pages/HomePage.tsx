@@ -17,21 +17,21 @@ const HomePage = (): React.JSX.Element => {
       />
 
       <section className="py-16 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-screen-2xl mx-auto">
           <h2 className="text-3xl font-semibold text-center mb-12">Featured Products</h2>
           <FeaturedProducts />
         </div>
       </section>
 
       <section className="py-16 px-4 bg-[#F5F5F5]">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-screen-2xl mx-auto">
           <h2 className="text-3xl font-semibold text-center mb-12">Shop by Category</h2>
           <CategoryGrid />
         </div>
       </section>
 
       <section className="py-16 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-screen-2xl mx-auto">
           <h2 className="text-3xl font-semibold text-center mb-12">#PrakashStores on Instagram</h2>
           <InstagramFeed />
         </div>

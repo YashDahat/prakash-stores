@@ -33,7 +33,7 @@ export default function EventsPage() {
 
       {/* Events Grid Section */}
       <section className="py-16 px-4 bg-[#F5F5F5]">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-screen-2xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-semibold text-center mb-12 text-[#212121]">Our Calendar</h2>
 
           {isLoading && (

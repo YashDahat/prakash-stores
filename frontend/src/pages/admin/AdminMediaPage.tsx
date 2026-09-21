@@ -152,6 +152,7 @@ export default function AdminMediaPage() {
       headerName: 'Preview',
       field: 'url',
       sortable: false,
+      filter: false,
       width: 90,
       flex: 0,
       cellRenderer: (p: CustomCellRendererProps<MediaAssetDto>) => (

@@ -23,7 +23,7 @@ export default function CategoryGrid(): React.JSX.Element {
 
   return (
     <section className="py-16 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-semibold text-center mb-12">Shop by Category</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category) => (

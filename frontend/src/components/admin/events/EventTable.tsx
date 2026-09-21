@@ -16,7 +16,7 @@ const ImageCell = (p: CustomCellRendererProps<EventDto>): React.JSX.Element => (
 
 export function EventTable({ events, onEdit, onDelete }: EventTableProps): React.JSX.Element {
   const columnDefs: ColDef<EventDto>[] = [
-    { headerName: 'Image', field: 'imageUrl', cellRenderer: ImageCell, sortable: false, width: 90, flex: 0 },
+    { headerName: 'Image', field: 'imageUrl', cellRenderer: ImageCell, sortable: false, filter: false, width: 90, flex: 0 },
     { headerName: 'Name', field: 'name' },
     { headerName: 'Date', field: 'date' },
     { headerName: 'Time', field: 'time' },

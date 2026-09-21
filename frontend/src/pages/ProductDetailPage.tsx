@@ -53,7 +53,7 @@ export default function ProductDetailPage(): React.JSX.Element {
 
   return (
     <section className="py-16 px-4 bg-[#F5F5F5]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <ProductImageGallery imageUrls={imageUrls} />
           <ProductInfo product={product} />

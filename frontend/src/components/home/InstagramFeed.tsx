@@ -14,7 +14,7 @@ export default function InstagramFeed(): React.JSX.Element {
 
   return (
     <section className="bg-[#F5F5F5] py-16 px-4" data-testid="instagram-feed-section">
-      <div className="max-w-7xl mx-auto text-center">
+      <div className="max-w-screen-2xl mx-auto text-center">
         <h2 className="text-2xl md:text-3xl font-semibold text-[#212121] mb-4">
           #PrakashStoresStyle on Instagram
         </h2>

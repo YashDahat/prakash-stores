@@ -28,7 +28,7 @@ export default function SiteFooter({
 }: SiteFooterProps) {
   return (
     <footer className={`${bgClass} ${textClass} pt-12 pb-6 px-4`}>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
 
           {/* Brand */}

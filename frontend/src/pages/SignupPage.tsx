@@ -17,6 +17,7 @@ import * as z from 'zod';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { ROUTES } from '@/routes';
+import { getApiErrorMessage } from '@/lib/apiError';
 
 const formSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -54,9 +55,7 @@ export default function SignupPage(): React.JSX.Element {
       toast.success('Account created successfully! You are now logged in.');
       navigate(ROUTES.HOME);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'An unknown error occurred';
-      toast.error(`Signup failed: ${errorMessage}`);
+      toast.error(`Signup failed: ${getApiErrorMessage(error)}`);
     }
   };
 

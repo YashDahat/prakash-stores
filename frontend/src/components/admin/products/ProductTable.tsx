@@ -23,7 +23,7 @@ const ImageCell = (p: CustomCellRendererProps<ProductDto>): React.JSX.Element =>
 
 export function ProductTable({ products, onEdit, onDelete }: ProductTableProps): React.JSX.Element {
   const columnDefs: ColDef<ProductDto>[] = [
-    { headerName: 'Image', field: 'imageUrl', cellRenderer: ImageCell, sortable: false, width: 90, flex: 0 },
+    { headerName: 'Image', field: 'imageUrl', cellRenderer: ImageCell, sortable: false, filter: false, width: 90, flex: 0 },
     { headerName: 'Name', field: 'name' },
     { headerName: 'Category', field: 'categoryName' },
     { headerName: 'Brand', field: 'brandName' },
